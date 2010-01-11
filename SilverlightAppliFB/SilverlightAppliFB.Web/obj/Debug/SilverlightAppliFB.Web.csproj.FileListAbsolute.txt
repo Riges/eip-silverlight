@@ -1,0 +1,10 @@
+c:\users\cbonfils\documents\visual studio 2010\Projects\SilverlightAppliFB\SilverlightAppliFB.Web\bin\SilverlightAppliFB.Web.dll
+c:\users\cbonfils\documents\visual studio 2010\Projects\SilverlightAppliFB\SilverlightAppliFB.Web\bin\SilverlightAppliFB.Web.pdb
+c:\users\cbonfils\documents\visual studio 2010\Projects\SilverlightAppliFB\SilverlightAppliFB.Web\obj\Debug\ResolveAssemblyReference.cache
+c:\users\cbonfils\documents\visual studio 2010\Projects\SilverlightAppliFB\SilverlightAppliFB.Web\obj\Debug\SilverlightAppliFB.Web.dll
+c:\users\cbonfils\documents\visual studio 2010\Projects\SilverlightAppliFB\SilverlightAppliFB.Web\obj\Debug\SilverlightAppliFB.Web.pdb
+C:\pfe\trunk\Tests APIs\Facebook\SilverlightAppliFB\SilverlightAppliFB.Web\bin\SilverlightAppliFB.Web.dll
+C:\pfe\trunk\Tests APIs\Facebook\SilverlightAppliFB\SilverlightAppliFB.Web\bin\SilverlightAppliFB.Web.pdb
+C:\pfe\trunk\Tests APIs\Facebook\SilverlightAppliFB\SilverlightAppliFB.Web\obj\Debug\ResolveAssemblyReference.cache
+C:\pfe\trunk\Tests APIs\Facebook\SilverlightAppliFB\SilverlightAppliFB.Web\obj\Debug\SilverlightAppliFB.Web.dll
+C:\pfe\trunk\Tests APIs\Facebook\SilverlightAppliFB\SilverlightAppliFB.Web\obj\Debug\SilverlightAppliFB.Web.pdb
