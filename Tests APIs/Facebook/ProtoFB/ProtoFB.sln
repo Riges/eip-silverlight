@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtoFB", "ProtoFB\ProtoFB.csproj", "{D08CB5A9-5122-4EDE-A1C1-6E739278DEF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtoFB.Web", "ProtoFB.Web\ProtoFB.Web.csproj", "{E6132A92-63BC-4309-8FAB-0AA46233AECE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D08CB5A9-5122-4EDE-A1C1-6E739278DEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D08CB5A9-5122-4EDE-A1C1-6E739278DEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D08CB5A9-5122-4EDE-A1C1-6E739278DEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D08CB5A9-5122-4EDE-A1C1-6E739278DEF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6132A92-63BC-4309-8FAB-0AA46233AECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6132A92-63BC-4309-8FAB-0AA46233AECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6132A92-63BC-4309-8FAB-0AA46233AECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6132A92-63BC-4309-8FAB-0AA46233AECE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
