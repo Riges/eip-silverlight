@@ -1,0 +1,5 @@
+c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\bin\ProtoFB.Web.dll
+c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\bin\ProtoFB.Web.pdb
+c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\obj\Debug\ResolveAssemblyReference.cache
+c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.dll
+c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.pdb
