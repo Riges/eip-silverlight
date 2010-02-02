@@ -15,6 +15,7 @@ using Facebook.Rest;
 using Facebook.Session;
 using Facebook.Schema;
 using Facebook.Utility;
+using System.IO.IsolatedStorage;
 
 namespace ProtoFB
 {
@@ -44,15 +45,29 @@ namespace ProtoFB
             BtnSeConnecter.Click += new RoutedEventHandler(SeConnecterButton_Click);
         }
 
+        private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
+
         private void SeConnecterButton_Click(object sender, RoutedEventArgs e)
         {
+           
             List<Enums.ExtendedPermissions> perms = new List<Enums.ExtendedPermissions>();
             perms.Add(Enums.ExtendedPermissions.offline_access);
             perms.Add(Enums.ExtendedPermissions.publish_stream);
             perms.Add(Enums.ExtendedPermissions.read_stream);
             _browserSession.RequiredPermissions = perms;
+
+            _browserSession.ApplicationKey = ApplicationKey;
             
-            _browserSession.Login(); 
+            bool sessionExpires = (storage.Contains("SessionExpires")?(bool)storage["SessionExpires"]:true);
+            string sessionKey = (storage.Contains("SessionKey")?(string)storage["SessionKey"]:null);
+            string sessionSecret = (storage.Contains("SessionSecret")?(string)storage["SessionSecret"]:null);
+            long userID = (storage.Contains("UserId")?(long)storage["UserId"]:0);
+            if (userID != 0)
+            {
+                _browserSession.LoggedIn(sessionKey, sessionSecret, Convert.ToInt32(sessionExpires), userID);
+            }
+            else
+                _browserSession.Login();    
         }
 
         private void SeDeConnecterButton_Click(object sender, RoutedEventArgs e)
@@ -61,37 +76,41 @@ namespace ProtoFB
 
         }
 
-        private void test(bool toto, object o, FacebookException ex)
+        private void IsLogged(long userId, object o, FacebookException ex)
         {
 
         }
 
         private void browserSession_LoginCompleted(object sender, EventArgs e)
         {
-            
             _facebookAPI = new Api(_browserSession);
-            string test = _facebookAPI.ExtendedPermissionUrl(Enums.ExtendedPermissions.read_stream);
+            storage["ApplicationSecret"] = _facebookAPI.Session.ApplicationSecret;
+            storage["SessionExpires"] = _facebookAPI.Session.SessionExpires;
+            storage["SessionKey"] = _facebookAPI.Session.SessionKey;
+            storage["SessionSecret"] = _facebookAPI.Session.SessionSecret;
+            storage["UserId"] = _facebookAPI.Session.UserId;
 
+            Load();
+        }
 
-            if (_browserSession.UserId != 0)
+        private void Load()
+        {
+            if (_facebookAPI.Session.UserId != 0)
             {
                 //_facebookAPI.Auth.RevokeAuthorizationAsync(null, null);
 
-                BtnSeConnecter.Content = "Se déconnecter";
-                BtnSeConnecter.Click += new RoutedEventHandler(SeDeConnecterButton_Click);
+               // BtnSeConnecter.Content = "Se déconnecter";
+                //BtnSeConnecter.Click += new RoutedEventHandler(SeDeConnecterButton_Click);
                 BtnGetAmis.IsEnabled = true;
                 BtnGetMyWall.IsEnabled = true;
             }
             else
             {
-                BtnSeConnecter.Content = "Se connecter";
-                BtnSeConnecter.Click += new RoutedEventHandler(SeConnecterButton_Click);
+               // BtnSeConnecter.Content = "Se connecter";
+               // BtnSeConnecter.Click += new RoutedEventHandler(SeConnecterButton_Click);
             }
-
             //TxtLogged.Visibility = System.Windows.Visibility.Visible;
         }
-
-
        
 
         private void BtnGetAmis_Click(object sender, RoutedEventArgs e)
@@ -187,7 +206,7 @@ namespace ProtoFB
             
 
             //_facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetStreamFiltersCompleted), null);
-            _facebookAPI.Stream.GetAsync(_facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, "app_2915120374", new Stream.GetCallback(GetStreamCompleted), null);
+            _facebookAPI.Stream.GetAsync(_facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, null, new Stream.GetCallback(GetStreamCompleted), null);
 
         }
 
