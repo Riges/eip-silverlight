@@ -3,3 +3,8 @@ c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\bin\
 c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\obj\Debug\ResolveAssemblyReference.cache
 c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.dll
 c:\users\cbonfils\documents\visual studio 2010\Projects\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.pdb
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\bin\ProtoFB.Web.dll
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\bin\ProtoFB.Web.pdb
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ResolveAssemblyReference.cache
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.dll
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.pdb
