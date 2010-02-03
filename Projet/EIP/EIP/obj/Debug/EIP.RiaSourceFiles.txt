@@ -1,0 +1,1 @@
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\EIP.Web.csproj,634007957671069754,Properties\AssemblyInfo.cs,
