@@ -1,0 +1,5 @@
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\bin\EIP.Web.dll
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\bin\EIP.Web.pdb
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\obj\Debug\EIP.Web.dll
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\obj\Debug\EIP.Web.pdb
