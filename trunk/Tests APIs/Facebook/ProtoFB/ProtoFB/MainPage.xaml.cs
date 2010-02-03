@@ -23,7 +23,15 @@ namespace ProtoFB
     {
         internal Api _facebookAPI;
         internal BrowserSession _browserSession;
+
         private const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a"; //temp
+        bool sessionExpires;
+        string sessionKey;
+        string sessionSecret;
+        long userID;
+
+        private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
+
         private user _aUser;
 
         IList<user> myFriends;
@@ -35,8 +43,6 @@ namespace ProtoFB
             _browserSession = new BrowserSession(ApplicationKey);
             _browserSession.LoginCompleted += browserSession_LoginCompleted;
             _browserSession.LogoutCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(_browserSession_LogoutCompleted);
-
-
         }
 
         void _browserSession_LogoutCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -45,11 +51,8 @@ namespace ProtoFB
             BtnSeConnecter.Click += new RoutedEventHandler(SeConnecterButton_Click);
         }
 
-        private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
-
         private void SeConnecterButton_Click(object sender, RoutedEventArgs e)
         {
-           
             List<Enums.ExtendedPermissions> perms = new List<Enums.ExtendedPermissions>();
             perms.Add(Enums.ExtendedPermissions.offline_access);
             perms.Add(Enums.ExtendedPermissions.publish_stream);
@@ -57,11 +60,8 @@ namespace ProtoFB
             _browserSession.RequiredPermissions = perms;
 
             _browserSession.ApplicationKey = ApplicationKey;
-            
-            bool sessionExpires = (storage.Contains("SessionExpires")?(bool)storage["SessionExpires"]:true);
-            string sessionKey = (storage.Contains("SessionKey")?(string)storage["SessionKey"]:null);
-            string sessionSecret = (storage.Contains("SessionSecret")?(string)storage["SessionSecret"]:null);
-            long userID = (storage.Contains("UserId")?(long)storage["UserId"]:0);
+
+            GetSession();
             if (userID != 0)
             {
                 _browserSession.LoggedIn(sessionKey, sessionSecret, Convert.ToInt32(sessionExpires), userID);
@@ -73,22 +73,36 @@ namespace ProtoFB
         private void SeDeConnecterButton_Click(object sender, RoutedEventArgs e)
         {
             _browserSession.Logout();
-
         }
 
-        private void IsLogged(long userId, object o, FacebookException ex)
+        private void GetSession()
         {
+            sessionExpires = (storage.Contains("SessionExpires") ? (bool)storage["SessionExpires"] : true);
+            sessionKey = (storage.Contains("SessionKey") ? (string)storage["SessionKey"] : null);
+            sessionSecret = (storage.Contains("SessionSecret") ? (string)storage["SessionSecret"] : null);
+            userID = (storage.Contains("UserId") ? (long)storage["UserId"] : 0);
+        }
 
+        private void SetSession()
+        {
+            //storage["ApplicationSecret"] = _facebookAPI.Session.ApplicationSecret;
+            sessionExpires = _facebookAPI.Session.SessionExpires;
+            storage["SessionExpires"] = sessionExpires;
+
+            sessionKey = _facebookAPI.Session.SessionKey;
+            storage["SessionKey"] = sessionKey; 
+
+            sessionSecret = _facebookAPI.Session.SessionSecret;
+            storage["SessionSecret"] = sessionSecret;
+
+            userID = _facebookAPI.Session.UserId;
+            storage["UserId"] = userID;
         }
 
         private void browserSession_LoginCompleted(object sender, EventArgs e)
         {
             _facebookAPI = new Api(_browserSession);
-            storage["ApplicationSecret"] = _facebookAPI.Session.ApplicationSecret;
-            storage["SessionExpires"] = _facebookAPI.Session.SessionExpires;
-            storage["SessionKey"] = _facebookAPI.Session.SessionKey;
-            storage["SessionSecret"] = _facebookAPI.Session.SessionSecret;
-            storage["UserId"] = _facebookAPI.Session.UserId;
+            SetSession();
 
             Load();
         }
@@ -110,8 +124,7 @@ namespace ProtoFB
                // BtnSeConnecter.Click += new RoutedEventHandler(SeConnecterButton_Click);
             }
             //TxtLogged.Visibility = System.Windows.Visibility.Visible;
-        }
-       
+        }       
 
         private void BtnGetAmis_Click(object sender, RoutedEventArgs e)
         {
