@@ -15,6 +15,7 @@ using Facebook.Schema;
 using Facebook.Utility;
 using System.Collections;
 using System.Windows.Browser;
+using System.Collections.ObjectModel;
 
 namespace EIP.Views
 {
@@ -24,6 +25,8 @@ namespace EIP.Views
         public StreamFeeds()
         {
             InitializeComponent();
+
+            //scroolView.ScrollToVerticalOffset(scroolView.VerticalOffset + 25);
         }
 
         // Executes when the user navigates to this page.
@@ -42,17 +45,35 @@ namespace EIP.Views
             else
                 filter = null;
 
-
-
-
             facebookAPI.Stream.GetAsync(facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), null);
-
         }
 
         private void GetStreamCompleted(stream_data data, object o, FacebookException ex)
         {
-            Dispatcher.BeginInvoke(() => FeedsControl.ItemsSource = data.posts.stream_post);
+            
+            /*DataSource dt = new DataSource();
+            foreach (stream_post post in data.posts.stream_post)
+                dt.Items.Add(post);*/
+            Dispatcher.BeginInvoke(() => FeedsControl.DataContext = data.posts.stream_post);//data.posts.stream_post);
+
         }
 
     }
+    /*
+    public class DataSource
+    {
+        private ObservableCollection<stream_post> items = new ObservableCollection<stream_post>();
+
+        public DataSource()
+        {
+            for (int i = 0; i < 10; ++i)
+                this.items.Add(i);
+        }
+
+        public ObservableCollection<stream_post> Items
+        {
+            get { return this.items; }
+            set { this.items = value; }
+        }
+    }*/
 }

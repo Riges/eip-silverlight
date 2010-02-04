@@ -62,9 +62,9 @@
                
             </StackPanel>
 
-            <StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch" >
+            <StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">
                 
-                <navigation:Frame x:Name="ContentFrame" Style="{StaticResource ContentFrameStyle}" 
+                <navigation:Frame x:Name="ContentFrame" Style="{StaticResource ContentFrameStyle}" Template="{StaticResource TransitioningFrame}" 
                                   Source="/WaitLoad" Navigated="ContentFrame_Navigated" NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/Home"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>

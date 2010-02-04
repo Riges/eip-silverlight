@@ -4,7 +4,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Height="120" Width="600">
+    d:DesignHeight="300" d:DesignWidth="400" Height="120" Width="700">
+    <UserControl.Resources>
+        <Storyboard x:Name="OnImg">
+            <DoubleAnimation Storyboard.TargetName="picUser" 
+                             Storyboard.TargetProperty="(UIElement.Projection).(RotationY)" 
+                             BeginTime="00:00:00" Duration="00:00:00.3" 
+                             From="-35" To="0">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="QuitImg">
+            <DoubleAnimation Storyboard.TargetName="picUser" 
+                             Storyboard.TargetProperty="(UIElement.Projection).(RotationY)" 
+                             BeginTime="00:00:00" Duration="00:00:00.3" 
+                             From="0" To="-35">
+            </DoubleAnimation>
+        </Storyboard>
+
+    </UserControl.Resources>
     <Border BorderBrush="Red" BorderThickness="3">
     <Grid x:Name="LayoutRoot" Background="White" >
         <Grid.RowDefinitions>
@@ -17,10 +35,14 @@
             <ColumnDefinition Width="75*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"></Image>
+        <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"  >
+                <Image.Projection>
+                    <PlaneProjection  RotationY="-35" CenterOfRotationX="0"  />
+                </Image.Projection>
+            </Image>
         <TextBlock Grid.Row="0" Grid.Column="1" Name="nameUser"></TextBlock>
         
-        <TextBlock Grid.Row="1" Grid.Column="1" Name="message"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Name="message" Text="{Binding Path=message}" HorizontalAlignment="Stretch" TextWrapping="Wrap"></TextBlock>
         
     </Grid>
         </Border>

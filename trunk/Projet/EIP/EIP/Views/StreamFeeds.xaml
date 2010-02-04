@@ -3,21 +3,35 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           xmlns:Controls="clr-namespace:EIP.Views.Controls"
+           xmlns:Controls="clr-namespace:EIP.Views.Controls;assembly=EIP"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="StreamFeeds Page">
   <Grid x:Name="LayoutRoot">
-        <Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="150"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
       
       <!--<Controls:Feed x:Name="Feed" Width="600" Height="120" />-->
-
-       <ItemsControl Name="FeedsControl">
-            <ItemsControl.Template>
+        <StackPanel Orientation="Vertical">
+            <Button Content="toto"></Button>
+     <Button Content="toto"></Button>
+            <TextBlock Text="toto sdvsdvzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toto sdvegsdvzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toto sdvsdvegsgdvsd vzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toto sdvsedvzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toeto sdvzgvvsdv dfgszerv dfbsdrg"></TextBlock>
+            <TextBlock Text="totog sdvsdvzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toto sdvsdvzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toto sdvsdvzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toto sdvsdvzerv dfbsdrg"></TextBlock>
+            <TextBlock Text="toto sdvsdvzerv dfbsdrg"></TextBlock>
+            
+            <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500">
+            <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
+                <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
                     <Border BorderBrush="Blue" BorderThickness="1">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -35,16 +49,13 @@
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Controls:Feed x:Name="Feed" DataContext="{Binding Path=Items/}" />
-                    <!--<TextBlock Text="{Binding Path=message}"></TextBlock>-->
-                    </Grid>
+                        <Controls:Feed x:Name="Feed" />
                 </DataTemplate>
                
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-
+        </StackPanel>
 
     </Grid>
 </navigation:Page>
