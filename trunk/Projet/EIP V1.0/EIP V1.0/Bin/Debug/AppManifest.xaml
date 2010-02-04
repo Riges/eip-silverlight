@@ -1,8 +1,0 @@
-﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="EIP V1.0" EntryPointType="EIP_V1._0.App" RuntimeVersion="4.0.41108.0">
-  <Deployment.Parts>
-    <AssemblyPart x:Name="EIP V1.0" Source="EIP V1.0.dll" />
-    <AssemblyPart x:Name="Facebook.Silverlight" Source="Facebook.Silverlight.dll" />
-    <AssemblyPart x:Name="System.Xml.Linq" Source="System.Xml.Linq.dll" />
-    <AssemblyPart x:Name="System.Xml.Serialization" Source="System.Xml.Serialization.dll" />
-  </Deployment.Parts>
-</Deployment>
