@@ -18,13 +18,18 @@
                     <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}">
                         <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
 
-                            <HyperlinkButton x:Name="Link1" Style="{StaticResource LinkStyle}" 
+                            <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
                                      NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>
 
                             <Rectangle x:Name="Divider1" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="Link2" Style="{StaticResource LinkStyle}" 
                                      NavigateUri="/Friends" TargetName="ContentFrame" Content="Friends"/>
+                            
+                            <Rectangle x:Name="Divider2" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="LinkSeDeco" Style="{StaticResource LinkStyle}" Click="LinkSeDeco_Click" 
+                                      Content="Se déconnecter"/>
 
 
 

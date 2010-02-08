@@ -8,3 +8,8 @@ C:\eip-silverlight\Projet\EIP\EIP.Web\bin\EIP.Web.pdb
 C:\eip-silverlight\Projet\EIP\EIP.Web\obj\Debug\ResolveAssemblyReference.cache
 C:\eip-silverlight\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.dll
 C:\eip-silverlight\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.pdb
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\bin\EIP.Web.dll
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\bin\EIP.Web.pdb
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\obj\Debug\ResolveAssemblyReference.cache
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.dll
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.pdb

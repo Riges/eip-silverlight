@@ -70,24 +70,26 @@ namespace EIP.Views.Controls
         private void GetUser_Completed(IList<user> users, object o, FacebookException ex)
         {
             BitmapImage btImg = null;
-            
-            Dispatcher.BeginInvoke(() =>
-                {
-                    if (users[0].pic != null)
+            if (users.Count > 0)
+            {
+                Dispatcher.BeginInvoke(() =>
                     {
-                        Uri uriImg = new Uri(users[0].pic);
-                        btImg = new BitmapImage(uriImg);
-                    }
-                    picUser.Source = btImg;
-                    nameUser.Text = users[0].name;
-                    message.Text = post.message;
+                        if (users[0].pic != null)
+                        {
+                            Uri uriImg = new Uri(users[0].pic);
+                            btImg = new BitmapImage(uriImg);
+                        }
+                        picUser.Source = btImg;
+                        nameUser.Text = users[0].name;
+                        message.Text = post.message;
 
-                    DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                    dateTime = dateTime.AddSeconds(post.updated_time);
-                    dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.AddHours(1).ToShortTimeString();
-                   
-                }
-            );
+                        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                        dateTime = dateTime.AddSeconds(post.updated_time);
+                        dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.AddHours(1).ToShortTimeString();
+
+                    }
+                );
+            }
         }
 
         private string Day2Jour(DateTime date)
