@@ -1,0 +1,11 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+All about DateTime
+
+
+= Details =
+
+Facebook :
+heures en GMT, donc faire +1(heure d'hiver) ou +2(heure d'été)
