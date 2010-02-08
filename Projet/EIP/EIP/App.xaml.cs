@@ -70,6 +70,21 @@ namespace EIP
             storage["UserId"] = userID;
         }
 
+        public void DestroySession()
+        {
+            sessionExpires = true;
+            storage["SessionExpires"] = null;
+
+            sessionKey = null;
+            storage["SessionKey"] = null;
+
+            sessionSecret = null;
+            storage["SessionSecret"] = null;
+
+            userID = 0;
+            storage["UserId"] = null;
+        }
+
         private void Application_Exit(object sender, EventArgs e)
         {
 

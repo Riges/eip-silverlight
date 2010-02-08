@@ -11,8 +11,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
 using System.Windows.Media.Imaging;
-using ImageTools;
-using ImageTools.IO.Gif;
 using System.IO;
 using System.Windows.Resources;
 using System.Windows.Navigation;
@@ -50,7 +48,7 @@ namespace EIP.Views.Controls
 
         private void Load()
         {
-            ImageTools.IO.Decoders.AddDecoder<GifDecoder>();
+            //ImageTools.IO.Decoders.AddDecoder<GifDecoder>();
 
             //Uri uriImg = new Uri("http://localhost:4164/GifHandler.ashx?link=" + this.Source.icon_url, UriKind.Absolute);
 

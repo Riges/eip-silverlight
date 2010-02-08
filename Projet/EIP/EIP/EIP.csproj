@@ -60,14 +60,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook.Silverlight, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.Filtering, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.IO.Bmp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.IO.Gif, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.IO.Jpeg, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.IO.Png, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
