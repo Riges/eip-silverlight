@@ -1,1 +1,1 @@
-C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\EIP.Web.csproj,634007957671069754,Properties\AssemblyInfo.cs,
+C:\eip-silverlight\Projet\EIP\EIP.Web\EIP.Web.csproj,634012402760292130,GifHandler.ashx.cs,Properties\AssemblyInfo.cs,

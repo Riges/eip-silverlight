@@ -1,6 +1,14 @@
-﻿<xapCache source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\EIP.xap" lastWriteTime="04/02/2010 18:38:36">
-  <file source="C:\eip-silverlight\Projet\EIP\EIP\obj\Debug\EIP.dll" archivePath="EIP.dll" lastWriteTime="04/02/2010 18:38:35" />
+﻿<xapCache source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\EIP.xap" lastWriteTime="08/02/2010 16:44:29">
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\obj\Debug\EIP.dll" archivePath="EIP.dll" lastWriteTime="08/02/2010 16:44:27" />
   <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\Facebook.Silverlight.dll" archivePath="Facebook.Silverlight.dll" lastWriteTime="30/11/2009 14:43:42" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.Controls.dll" archivePath="ImageTools.Controls.dll" lastWriteTime="23/01/2010 15:07:09" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.dll" archivePath="ImageTools.dll" lastWriteTime="23/01/2010 15:06:58" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.Filtering.dll" archivePath="ImageTools.Filtering.dll" lastWriteTime="23/01/2010 15:07:11" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.IO.Bmp.dll" archivePath="ImageTools.IO.Bmp.dll" lastWriteTime="23/01/2010 15:07:07" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.IO.Gif.dll" archivePath="ImageTools.IO.Gif.dll" lastWriteTime="23/01/2010 15:07:04" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.IO.Jpeg.dll" archivePath="ImageTools.IO.Jpeg.dll" lastWriteTime="23/01/2010 15:07:01" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.IO.Png.dll" archivePath="ImageTools.IO.Png.dll" lastWriteTime="23/01/2010 15:06:59" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\ImageTools.Utils.dll" archivePath="ImageTools.Utils.dll" lastWriteTime="23/01/2010 15:06:59" />
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="07/11/2009 19:31:36" />
   <file source="c:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="07/11/2009 19:31:36" />
   <file source="C:\Program Files\Microsoft SDKs\Silverlight\v3.0\Toolkit\Nov09\Bin\System.Windows.Controls.Layout.Toolkit.dll" archivePath="System.Windows.Controls.Layout.Toolkit.dll" lastWriteTime="18/11/2009 03:14:38" />
@@ -10,5 +18,5 @@
   <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\System.Xml.Linq.dll" archivePath="System.Xml.Linq.dll" lastWriteTime="07/11/2009 19:31:36" />
   <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\System.Xml.Serialization.dll" archivePath="System.Xml.Serialization.dll" lastWriteTime="07/11/2009 19:31:36" />
   <file source="C:\Program Files\Microsoft SDKs\Silverlight\v3.0\Toolkit\Nov09\Bin\System.Reactive.dll" archivePath="System.Reactive.dll" lastWriteTime="18/11/2009 02:30:10" />
-  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="04/02/2010 18:07:56" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="08/02/2010 14:34:59" />
 </xapCache>

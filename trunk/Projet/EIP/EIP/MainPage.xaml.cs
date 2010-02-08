@@ -76,9 +76,9 @@ namespace EIP
         // If an error occurs during navigation, show an error window
         private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            e.Handled = true;
+           /* e.Handled = true;
             ChildWindow errorWin = new ErrorWindow(e.Uri);
-            errorWin.Show();
+            errorWin.Show();*/
         }
     }
 }

@@ -43,7 +43,10 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Name="nameUser"></TextBlock>
         
         <TextBlock Grid.Row="1" Grid.Column="1" Name="message" Text="{Binding Path=message}" HorizontalAlignment="Stretch" TextWrapping="Wrap"></TextBlock>
-        
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock  Name="dateTimeFeed"></TextBlock>
+            </StackPanel>
     </Grid>
         </Border>
 </UserControl>
