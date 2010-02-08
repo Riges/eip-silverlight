@@ -54,7 +54,15 @@ namespace EIP.Views
             /*DataSource dt = new DataSource();
             foreach (stream_post post in data.posts.stream_post)
                 dt.Items.Add(post);*/
-            Dispatcher.BeginInvoke(() => FeedsControl.DataContext = data.posts.stream_post);//data.posts.stream_post);
+            
+            Dispatcher.BeginInvoke(() =>
+                {
+                    FeedsControl.DataContext = data.posts.stream_post;
+                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                    ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                }
+                );
+             
 
         }
 

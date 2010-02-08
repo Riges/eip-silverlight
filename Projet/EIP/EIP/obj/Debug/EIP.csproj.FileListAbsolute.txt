@@ -153,3 +153,5 @@ C:\eip-silverlight\Projet\EIP\EIP\obj\Debug\XapCacheFile.xml
 C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
 C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Layout.Toolkit.pdb
 C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Layout.Toolkit.xml
+C:\eip-silverlight\Projet\EIP\EIP\obj\Debug\Views\Controls\Loader.g.cs
+C:\eip-silverlight\Projet\EIP\EIP\obj\Debug\Views\Controls\FilterButton.g.cs

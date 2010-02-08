@@ -47,7 +47,7 @@
                             <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
                             <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/MenuFeeds.xaml"/>
                             <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/HomeCenter.xaml"/>
-                            <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml" />
+                            <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
                             
                             <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/Menu{pageName}.xaml"/>-->
 

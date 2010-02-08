@@ -32,7 +32,7 @@ namespace EIP.Views.Controls
             //
 
 
-            
+          
             this.Loaded += new RoutedEventHandler(Feed_Loaded);
 
             picUser.MouseEnter += new MouseEventHandler(picUser_MouseEnter);
@@ -42,8 +42,7 @@ namespace EIP.Views.Controls
         void picUser_MouseLeave(object sender, MouseEventArgs e)
         {
             //picUser.Projection = new PlaneProjection() { RotationY=-35, CenterOfRotationY=-1};
-            QuitImg.Begin();
-            
+            QuitImg.Begin();            
         }
 
         void picUser_MouseEnter(object sender, MouseEventArgs e)
@@ -59,13 +58,13 @@ namespace EIP.Views.Controls
              {
                  facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
              }
-             else
+            /* else
              {
                  Uri uriImg = new Uri("http://t3.gstatic.com/images?q=tbn:YEeflcdkzQD0tM:http://photodezign.free.fr/wp-content/icone-vector.jpg");
                  picUser.Source = new BitmapImage(uriImg);
                  nameUser.Text = "Pocket";
                  message.Text = "Kikoooo !!!";
-             }
+             }*/
         }
 
         private void GetUser_Completed(IList<user> users, object o, FacebookException ex)
@@ -82,8 +81,56 @@ namespace EIP.Views.Controls
                     picUser.Source = btImg;
                     nameUser.Text = users[0].name;
                     message.Text = post.message;
+
+                    DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                    dateTime = dateTime.AddSeconds(post.updated_time);
+                    dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.AddHours(1).ToShortTimeString();
+                   
                 }
             );
         }
+
+        private string Day2Jour(DateTime date)
+        {
+            string jour = string.Empty;
+
+            if (date.Date == DateTime.Today)
+                return "Aujourd'hui";
+            if (date.Date == DateTime.Today.AddDays(-1))
+                return "Hier";
+            if (date.Date == DateTime.Today.AddDays(1))
+                return "Demain";
+            if (date.Date == DateTime.Today.AddDays(-2))
+                return "Avant-hier";
+
+            switch (date.Day)
+            {
+                case 1 :
+                    return "Dimanche";
+                    break;
+                case 2:
+                    return "Lundi";
+                    break;
+                case 3:
+                    return "Mardi";
+                    break;
+                case 4:
+                    return "Mercredi";
+                    break;
+                case 5:
+                    return "Jeudi";
+                    break;
+                case 6:
+                    return "Vendredi";
+                    break;
+                case 7:
+                    return "Samedi";
+                    break;
+            }
+
+
+            return jour;
+        }
+
     }
 }
