@@ -84,6 +84,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountFacebook.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -93,6 +95,9 @@
     </Compile>
     <Compile Include="Views\Controls\FilterButton.xaml.cs">
       <DependentUpon>FilterButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ListeComptes.xaml.cs">
+      <DependentUpon>ListeComptes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\Loader.xaml.cs">
       <DependentUpon>Loader.xaml</DependentUpon>
@@ -131,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\FilterButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ListeComptes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

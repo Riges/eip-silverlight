@@ -14,6 +14,7 @@ using Facebook.Schema;
 using Facebook.Rest;
 using Facebook.Session;
 using System.IO.IsolatedStorage;
+using Facebook.Utility;
 
 namespace EIP
 {
@@ -23,10 +24,14 @@ namespace EIP
         internal BrowserSession _browserSession { get; set; }
 
         public const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
-        public bool sessionExpires { get; set; }
-        public string sessionKey { get; set; }
-        public string sessionSecret { get; set; }
-        public long userID { get; set; }
+        public bool currentSessionExpires { get; set; }
+        public string currentSessionKey { get; set; }
+        public string currentSessionSecret { get; set; }
+        public long currentUserID { get; set; }
+        public List<Account> currentAccounts { get; set; }
+        public List<Account> storageAccounts { get; set; }
+        public Account currentAccount { get; set; }
+
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
 
         public App()
@@ -41,48 +46,179 @@ namespace EIP
         private void Application_Startup(object sender, StartupEventArgs e)
         {
 
-            _browserSession = new BrowserSession(ApplicationKey);
+            this._browserSession = new BrowserSession(ApplicationKey);
+            this._browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
+
+            /*AccountFacebook acc = new AccountFacebook() { accountID = 0, typeAccount = Account.TypeAccount.Facebook, userID = 0 };
+            List<Account> accs = new List<Account>();
+            accs.Add(acc);
+            storage["Accounts"] = accs;*/
+
+
+            this.storageAccounts = (storage.Contains("Accounts") ? (List<Account>)storage["Accounts"] : null);
             GetSession();
+
+            if (currentUserID != 0)
+            {
+                var theAccountID = from Account account in storageAccounts
+                                 where account.userID == currentUserID
+                                 select account.accountID;
+                if (theAccountID.Count() > 0)
+                {
+                    var theAccounts = from Account account in storageAccounts
+                                      where account.accountID == theAccountID.First()
+                                      select account;
+
+                    this.currentAccounts = new List<Account>();
+                    foreach (Account acc in theAccounts)
+                    {
+                        this.currentAccounts.Add(acc);
+                    }
+                }
+            }
+           
             this.RootVisual = new MainPage();
         }
 
         private void GetSession()
         {
-            sessionExpires = (storage.Contains("SessionExpires") ? (bool)storage["SessionExpires"] : true);
-            sessionKey = (storage.Contains("SessionKey") ? (string)storage["SessionKey"] : null);
-            sessionSecret = (storage.Contains("SessionSecret") ? (string)storage["SessionSecret"] : null);
-            userID = (storage.Contains("UserId") ? (long)storage["UserId"] : 0);
+            currentSessionExpires = (storage.Contains("SessionExpires") ? (bool)storage["SessionExpires"] : true);
+            currentSessionKey = (storage.Contains("SessionKey") ? (string)storage["SessionKey"] : null);
+            currentSessionSecret = (storage.Contains("SessionSecret") ? (string)storage["SessionSecret"] : null);
+            currentUserID = (storage.Contains("UserId") ? (long)storage["UserId"] : 0);
         }
 
         public void SetSession()
         {
             //storage["ApplicationSecret"] = _facebookAPI.Session.ApplicationSecret;
-            sessionExpires = _facebookAPI.Session.SessionExpires;
-            storage["SessionExpires"] = sessionExpires;
+            currentSessionExpires = this._facebookAPI.Session.SessionExpires;
+            storage["SessionExpires"] = currentSessionExpires;
 
-            sessionKey = _facebookAPI.Session.SessionKey;
-            storage["SessionKey"] = sessionKey;
+            currentSessionKey = this._facebookAPI.Session.SessionKey;
+            storage["SessionKey"] = currentSessionKey;
 
-            sessionSecret = _facebookAPI.Session.SessionSecret;
-            storage["SessionSecret"] = sessionSecret;
+            currentSessionSecret = this._facebookAPI.Session.SessionSecret;
+            storage["SessionSecret"] = currentSessionSecret;
 
-            userID = _facebookAPI.Session.UserId;
-            storage["UserId"] = userID;
+            currentUserID = this._facebookAPI.Session.UserId;
+            storage["UserId"] = currentUserID;
         }
 
         public void DestroySession()
         {
-            sessionExpires = true;
+            currentSessionExpires = true;
             storage["SessionExpires"] = null;
 
-            sessionKey = null;
+            currentSessionKey = null;
             storage["SessionKey"] = null;
 
-            sessionSecret = null;
+            currentSessionSecret = null;
             storage["SessionSecret"] = null;
 
-            userID = 0;
+            currentUserID = 0;
             storage["UserId"] = null;
+        }
+
+        public void AddAccount(Account.TypeAccount type)
+        { 
+            switch (type)
+            {
+                case Account.TypeAccount.Facebook:
+                    if (this._facebookAPI != null)
+                        this._facebookAPI.Session.Logout();
+                    this._browserSession.LoginCompleted += NewAccountFacebook_LoginCompleted;
+                    this._browserSession.Login();
+                    break;
+                case Account.TypeAccount.Twitter:
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void LoadAccount(Account account)
+        {
+            /*var theAccount = from Account oneAccount in this.currentAccounts
+                             where oneAccount.userID == account.userID
+                               select account;*/
+            switch (account.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    currentAccount = (AccountFacebook)account;//theAccount.First();
+                    LoginToAccount();
+                    break;
+                case Account.TypeAccount.Twitter:
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            } 
+        }
+
+        private void LoginToAccount()
+        {
+            if (this.currentAccount != null)
+            {
+                switch (currentAccount.typeAccount)
+                {
+                    case Account.TypeAccount.Facebook:
+                        {
+                            AccountFacebook myCurrentAccount = (AccountFacebook)currentAccount;
+                            this._browserSession.LoggedIn(myCurrentAccount.sessionKey,
+                                                            myCurrentAccount.sessionSecret,
+                                                            Convert.ToInt32(myCurrentAccount.sessionExpires),
+                                                            myCurrentAccount.userID);
+                                //this._browserSession.Login();
+                        }
+                        break;
+                    case Account.TypeAccount.Twitter:
+                        break;
+                    case Account.TypeAccount.Myspace:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void NewAccountFacebook_LoginCompleted(object sender, EventArgs e)
+        {
+            LoginFacebook_LoginCompleted(sender, e);
+            this._facebookAPI.Users.GetInfoAsync(new Users.GetInfoCallback(GetUserFacebook_Completed), new object()); 
+        }
+
+        private void GetUserFacebook_Completed(IList<user> users, object o, FacebookException ex)
+        {
+            if (users.Count > 0)
+            {
+                long accountId;
+                if (currentAccounts != null)
+                    accountId = currentAccounts[0].accountID;
+                else
+                    accountId = (long)users[0].uid;
+                AccountFacebook newAccount = new AccountFacebook()
+                {
+                    accountID = accountId,
+                    typeAccount = Account.TypeAccount.Facebook,
+                    userID = this._facebookAPI.Session.UserId,
+                    name = users[0].name,
+                    sessionExpires = currentSessionExpires,
+                    sessionKey = currentSessionKey,
+                    sessionSecret = currentSessionSecret
+                };
+                this.currentAccount = newAccount;
+                this.storageAccounts.Add(newAccount);
+                storage["Accounts"] = this.storageAccounts;
+            }
+        }
+
+        private void LoginFacebook_LoginCompleted(object sender, EventArgs e)
+        {
+            this._facebookAPI = new Api(this._browserSession);
+            SetSession();
         }
 
         private void Application_Exit(object sender, EventArgs e)
@@ -118,5 +254,7 @@ namespace EIP
             {
             }
         }
+
+        
     }
 }
