@@ -22,22 +22,25 @@ namespace EIP
     {
 
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
+        App app = (App)System.Windows.Application.Current;
+
+
         public MainPage()
         {
             InitializeComponent();
-            ((App)System.Windows.Application.Current)._browserSession.LoginCompleted += browserSession_LoginCompleted;
+            //((App)System.Windows.Application.Current)._browserSession.LoginCompleted += browserSession_LoginCompleted;
 
-            LoginFB();
+            //LoginFB();
         }
 
         private void LoginFB()
         {
-            if (((App)System.Windows.Application.Current).userID != 0)
+            if (((App)System.Windows.Application.Current).currentUserID != 0)
             {
-                ((App)System.Windows.Application.Current)._browserSession.LoggedIn(((App)System.Windows.Application.Current).sessionKey, 
-                                                                                    ((App)System.Windows.Application.Current).sessionSecret, 
-                                                                                    Convert.ToInt32(((App)System.Windows.Application.Current).sessionExpires), 
-                                                                                    ((App)System.Windows.Application.Current).userID);
+                ((App)System.Windows.Application.Current)._browserSession.LoggedIn(((App)System.Windows.Application.Current).currentSessionKey,
+                                                                                    ((App)System.Windows.Application.Current).currentSessionSecret,
+                                                                                    Convert.ToInt32(((App)System.Windows.Application.Current).currentSessionExpires),
+                                                                                    ((App)System.Windows.Application.Current).currentUserID);
             }
             else
                 ((App)System.Windows.Application.Current)._browserSession.Login();   
@@ -83,18 +86,26 @@ namespace EIP
 
         private void LinkSeDeco_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if (((App)System.Windows.Application.Current)._facebookAPI != null)
             {
                 ((App)System.Windows.Application.Current)._facebookAPI.Session.Logout();
                 ((App)System.Windows.Application.Current)._facebookAPI = null;
             }
             ((App)System.Windows.Application.Current).DestroySession();
+             * */
         }
 
         private void LinkHome_Click(object sender, RoutedEventArgs e)
         {
-            if (((App)System.Windows.Application.Current)._facebookAPI == null)
-                LoginFB();
+           // if (((App)System.Windows.Application.Current)._facebookAPI == null)
+            //    LoginFB();
+            //LeftFrame.Navigate(new Uri("/Views/MenuFeeds.xaml", UriKind.Relative));
+        }
+
+        private void LinkCreateNewFbAccount_Click(object sender, RoutedEventArgs e)
+        {
+            app.AddAccount(Account.TypeAccount.Facebook);
         }
     }
 }

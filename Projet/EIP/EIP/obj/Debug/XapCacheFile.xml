@@ -1,14 +1,14 @@
-﻿<xapCache source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\EIP.xap" lastWriteTime="08/02/2010 23:08:54">
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\EIP.dll" archivePath="EIP.dll" lastWriteTime="08/02/2010 23:08:53" />
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\Facebook.Silverlight.dll" archivePath="Facebook.Silverlight.dll" lastWriteTime="07/02/2010 13:43:53" />
-  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="07/11/2009 19:31:36" />
-  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="07/11/2009 19:31:36" />
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Layout.Toolkit.dll" archivePath="System.Windows.Controls.Layout.Toolkit.dll" lastWriteTime="07/02/2010 13:43:53" />
-  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Navigation.dll" archivePath="System.Windows.Controls.Navigation.dll" lastWriteTime="07/11/2009 19:31:36" />
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Toolkit.dll" archivePath="System.Windows.Controls.Toolkit.dll" lastWriteTime="07/02/2010 13:43:53" />
-  <file source="c:\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.Windows.Ria.dll" archivePath="System.Windows.Ria.dll" lastWriteTime="11/11/2009 11:16:30" />
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Xml.Linq.dll" archivePath="System.Xml.Linq.dll" lastWriteTime="07/02/2010 13:43:53" />
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Xml.Serialization.dll" archivePath="System.Xml.Serialization.dll" lastWriteTime="07/02/2010 13:43:53" />
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Reactive.dll" archivePath="System.Reactive.dll" lastWriteTime="07/02/2010 13:43:53" />
-  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="08/02/2010 22:39:49" />
+﻿<xapCache source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\EIP.xap" lastWriteTime="09/02/2010 18:49:43">
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\obj\Debug\EIP.dll" archivePath="EIP.dll" lastWriteTime="09/02/2010 18:49:41" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\Facebook.Silverlight.dll" archivePath="Facebook.Silverlight.dll" lastWriteTime="30/11/2009 14:43:42" />
+  <file source="c:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="07/11/2009 19:31:36" />
+  <file source="c:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="07/11/2009 19:31:36" />
+  <file source="C:\Program Files\Microsoft SDKs\Silverlight\v3.0\Toolkit\Nov09\Bin\System.Windows.Controls.Layout.Toolkit.dll" archivePath="System.Windows.Controls.Layout.Toolkit.dll" lastWriteTime="18/11/2009 03:14:38" />
+  <file source="c:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Navigation.dll" archivePath="System.Windows.Controls.Navigation.dll" lastWriteTime="07/11/2009 19:31:36" />
+  <file source="C:\Program Files\Microsoft SDKs\Silverlight\v3.0\Toolkit\Nov09\Bin\System.Windows.Controls.Toolkit.dll" archivePath="System.Windows.Controls.Toolkit.dll" lastWriteTime="18/11/2009 03:14:52" />
+  <file source="c:\Program Files\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.Windows.Ria.dll" archivePath="System.Windows.Ria.dll" lastWriteTime="11/11/2009 11:16:30" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\System.Xml.Linq.dll" archivePath="System.Xml.Linq.dll" lastWriteTime="07/11/2009 19:31:36" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\System.Xml.Serialization.dll" archivePath="System.Xml.Serialization.dll" lastWriteTime="07/11/2009 19:31:36" />
+  <file source="C:\Program Files\Microsoft SDKs\Silverlight\v3.0\Toolkit\Nov09\Bin\System.Reactive.dll" archivePath="System.Reactive.dll" lastWriteTime="18/11/2009 02:30:10" />
+  <file source="C:\eip-silverlight\Projet\EIP\EIP\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="09/02/2010 11:45:35" />
 </xapCache>

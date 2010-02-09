@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:Controls="clr-namespace:EIP.Views.Controls;assembly=EIP"
     xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
     xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
     mc:Ignorable="d"
@@ -26,6 +27,11 @@
                             <HyperlinkButton x:Name="Link2" Style="{StaticResource LinkStyle}" 
                                      NavigateUri="/Friends" TargetName="ContentFrame" Content="Friends"/>
                             
+                            <Rectangle x:Name="Divider3" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="LinkCreateNewFbAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewFbAccount_Click"
+                                      Content="Ajouter Fb"/>
+                            
                             <Rectangle x:Name="Divider2" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="LinkSeDeco" Style="{StaticResource LinkStyle}" Click="LinkSeDeco_Click" 
@@ -43,7 +49,7 @@
                 <Button  Content="bas"  ></Button>
             </StackPanel>
 
-            <StackPanel my:DockPanel.Dock="Left" Width="100" >
+            <StackPanel my:DockPanel.Dock="Left" Width="120" >
 
                 <navigation:Frame x:Name="LeftFrame"  
                                NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/MenuFeeds"-->
@@ -63,8 +69,9 @@
             </StackPanel>
             
             <StackPanel my:DockPanel.Dock="Right"  Width="100">
-
-               
+                
+                <Controls:ListeComptes x:Name="liste"></Controls:ListeComptes>
+                
             </StackPanel>
 
             <StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">
