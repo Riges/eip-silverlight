@@ -186,7 +186,8 @@ namespace EIP
 
         private void NewAccountFacebook_LoginCompleted(object sender, EventArgs e)
         {
-            LoginFacebook_LoginCompleted(sender, e);
+            //LoginFacebook_LoginCompleted(sender, e);
+            this._facebookAPI = new Api(this._browserSession);
             this._facebookAPI.Users.GetInfoAsync(new Users.GetInfoCallback(GetUserFacebook_Completed), new object()); 
         }
 
