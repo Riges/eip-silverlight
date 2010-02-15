@@ -18,31 +18,53 @@ namespace EIP.Views.Controls
         public ListeComptes()
         {
             InitializeComponent();
-            app = (App)System.Windows.Application.Current;
+            //app = (App)System.Windows.Application.Current;
+            LoadAccountButtons();
+        }
+
+        public void Reload()
+        {
             LoadAccountButtons();
         }
 
         private void LoadAccountButtons()
         {
-            if (app.currentAccounts != null)
+            if (Connexion.currentAccounts != null)
             {
-                if (app.currentAccounts.Count > 0)
+                if (Connexion.currentAccounts.Count > 0)
                 {
-                    foreach (Account oneAccount in app.currentAccounts)
+                    Dispatcher.BeginInvoke(() =>
                     {
-                        Button btnAccount = new Button();
-                        btnAccount.Content = oneAccount.name;
-                        //btnAccount.Click += btnAccount_Click;
-                        btnAccount.CommandParameter = oneAccount;
-                        LayoutPanel.Children.Add(btnAccount);
+                        LayoutPanel.Children.Clear();
+                    });
+                    foreach (Account oneAccount in Connexion.currentAccounts)
+                    {
+                        Dispatcher.BeginInvoke(() =>
+                            {
+                                Button btnAccount = new Button();
+                                btnAccount.Content = oneAccount.name;
+                                btnAccount.Click += btnAccount_Click;
+                                btnAccount.CommandParameter = oneAccount;
+                                LayoutPanel.Children.Add(btnAccount);
+                            });
                     }
                 }
             }
+            /*else
+            {
+                Dispatcher.BeginInvoke(() =>
+                    {
+                        Button btnAccount = new Button();
+                        btnAccount.Content = "test";
+                        LayoutPanel.Children.Add(btnAccount);
+                    });
+            }*/
         }
 
        void btnAccount_Click(object sender, RoutedEventArgs e)
         {
-            app.LoadAccount((Account)((Button)sender).CommandParameter);
+            //app.LoadAccount((Account)((Button)sender).CommandParameter);
+            Connexion.LoadAccount((Account)((Button)sender).CommandParameter);
         }
     }
 }

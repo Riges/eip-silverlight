@@ -52,7 +52,7 @@ namespace EIP.Views.Controls
 
         void Feed_Loaded(object sender, RoutedEventArgs e)
         {
-            facebookAPI = ((App)System.Windows.Application.Current)._facebookAPI;
+            facebookAPI = Connexion.facebookAPI;
             post = (stream_post)this.DataContext;
             if (post != null)
              {

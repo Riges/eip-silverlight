@@ -35,7 +35,7 @@ namespace EIP.Views
         {
 
             
-            facebookAPI = ((App)System.Windows.Application.Current)._facebookAPI;
+            facebookAPI = Connexion.facebookAPI;
 
             
             this.filters = (storage.Contains("filters-" + facebookAPI.Session.UserId) ? (IList<stream_filter>)storage["filters-" + facebookAPI.Session.UserId] : null);
