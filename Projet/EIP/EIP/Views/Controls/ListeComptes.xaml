@@ -8,6 +8,7 @@
     
     <Grid x:Name="LayoutRoot" Background="White">
         <StackPanel Orientation="Vertical" Name="LayoutPanel">
+            
         </StackPanel>
     </Grid>
 </UserControl>
