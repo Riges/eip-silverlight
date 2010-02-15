@@ -22,7 +22,7 @@ namespace EIP
     {
 
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
-        App app = (App)System.Windows.Application.Current;
+        //App app = (App)System.Windows.Application.Current;
 
 
         public MainPage()
@@ -49,7 +49,7 @@ namespace EIP
         private void browserSession_LoginCompleted(object sender, EventArgs e)
         {
             ((App)System.Windows.Application.Current)._facebookAPI = new Api(((App)System.Windows.Application.Current)._browserSession);
-            ((App)System.Windows.Application.Current).SetSession();
+            //((App)System.Windows.Application.Current).SetSession();
 
             //ContentFrame.Source = new Uri("Home");
         }
@@ -105,7 +105,9 @@ namespace EIP
 
         private void LinkCreateNewFbAccount_Click(object sender, RoutedEventArgs e)
         {
-            app.AddAccount(Account.TypeAccount.Facebook);
+            //app.AddAccount(Account.TypeAccount.Facebook);
+            
+            Connexion.AddAccount(Account.TypeAccount.Facebook, this.liste);
         }
     }
 }

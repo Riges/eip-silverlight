@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Account.cs" />
     <Compile Include="AccountFacebook.cs" />
+    <Compile Include="Connexion.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

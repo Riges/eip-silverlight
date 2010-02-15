@@ -32,7 +32,7 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            facebookAPI = ((App)System.Windows.Application.Current)._facebookAPI;
+            facebookAPI = Connexion.facebookAPI;
 
             Uri urlSource = System.Windows.Application.Current.Host.Source;
 
