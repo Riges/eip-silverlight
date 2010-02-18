@@ -109,5 +109,12 @@ namespace EIP
             
             Connexion.AddAccount(Account.TypeAccount.Facebook, this.liste);
         }
+
+        private void LinkCreateNewTwitterAccount_Click(object sender, RoutedEventArgs e)
+        {
+            Connexion.AddAccount(Account.TypeAccount.Twitter, this.liste);
+        }
+
+
     }
 }
