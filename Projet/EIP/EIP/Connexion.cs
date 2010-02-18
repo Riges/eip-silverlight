@@ -26,6 +26,9 @@ namespace EIP
 
         private const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
 
+        private const string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
+        private const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
+
         public static List<Account> currentAccounts { get; set; }
         public static List<Account> storageAccounts { get; set; }
         public static Account currentAccount { get; set; }
@@ -136,12 +139,23 @@ namespace EIP
 
                     break;
                 case Account.TypeAccount.Twitter:
+                    ServiceEIP.ServiceEIPClient serviceEIP = new ServiceEIP.ServiceEIPClient();
+
+                    serviceEIP.AuthorizeDesktopCompleted += new EventHandler<ServiceEIP.AuthorizeDesktopCompletedEventArgs>(test_AuthorizeDesktopCompleted);
+                    serviceEIP.AuthorizeDesktopAsync(consumerKey, consumerSecret);
                     break;
                 case Account.TypeAccount.Myspace:
                     break;
                 default:
                     break;
             }
+        }
+
+        private static void test_AuthorizeDesktopCompleted(object sender, ServiceEIP.AuthorizeDesktopCompletedEventArgs e)
+        {
+            string token = e.Result;
+            TwitterPin twitterPin = new TwitterPin();
+            twitterPin.Show();
         }
 
         private static void BrowserSession_LogoutCompleted(object sender, EventArgs e)

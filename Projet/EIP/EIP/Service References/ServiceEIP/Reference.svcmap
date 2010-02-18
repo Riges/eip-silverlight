@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e5a600ee-bd19-425d-8bd4-7a701d6c19d9" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies>
+      <ReferencedAssembly AssemblyName="System.Runtime.Serialization" />
+    </ReferencedAssemblies>
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:6080/ServiceEIP.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServiceEIP.wsdl" MetadataType="Wsdl" ID="c62596e3-5d53-4373-bf51-6ae2fb4d1f67" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?wsdl" />
+    <MetadataFile FileName="ServiceEIP.disco" MetadataType="Disco" ID="4ff1ea94-82e8-4790-9ce7-d30f77c90319" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?disco" />
+    <MetadataFile FileName="ServiceEIP.xsd" MetadataType="Schema" ID="81b61c49-a440-445b-a071-5ca831764e53" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServiceEIP1.xsd" MetadataType="Schema" ID="c86d2647-6b88-4c65-8e59-0ef114a4d3af" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

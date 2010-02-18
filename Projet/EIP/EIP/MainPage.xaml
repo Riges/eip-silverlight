@@ -31,7 +31,12 @@
 
                             <HyperlinkButton x:Name="LinkCreateNewFbAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewFbAccount_Click"
                                       Content="Ajouter Fb"/>
-                            
+
+                            <Rectangle x:Name="Divider4" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="LinkCreateNewTwitterAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewTwitterAccount_Click"
+                                      Content="Ajouter Twitter"/>
+
                             <Rectangle x:Name="Divider2" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="LinkSeDeco" Style="{StaticResource LinkStyle}" Click="LinkSeDeco_Click" 

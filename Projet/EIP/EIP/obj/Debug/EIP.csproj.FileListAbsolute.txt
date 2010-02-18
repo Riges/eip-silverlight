@@ -235,3 +235,5 @@ K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\zh-Hans\System.
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\zh-Hant\System.Xml.Serialization.resources.dll
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\XapCacheFile.xml
 C:\eip-silverlight\Projet\EIP\EIP\obj\Debug\Views\Controls\ListeComptes.g.cs
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\Views\Controls\ListeComptes.g.cs
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\TwitterPin.g.cs
