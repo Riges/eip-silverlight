@@ -2,9 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtoFB", "ProtoFB\ProtoFB.csproj", "{D08CB5A9-5122-4EDE-A1C1-6E739278DEF8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{57540BE9-85FE-4F98-A5DF-66E4FFC72A1D} = {57540BE9-85FE-4F98-A5DF-66E4FFC72A1D}
-	EndProjectSection
+
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtoFB.Web", "ProtoFB.Web\ProtoFB.Web.csproj", "{E6132A92-63BC-4309-8FAB-0AA46233AECE}"
 EndProject
