@@ -12,10 +12,11 @@ using System.Windows.Shapes;
 using Facebook;
 using Facebook.Session;
 using Facebook.Rest;
-using Facebook.Session;
 using Facebook.Schema;
 using Facebook.Utility;
 using System.IO.IsolatedStorage;
+using System.IO;
+using ProtoFB;
 
 namespace ProtoFB
 {
@@ -30,9 +31,12 @@ namespace ProtoFB
         string sessionSecret;
         long userID;
 
+        private string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
+        private string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
+
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
 
-        private user _aUser;
+        //private user _aUser;
 
         IList<user> myFriends;
 
@@ -68,7 +72,30 @@ namespace ProtoFB
             }
             else
                 _browserSession.Login();    
+
+
+            ///// Twitter 
+            ProtoFB.toto.Service1Client test = new toto.Service1Client();
+
+           // test.LoginTwitterCompleted += new EventHandler<toto.LoginTwitterCompletedEventArgs>(test_LoginTwitterCompleted);
+            //test.LoginTwitterAsync("pocketino", "fdsfds");
+            test.AuthorizeDesktopCompleted += new EventHandler<toto.AuthorizeDesktopCompletedEventArgs>(test_AuthorizeDesktopCompleted);
+            test.AuthorizeDesktopAsync(consumerKey, consumerSecret);
         }
+
+        void test_AuthorizeDesktopCompleted(object sender, toto.AuthorizeDesktopCompletedEventArgs e)
+        {
+            string token = e.Result;
+            TwitterPin twitterPin = new TwitterPin();
+            twitterPin.Show();
+        }
+
+        void test_LoginTwitterCompleted(object sender, toto.LoginTwitterCompletedEventArgs e)
+        {
+           
+        }
+
+
 
         private void SeDeConnecterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -219,7 +246,7 @@ namespace ProtoFB
             
 
             //_facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetStreamFiltersCompleted), null);
-            _facebookAPI.Stream.GetAsync(_facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, null, new Stream.GetCallback(GetStreamCompleted), null);
+            _facebookAPI.Stream.GetAsync(_facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, null, new Facebook.Rest.Stream.GetCallback(GetStreamCompleted), null);
 
         }
 
