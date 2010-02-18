@@ -29,6 +29,7 @@
     <MetadataFile FileName="ServiceEIP.disco" MetadataType="Disco" ID="4ff1ea94-82e8-4790-9ce7-d30f77c90319" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?disco" />
     <MetadataFile FileName="ServiceEIP.xsd" MetadataType="Schema" ID="81b61c49-a440-445b-a071-5ca831764e53" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd1" />
     <MetadataFile FileName="ServiceEIP1.xsd" MetadataType="Schema" ID="c86d2647-6b88-4c65-8e59-0ef114a4d3af" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServiceEIP2.xsd" MetadataType="Schema" ID="cf4245cb-594e-4953-8699-125d669de993" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
