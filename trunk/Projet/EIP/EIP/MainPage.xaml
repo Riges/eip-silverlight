@@ -21,6 +21,7 @@
 
                             <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
                                      NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>
+                            
 
                             <Rectangle x:Name="Divider1" Style="{StaticResource DividerStyle}"/>
 
@@ -54,16 +55,17 @@
                 <Button  Content="bas"  ></Button>
             </StackPanel>
 
-            <StackPanel my:DockPanel.Dock="Left" Width="120" >
+            <!--<StackPanel my:DockPanel.Dock="Left" Width="120" >-->
 
-                <navigation:Frame x:Name="LeftFrame"  
+                <navigation:Frame x:Name="LeftFrame" my:DockPanel.Dock="Left" Width="120" 
                                NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/MenuFeeds"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>
                             <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
                             <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/MenuFeeds.xaml"/>
-                            <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/HomeCenter.xaml"/>
+                            <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/EmptyPage.xaml"/>
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
+                            <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/EmptyPage.xaml" />
                             
                             <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/Menu{pageName}.xaml"/>-->
 
@@ -71,17 +73,17 @@
                     </navigation:Frame.UriMapper>
                 </navigation:Frame>
 
-            </StackPanel>
+            <!--</StackPanel>-->
             
-            <StackPanel my:DockPanel.Dock="Right"  Width="100">
+            <StackPanel my:DockPanel.Dock="Right"  Width="120">
                 
                 <Controls:ListeComptes x:Name="liste"></Controls:ListeComptes>
                 
             </StackPanel>
 
-            <StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+            <!--<StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">-->
                 
-                <navigation:Frame x:Name="ContentFrame" Style="{StaticResource ContentFrameStyle}" Template="{StaticResource TransitioningFrame}" 
+                <navigation:Frame x:Name="ContentFrame" my:DockPanel.Dock="Top" Style="{StaticResource ContentFrameStyle}" Template="{StaticResource TransitioningFrame}" 
                                   Source="/WaitLoad" Navigated="ContentFrame_Navigated" NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/Home"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>
@@ -90,16 +92,14 @@
                             <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/StreamFeeds.xaml" />
                             <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/WaitLoad.xaml" />
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />
-                            
-                            
+                            <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
+
                             <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>-->
 
                         </uriMapper:UriMapper>
                     </navigation:Frame.UriMapper>
                 </navigation:Frame>
-                
-                
-            </StackPanel>
+            <!--</StackPanel>-->
 
 
         </my:DockPanel>

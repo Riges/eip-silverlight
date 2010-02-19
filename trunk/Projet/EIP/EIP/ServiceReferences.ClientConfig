@@ -9,7 +9,7 @@
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://localhost:6080/ServiceEIP.svc" binding="basicHttpBinding"
+            <endpoint address="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc" binding="basicHttpBinding"
                 bindingConfiguration="BasicHttpBinding_IServiceEIP" contract="ServiceEIP.IServiceEIP"
                 name="BasicHttpBinding_IServiceEIP" />
         </client>

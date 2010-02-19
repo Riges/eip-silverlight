@@ -16,6 +16,8 @@ using Facebook.Utility;
 using System.Collections;
 using System.Windows.Browser;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
+using EIP.ServiceEIP;
 
 namespace EIP.Views
 {
@@ -32,20 +34,67 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            facebookAPI = Connexion.facebookAPI;
+            if (Connexion.currentAccount != null)
+            {
+                switch (Connexion.currentAccount.typeAccount)
+                {
+                    case Account.TypeAccount.Facebook:
+                        facebookAPI = Connexion.facebookAPI;
 
-            Uri urlSource = System.Windows.Application.Current.Host.Source;
+                        Uri urlSource = System.Windows.Application.Current.Host.Source;
+                        string filter = string.Empty;
 
-            string filter = string.Empty;
-            //Dictionary<string, string> urlparams = HtmlPage.Document.QueryString as Dictionary<string, string>;
-            //urlparams.TryGetValue("filter", out filter);
+                        if (this.NavigationContext.QueryString.ContainsKey("filter"))
+                            filter = this.NavigationContext.QueryString["filter"];
+                        else
+                            filter = null;
 
-            if (this.NavigationContext.QueryString.ContainsKey("filter"))
-                filter = this.NavigationContext.QueryString["filter"];
-            else
-                filter = null;
+                        facebookAPI.Stream.GetAsync(facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), null);
 
-            facebookAPI.Stream.GetAsync(facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), null);
+                        break;
+                    case Account.TypeAccount.Twitter:
+                        while (((AccountTwitter)Connexion.currentAccount).homeStatuses == null)
+                        {
+
+                        }
+                        FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                        ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                        ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                        break;
+                    case Account.TypeAccount.Myspace:
+                        break;
+                    default:
+                        break;
+                }
+                
+                DispatcherTimer dt = new DispatcherTimer();
+                dt.Interval = new TimeSpan(0, 0, 0, 20, 000);
+                dt.Tick += new EventHandler(dt_Tick);
+                dt.Start();
+
+
+            }
+           
+        }
+
+        void dt_Tick(object sender, EventArgs e)
+        {
+            switch (Connexion.currentAccount.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    break;
+                case Account.TypeAccount.Twitter:
+                    Connexion.TwitterReloadHomeStatuses();
+                    TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
+                    if (last.Id != ((AccountTwitter)Connexion.currentAccount).homeStatuses.First().Id)
+                        FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            }
+            
         }
 
         private void GetStreamCompleted(stream_data data, object o, FacebookException ex)
@@ -66,7 +115,12 @@ namespace EIP.Views
 
         }
 
+
     }
+
+    
+
+
     /*
     public class DataSource
     {

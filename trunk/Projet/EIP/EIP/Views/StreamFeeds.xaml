@@ -8,8 +8,10 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="StreamFeeds Page">
+    
   <Grid x:Name="LayoutRoot">
-        <!--<Grid.RowDefinitions>
+
+            <!--<Grid.RowDefinitions>
             <RowDefinition Height="150"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>-->

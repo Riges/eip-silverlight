@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientAccessPolicy.xml" />
+    <Content Include="crossdomain.xml" />
     <Content Include="ServiceEIP.svc" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
