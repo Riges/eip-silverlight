@@ -20,6 +20,15 @@ using ProtoFB;
 
 namespace ProtoFB
 {
+    public class tStatuesApp
+    {
+        public String message
+        {
+            get;
+            set;
+        }
+    }
+    
     public partial class MainPage : UserControl
     {
         internal Api _facebookAPI;
@@ -277,13 +286,16 @@ namespace ProtoFB
 
         private void getMyTimeline(object sender, toto.PublicStatuesCompletedEventArgs e)
         {
-            
+            List<tStatuesApp> lsReturn = new List<tStatuesApp>();
             foreach(toto.TwitterStatus statu in e.Result)
             {
-                MessageBoxResult result = MessageBox.Show(statu.Text, "Restart", MessageBoxButton.OKCancel);
+                //MessageBoxResult result = MessageBox.Show(statu.Text, "Restart", MessageBoxButton.OKCancel);
+                tStatuesApp statue = new tStatuesApp();
+                statue.message = statu.User.ScreenName + " : " + statu.Text;
+                lsReturn.Add(statue);
             }
 
-            //Dispatcher.BeginInvoke(() => ListBoxWall.ItemsSource = e.Result);
+            Dispatcher.BeginInvoke(() => ListBoxWall.ItemsSource = lsReturn);
         }
 
         private void BtnGetMyTimeLine_Click(object sender, RoutedEventArgs e)
