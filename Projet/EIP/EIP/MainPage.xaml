@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="EIP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+    xmlns:Controls="clr-namespace:EIP.Views.Controls;assembly=EIP"
+    xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+    xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+
+        <my:DockPanel Background="White" LastChildFill="False">
+            <StackPanel my:DockPanel.Dock="Top" Height="100">
+                <Grid x:Name="NavigationGrid" Style="{StaticResource NavigationGridStyle}">
+
+                    <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}">
+                        <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
+
+                            <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
+                                     NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>
+                            
+
+                            <Rectangle x:Name="Divider1" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="Link2" Style="{StaticResource LinkStyle}" 
+                                     NavigateUri="/Friends" TargetName="ContentFrame" Content="Friends"/>
+                            
+                            <Rectangle x:Name="Divider3" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="LinkCreateNewFbAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewFbAccount_Click"
+                                      Content="Ajouter Fb"/>
+
+                            <Rectangle x:Name="Divider4" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="LinkCreateNewTwitterAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewTwitterAccount_Click"
+                                      Content="Ajouter Twitter"/>
+
+                            <Rectangle x:Name="Divider2" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="LinkSeDeco" Style="{StaticResource LinkStyle}" Click="LinkSeDeco_Click" 
+                                      Content="Se déconnecter"/>
+
+
+
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+            </StackPanel>
+
+            <StackPanel my:DockPanel.Dock="Bottom"  Height="100" >
+                <Button  Content="bas"  ></Button>
+            </StackPanel>
+
+            <!--<StackPanel my:DockPanel.Dock="Left" Width="120" >-->
+
+                <navigation:Frame x:Name="LeftFrame" my:DockPanel.Dock="Left" Width="120" 
+                               NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/MenuFeeds"-->
+                    <navigation:Frame.UriMapper>
+                        <uriMapper:UriMapper>
+                            <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
+                            <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/MenuFeeds.xaml"/>
+                            <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/EmptyPage.xaml"/>
+                            <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
+                            <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/EmptyPage.xaml" />
+                            
+                            <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/Menu{pageName}.xaml"/>-->
+
+                        </uriMapper:UriMapper>
+                    </navigation:Frame.UriMapper>
+                </navigation:Frame>
+
+            <!--</StackPanel>-->
+            
+            <StackPanel my:DockPanel.Dock="Right"  Width="120">
+                
+                <Controls:ListeComptes x:Name="liste"></Controls:ListeComptes>
+                
+            </StackPanel>
+
+            <!--<StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">-->
+                
+                <navigation:Frame x:Name="ContentFrame" my:DockPanel.Dock="Top" Style="{StaticResource ContentFrameStyle}" Template="{StaticResource TransitioningFrame}" 
+                                  Source="/WaitLoad" Navigated="ContentFrame_Navigated" NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/Home"-->
+                    <navigation:Frame.UriMapper>
+                        <uriMapper:UriMapper>
+                            <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
+                            <!--<uriMapper:UriMapping Uri="/User/{id}" MappedUri="/Views/UserDetail.xaml?id={id}" />-->
+                            <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/StreamFeeds.xaml" />
+                            <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/WaitLoad.xaml" />
+                            <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />
+                            <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
+
+                            <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>-->
+
+                        </uriMapper:UriMapper>
+                    </navigation:Frame.UriMapper>
+                </navigation:Frame>
+            <!--</StackPanel>-->
+
+
+        </my:DockPanel>
+
+
+    </Grid>
+</UserControl>
