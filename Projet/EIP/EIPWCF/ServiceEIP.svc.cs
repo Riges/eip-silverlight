@@ -23,14 +23,18 @@ namespace EIPWCF
         {
             var requestToken = GetRequestToken(consumerKey, consumerSecret);
 
-            FluentTwitter.CreateRequest()
+            /*FluentTwitter.CreateRequest()
                .Authentication
                .AuthorizeDesktop(consumerKey,
                                  consumerSecret,
                                  requestToken.Token);
-               
-
+            */
             return requestToken.Token;
+        }
+
+        public IFluentTwitter GetFluent()
+        {
+            return FluentTwitter.CreateRequest();
         }
 
         private static void GetResponse(TwitterResult response)
