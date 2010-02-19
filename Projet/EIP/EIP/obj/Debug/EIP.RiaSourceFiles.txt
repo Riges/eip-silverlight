@@ -1,0 +1,1 @@
+C:\eip-silverlight\Projet\EIP\EIP.Web\EIP.Web.csproj,634012402760292130,GifHandler.ashx.cs,Properties\AssemblyInfo.cs,

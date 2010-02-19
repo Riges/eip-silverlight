@@ -1,0 +1,31 @@
+<<<<<<< .mine
+﻿<xapCache source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\EIP.xap" lastWriteTime="19/02/2010 19:40:32">
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\EIP.dll" archivePath="EIP.dll" lastWriteTime="19/02/2010 19:40:31" />
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\Facebook.Silverlight.dll" archivePath="Facebook.Silverlight.dll" lastWriteTime="16/02/2010 20:51:58" />
+=======
+﻿<xapCache source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\EIP.xap" lastWriteTime="19/02/2010 17:38:33">
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\obj\Debug\EIP.dll" archivePath="EIP.dll" lastWriteTime="19/02/2010 17:38:31" />
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\Facebook.Silverlight.dll" archivePath="Facebook.Silverlight.dll" lastWriteTime="18/02/2010 21:33:40" />
+>>>>>>> .r52
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="07/11/2009 19:31:36" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="07/11/2009 19:31:36" />
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Layout.Toolkit.dll" archivePath="System.Windows.Controls.Layout.Toolkit.dll" lastWriteTime="18/02/2010 21:33:39" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Navigation.dll" archivePath="System.Windows.Controls.Navigation.dll" lastWriteTime="07/11/2009 19:31:36" />
+<<<<<<< .mine
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Toolkit.dll" archivePath="System.Windows.Controls.Toolkit.dll" lastWriteTime="16/02/2010 20:51:58" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.Windows.Ria.dll" archivePath="System.Windows.Ria.dll" lastWriteTime="11/11/2009 11:16:30" />
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Xml.Linq.dll" archivePath="System.Xml.Linq.dll" lastWriteTime="16/02/2010 20:51:58" />
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Xml.Serialization.dll" archivePath="System.Xml.Serialization.dll" lastWriteTime="16/02/2010 20:51:58" />
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\System.Reactive.dll" archivePath="System.Reactive.dll" lastWriteTime="16/02/2010 20:51:58" />
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\ServiceReferences.ClientConfig" archivePath="ServiceReferences.ClientConfig" lastWriteTime="19/02/2010 19:21:24" />
+  <file source="K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="16/02/2010 20:51:58" />
+=======
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\System.Windows.Controls.Toolkit.dll" archivePath="System.Windows.Controls.Toolkit.dll" lastWriteTime="18/02/2010 21:33:40" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.Windows.Ria.dll" archivePath="System.Windows.Ria.dll" lastWriteTime="18/11/2009 23:12:40" />
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\System.Xml.Linq.dll" archivePath="System.Xml.Linq.dll" lastWriteTime="18/02/2010 21:33:39" />
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\System.Xml.Serialization.dll" archivePath="System.Xml.Serialization.dll" lastWriteTime="18/02/2010 21:33:40" />
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\System.Reactive.dll" archivePath="System.Reactive.dll" lastWriteTime="18/02/2010 21:33:40" />
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\ServiceReferences.ClientConfig" archivePath="ServiceReferences.ClientConfig" lastWriteTime="18/02/2010 21:33:43" />
+  <file source="C:\ETNA\EIP\proto\Projet\EIP\EIP\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="18/02/2010 21:33:39" />
+>>>>>>> .r52
+</xapCache>

@@ -1,0 +1,20 @@
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\bin\EIP.Web.dll
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\bin\EIP.Web.pdb
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\obj\Debug\EIP.Web.dll
+C:\Users\cbonfils\documents\visual studio 2010\Projects\EIP\EIP.Web\obj\Debug\EIP.Web.pdb
+C:\eip-silverlight\Projet\EIP\EIP.Web\bin\EIP.Web.dll
+C:\eip-silverlight\Projet\EIP\EIP.Web\bin\EIP.Web.pdb
+C:\eip-silverlight\Projet\EIP\EIP.Web\obj\Debug\ResolveAssemblyReference.cache
+C:\eip-silverlight\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.dll
+C:\eip-silverlight\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.pdb
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\bin\EIP.Web.dll
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\bin\EIP.Web.pdb
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\obj\Debug\ResolveAssemblyReference.cache
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.dll
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.pdb
+C:\ETNA\EIP\proto\Projet\EIP\EIP.Web\bin\EIP.Web.dll
+C:\ETNA\EIP\proto\Projet\EIP\EIP.Web\bin\EIP.Web.pdb
+C:\ETNA\EIP\proto\Projet\EIP\EIP.Web\obj\Debug\ResolveAssemblyReference.cache
+C:\ETNA\EIP\proto\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.dll
+C:\ETNA\EIP\proto\Projet\EIP\EIP.Web\obj\Debug\EIP.Web.pdb
