@@ -22,8 +22,6 @@ namespace EIP
     {
 
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
-        //App app = (App)System.Windows.Application.Current;
-
 
         public MainPage()
         {
@@ -85,12 +83,12 @@ namespace EIP
         {
             //app.AddAccount(Account.TypeAccount.Facebook);
             
-            Connexion.AddAccount(Account.TypeAccount.Facebook, this.liste);
+            Connexion.AddAccount(Account.TypeAccount.Facebook, this.liste, ContentFrame);
         }
 
         private void LinkCreateNewTwitterAccount_Click(object sender, RoutedEventArgs e)
         {
-            Connexion.AddAccount(Account.TypeAccount.Twitter, this.liste);
+            Connexion.AddAccount(Account.TypeAccount.Twitter, this.liste, ContentFrame);
         }
 
 

@@ -108,9 +108,10 @@ namespace EIP
             currentAccounts = null;
         }
 
-        public static void AddAccount(Account.TypeAccount type, ListeComptes listes)
+        public static void AddAccount(Account.TypeAccount type, ListeComptes listes, Frame frame)
         {
             listeComptes = listes;
+            contentFrame = frame;
             switch (type)
             {
                 case Account.TypeAccount.Facebook:
@@ -255,11 +256,13 @@ namespace EIP
                     default:
                         break;
                 }
-            
-                MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
-                msgBox.Show();
 
-                contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+                
+                        //MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
+                        //msgBox.Show();
+
+                        //contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+                   
             
             }
         }
