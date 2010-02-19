@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using EIP;
+using Dimebrain.TweetSharp.Model;
 
 namespace EIPWCF
 {
@@ -19,6 +20,12 @@ namespace EIPWCF
 
         [OperationContract]
         AccountTwitter GetAccessToken(string consumerKey, string consumerSecret, string token, string pin);
+
+        [OperationContract]
+        TwitterUser TwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId);
+
+        [OperationContract]
+        IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret);
 
         
     }
