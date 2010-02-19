@@ -13,6 +13,7 @@ namespace EIP
 
         public string token { get; set; }
         public string tokenSecret { get; set; }
+        public string pin { get; set; }
 
         public AccountTwitter()
         {

@@ -96,6 +96,30 @@ namespace EIPWCF
 
             return accountTwitter;// result.TokenSecret;
         }
+
+        public TwitterUser TwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId)
+        {
+            var userInfo = FluentTwitter.CreateRequest()
+               .AuthenticateWith(consumerKey, consumerSecret, token, tokenSecret)
+               .Users().ShowProfileFor(userId);
+
+            var response = userInfo.Request();
+            var result = response.AsUser();
+
+            return result;
+        }
+
+        public IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret)
+        {
+            var userInfo = FluentTwitter.CreateRequest()
+               .AuthenticateWith(consumerKey, consumerSecret, token, tokenSecret)
+               .Statuses().OnHomeTimeline();
+
+            var response = userInfo.Request();
+            var result = response.AsStatuses();
+
+            return result;
+        }
         
 
         
