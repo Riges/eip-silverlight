@@ -1,0 +1,17 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_IServiceEIP" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc" binding="basicHttpBinding"
+                bindingConfiguration="BasicHttpBinding_IServiceEIP" contract="ServiceEIP.IServiceEIP"
+                name="BasicHttpBinding_IServiceEIP" />
+        </client>
+    </system.serviceModel>
+</configuration>
