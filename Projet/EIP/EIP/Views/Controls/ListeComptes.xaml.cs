@@ -14,7 +14,9 @@ namespace EIP.Views.Controls
 {
     public partial class ListeComptes : UserControl
     {
-        private App app;
+
+        public Frame contentFrame { get; set; }
+
         public ListeComptes()
         {
             InitializeComponent();
@@ -36,35 +38,36 @@ namespace EIP.Views.Controls
                     Dispatcher.BeginInvoke(() =>
                     {
                         LayoutPanel.Children.Clear();
-                    });
+                    
+                   
                     foreach (Account oneAccount in Connexion.currentAccounts)
                     {
-                        Dispatcher.BeginInvoke(() =>
-                            {
+                        //Dispatcher.BeginInvoke(() =>
+                            //{
                                 Button btnAccount = new Button();
                                 btnAccount.Content = oneAccount.name;
                                 btnAccount.Click += btnAccount_Click;
                                 btnAccount.CommandParameter = oneAccount;
                                 LayoutPanel.Children.Add(btnAccount);
-                            });
+                            //});
                     }
+
+                    });
                 }
             }
-            /*else
+            else
             {
                 Dispatcher.BeginInvoke(() =>
                     {
-                        Button btnAccount = new Button();
-                        btnAccount.Content = "test";
-                        LayoutPanel.Children.Add(btnAccount);
+                        LayoutPanel.Children.Clear();
                     });
-            }*/
+            }
         }
 
        void btnAccount_Click(object sender, RoutedEventArgs e)
         {
             //app.LoadAccount((Account)((Button)sender).CommandParameter);
-            Connexion.LoadAccount((Account)((Button)sender).CommandParameter);
+            Connexion.LoadAccount((Account)((Button)sender).CommandParameter, contentFrame);
         }
     }
 }

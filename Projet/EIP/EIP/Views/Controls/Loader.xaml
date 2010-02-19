@@ -21,7 +21,7 @@
 
             <Rectangle Stroke="Black" Height="12" Width="202" RadiusX="5" RadiusY="5"  ></Rectangle>
             <!--<Rectangle Visibility="Visible" x:Name="InvisibleRect" Canvas.Left="1" RadiusX="5" RadiusY="5" Canvas.Top="1" Width="1" Height="10" Fill="SeaGreen"  />-->
-            <Rectangle Visibility="Visible" x:Name="InvisibleRect" Canvas.Left="1" RadiusX="5" RadiusY="5" Canvas.Top="1" Width="50" Height="10" Fill="SeaGreen"  />
+            <Rectangle Visibility="Visible" x:Name="InvisibleRect" Canvas.Left="1" RadiusX="5" RadiusY="5" Canvas.Top="1" Width="50" Height="10" Fill="DarkBlue"  />
         </Canvas>
     </Grid>
 </UserControl>

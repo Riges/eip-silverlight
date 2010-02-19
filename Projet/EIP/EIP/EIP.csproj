@@ -84,10 +84,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Account.cs" />
-    <Compile Include="AccountFacebook.cs" />
-    <Compile Include="Connexion.cs" />
-    <Compile Include="AccountTwitter.cs" />
+    <Compile Include="Objects\Account.cs" />
+    <Compile Include="Objects\AccountFacebook.cs" />
+    <Compile Include="Objects\Connexion.cs" />
+    <Compile Include="Objects\AccountTwitter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -97,7 +97,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="TwitterPin.xaml.cs">
+    <Compile Include="Views\Child\TwitterPin.xaml.cs">
       <DependentUpon>TwitterPin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\Feed.xaml.cs">
@@ -112,7 +112,16 @@
     <Compile Include="Views\Controls\Loader.xaml.cs">
       <DependentUpon>Loader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorWindow.xaml.cs">
+    <Compile Include="Views\Deconnexion.xaml.cs">
+      <DependentUpon>Deconnexion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmptyPage.xaml.cs">
+      <DependentUpon>EmptyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Child\MessageBox.xaml.cs">
+      <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Child\ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeCenter.xaml.cs">
@@ -141,7 +150,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TwitterPin.xaml">
+    <Page Include="Views\Child\TwitterPin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -161,7 +170,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ErrorWindow.xaml">
+    <Page Include="Views\Deconnexion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EmptyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Child\MessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Child\ErrorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomeCenter.xaml">
@@ -191,6 +211,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountTwitter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\ServiceEIP.disco" />
+    <None Include="Service References\ServiceEIP\configuration91.svcinfo" />
+    <None Include="Service References\ServiceEIP\configuration.svcinfo" />
+    <None Include="Service References\ServiceEIP\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">
       <SubType>Designer</SubType>
@@ -198,7 +235,12 @@
     <None Include="Service References\ServiceEIP\ServiceEIP1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\ServiceEIP\ServiceEIP2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceEIP\ServiceEIP3.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\ajax-loader.gif" />
@@ -208,21 +250,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceEIP\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceEIP\ServiceEIP.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceEIP\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceEIP\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceEIP\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

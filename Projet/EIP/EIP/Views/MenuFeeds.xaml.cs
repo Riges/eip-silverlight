@@ -33,20 +33,33 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (Connexion.currentAccount != null)
+                switch (Connexion.currentAccount.typeAccount)
+                {
+                    case Account.TypeAccount.Facebook:
+                        facebookAPI = Connexion.facebookAPI;
 
-            
-            facebookAPI = Connexion.facebookAPI;
+                        this.filters = (storage.Contains("filters-" + facebookAPI.Session.UserId) ? (IList<stream_filter>)storage["filters-" + facebookAPI.Session.UserId] : null);
 
-            
-            this.filters = (storage.Contains("filters-" + facebookAPI.Session.UserId) ? (IList<stream_filter>)storage["filters-" + facebookAPI.Session.UserId] : null);
+                        string filterStr = (this.NavigationContext.QueryString.ContainsKey("filter")) ? this.NavigationContext.QueryString["filter"] : null;
 
-            string filterStr = (this.NavigationContext.QueryString.ContainsKey("filter")) ? this.NavigationContext.QueryString["filter"] : null;
+                        if (filterStr == null || filters == null)
+                            facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), null);
+                        else
+                            LoadFilters();
 
-            if (filterStr == null || filters == null)
-                facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), null);
-            else
-                LoadFilters();
-            
+                        break;
+                    case Account.TypeAccount.Twitter:
+                        
+
+
+                        break;
+                    case Account.TypeAccount.Myspace:
+                        break;
+                    default:
+                        break;
+                }
+
             
         }
 
