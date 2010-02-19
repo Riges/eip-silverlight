@@ -22,13 +22,13 @@ namespace EIPWCF
         public string AuthorizeDesktop(string consumerKey, string consumerSecret)
         {
             var requestToken = GetRequestToken(consumerKey, consumerSecret);
-            /*
+            
             FluentTwitter.CreateRequest()
                .Authentication
                .AuthorizeDesktop(consumerKey,
                                  consumerSecret,
                                  requestToken.Token);
-            */
+            
             return requestToken.Token;
         }
 
@@ -56,10 +56,10 @@ namespace EIPWCF
 
         private static OAuthToken GetRequestToken(string consumerKey, string consumerSecret)
         {
-            //var requestToken = FluentTwitter.CreateRequest()
-            //    .Authentication.GetRequestToken(consumerKey, consumerSecret);
             var requestToken = FluentTwitter.CreateRequest()
-               .AuthenticateAs("pocketino", "fdsfds").Authentication.GetRequestToken(consumerKey, consumerSecret);
+                .Authentication.GetRequestToken(consumerKey, consumerSecret);
+            //var requestToken = FluentTwitter.CreateRequest()
+            //   .AuthenticateAs("pocketino", "fdsfds").Authentication.GetRequestToken(consumerKey, consumerSecret);
 
             var response = requestToken.Request();
             var result = response.AsToken();
@@ -78,11 +78,11 @@ namespace EIPWCF
 
         public AccountTwitter GetAccessToken(string consumerKey, string consumerSecret, string token, string pin)
         {
-            //var accessToken = FluentTwitter.CreateRequest()
-            //    .Authentication.GetAccessToken(consumerKey, consumerSecret, token, pin);
-
             var accessToken = FluentTwitter.CreateRequest()
-               .AuthenticateAs("pocketino", "fdsfds").Authentication.GetAccessToken(consumerKey, consumerSecret, token);
+                .Authentication.GetAccessToken(consumerKey, consumerSecret, token, pin);
+
+            //var accessToken = FluentTwitter.CreateRequest()
+            //   .AuthenticateAs("pocketino", "fdsfds").Authentication.GetAccessToken(consumerKey, consumerSecret, token);
 
             var response = accessToken.Request();
             var result = response.AsToken();
