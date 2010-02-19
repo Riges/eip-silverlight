@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ProtoWCF" />
+  <xs:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model" />
+  <xs:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ProtoWCF" />
   <xs:element name="GetData">
     <xs:complexType>
       <xs:sequence>
@@ -12,6 +13,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetDataResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PublicStatues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pseudo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PublicStatuesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model" minOccurs="0" name="PublicStatuesResult" nillable="true" type="q1:ArrayOfTwitterStatus" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -27,6 +43,23 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="AuthorizeDesktopResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccessToken">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="consumerKey" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="consumerSecret" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccessTokenResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAccessTokenResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -48,14 +81,14 @@
   <xs:element name="GetDataUsingDataContract">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ProtoWCF" minOccurs="0" name="composite" nillable="true" type="q1:CompositeType" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ProtoWCF" minOccurs="0" name="composite" nillable="true" type="q2:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetDataUsingDataContractResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ProtoWCF" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q2:CompositeType" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ProtoWCF" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q3:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

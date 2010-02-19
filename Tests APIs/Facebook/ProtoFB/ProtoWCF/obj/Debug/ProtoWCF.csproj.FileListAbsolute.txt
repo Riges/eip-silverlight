@@ -3,3 +3,8 @@ K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoWCF\bin
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ResolveAssemblyReference.cache
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ProtoWCF.dll
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ProtoWCF.pdb
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\bin\ProtoWCF.dll
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\bin\ProtoWCF.pdb
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ResolveAssemblyReference.cache
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ProtoWCF.dll
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ProtoWCF.pdb

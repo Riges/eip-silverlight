@@ -17,6 +17,680 @@ namespace ProtoFB.toto {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TwitterStatus", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    public partial class TwitterStatus : ProtoFB.toto.PropertyChangedBase {
+        
+        private System.DateTime CreatedDateField;
+        
+        private long IdField;
+        
+        private string InReplyToScreenNameField;
+        
+        private System.Nullable<long> InReplyToStatusIdField;
+        
+        private System.Nullable<int> InReplyToUserIdField;
+        
+        private bool IsFavoritedField;
+        
+        private bool IsTruncatedField;
+        
+        private System.Nullable<ProtoFB.toto.GeoLocation> LocationField;
+        
+        private ProtoFB.toto.TwitterStatus RetweetedStatusField;
+        
+        private string SourceField;
+        
+        private string TextField;
+        
+        private ProtoFB.toto.TwitterUser UserField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InReplyToScreenName {
+            get {
+                return this.InReplyToScreenNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InReplyToScreenNameField, value) != true)) {
+                    this.InReplyToScreenNameField = value;
+                    this.RaisePropertyChanged("InReplyToScreenName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> InReplyToStatusId {
+            get {
+                return this.InReplyToStatusIdField;
+            }
+            set {
+                if ((this.InReplyToStatusIdField.Equals(value) != true)) {
+                    this.InReplyToStatusIdField = value;
+                    this.RaisePropertyChanged("InReplyToStatusId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> InReplyToUserId {
+            get {
+                return this.InReplyToUserIdField;
+            }
+            set {
+                if ((this.InReplyToUserIdField.Equals(value) != true)) {
+                    this.InReplyToUserIdField = value;
+                    this.RaisePropertyChanged("InReplyToUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsFavorited {
+            get {
+                return this.IsFavoritedField;
+            }
+            set {
+                if ((this.IsFavoritedField.Equals(value) != true)) {
+                    this.IsFavoritedField = value;
+                    this.RaisePropertyChanged("IsFavorited");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsTruncated {
+            get {
+                return this.IsTruncatedField;
+            }
+            set {
+                if ((this.IsTruncatedField.Equals(value) != true)) {
+                    this.IsTruncatedField = value;
+                    this.RaisePropertyChanged("IsTruncated");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<ProtoFB.toto.GeoLocation> Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((this.LocationField.Equals(value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ProtoFB.toto.TwitterStatus RetweetedStatus {
+            get {
+                return this.RetweetedStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RetweetedStatusField, value) != true)) {
+                    this.RetweetedStatusField = value;
+                    this.RaisePropertyChanged("RetweetedStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Source {
+            get {
+                return this.SourceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceField, value) != true)) {
+                    this.SourceField = value;
+                    this.RaisePropertyChanged("Source");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ProtoFB.toto.TwitterUser User {
+            get {
+                return this.UserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PropertyChangedBase", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ProtoFB.toto.TwitterUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ProtoFB.toto.TwitterStatus))]
+    public partial class PropertyChangedBase : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TwitterUser", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    public partial class TwitterUser : ProtoFB.toto.PropertyChangedBase {
+        
+        private System.DateTime CreatedDateField;
+        
+        private string DescriptionField;
+        
+        private int FavouritesCountField;
+        
+        private int FollowersCountField;
+        
+        private int FriendsCountField;
+        
+        private System.Nullable<bool> HasNotificationsField;
+        
+        private int IdField;
+        
+        private System.Nullable<bool> IsFollowingField;
+        
+        private System.Nullable<bool> IsGeoEnabledField;
+        
+        private bool IsProfileBackgroundTiledField;
+        
+        private System.Nullable<bool> IsProtectedField;
+        
+        private System.Nullable<bool> IsVerifiedField;
+        
+        private string LanguageField;
+        
+        private string LocationField;
+        
+        private string NameField;
+        
+        private string ProfileBackgroundColorField;
+        
+        private string ProfileBackgroundImageUrlField;
+        
+        private string ProfileImageUrlField;
+        
+        private string ProfileLinkColorField;
+        
+        private string ProfileSidebarBorderColorField;
+        
+        private string ProfileSidebarFillColorField;
+        
+        private string ProfileTextColorField;
+        
+        private string ScreenNameField;
+        
+        private ProtoFB.toto.TwitterStatus StatusField;
+        
+        private int StatusesCountField;
+        
+        private string TimeZoneField;
+        
+        private string UrlField;
+        
+        private string UtcOffsetField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FavouritesCount {
+            get {
+                return this.FavouritesCountField;
+            }
+            set {
+                if ((this.FavouritesCountField.Equals(value) != true)) {
+                    this.FavouritesCountField = value;
+                    this.RaisePropertyChanged("FavouritesCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FollowersCount {
+            get {
+                return this.FollowersCountField;
+            }
+            set {
+                if ((this.FollowersCountField.Equals(value) != true)) {
+                    this.FollowersCountField = value;
+                    this.RaisePropertyChanged("FollowersCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FriendsCount {
+            get {
+                return this.FriendsCountField;
+            }
+            set {
+                if ((this.FriendsCountField.Equals(value) != true)) {
+                    this.FriendsCountField = value;
+                    this.RaisePropertyChanged("FriendsCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> HasNotifications {
+            get {
+                return this.HasNotificationsField;
+            }
+            set {
+                if ((this.HasNotificationsField.Equals(value) != true)) {
+                    this.HasNotificationsField = value;
+                    this.RaisePropertyChanged("HasNotifications");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsFollowing {
+            get {
+                return this.IsFollowingField;
+            }
+            set {
+                if ((this.IsFollowingField.Equals(value) != true)) {
+                    this.IsFollowingField = value;
+                    this.RaisePropertyChanged("IsFollowing");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsGeoEnabled {
+            get {
+                return this.IsGeoEnabledField;
+            }
+            set {
+                if ((this.IsGeoEnabledField.Equals(value) != true)) {
+                    this.IsGeoEnabledField = value;
+                    this.RaisePropertyChanged("IsGeoEnabled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsProfileBackgroundTiled {
+            get {
+                return this.IsProfileBackgroundTiledField;
+            }
+            set {
+                if ((this.IsProfileBackgroundTiledField.Equals(value) != true)) {
+                    this.IsProfileBackgroundTiledField = value;
+                    this.RaisePropertyChanged("IsProfileBackgroundTiled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsProtected {
+            get {
+                return this.IsProtectedField;
+            }
+            set {
+                if ((this.IsProtectedField.Equals(value) != true)) {
+                    this.IsProtectedField = value;
+                    this.RaisePropertyChanged("IsProtected");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsVerified {
+            get {
+                return this.IsVerifiedField;
+            }
+            set {
+                if ((this.IsVerifiedField.Equals(value) != true)) {
+                    this.IsVerifiedField = value;
+                    this.RaisePropertyChanged("IsVerified");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Language {
+            get {
+                return this.LanguageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LanguageField, value) != true)) {
+                    this.LanguageField = value;
+                    this.RaisePropertyChanged("Language");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileBackgroundColor {
+            get {
+                return this.ProfileBackgroundColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileBackgroundColorField, value) != true)) {
+                    this.ProfileBackgroundColorField = value;
+                    this.RaisePropertyChanged("ProfileBackgroundColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileBackgroundImageUrl {
+            get {
+                return this.ProfileBackgroundImageUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileBackgroundImageUrlField, value) != true)) {
+                    this.ProfileBackgroundImageUrlField = value;
+                    this.RaisePropertyChanged("ProfileBackgroundImageUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileImageUrl {
+            get {
+                return this.ProfileImageUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileImageUrlField, value) != true)) {
+                    this.ProfileImageUrlField = value;
+                    this.RaisePropertyChanged("ProfileImageUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileLinkColor {
+            get {
+                return this.ProfileLinkColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileLinkColorField, value) != true)) {
+                    this.ProfileLinkColorField = value;
+                    this.RaisePropertyChanged("ProfileLinkColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileSidebarBorderColor {
+            get {
+                return this.ProfileSidebarBorderColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileSidebarBorderColorField, value) != true)) {
+                    this.ProfileSidebarBorderColorField = value;
+                    this.RaisePropertyChanged("ProfileSidebarBorderColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileSidebarFillColor {
+            get {
+                return this.ProfileSidebarFillColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileSidebarFillColorField, value) != true)) {
+                    this.ProfileSidebarFillColorField = value;
+                    this.RaisePropertyChanged("ProfileSidebarFillColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileTextColor {
+            get {
+                return this.ProfileTextColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileTextColorField, value) != true)) {
+                    this.ProfileTextColorField = value;
+                    this.RaisePropertyChanged("ProfileTextColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ScreenName {
+            get {
+                return this.ScreenNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ScreenNameField, value) != true)) {
+                    this.ScreenNameField = value;
+                    this.RaisePropertyChanged("ScreenName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ProtoFB.toto.TwitterStatus Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int StatusesCount {
+            get {
+                return this.StatusesCountField;
+            }
+            set {
+                if ((this.StatusesCountField.Equals(value) != true)) {
+                    this.StatusesCountField = value;
+                    this.RaisePropertyChanged("StatusesCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TimeZone {
+            get {
+                return this.TimeZoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TimeZoneField, value) != true)) {
+                    this.TimeZoneField = value;
+                    this.RaisePropertyChanged("TimeZone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Url {
+            get {
+                return this.UrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UrlField, value) != true)) {
+                    this.UrlField = value;
+                    this.RaisePropertyChanged("Url");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UtcOffset {
+            get {
+                return this.UtcOffsetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UtcOffsetField, value) != true)) {
+                    this.UtcOffsetField = value;
+                    this.RaisePropertyChanged("UtcOffset");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GeoLocation", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    public partial struct GeoLocation : System.ComponentModel.INotifyPropertyChanged {
+        
+        private double Latitudek__BackingFieldField;
+        
+        private double Longitudek__BackingFieldField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Latitude>k__BackingField", IsRequired=true)]
+        public double Latitudek__BackingField {
+            get {
+                return this.Latitudek__BackingFieldField;
+            }
+            set {
+                if ((this.Latitudek__BackingFieldField.Equals(value) != true)) {
+                    this.Latitudek__BackingFieldField = value;
+                    this.RaisePropertyChanged("Latitudek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Longitude>k__BackingField", IsRequired=true)]
+        public double Longitudek__BackingField {
+            get {
+                return this.Longitudek__BackingFieldField;
+            }
+            set {
+                if ((this.Longitudek__BackingFieldField.Equals(value) != true)) {
+                    this.Longitudek__BackingFieldField = value;
+                    this.RaisePropertyChanged("Longitudek__BackingField");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/ProtoWCF")]
     public partial class CompositeType : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -69,10 +743,20 @@ namespace ProtoFB.toto {
         
         string EndGetData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:IService1/PublicStatues", ReplyAction="urn:IService1/PublicStatuesResponse")]
+        System.IAsyncResult BeginPublicStatues(string pseudo, string password, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus> EndPublicStatues(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:IService1/AuthorizeDesktop", ReplyAction="urn:IService1/AuthorizeDesktopResponse")]
         System.IAsyncResult BeginAuthorizeDesktop(string consumerKey, string consumerSecret, System.AsyncCallback callback, object asyncState);
         
         string EndAuthorizeDesktop(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:IService1/GetAccessToken", ReplyAction="urn:IService1/GetAccessTokenResponse")]
+        System.IAsyncResult BeginGetAccessToken(string consumerKey, string consumerSecret, string token, string pin, System.AsyncCallback callback, object asyncState);
+        
+        string EndGetAccessToken(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:IService1/LoginTwitter", ReplyAction="urn:IService1/LoginTwitterResponse")]
         System.IAsyncResult BeginLoginTwitter(string pseudo, string passord, System.AsyncCallback callback, object asyncState);
@@ -110,11 +794,51 @@ namespace ProtoFB.toto {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class PublicStatuesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public PublicStatuesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus>)(this.results[0]));
+            }
+        }
+
+        public System.Collections.Generic.IEnumerable<TwitterStatus> result { get; set; }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class AuthorizeDesktopCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
         public AuthorizeDesktopCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetAccessTokenCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetAccessTokenCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -175,11 +899,23 @@ namespace ProtoFB.toto {
         
         private System.Threading.SendOrPostCallback onGetDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginPublicStatuesDelegate;
+        
+        private EndOperationDelegate onEndPublicStatuesDelegate;
+        
+        private System.Threading.SendOrPostCallback onPublicStatuesCompletedDelegate;
+        
         private BeginOperationDelegate onBeginAuthorizeDesktopDelegate;
         
         private EndOperationDelegate onEndAuthorizeDesktopDelegate;
         
         private System.Threading.SendOrPostCallback onAuthorizeDesktopCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetAccessTokenDelegate;
+        
+        private EndOperationDelegate onEndGetAccessTokenDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetAccessTokenCompletedDelegate;
         
         private BeginOperationDelegate onBeginLoginTwitterDelegate;
         
@@ -248,7 +984,11 @@ namespace ProtoFB.toto {
         
         public event System.EventHandler<GetDataCompletedEventArgs> GetDataCompleted;
         
+        public event System.EventHandler<PublicStatuesCompletedEventArgs> PublicStatuesCompleted;
+        
         public event System.EventHandler<AuthorizeDesktopCompletedEventArgs> AuthorizeDesktopCompleted;
+        
+        public event System.EventHandler<GetAccessTokenCompletedEventArgs> GetAccessTokenCompleted;
         
         public event System.EventHandler<LoginTwitterCompletedEventArgs> LoginTwitterCompleted;
         
@@ -305,6 +1045,54 @@ namespace ProtoFB.toto {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult ProtoFB.toto.IService1.BeginPublicStatues(string pseudo, string password, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginPublicStatues(pseudo, password, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus> ProtoFB.toto.IService1.EndPublicStatues(System.IAsyncResult result) {
+            return base.Channel.EndPublicStatues(result);
+        }
+        
+        private System.IAsyncResult OnBeginPublicStatues(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string pseudo = ((string)(inValues[0]));
+            string password = ((string)(inValues[1]));
+            return ((ProtoFB.toto.IService1)(this)).BeginPublicStatues(pseudo, password, callback, asyncState);
+        }
+        
+        private object[] OnEndPublicStatues(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus> retVal = ((ProtoFB.toto.IService1)(this)).EndPublicStatues(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnPublicStatuesCompleted(object state) {
+            if ((this.PublicStatuesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.PublicStatuesCompleted(this, new PublicStatuesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void PublicStatuesAsync(string pseudo, string password) {
+            this.PublicStatuesAsync(pseudo, password, null);
+        }
+        
+        public void PublicStatuesAsync(string pseudo, string password, object userState) {
+            if ((this.onBeginPublicStatuesDelegate == null)) {
+                this.onBeginPublicStatuesDelegate = new BeginOperationDelegate(this.OnBeginPublicStatues);
+            }
+            if ((this.onEndPublicStatuesDelegate == null)) {
+                this.onEndPublicStatuesDelegate = new EndOperationDelegate(this.OnEndPublicStatues);
+            }
+            if ((this.onPublicStatuesCompletedDelegate == null)) {
+                this.onPublicStatuesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnPublicStatuesCompleted);
+            }
+            base.InvokeAsync(this.onBeginPublicStatuesDelegate, new object[] {
+                        pseudo,
+                        password}, this.onEndPublicStatuesDelegate, this.onPublicStatuesCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult ProtoFB.toto.IService1.BeginAuthorizeDesktop(string consumerKey, string consumerSecret, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginAuthorizeDesktop(consumerKey, consumerSecret, callback, asyncState);
         }
@@ -350,6 +1138,58 @@ namespace ProtoFB.toto {
             base.InvokeAsync(this.onBeginAuthorizeDesktopDelegate, new object[] {
                         consumerKey,
                         consumerSecret}, this.onEndAuthorizeDesktopDelegate, this.onAuthorizeDesktopCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult ProtoFB.toto.IService1.BeginGetAccessToken(string consumerKey, string consumerSecret, string token, string pin, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAccessToken(consumerKey, consumerSecret, token, pin, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string ProtoFB.toto.IService1.EndGetAccessToken(System.IAsyncResult result) {
+            return base.Channel.EndGetAccessToken(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetAccessToken(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string consumerKey = ((string)(inValues[0]));
+            string consumerSecret = ((string)(inValues[1]));
+            string token = ((string)(inValues[2]));
+            string pin = ((string)(inValues[3]));
+            return ((ProtoFB.toto.IService1)(this)).BeginGetAccessToken(consumerKey, consumerSecret, token, pin, callback, asyncState);
+        }
+        
+        private object[] OnEndGetAccessToken(System.IAsyncResult result) {
+            string retVal = ((ProtoFB.toto.IService1)(this)).EndGetAccessToken(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetAccessTokenCompleted(object state) {
+            if ((this.GetAccessTokenCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetAccessTokenCompleted(this, new GetAccessTokenCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetAccessTokenAsync(string consumerKey, string consumerSecret, string token, string pin) {
+            this.GetAccessTokenAsync(consumerKey, consumerSecret, token, pin, null);
+        }
+        
+        public void GetAccessTokenAsync(string consumerKey, string consumerSecret, string token, string pin, object userState) {
+            if ((this.onBeginGetAccessTokenDelegate == null)) {
+                this.onBeginGetAccessTokenDelegate = new BeginOperationDelegate(this.OnBeginGetAccessToken);
+            }
+            if ((this.onEndGetAccessTokenDelegate == null)) {
+                this.onEndGetAccessTokenDelegate = new EndOperationDelegate(this.OnEndGetAccessToken);
+            }
+            if ((this.onGetAccessTokenCompletedDelegate == null)) {
+                this.onGetAccessTokenCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAccessTokenCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetAccessTokenDelegate, new object[] {
+                        consumerKey,
+                        consumerSecret,
+                        token,
+                        pin}, this.onEndGetAccessTokenDelegate, this.onGetAccessTokenCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -535,6 +1375,20 @@ namespace ProtoFB.toto {
                 return _result;
             }
             
+            public System.IAsyncResult BeginPublicStatues(string pseudo, string password, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = pseudo;
+                _args[1] = password;
+                System.IAsyncResult _result = base.BeginInvoke("PublicStatues", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus> EndPublicStatues(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus> _result = ((System.Collections.ObjectModel.ObservableCollection<ProtoFB.toto.TwitterStatus>)(base.EndInvoke("PublicStatues", _args, result)));
+                return _result;
+            }
+            
             public System.IAsyncResult BeginAuthorizeDesktop(string consumerKey, string consumerSecret, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
                 _args[0] = consumerKey;
@@ -546,6 +1400,22 @@ namespace ProtoFB.toto {
             public string EndAuthorizeDesktop(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("AuthorizeDesktop", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetAccessToken(string consumerKey, string consumerSecret, string token, string pin, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
+                _args[0] = consumerKey;
+                _args[1] = consumerSecret;
+                _args[2] = token;
+                _args[3] = pin;
+                System.IAsyncResult _result = base.BeginInvoke("GetAccessToken", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndGetAccessToken(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("GetAccessToken", _args, result)));
                 return _result;
             }
             
