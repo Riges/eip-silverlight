@@ -19,8 +19,21 @@ namespace ProtoFB
             InitializeComponent();
         }
 
+        public TwitterPin(string pin)
+            :this()
+        {
+            TBoxPin.Text = pin;
+        }
+
+        public string tPin
+        {
+            get;
+            set;
+        }
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            this.tPin = TBoxPin.Text;
             this.DialogResult = true;
         }
 

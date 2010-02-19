@@ -23,7 +23,8 @@
             <Button Content="Se connecter" Margin="0,0,20,0" Name="BtnSeConnecter" Click="SeConnecterButton_Click"/>
             <TextBlock Name="TxtLogged" Visibility="Collapsed"></TextBlock>
             <Button Content="Get Amis" Margin="0,0,20,0" Name="BtnGetAmis" Click="BtnGetAmis_Click" IsEnabled="False"/>
-            <Button Content="Get mon mur" Name="BtnGetMyWall" Click="BtnGetMyWall_Click" IsEnabled="False"/>
+            <Button Content="Get mon mur" Name="BtnGetMyWall" Margin="0,0,20,0" Click="BtnGetMyWall_Click" IsEnabled="False"/>
+            <Button Content="Get ma TimeLine" Name="BtnGetMyTimeLine" Click="BtnGetMyTimeLine_Click" IsEnabled="False"/>
 
         </StackPanel>
         

@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using System.ServiceModel.Activation;
+using Dimebrain.TweetSharp.Model;
 
 namespace ProtoWCF
 {
@@ -20,6 +21,9 @@ namespace ProtoWCF
         /*[OperationContract]
         bool LoginTwitter();
         */
+
+        [OperationContract]
+        IEnumerable<TwitterStatus> PublicStatues(string pseudo, string password);
 
         [OperationContract]
         string AuthorizeDesktop(string consumerKey, string consumerSecret);

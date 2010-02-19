@@ -8,3 +8,8 @@ K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ResolveAssemblyReference.cache
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.dll
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.pdb
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\bin\ProtoFB.Web.dll
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\bin\ProtoFB.Web.pdb
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ResolveAssemblyReference.cache
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.dll
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoFB.Web\obj\Debug\ProtoFB.Web.pdb

@@ -4,7 +4,8 @@
     <xsd:schema targetNamespace="/Imports">
       <xsd:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd0" />
       <xsd:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ProtoWCF" />
+      <xsd:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model" />
+      <xsd:import schemaLocation="http://localhost:2000/Service1.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/ProtoWCF" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IService1_GetData_InputMessage">
@@ -13,11 +14,23 @@
   <wsdl:message name="IService1_GetData_OutputMessage">
     <wsdl:part name="parameters" element="GetDataResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_PublicStatues_InputMessage">
+    <wsdl:part name="parameters" element="PublicStatues" />
+  </wsdl:message>
+  <wsdl:message name="IService1_PublicStatues_OutputMessage">
+    <wsdl:part name="parameters" element="PublicStatuesResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_AuthorizeDesktop_InputMessage">
     <wsdl:part name="parameters" element="AuthorizeDesktop" />
   </wsdl:message>
   <wsdl:message name="IService1_AuthorizeDesktop_OutputMessage">
     <wsdl:part name="parameters" element="AuthorizeDesktopResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetAccessToken_InputMessage">
+    <wsdl:part name="parameters" element="GetAccessToken" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetAccessToken_OutputMessage">
+    <wsdl:part name="parameters" element="GetAccessTokenResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_LoginTwitter_InputMessage">
     <wsdl:part name="parameters" element="LoginTwitter" />
@@ -36,9 +49,17 @@
       <wsdl:input wsaw:Action="urn:IService1/GetData" message="IService1_GetData_InputMessage" />
       <wsdl:output wsaw:Action="urn:IService1/GetDataResponse" message="IService1_GetData_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="PublicStatues">
+      <wsdl:input wsaw:Action="urn:IService1/PublicStatues" message="IService1_PublicStatues_InputMessage" />
+      <wsdl:output wsaw:Action="urn:IService1/PublicStatuesResponse" message="IService1_PublicStatues_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AuthorizeDesktop">
       <wsdl:input wsaw:Action="urn:IService1/AuthorizeDesktop" message="IService1_AuthorizeDesktop_InputMessage" />
       <wsdl:output wsaw:Action="urn:IService1/AuthorizeDesktopResponse" message="IService1_AuthorizeDesktop_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccessToken">
+      <wsdl:input wsaw:Action="urn:IService1/GetAccessToken" message="IService1_GetAccessToken_InputMessage" />
+      <wsdl:output wsaw:Action="urn:IService1/GetAccessTokenResponse" message="IService1_GetAccessToken_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="LoginTwitter">
       <wsdl:input wsaw:Action="urn:IService1/LoginTwitter" message="IService1_LoginTwitter_InputMessage" />

@@ -48,9 +48,21 @@ namespace ProtoWCF
             Console.WriteLine("Called synchronous sample method with \"{0}\"", pseudo);
            // return "The sychronous service greets you: " + pseudo;
 
-
-
             return false;
+        }
+
+        public IEnumerable<TwitterStatus> PublicStatues(string pseudo, string password)
+        {
+            // Get the public timeline
+            var twitter = FluentTwitter.CreateRequest().AuthenticateAs(pseudo, password)
+                 .Statuses().OnHomeTimeline().AsXml();  
+              
+            // Sequential call for data  
+            var response = twitter.Request();  
+              
+            // Convert response to data classes  
+            var statuses = response.AsStatuses();
+            return statuses;
         }
 
         private string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
@@ -66,6 +78,8 @@ namespace ProtoWCF
                .AuthorizeDesktop(consumerKey,
                                  consumerSecret,
                                  requestToken.Token);
+
+            
 
             return requestToken.Token;
         }

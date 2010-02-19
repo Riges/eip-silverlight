@@ -13,8 +13,26 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PublicStatues">
+      <soap:operation soapAction="urn:IService1/PublicStatues" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AuthorizeDesktop">
       <soap:operation soapAction="urn:IService1/AuthorizeDesktop" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccessToken">
+      <soap:operation soapAction="urn:IService1/GetAccessToken" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -109,6 +109,9 @@
     <None Include="Service References\toto\ProtoFB.toto.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\toto\ProtoFB.toto.TwitterStatus1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\toto\Service1.disco" />
     <None Include="Service References\toto\configuration91.svcinfo" />
     <None Include="Service References\toto\configuration.svcinfo" />
@@ -126,6 +129,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\toto\Service12.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\toto\Service13.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

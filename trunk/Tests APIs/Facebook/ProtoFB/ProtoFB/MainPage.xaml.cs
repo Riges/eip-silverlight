@@ -36,6 +36,8 @@ namespace ProtoFB
 
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
 
+        private string tUserPin = "";
+
         //private user _aUser;
 
         IList<user> myFriends;
@@ -77,10 +79,11 @@ namespace ProtoFB
             ///// Twitter 
             ProtoFB.toto.Service1Client test = new toto.Service1Client();
 
-           // test.LoginTwitterCompleted += new EventHandler<toto.LoginTwitterCompletedEventArgs>(test_LoginTwitterCompleted);
-            //test.LoginTwitterAsync("pocketino", "fdsfds");
-            test.AuthorizeDesktopCompleted += new EventHandler<toto.AuthorizeDesktopCompletedEventArgs>(test_AuthorizeDesktopCompleted);
-            test.AuthorizeDesktopAsync(consumerKey, consumerSecret);
+            test.LoginTwitterCompleted += new EventHandler<toto.LoginTwitterCompletedEventArgs>(test_LoginTwitterCompleted);
+            test.LoginTwitterAsync("pocketino", "fdsfds");
+            BtnGetMyTimeLine.IsEnabled = true;
+            //test.AuthorizeDesktopCompleted += new EventHandler<toto.AuthorizeDesktopCompletedEventArgs>(test_AuthorizeDesktopCompleted);
+            //test.AuthorizeDesktopAsync(consumerKey, consumerSecret);
         }
 
         void test_AuthorizeDesktopCompleted(object sender, toto.AuthorizeDesktopCompletedEventArgs e)
@@ -88,6 +91,7 @@ namespace ProtoFB
             string token = e.Result;
             TwitterPin twitterPin = new TwitterPin();
             twitterPin.Show();
+            this.tUserPin = twitterPin.tPin;
         }
 
         void test_LoginTwitterCompleted(object sender, toto.LoginTwitterCompletedEventArgs e)
@@ -269,6 +273,25 @@ namespace ProtoFB
             
             ListBoxFriends.ItemsSource = users;
            
+        }
+
+        private void getMyTimeline(object sender, toto.PublicStatuesCompletedEventArgs e)
+        {
+            
+            foreach(toto.TwitterStatus statu in e.Result)
+            {
+                MessageBoxResult result = MessageBox.Show(statu.Text, "Restart", MessageBoxButton.OKCancel);
+            }
+
+            //Dispatcher.BeginInvoke(() => ListBoxWall.ItemsSource = e.Result);
+        }
+
+        private void BtnGetMyTimeLine_Click(object sender, RoutedEventArgs e)
+        {
+            ProtoFB.toto.Service1Client test = new toto.Service1Client();
+            test.PublicStatuesCompleted += new EventHandler<toto.PublicStatuesCompletedEventArgs>(getMyTimeline);
+            test.PublicStatuesAsync("pocketino", "fdsfds");
+            
         }
         
     }

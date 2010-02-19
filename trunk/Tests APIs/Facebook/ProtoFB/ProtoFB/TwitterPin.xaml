@@ -11,7 +11,7 @@
     </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Width="370">
             <TextBlock Text="Pin : "  ></TextBlock>
-        <TextBox Width="300" ></TextBox>
+        <TextBox Width="300" Name="TBoxPin"></TextBox>
             </StackPanel>
 
             <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" />
