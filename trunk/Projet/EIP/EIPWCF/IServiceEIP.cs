@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using EIP;
 using Dimebrain.TweetSharp.Model;
+using Dimebrain.TweetSharp.Fluent;
 
 namespace EIPWCF
 {
@@ -26,6 +27,10 @@ namespace EIPWCF
 
         [OperationContract]
         IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret);
+
+
+        [OperationContract]
+        IFluentTwitter GetFluent();
 
         
     }
