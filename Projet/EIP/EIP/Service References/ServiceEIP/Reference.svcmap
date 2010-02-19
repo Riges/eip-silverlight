@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="96e886f3-29f9-4abd-809f-0d6128b70a45" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServiceEIP.xsd" MetadataType="Schema" ID="c571b7d3-147b-4d5b-85cd-15dbeeada7cf" SourceId="1" SourceUrl="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServiceEIP1.xsd" MetadataType="Schema" ID="65e2a740-57f8-4264-9b69-f617c683ad79" SourceId="1" SourceUrl="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServiceEIP.wsdl" MetadataType="Wsdl" ID="9f13d269-24f4-454a-aac9-607a7cfbd309" SourceId="1" SourceUrl="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc?wsdl" />
+    <MetadataFile FileName="ServiceEIP2.xsd" MetadataType="Schema" ID="cfe0dde8-8d5d-4f1f-88d7-1d69828b349d" SourceId="1" SourceUrl="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServiceEIP3.xsd" MetadataType="Schema" ID="f62364c6-e293-4afb-83f8-bb30838d25d8" SourceId="1" SourceUrl="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServiceEIP.disco" MetadataType="Disco" ID="ae9d7f32-602a-485e-a255-6b59f0ff15ce" SourceId="1" SourceUrl="http://pocket.serveftp.net/Dev/WCF/ServiceEIP.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
