@@ -110,9 +110,24 @@ namespace EIP.ServiceEIP {
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountTwitter", Namespace="http://schemas.datacontract.org/2004/07/EIP")]
     public partial class AccountTwitter : EIP.ServiceEIP.Account {
         
+        private string pinField;
+        
         private string tokenField;
         
         private string tokenSecretField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string pin {
+            get {
+                return this.pinField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.pinField, value) != true)) {
+                    this.pinField = value;
+                    this.RaisePropertyChanged("pin");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string token {
@@ -141,6 +156,680 @@ namespace EIP.ServiceEIP {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PropertyChangedBase", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.TwitterStatus))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.TwitterUser))]
+    public partial class PropertyChangedBase : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TwitterStatus", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    public partial class TwitterStatus : EIP.ServiceEIP.PropertyChangedBase {
+        
+        private System.DateTime CreatedDateField;
+        
+        private long IdField;
+        
+        private string InReplyToScreenNameField;
+        
+        private System.Nullable<long> InReplyToStatusIdField;
+        
+        private System.Nullable<int> InReplyToUserIdField;
+        
+        private bool IsFavoritedField;
+        
+        private bool IsTruncatedField;
+        
+        private System.Nullable<EIP.ServiceEIP.GeoLocation> LocationField;
+        
+        private EIP.ServiceEIP.TwitterStatus RetweetedStatusField;
+        
+        private string SourceField;
+        
+        private string TextField;
+        
+        private EIP.ServiceEIP.TwitterUser UserField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InReplyToScreenName {
+            get {
+                return this.InReplyToScreenNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InReplyToScreenNameField, value) != true)) {
+                    this.InReplyToScreenNameField = value;
+                    this.RaisePropertyChanged("InReplyToScreenName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> InReplyToStatusId {
+            get {
+                return this.InReplyToStatusIdField;
+            }
+            set {
+                if ((this.InReplyToStatusIdField.Equals(value) != true)) {
+                    this.InReplyToStatusIdField = value;
+                    this.RaisePropertyChanged("InReplyToStatusId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> InReplyToUserId {
+            get {
+                return this.InReplyToUserIdField;
+            }
+            set {
+                if ((this.InReplyToUserIdField.Equals(value) != true)) {
+                    this.InReplyToUserIdField = value;
+                    this.RaisePropertyChanged("InReplyToUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsFavorited {
+            get {
+                return this.IsFavoritedField;
+            }
+            set {
+                if ((this.IsFavoritedField.Equals(value) != true)) {
+                    this.IsFavoritedField = value;
+                    this.RaisePropertyChanged("IsFavorited");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsTruncated {
+            get {
+                return this.IsTruncatedField;
+            }
+            set {
+                if ((this.IsTruncatedField.Equals(value) != true)) {
+                    this.IsTruncatedField = value;
+                    this.RaisePropertyChanged("IsTruncated");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<EIP.ServiceEIP.GeoLocation> Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((this.LocationField.Equals(value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public EIP.ServiceEIP.TwitterStatus RetweetedStatus {
+            get {
+                return this.RetweetedStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RetweetedStatusField, value) != true)) {
+                    this.RetweetedStatusField = value;
+                    this.RaisePropertyChanged("RetweetedStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Source {
+            get {
+                return this.SourceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceField, value) != true)) {
+                    this.SourceField = value;
+                    this.RaisePropertyChanged("Source");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public EIP.ServiceEIP.TwitterUser User {
+            get {
+                return this.UserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TwitterUser", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    public partial class TwitterUser : EIP.ServiceEIP.PropertyChangedBase {
+        
+        private System.DateTime CreatedDateField;
+        
+        private string DescriptionField;
+        
+        private int FavouritesCountField;
+        
+        private int FollowersCountField;
+        
+        private int FriendsCountField;
+        
+        private System.Nullable<bool> HasNotificationsField;
+        
+        private int IdField;
+        
+        private System.Nullable<bool> IsFollowingField;
+        
+        private System.Nullable<bool> IsGeoEnabledField;
+        
+        private bool IsProfileBackgroundTiledField;
+        
+        private System.Nullable<bool> IsProtectedField;
+        
+        private System.Nullable<bool> IsVerifiedField;
+        
+        private string LanguageField;
+        
+        private string LocationField;
+        
+        private string NameField;
+        
+        private string ProfileBackgroundColorField;
+        
+        private string ProfileBackgroundImageUrlField;
+        
+        private string ProfileImageUrlField;
+        
+        private string ProfileLinkColorField;
+        
+        private string ProfileSidebarBorderColorField;
+        
+        private string ProfileSidebarFillColorField;
+        
+        private string ProfileTextColorField;
+        
+        private string ScreenNameField;
+        
+        private EIP.ServiceEIP.TwitterStatus StatusField;
+        
+        private int StatusesCountField;
+        
+        private string TimeZoneField;
+        
+        private string UrlField;
+        
+        private string UtcOffsetField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedDate {
+            get {
+                return this.CreatedDateField;
+            }
+            set {
+                if ((this.CreatedDateField.Equals(value) != true)) {
+                    this.CreatedDateField = value;
+                    this.RaisePropertyChanged("CreatedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FavouritesCount {
+            get {
+                return this.FavouritesCountField;
+            }
+            set {
+                if ((this.FavouritesCountField.Equals(value) != true)) {
+                    this.FavouritesCountField = value;
+                    this.RaisePropertyChanged("FavouritesCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FollowersCount {
+            get {
+                return this.FollowersCountField;
+            }
+            set {
+                if ((this.FollowersCountField.Equals(value) != true)) {
+                    this.FollowersCountField = value;
+                    this.RaisePropertyChanged("FollowersCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FriendsCount {
+            get {
+                return this.FriendsCountField;
+            }
+            set {
+                if ((this.FriendsCountField.Equals(value) != true)) {
+                    this.FriendsCountField = value;
+                    this.RaisePropertyChanged("FriendsCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> HasNotifications {
+            get {
+                return this.HasNotificationsField;
+            }
+            set {
+                if ((this.HasNotificationsField.Equals(value) != true)) {
+                    this.HasNotificationsField = value;
+                    this.RaisePropertyChanged("HasNotifications");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsFollowing {
+            get {
+                return this.IsFollowingField;
+            }
+            set {
+                if ((this.IsFollowingField.Equals(value) != true)) {
+                    this.IsFollowingField = value;
+                    this.RaisePropertyChanged("IsFollowing");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsGeoEnabled {
+            get {
+                return this.IsGeoEnabledField;
+            }
+            set {
+                if ((this.IsGeoEnabledField.Equals(value) != true)) {
+                    this.IsGeoEnabledField = value;
+                    this.RaisePropertyChanged("IsGeoEnabled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsProfileBackgroundTiled {
+            get {
+                return this.IsProfileBackgroundTiledField;
+            }
+            set {
+                if ((this.IsProfileBackgroundTiledField.Equals(value) != true)) {
+                    this.IsProfileBackgroundTiledField = value;
+                    this.RaisePropertyChanged("IsProfileBackgroundTiled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsProtected {
+            get {
+                return this.IsProtectedField;
+            }
+            set {
+                if ((this.IsProtectedField.Equals(value) != true)) {
+                    this.IsProtectedField = value;
+                    this.RaisePropertyChanged("IsProtected");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> IsVerified {
+            get {
+                return this.IsVerifiedField;
+            }
+            set {
+                if ((this.IsVerifiedField.Equals(value) != true)) {
+                    this.IsVerifiedField = value;
+                    this.RaisePropertyChanged("IsVerified");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Language {
+            get {
+                return this.LanguageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LanguageField, value) != true)) {
+                    this.LanguageField = value;
+                    this.RaisePropertyChanged("Language");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileBackgroundColor {
+            get {
+                return this.ProfileBackgroundColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileBackgroundColorField, value) != true)) {
+                    this.ProfileBackgroundColorField = value;
+                    this.RaisePropertyChanged("ProfileBackgroundColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileBackgroundImageUrl {
+            get {
+                return this.ProfileBackgroundImageUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileBackgroundImageUrlField, value) != true)) {
+                    this.ProfileBackgroundImageUrlField = value;
+                    this.RaisePropertyChanged("ProfileBackgroundImageUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileImageUrl {
+            get {
+                return this.ProfileImageUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileImageUrlField, value) != true)) {
+                    this.ProfileImageUrlField = value;
+                    this.RaisePropertyChanged("ProfileImageUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileLinkColor {
+            get {
+                return this.ProfileLinkColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileLinkColorField, value) != true)) {
+                    this.ProfileLinkColorField = value;
+                    this.RaisePropertyChanged("ProfileLinkColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileSidebarBorderColor {
+            get {
+                return this.ProfileSidebarBorderColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileSidebarBorderColorField, value) != true)) {
+                    this.ProfileSidebarBorderColorField = value;
+                    this.RaisePropertyChanged("ProfileSidebarBorderColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileSidebarFillColor {
+            get {
+                return this.ProfileSidebarFillColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileSidebarFillColorField, value) != true)) {
+                    this.ProfileSidebarFillColorField = value;
+                    this.RaisePropertyChanged("ProfileSidebarFillColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProfileTextColor {
+            get {
+                return this.ProfileTextColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProfileTextColorField, value) != true)) {
+                    this.ProfileTextColorField = value;
+                    this.RaisePropertyChanged("ProfileTextColor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ScreenName {
+            get {
+                return this.ScreenNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ScreenNameField, value) != true)) {
+                    this.ScreenNameField = value;
+                    this.RaisePropertyChanged("ScreenName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public EIP.ServiceEIP.TwitterStatus Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int StatusesCount {
+            get {
+                return this.StatusesCountField;
+            }
+            set {
+                if ((this.StatusesCountField.Equals(value) != true)) {
+                    this.StatusesCountField = value;
+                    this.RaisePropertyChanged("StatusesCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TimeZone {
+            get {
+                return this.TimeZoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TimeZoneField, value) != true)) {
+                    this.TimeZoneField = value;
+                    this.RaisePropertyChanged("TimeZone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Url {
+            get {
+                return this.UrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UrlField, value) != true)) {
+                    this.UrlField = value;
+                    this.RaisePropertyChanged("Url");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UtcOffset {
+            get {
+                return this.UtcOffsetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UtcOffsetField, value) != true)) {
+                    this.UtcOffsetField = value;
+                    this.RaisePropertyChanged("UtcOffset");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GeoLocation", Namespace="http://schemas.datacontract.org/2004/07/Dimebrain.TweetSharp.Model")]
+    public partial struct GeoLocation : System.ComponentModel.INotifyPropertyChanged {
+        
+        private double Latitudek__BackingFieldField;
+        
+        private double Longitudek__BackingFieldField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Latitude>k__BackingField", IsRequired=true)]
+        public double Latitudek__BackingField {
+            get {
+                return this.Latitudek__BackingFieldField;
+            }
+            set {
+                if ((this.Latitudek__BackingFieldField.Equals(value) != true)) {
+                    this.Latitudek__BackingFieldField = value;
+                    this.RaisePropertyChanged("Latitudek__BackingField");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Name="<Longitude>k__BackingField", IsRequired=true)]
+        public double Longitudek__BackingField {
+            get {
+                return this.Longitudek__BackingFieldField;
+            }
+            set {
+                if ((this.Longitudek__BackingFieldField.Equals(value) != true)) {
+                    this.Longitudek__BackingFieldField = value;
+                    this.RaisePropertyChanged("Longitudek__BackingField");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceEIP.IServiceEIP")]
     public interface IServiceEIP {
@@ -154,6 +843,16 @@ namespace EIP.ServiceEIP {
         System.IAsyncResult BeginGetAccessToken(string consumerKey, string consumerSecret, string token, string pin, System.AsyncCallback callback, object asyncState);
         
         EIP.ServiceEIP.AccountTwitter EndGetAccessToken(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/TwitterGetUserInfo", ReplyAction="http://tempuri.org/IServiceEIP/TwitterGetUserInfoResponse")]
+        System.IAsyncResult BeginTwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId, System.AsyncCallback callback, object asyncState);
+        
+        EIP.ServiceEIP.TwitterUser EndTwitterGetUserInfo(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/TwitterGetHomeStatuses", ReplyAction="http://tempuri.org/IServiceEIP/TwitterGetHomeStatusesResponse")]
+        System.IAsyncResult BeginTwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
+        
+        EIP.ServiceEIP.TwitterStatus[] EndTwitterGetHomeStatuses(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -200,6 +899,44 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class TwitterGetUserInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public TwitterGetUserInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public EIP.ServiceEIP.TwitterUser Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((EIP.ServiceEIP.TwitterUser)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class TwitterGetHomeStatusesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public TwitterGetHomeStatusesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public EIP.ServiceEIP.TwitterStatus[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((EIP.ServiceEIP.TwitterStatus[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ServiceEIPClient : System.ServiceModel.ClientBase<EIP.ServiceEIP.IServiceEIP>, EIP.ServiceEIP.IServiceEIP {
         
         private BeginOperationDelegate onBeginAuthorizeDesktopDelegate;
@@ -213,6 +950,18 @@ namespace EIP.ServiceEIP {
         private EndOperationDelegate onEndGetAccessTokenDelegate;
         
         private System.Threading.SendOrPostCallback onGetAccessTokenCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginTwitterGetUserInfoDelegate;
+        
+        private EndOperationDelegate onEndTwitterGetUserInfoDelegate;
+        
+        private System.Threading.SendOrPostCallback onTwitterGetUserInfoCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginTwitterGetHomeStatusesDelegate;
+        
+        private EndOperationDelegate onEndTwitterGetHomeStatusesDelegate;
+        
+        private System.Threading.SendOrPostCallback onTwitterGetHomeStatusesCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -270,6 +1019,10 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<AuthorizeDesktopCompletedEventArgs> AuthorizeDesktopCompleted;
         
         public event System.EventHandler<GetAccessTokenCompletedEventArgs> GetAccessTokenCompleted;
+        
+        public event System.EventHandler<TwitterGetUserInfoCompletedEventArgs> TwitterGetUserInfoCompleted;
+        
+        public event System.EventHandler<TwitterGetHomeStatusesCompletedEventArgs> TwitterGetHomeStatusesCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -375,6 +1128,112 @@ namespace EIP.ServiceEIP {
                         pin}, this.onEndGetAccessTokenDelegate, this.onGetAccessTokenCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginTwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginTwitterGetUserInfo(consumerKey, consumerSecret, token, tokenSecret, userId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        EIP.ServiceEIP.TwitterUser EIP.ServiceEIP.IServiceEIP.EndTwitterGetUserInfo(System.IAsyncResult result) {
+            return base.Channel.EndTwitterGetUserInfo(result);
+        }
+        
+        private System.IAsyncResult OnBeginTwitterGetUserInfo(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string consumerKey = ((string)(inValues[0]));
+            string consumerSecret = ((string)(inValues[1]));
+            string token = ((string)(inValues[2]));
+            string tokenSecret = ((string)(inValues[3]));
+            long userId = ((long)(inValues[4]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginTwitterGetUserInfo(consumerKey, consumerSecret, token, tokenSecret, userId, callback, asyncState);
+        }
+        
+        private object[] OnEndTwitterGetUserInfo(System.IAsyncResult result) {
+            EIP.ServiceEIP.TwitterUser retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndTwitterGetUserInfo(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnTwitterGetUserInfoCompleted(object state) {
+            if ((this.TwitterGetUserInfoCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.TwitterGetUserInfoCompleted(this, new TwitterGetUserInfoCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void TwitterGetUserInfoAsync(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId) {
+            this.TwitterGetUserInfoAsync(consumerKey, consumerSecret, token, tokenSecret, userId, null);
+        }
+        
+        public void TwitterGetUserInfoAsync(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId, object userState) {
+            if ((this.onBeginTwitterGetUserInfoDelegate == null)) {
+                this.onBeginTwitterGetUserInfoDelegate = new BeginOperationDelegate(this.OnBeginTwitterGetUserInfo);
+            }
+            if ((this.onEndTwitterGetUserInfoDelegate == null)) {
+                this.onEndTwitterGetUserInfoDelegate = new EndOperationDelegate(this.OnEndTwitterGetUserInfo);
+            }
+            if ((this.onTwitterGetUserInfoCompletedDelegate == null)) {
+                this.onTwitterGetUserInfoCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnTwitterGetUserInfoCompleted);
+            }
+            base.InvokeAsync(this.onBeginTwitterGetUserInfoDelegate, new object[] {
+                        consumerKey,
+                        consumerSecret,
+                        token,
+                        tokenSecret,
+                        userId}, this.onEndTwitterGetUserInfoDelegate, this.onTwitterGetUserInfoCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginTwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginTwitterGetHomeStatuses(consumerKey, consumerSecret, token, tokenSecret, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        EIP.ServiceEIP.TwitterStatus[] EIP.ServiceEIP.IServiceEIP.EndTwitterGetHomeStatuses(System.IAsyncResult result) {
+            return base.Channel.EndTwitterGetHomeStatuses(result);
+        }
+        
+        private System.IAsyncResult OnBeginTwitterGetHomeStatuses(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string consumerKey = ((string)(inValues[0]));
+            string consumerSecret = ((string)(inValues[1]));
+            string token = ((string)(inValues[2]));
+            string tokenSecret = ((string)(inValues[3]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginTwitterGetHomeStatuses(consumerKey, consumerSecret, token, tokenSecret, callback, asyncState);
+        }
+        
+        private object[] OnEndTwitterGetHomeStatuses(System.IAsyncResult result) {
+            EIP.ServiceEIP.TwitterStatus[] retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndTwitterGetHomeStatuses(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnTwitterGetHomeStatusesCompleted(object state) {
+            if ((this.TwitterGetHomeStatusesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.TwitterGetHomeStatusesCompleted(this, new TwitterGetHomeStatusesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void TwitterGetHomeStatusesAsync(string consumerKey, string consumerSecret, string token, string tokenSecret) {
+            this.TwitterGetHomeStatusesAsync(consumerKey, consumerSecret, token, tokenSecret, null);
+        }
+        
+        public void TwitterGetHomeStatusesAsync(string consumerKey, string consumerSecret, string token, string tokenSecret, object userState) {
+            if ((this.onBeginTwitterGetHomeStatusesDelegate == null)) {
+                this.onBeginTwitterGetHomeStatusesDelegate = new BeginOperationDelegate(this.OnBeginTwitterGetHomeStatuses);
+            }
+            if ((this.onEndTwitterGetHomeStatusesDelegate == null)) {
+                this.onEndTwitterGetHomeStatusesDelegate = new EndOperationDelegate(this.OnEndTwitterGetHomeStatuses);
+            }
+            if ((this.onTwitterGetHomeStatusesCompletedDelegate == null)) {
+                this.onTwitterGetHomeStatusesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnTwitterGetHomeStatusesCompleted);
+            }
+            base.InvokeAsync(this.onBeginTwitterGetHomeStatusesDelegate, new object[] {
+                        consumerKey,
+                        consumerSecret,
+                        token,
+                        tokenSecret}, this.onEndTwitterGetHomeStatusesDelegate, this.onTwitterGetHomeStatusesCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -478,6 +1337,39 @@ namespace EIP.ServiceEIP {
             public EIP.ServiceEIP.AccountTwitter EndGetAccessToken(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 EIP.ServiceEIP.AccountTwitter _result = ((EIP.ServiceEIP.AccountTwitter)(base.EndInvoke("GetAccessToken", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginTwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
+                _args[0] = consumerKey;
+                _args[1] = consumerSecret;
+                _args[2] = token;
+                _args[3] = tokenSecret;
+                _args[4] = userId;
+                System.IAsyncResult _result = base.BeginInvoke("TwitterGetUserInfo", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public EIP.ServiceEIP.TwitterUser EndTwitterGetUserInfo(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                EIP.ServiceEIP.TwitterUser _result = ((EIP.ServiceEIP.TwitterUser)(base.EndInvoke("TwitterGetUserInfo", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginTwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
+                _args[0] = consumerKey;
+                _args[1] = consumerSecret;
+                _args[2] = token;
+                _args[3] = tokenSecret;
+                System.IAsyncResult _result = base.BeginInvoke("TwitterGetHomeStatuses", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public EIP.ServiceEIP.TwitterStatus[] EndTwitterGetHomeStatuses(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                EIP.ServiceEIP.TwitterStatus[] _result = ((EIP.ServiceEIP.TwitterStatus[])(base.EndInvoke("TwitterGetHomeStatuses", _args, result)));
                 return _result;
             }
         }
