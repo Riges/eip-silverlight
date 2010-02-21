@@ -26,7 +26,10 @@ namespace EIP
         public MainPage()
         {
             InitializeComponent();
-            liste.contentFrame = ContentFrame;
+
+            Connexion.listeComptes = liste;
+            Connexion.contentFrame = ContentFrame;
+            Connexion.LoginToAccount();
         }
 
         private void browserSession_LoginCompleted(object sender, EventArgs e)
@@ -83,12 +86,12 @@ namespace EIP
         {
             //app.AddAccount(Account.TypeAccount.Facebook);
             
-            Connexion.AddAccount(Account.TypeAccount.Facebook, this.liste, ContentFrame);
+            Connexion.AddAccount(Account.TypeAccount.Facebook);
         }
 
         private void LinkCreateNewTwitterAccount_Click(object sender, RoutedEventArgs e)
         {
-            Connexion.AddAccount(Account.TypeAccount.Twitter, this.liste, ContentFrame);
+            Connexion.AddAccount(Account.TypeAccount.Twitter);
         }
 
 

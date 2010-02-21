@@ -10,23 +10,17 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace EIP
+namespace EIP.Views.Child
 {
-    public partial class TwitterPin : ChildWindow
+    public partial class Login : ChildWindow
     {
-        private AccountTwitter _accountTwitter;
-        public TwitterPin(AccountTwitter accountTwitter)
+        public Login()
         {
             InitializeComponent();
-            _accountTwitter = accountTwitter;
-            link.NavigateUri = new Uri("http://api.twitter.com/oauth/authorize?oauth_token=" + _accountTwitter.token, UriKind.Absolute);
-            link.TargetName = "_blank";
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            _accountTwitter.pin = pinBox.Text.Trim();
-            Connexion.AddTwitterAccount(_accountTwitter, Dispatcher);
             this.DialogResult = true;
         }
 

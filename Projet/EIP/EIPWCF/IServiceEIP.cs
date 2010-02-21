@@ -26,6 +26,9 @@ namespace EIPWCF
         TwitterUser TwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId);
 
         [OperationContract]
+        long TwitterCheckUserInfo(string username, string password);
+
+        [OperationContract]
         IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret);
 
 

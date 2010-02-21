@@ -23,11 +23,13 @@ namespace EIPWCF
         {
             var requestToken = GetRequestToken(consumerKey, consumerSecret);
             
+            /*
             FluentTwitter.CreateRequest()
                .Authentication
                .AuthorizeDesktop(consumerKey,
                                  consumerSecret,
                                  requestToken.Token);
+             */
             
             return requestToken.Token;
         }
@@ -58,8 +60,6 @@ namespace EIPWCF
         {
             var requestToken = FluentTwitter.CreateRequest()
                 .Authentication.GetRequestToken(consumerKey, consumerSecret);
-            //var requestToken = FluentTwitter.CreateRequest()
-            //   .AuthenticateAs("pocketino", "fdsfds").Authentication.GetRequestToken(consumerKey, consumerSecret);
 
             var response = requestToken.Request();
             var result = response.AsToken();
@@ -80,9 +80,6 @@ namespace EIPWCF
         {
             var accessToken = FluentTwitter.CreateRequest()
                 .Authentication.GetAccessToken(consumerKey, consumerSecret, token, pin);
-
-            //var accessToken = FluentTwitter.CreateRequest()
-            //   .AuthenticateAs("pocketino", "fdsfds").Authentication.GetAccessToken(consumerKey, consumerSecret, token);
 
             var response = accessToken.Request();
             var result = response.AsToken();
@@ -118,6 +115,18 @@ namespace EIPWCF
             return result;
         }
 
+        public long TwitterCheckUserInfo(string username, string password)
+        {
+            var userInfo = FluentTwitter.CreateRequest()
+               .AuthenticateAs(username, password);
+               
+            var response = userInfo.Request();
+
+            var result = response.AsToken();
+
+            return Convert.ToInt64(result.UserId);
+        }
+
         public IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret)
         {
             var userInfo = FluentTwitter.CreateRequest()
@@ -129,6 +138,10 @@ namespace EIPWCF
 
             return result;
         }
+
+
+
+        
         
 
         

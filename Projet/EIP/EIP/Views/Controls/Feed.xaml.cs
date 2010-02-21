@@ -15,6 +15,7 @@ using Facebook.Utility;
 using System.Windows.Media.Imaging;
 using Facebook.Session;
 using EIP.ServiceEIP;
+using System.Windows.Data;
 
 
 namespace EIP.Views.Controls
@@ -33,15 +34,27 @@ namespace EIP.Views.Controls
         {
             InitializeComponent();
             //
-
-
           
             this.Loaded += new RoutedEventHandler(Feed_Loaded);
 
             picUser.MouseEnter += new MouseEventHandler(picUser_MouseEnter);
             picUser.MouseLeave += new MouseEventHandler(picUser_MouseLeave);
-        }
 
+            //SetBinding(DataContextWatcherProperty, new Binding());
+        }
+        /*
+        public static readonly DependencyProperty DataContextWatcherProperty =
+            DependencyProperty.Register("DataContextWatcher",
+                                        typeof(Object), typeof(Feed),
+                                        new PropertyMetadata(DataContextChanged));
+
+        private static void DataContextChanged(object sender,
+                                               DependencyPropertyChangedEventArgs e)
+        {
+            var feed = (Feed)sender;
+            // Update the control as needed
+        }
+        */
         void picUser_MouseLeave(object sender, MouseEventArgs e)
         {
             //picUser.Projection = new PlaneProjection() { RotationY=-35, CenterOfRotationY=-1};
@@ -60,24 +73,32 @@ namespace EIP.Views.Controls
                 {
                     case Account.TypeAccount.Facebook:
                         facebookAPI = Connexion.facebookAPI;
-                        post = (stream_post)this.DataContext;
-                        if (post != null)
-                         {
-                             facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
-                         }
+                        stream_post typeF = new stream_post();
+                        if (this.DataContext.GetType() == typeF.GetType())
+                        {
+                            post = (stream_post)this.DataContext;
+                            if (post != null)
+                            {
+                                facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
+                            }
+                        }
                         break;
                     case Account.TypeAccount.Twitter:
                         BitmapImage btImg = null;
-                        status = (TwitterStatus)this.DataContext;
-                        if (status.User.ProfileImageUrl != null)
+                        TwitterStatus typeT = new TwitterStatus();
+                        if (this.DataContext.GetType() == typeT.GetType())
                         {
-                            Uri uriImg = new Uri(status.User.ProfileImageUrl);
-                            btImg = new BitmapImage(uriImg);
+                            status = (TwitterStatus)this.DataContext;
+                            if (status.User.ProfileImageUrl != null)
+                            {
+                             Uri uriImg = new Uri(status.User.ProfileImageUrl);
+                             btImg = new BitmapImage(uriImg);
+                            }
+                            picUser.Source = btImg;
+                            nameUser.Text = status.User.Name;
+                            message.Text = status.Text;
+                            dateTimeFeed.Text = Day2Jour(status.CreatedDate) + ", à " + status.CreatedDate.AddHours(1).ToShortTimeString();
                         }
-                        picUser.Source = btImg;
-                        nameUser.Text = status.User.Name;
-                        message.Text = status.Text;
-                        dateTimeFeed.Text = Day2Jour(status.CreatedDate) + ", à " + status.CreatedDate.AddHours(1).ToShortTimeString();
 
                         break;
                     case Account.TypeAccount.Myspace:

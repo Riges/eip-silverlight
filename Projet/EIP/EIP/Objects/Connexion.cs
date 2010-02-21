@@ -27,25 +27,30 @@ namespace EIP
 {
     public static class Connexion
     {
+        //Objets Facebook
         public static Api facebookAPI { get; set; }
         private static BrowserSession browserSession { get; set; }
 
+        //api key Facebook
         private const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
 
+        //api key Twitter
         private const string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
         private const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
 
+        //Accounts
         public static List<Account> currentAccounts { get; set; }
         public static List<Account> storageAccounts { get; set; }
         public static Account currentAccount { get; set; }
 
         private static IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
        
-        
-        private static ListeComptes listeComptes;
+        //Controls
+        public static ListeComptes listeComptes;
         private static Dispatcher dispatcher;
-        private static Frame contentFrame;
+        public static Frame contentFrame;
 
+        //WCF
         private static ServiceEIP.ServiceEIPClient serviceEIP = new ServiceEIP.ServiceEIPClient();
 
         public static void Start()
@@ -108,10 +113,10 @@ namespace EIP
             currentAccounts = null;
         }
 
-        public static void AddAccount(Account.TypeAccount type, ListeComptes listes, Frame frame)
+        public static void AddAccount(Account.TypeAccount type)
         {
-            listeComptes = listes;
-            contentFrame = frame;
+            /*listeComptes = listes;
+            contentFrame = frame;*/
             switch (type)
             {
                 case Account.TypeAccount.Facebook:
@@ -202,13 +207,13 @@ namespace EIP
             browserSession.Login();
         }
 
-        public static void LoadAccount(Account account, Frame frame)
+        public static void LoadAccount(Account account)
         {
             /*var theAccount = from Account oneAccount in this.currentAccounts
                              where oneAccount.userID == account.userID
                                select account;*/
             //dispatcher = dispatch;
-            contentFrame = frame;
+            //contentFrame = frame;
             switch (account.typeAccount)
             {
                 case Account.TypeAccount.Facebook:
@@ -226,7 +231,7 @@ namespace EIP
             }
         }
 
-        private static void LoginToAccount()
+        public static void LoginToAccount()
         {
             if (currentAccount != null)
             {
@@ -261,8 +266,8 @@ namespace EIP
                         //MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
                         //msgBox.Show();
 
-                        //contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
-                   
+                contentFrame.Navigate(new Uri("/Home?time="+DateTime.Now.Ticks, UriKind.Relative));
+                listeComptes.Reload();   
             
             }
         }
@@ -275,12 +280,14 @@ namespace EIP
 
         private static void serviceEIP_TwitterGetHomeStatusesCompleted(object sender, TwitterGetHomeStatusesCompletedEventArgs e)
         {
-             ((AccountTwitter)currentAccount).homeStatuses = e.Result;
+            if(currentAccount.typeAccount == Account.TypeAccount.Twitter)
+                ((AccountTwitter)currentAccount).homeStatuses = e.Result;
         }
 
         private static void serviceEIP_TwitterGetUserInfoCompleted(object sender, ServiceEIP.TwitterGetUserInfoCompletedEventArgs e)
         {
-            ((AccountTwitter)currentAccount).user = e.Result;
+            if (currentAccount.typeAccount == Account.TypeAccount.Twitter)
+                ((AccountTwitter)currentAccount).user = e.Result;
         }
 
         private static void NewAccountFacebook_LoginCompleted(object sender, EventArgs e)

@@ -48,7 +48,11 @@ namespace EIP.Views
                             filter = this.NavigationContext.QueryString["filter"];
                         else
                             filter = null;
-
+                        /*FeedsControl.ClearValue(DataContextProperty);
+                        FeedsControl.Items.Clear();
+                        List<stream_post> test = new List<stream_post>();
+                        test.Add(new stream_post() { message = "test" });
+                        FeedsControl.DataContext = test;*/
                         facebookAPI.Stream.GetAsync(facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), null);
 
                         break;
@@ -85,9 +89,12 @@ namespace EIP.Views
                     break;
                 case Account.TypeAccount.Twitter:
                     Connexion.TwitterReloadHomeStatuses();
-                    TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
-                    if (last.Id != ((AccountTwitter)Connexion.currentAccount).homeStatuses.First().Id)
-                        FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                    if (FeedsControl.DataContext != null)
+                    {
+                        TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
+                        if (last.Id != ((AccountTwitter)Connexion.currentAccount).homeStatuses.First().Id)
+                            FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                    }
                     break;
                 case Account.TypeAccount.Myspace:
                     break;

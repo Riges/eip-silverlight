@@ -82,3 +82,4 @@ K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\EIP.g.resources
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\EIP.dll
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\EIP.pdb
 K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\XapCacheFile.xml
+K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\obj\Debug\Views\Child\Login.g.cs

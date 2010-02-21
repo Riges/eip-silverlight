@@ -44,11 +44,13 @@ namespace EIP.Views.Controls
                     {
                         //Dispatcher.BeginInvoke(() =>
                             //{
-                                Button btnAccount = new Button();
-                                btnAccount.Content = oneAccount.name;
-                                btnAccount.Click += btnAccount_Click;
-                                btnAccount.CommandParameter = oneAccount;
-                                LayoutPanel.Children.Add(btnAccount);
+                        Button btnAccount = new Button();
+                        btnAccount.Content = oneAccount.name;
+                        btnAccount.Click += btnAccount_Click;
+                        btnAccount.CommandParameter = oneAccount;
+                        if (Connexion.currentAccount.typeAccount == oneAccount.typeAccount && Connexion.currentAccount.userID == oneAccount.userID)
+                            btnAccount.IsEnabled = false;
+                        LayoutPanel.Children.Add(btnAccount);
                             //});
                     }
 
@@ -67,7 +69,7 @@ namespace EIP.Views.Controls
        void btnAccount_Click(object sender, RoutedEventArgs e)
         {
             //app.LoadAccount((Account)((Button)sender).CommandParameter);
-            Connexion.LoadAccount((Account)((Button)sender).CommandParameter, contentFrame);
+            Connexion.LoadAccount((Account)((Button)sender).CommandParameter);
         }
     }
 }
