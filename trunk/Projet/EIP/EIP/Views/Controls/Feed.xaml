@@ -23,16 +23,18 @@
         </Storyboard>
 
     </UserControl.Resources>
-    <Border BorderBrush="Red" BorderThickness="3">
-    <Grid x:Name="LayoutRoot" Background="White" >
+    <!--<Border BorderBrush="Red" BorderThickness="3">-->
+    <Grid x:Name="LayoutRoot" Background="White"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="2"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25*"></ColumnDefinition>
             <ColumnDefinition Width="75*"></ColumnDefinition>
+           
         </Grid.ColumnDefinitions>
 
         <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"  >
@@ -47,6 +49,11 @@
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                 <TextBlock  Name="dateTimeFeed"></TextBlock>
             </StackPanel>
+        
+        <Rectangle Grid.Row="3" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
+            
+       
     </Grid>
-        </Border>
+        <!--</Border>-->
+    
 </UserControl>
