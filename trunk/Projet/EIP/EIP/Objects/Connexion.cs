@@ -22,6 +22,7 @@ using EIP.ServiceEIP;
 
 using System.Windows.Navigation;
 using EIP.Views;
+using System.ComponentModel;
 
 namespace EIP
 {
@@ -156,6 +157,8 @@ namespace EIP
 
         public static void AddTwitterAccount(AccountTwitter accountTwitter, Dispatcher dispatch)
         {
+
+
             dispatcher = dispatch;
             serviceEIP.GetAccessTokenCompleted += new EventHandler<ServiceEIP.GetAccessTokenCompletedEventArgs>(serviceEIP_GetAccessTokenCompleted);
             serviceEIP.GetAccessTokenAsync(consumerKey, consumerSecret, accountTwitter.token, accountTwitter.pin);
@@ -163,6 +166,14 @@ namespace EIP
 
         static void serviceEIP_GetAccessTokenCompleted(object sender, ServiceEIP.GetAccessTokenCompletedEventArgs e)
         {
+            /*
+            MessageBox msgBox = new MessageBox("", "token : " + e.Result.token 
+                + " - secret : " + e.Result.tokenSecret
+                + " - name : " + e.Result.name 
+                + " - userId : " + e.Result.userID);
+            msgBox.Show();*/
+            
+            
             EIP.ServiceEIP.AccountTwitter tmp = e.Result;
             currentAccount = new AccountTwitter();
             currentAccount.name = tmp.name;
@@ -172,7 +183,7 @@ namespace EIP
             ((AccountTwitter)currentAccount).token = tmp.token;
             ((AccountTwitter)currentAccount).tokenSecret = tmp.tokenSecret;
 
-
+            
             if (currentAccounts != null)
             {
                 currentAccount.accountID = currentAccounts[0].accountID;
@@ -183,7 +194,7 @@ namespace EIP
             }
 
             SetSession();
-
+            
             //Ajouter la verif sur cpt de type Twitter
             var theAccountID = from Account account in storageAccounts
                                where account.userID == currentAccount.userID
@@ -194,7 +205,7 @@ namespace EIP
             {
                 storage["Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID] = (AccountTwitter)currentAccount;
             }
-
+           
             LoadFromStorage();
             listeComptes.Reload();
             LoginToAccount();
@@ -249,7 +260,7 @@ namespace EIP
                         break;
                     case Account.TypeAccount.Twitter:
 
-                        serviceEIP.TwitterGetUserInfoCompleted += new EventHandler<ServiceEIP.TwitterGetUserInfoCompletedEventArgs>(serviceEIP_TwitterGetUserInfoCompleted);
+                        serviceEIP.TwitterGetUserInfoCompleted += new EventHandler<TwitterGetUserInfoCompletedEventArgs>(serviceEIP_TwitterGetUserInfoCompleted);
                         serviceEIP.TwitterGetUserInfoAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret, ((AccountTwitter)currentAccount).userID);
 
                         serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
@@ -261,22 +272,33 @@ namespace EIP
                     default:
                         break;
                 }
-
                 
-                        //MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
-                        //msgBox.Show();
+                
+                MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
+                msgBox.Show();
 
-                contentFrame.Navigate(new Uri("/Home?time="+DateTime.Now.Ticks, UriKind.Relative));
-                listeComptes.Reload();   
+                if(contentFrame != null)
+                    contentFrame.Navigate(new Uri("/Home?time="+DateTime.Now.Ticks, UriKind.Relative));
+                if (listeComptes != null)
+                    listeComptes.Reload();   
             
             }
         }
 
+        //// Async method
+        //// 
+
+      
         public static void TwitterReloadHomeStatuses()
         {
             serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
             serviceEIP.TwitterGetHomeStatusesAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret);
         }
+
+
+
+        //// end Async method
+        //// 
 
         private static void serviceEIP_TwitterGetHomeStatusesCompleted(object sender, TwitterGetHomeStatusesCompletedEventArgs e)
         {

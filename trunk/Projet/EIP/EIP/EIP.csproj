@@ -227,13 +227,13 @@
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ServiceEIP\ServiceEIP.disco" />
     <None Include="Service References\ServiceEIP\configuration91.svcinfo" />
     <None Include="Service References\ServiceEIP\configuration.svcinfo" />
     <None Include="Service References\ServiceEIP\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ServiceEIP\ServiceEIP.disco" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">

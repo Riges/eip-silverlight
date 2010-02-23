@@ -1,1 +1,1 @@
-K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP\Generated_Code\EIP.Web.g.cs
+C:\eip-silverlight\Projet\EIP\EIP\Generated_Code\EIP.Web.g.cs
