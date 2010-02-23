@@ -78,6 +78,7 @@ namespace EIPWCF
 
         public AccountTwitter GetAccessToken(string consumerKey, string consumerSecret, string token, string pin)
         {
+           
             var accessToken = FluentTwitter.CreateRequest()
                 .Authentication.GetAccessToken(consumerKey, consumerSecret, token, pin);
 
@@ -86,6 +87,7 @@ namespace EIPWCF
 
             if (result == null)
             {
+               
                 var error = response.AsError();
                 if (error != null)
                 {
@@ -93,12 +95,13 @@ namespace EIPWCF
                 }
             }
             AccountTwitter accountTwitter = new AccountTwitter();
+            
             accountTwitter.token = result.Token;
             accountTwitter.tokenSecret = result.TokenSecret;
             accountTwitter.name = result.ScreenName;
             accountTwitter.userID =  Convert.ToInt64(result.UserId);
 
-
+            
 
             return accountTwitter;// result.TokenSecret;
         }

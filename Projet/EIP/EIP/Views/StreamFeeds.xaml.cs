@@ -57,13 +57,13 @@ namespace EIP.Views
 
                         break;
                     case Account.TypeAccount.Twitter:
-                        while (((AccountTwitter)Connexion.currentAccount).homeStatuses == null)
+                        dt_Tick(null, null);
+                        if (((AccountTwitter)Connexion.currentAccount).homeStatuses != null)
                         {
-
+                            FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                            ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                            ContentPanel.Visibility = System.Windows.Visibility.Visible;
                         }
-                        FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
-                        ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                        ContentPanel.Visibility = System.Windows.Visibility.Visible;
                         break;
                     case Account.TypeAccount.Myspace:
                         break;
@@ -72,7 +72,7 @@ namespace EIP.Views
                 }
                 
                 DispatcherTimer dt = new DispatcherTimer();
-                dt.Interval = new TimeSpan(0, 0, 0, 20, 000);
+                dt.Interval = new TimeSpan(0, 0, 10, 20, 000);
                 dt.Tick += new EventHandler(dt_Tick);
                 dt.Start();
 
@@ -89,11 +89,19 @@ namespace EIP.Views
                     break;
                 case Account.TypeAccount.Twitter:
                     Connexion.TwitterReloadHomeStatuses();
-                    if (FeedsControl.DataContext != null)
+                    
+                    if (((AccountTwitter)Connexion.currentAccount).homeStatuses != null)
                     {
-                        TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
-                        if (last.Id != ((AccountTwitter)Connexion.currentAccount).homeStatuses.First().Id)
+                        if (FeedsControl.DataContext != null)
+                        {
+                            TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
+                            if (last.Id != ((AccountTwitter)Connexion.currentAccount).homeStatuses.First().Id)
+                                FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                        }
+                        else
                             FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                        ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                        ContentPanel.Visibility = System.Windows.Visibility.Visible;
                     }
                     break;
                 case Account.TypeAccount.Myspace:

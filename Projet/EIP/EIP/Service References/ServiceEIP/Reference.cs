@@ -849,6 +849,11 @@ namespace EIP.ServiceEIP {
         
         EIP.ServiceEIP.TwitterUser EndTwitterGetUserInfo(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/TwitterCheckUserInfo", ReplyAction="http://tempuri.org/IServiceEIP/TwitterCheckUserInfoResponse")]
+        System.IAsyncResult BeginTwitterCheckUserInfo(string username, string password, System.AsyncCallback callback, object asyncState);
+        
+        long EndTwitterCheckUserInfo(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/TwitterGetHomeStatuses", ReplyAction="http://tempuri.org/IServiceEIP/TwitterGetHomeStatusesResponse")]
         System.IAsyncResult BeginTwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
         
@@ -931,6 +936,25 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class TwitterCheckUserInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public TwitterCheckUserInfoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class TwitterGetHomeStatusesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -988,6 +1012,12 @@ namespace EIP.ServiceEIP {
         private EndOperationDelegate onEndTwitterGetUserInfoDelegate;
         
         private System.Threading.SendOrPostCallback onTwitterGetUserInfoCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginTwitterCheckUserInfoDelegate;
+        
+        private EndOperationDelegate onEndTwitterCheckUserInfoDelegate;
+        
+        private System.Threading.SendOrPostCallback onTwitterCheckUserInfoCompletedDelegate;
         
         private BeginOperationDelegate onBeginTwitterGetHomeStatusesDelegate;
         
@@ -1059,6 +1089,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<GetAccessTokenCompletedEventArgs> GetAccessTokenCompleted;
         
         public event System.EventHandler<TwitterGetUserInfoCompletedEventArgs> TwitterGetUserInfoCompleted;
+        
+        public event System.EventHandler<TwitterCheckUserInfoCompletedEventArgs> TwitterCheckUserInfoCompleted;
         
         public event System.EventHandler<TwitterGetHomeStatusesCompletedEventArgs> TwitterGetHomeStatusesCompleted;
         
@@ -1220,6 +1252,54 @@ namespace EIP.ServiceEIP {
                         token,
                         tokenSecret,
                         userId}, this.onEndTwitterGetUserInfoDelegate, this.onTwitterGetUserInfoCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginTwitterCheckUserInfo(string username, string password, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginTwitterCheckUserInfo(username, password, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        long EIP.ServiceEIP.IServiceEIP.EndTwitterCheckUserInfo(System.IAsyncResult result) {
+            return base.Channel.EndTwitterCheckUserInfo(result);
+        }
+        
+        private System.IAsyncResult OnBeginTwitterCheckUserInfo(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string username = ((string)(inValues[0]));
+            string password = ((string)(inValues[1]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginTwitterCheckUserInfo(username, password, callback, asyncState);
+        }
+        
+        private object[] OnEndTwitterCheckUserInfo(System.IAsyncResult result) {
+            long retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndTwitterCheckUserInfo(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnTwitterCheckUserInfoCompleted(object state) {
+            if ((this.TwitterCheckUserInfoCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.TwitterCheckUserInfoCompleted(this, new TwitterCheckUserInfoCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void TwitterCheckUserInfoAsync(string username, string password) {
+            this.TwitterCheckUserInfoAsync(username, password, null);
+        }
+        
+        public void TwitterCheckUserInfoAsync(string username, string password, object userState) {
+            if ((this.onBeginTwitterCheckUserInfoDelegate == null)) {
+                this.onBeginTwitterCheckUserInfoDelegate = new BeginOperationDelegate(this.OnBeginTwitterCheckUserInfo);
+            }
+            if ((this.onEndTwitterCheckUserInfoDelegate == null)) {
+                this.onEndTwitterCheckUserInfoDelegate = new EndOperationDelegate(this.OnEndTwitterCheckUserInfo);
+            }
+            if ((this.onTwitterCheckUserInfoCompletedDelegate == null)) {
+                this.onTwitterCheckUserInfoCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnTwitterCheckUserInfoCompleted);
+            }
+            base.InvokeAsync(this.onBeginTwitterCheckUserInfoDelegate, new object[] {
+                        username,
+                        password}, this.onEndTwitterCheckUserInfoDelegate, this.onTwitterCheckUserInfoCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1438,6 +1518,20 @@ namespace EIP.ServiceEIP {
             public EIP.ServiceEIP.TwitterUser EndTwitterGetUserInfo(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 EIP.ServiceEIP.TwitterUser _result = ((EIP.ServiceEIP.TwitterUser)(base.EndInvoke("TwitterGetUserInfo", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginTwitterCheckUserInfo(string username, string password, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = username;
+                _args[1] = password;
+                System.IAsyncResult _result = base.BeginInvoke("TwitterCheckUserInfo", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public long EndTwitterCheckUserInfo(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                long _result = ((long)(base.EndInvoke("TwitterCheckUserInfo", _args, result)));
                 return _result;
             }
             
