@@ -1,1 +1,0 @@
-K:\-- Etna\ETNA 2\eip-silverlight\trunk\Projet\EIP\EIP.Web\EIP.Web.csproj,634019503097606605,GifHandler.ashx.cs,Properties\AssemblyInfo.cs,
