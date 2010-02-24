@@ -32,6 +32,27 @@ namespace EIP
             
         }
 
+          //*******************************\\
+         //*Methode de récupération d'infos*\\
+        //***********************************\\
+
+        /// <summary>
+        /// Met à jour l'attribut "homeStatuses"
+        /// </summary>
+        public void ReloadHomeStatuses()
+        {
+            Connexion.serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
+            Connexion.serviceEIP.TwitterGetHomeStatusesAsync(Connexion.consumerKey, Connexion.consumerSecret, this.token, this.tokenSecret);
+        }
+
+        private  void serviceEIP_TwitterGetHomeStatusesCompleted(object sender, TwitterGetHomeStatusesCompletedEventArgs e)
+        {
+            if (this.typeAccount == Account.TypeAccount.Twitter && e != null && e.Result != null)
+            {
+                this.homeStatuses = e.Result;
+                Connexion.SaveAccount();
+        }
+
     
     }
 }

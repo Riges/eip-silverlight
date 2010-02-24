@@ -36,8 +36,8 @@ namespace EIP
         private const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
 
         //api key Twitter
-        private const string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
-        private const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
+        public const string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
+        public const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
 
         //Accounts
         public static List<Account> currentAccounts { get; set; }
@@ -52,7 +52,7 @@ namespace EIP
         public static Frame contentFrame;
 
         //WCF
-        private static ServiceEIP.ServiceEIPClient serviceEIP = new ServiceEIP.ServiceEIPClient();
+        public static ServiceEIP.ServiceEIPClient serviceEIP = new ServiceEIP.ServiceEIPClient();
 
         public static void Start()
         {
@@ -100,12 +100,34 @@ namespace EIP
 
         private static void GetSession()
         {
-            currentAccount = (storage.Contains("CurrentAccount") ? (Account)storage["CurrentAccount"] : null);
+            if (storage.Contains("CurrentAccount"))
+            {
+                string curAccount = storage["CurrentAccount"].ToString();
+                currentAccount =(Account)storage[curAccount];
+            }
         }
 
         private static void SetSession()
         {
-            storage["CurrentAccount"] = currentAccount; 
+            //storage["CurrentAccount"] = currentAccount;
+            storage["CurrentAccount"] = "Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID;
+        }
+
+        public static void SaveAccount()
+        {
+            switch (currentAccount.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    storage["Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID] = (AccountFacebook)currentAccount
+                    break;
+                case Account.TypeAccount.Twitter:
+                    storage["Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID] = (AccountTwitter)currentAccount
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private static void DestroySession()
@@ -285,26 +307,7 @@ namespace EIP
             }
         }
 
-        //// Async method
-        //// 
-
-      
-        public static void TwitterReloadHomeStatuses()
-        {
-            serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
-            serviceEIP.TwitterGetHomeStatusesAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret);
-        }
-
-
-
-        //// end Async method
-        //// 
-
-        private static void serviceEIP_TwitterGetHomeStatusesCompleted(object sender, TwitterGetHomeStatusesCompletedEventArgs e)
-        {
-            if(currentAccount.typeAccount == Account.TypeAccount.Twitter)
-                ((AccountTwitter)currentAccount).homeStatuses = e.Result;
-        }
+        
 
         private static void serviceEIP_TwitterGetUserInfoCompleted(object sender, ServiceEIP.TwitterGetUserInfoCompletedEventArgs e)
         {
