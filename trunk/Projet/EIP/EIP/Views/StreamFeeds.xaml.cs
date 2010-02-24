@@ -89,7 +89,7 @@ namespace EIP.Views
                     break;
                 case Account.TypeAccount.Twitter:
                     //Connexion.TwitterReloadHomeStatuses();
-                    ((AccountTwitter)Connexion.currentAccount).ReloadHomeStatuses();
+                    ((AccountTwitter)Connexion.currentAccount).LoadHomeStatuses();
                     
                     if (((AccountTwitter)Connexion.currentAccount).homeStatuses != null)
                     {

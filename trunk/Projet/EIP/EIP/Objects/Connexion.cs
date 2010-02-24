@@ -285,7 +285,7 @@ namespace EIP
                         serviceEIP.TwitterGetUserInfoCompleted += new EventHandler<TwitterGetUserInfoCompletedEventArgs>(serviceEIP_TwitterGetUserInfoCompleted);
                         serviceEIP.TwitterGetUserInfoAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret, ((AccountTwitter)currentAccount).userID);
 
-                        ((AccountTwitter)currentAccount).ReloadHomeStatuses();
+                        ((AccountTwitter)currentAccount).LoadHomeStatuses();
                         //serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
                         //serviceEIP.TwitterGetHomeStatusesAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret);
 

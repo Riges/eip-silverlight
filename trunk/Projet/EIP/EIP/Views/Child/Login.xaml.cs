@@ -19,6 +19,19 @@ namespace EIP.Views.Child
             InitializeComponent();
         }
 
+        private void LoadDropDownType()
+        {
+            var enumType = typeof(Account.TypeAccount);
+            var fields =  from field in enumType.GetFields()
+                          where field.IsLiteral
+                          select field.GetValue(null).ToString();
+            DropDownTypes.ItemsSource = fields;
+
+
+
+        }
+
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
