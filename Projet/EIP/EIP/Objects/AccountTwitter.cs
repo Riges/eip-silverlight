@@ -39,7 +39,7 @@ namespace EIP
         /// <summary>
         /// Met à jour l'attribut "homeStatuses"
         /// </summary>
-        public void ReloadHomeStatuses()
+        public void LoadHomeStatuses()
         {
             Connexion.serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
             Connexion.serviceEIP.TwitterGetHomeStatusesAsync(Connexion.consumerKey, Connexion.consumerSecret, this.token, this.tokenSecret);
