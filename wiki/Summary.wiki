@@ -1,0 +1,18 @@
+#summary Comment bien remplir les summary de méthode
+
+= Introduction =
+
+Comment bien remplir les summary de méthode
+
+
+= Details =
+Afin de pouvoir s'y retrouver et avoir un minimum de documentation il est obligatoire de créer un summary pour toute méthode contenu dans un objet métier et optionnel pour les objets graphiques (bien que fortement recommandé)
+
+Pour écrire un summary :<br />
+  # Se placer la ligne au-dessus la méthode
+  # Taper "///"
+  # le summary apparait.
+  # Remplir au minimum la description
+  # Remplir s'il y a lieu : 
+  * les params
+  * le returns
