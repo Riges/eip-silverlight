@@ -51,6 +51,7 @@ namespace EIP
             {
                 this.homeStatuses = e.Result;
                 Connexion.SaveAccount();
+            }
         }
 
     
