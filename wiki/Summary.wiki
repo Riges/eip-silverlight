@@ -16,3 +16,5 @@ Pour écrire un summary :<br />
   # Remplir s'il y a lieu : 
   * les params
   * le returns
+
+Lien : [http://www.jmdoudoux.fr/microsoft/doctechcsharp/doctechcsharp.htm Détail de chaque balise]
