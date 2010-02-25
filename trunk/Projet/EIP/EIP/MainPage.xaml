@@ -23,12 +23,12 @@
                                      NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>
                             
 
-                            <Rectangle x:Name="Divider1" Style="{StaticResource DividerStyle}"/>
+                            <Rectangle x:Name="DividerHome" Style="{StaticResource DividerStyle}"/>
 
-                            <HyperlinkButton x:Name="Link2" Style="{StaticResource LinkStyle}" 
+                            <HyperlinkButton x:Name="LinkFriends" Style="{StaticResource LinkStyle}" 
                                      NavigateUri="/Friends" TargetName="ContentFrame" Content="Friends"/>
                             
-                            <Rectangle x:Name="Divider3" Style="{StaticResource DividerStyle}"/>
+                            <Rectangle x:Name="DividerFriends" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="LinkCreateNewFbAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewFbAccount_Click"
                                       Content="Ajouter Fb"/>

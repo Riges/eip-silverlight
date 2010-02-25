@@ -27,9 +27,41 @@ namespace EIP
         {
             InitializeComponent();
 
+            this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             Connexion.listeComptes = liste;
             Connexion.contentFrame = ContentFrame;
             Connexion.LoginToAccount();
+            LoadInterface();
+        }
+
+        private void LoadInterface()
+        {
+            if (Connexion.currentAccount == null)
+            {
+                LinkHome.Visibility = System.Windows.Visibility.Collapsed;
+                DividerHome.Visibility = System.Windows.Visibility.Collapsed;
+                LinkFriends.Visibility = System.Windows.Visibility.Collapsed;
+                DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
+                LinkSeDeco.Visibility = System.Windows.Visibility.Collapsed;
+
+            }
+            else
+            {
+                LinkHome.Visibility = System.Windows.Visibility.Collapsed;
+                DividerHome.Visibility = System.Windows.Visibility.Collapsed;
+                LinkFriends.Visibility = System.Windows.Visibility.Collapsed;
+                DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
+                LinkSeDeco.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Connexion.currentAccount == null)
+            {
+                Views.Child.Login loginWindow = new Views.Child.Login(false);
+                loginWindow.Show();
+            }
         }
 
         private void browserSession_LoginCompleted(object sender, EventArgs e)
