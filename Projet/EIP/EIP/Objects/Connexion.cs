@@ -102,8 +102,12 @@ namespace EIP
         {
             if (storage.Contains("CurrentAccount"))
             {
-                string curAccount = storage["CurrentAccount"].ToString();
-                currentAccount =(Account)storage[curAccount];
+                if (storage["CurrentAccount"] != null)
+                {
+                    string curAccountKey = storage["CurrentAccount"].ToString();
+                    if (storage.Contains(curAccountKey))
+                        currentAccount = (Account)storage[curAccountKey];
+                }
             }
         }
 
@@ -295,20 +299,19 @@ namespace EIP
                     default:
                         break;
                 }
-                
-                
+
+
                 MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
                 msgBox.Show();
 
-                if(contentFrame != null)
-                    contentFrame.Navigate(new Uri("/Home?time="+DateTime.Now.Ticks, UriKind.Relative));
+                if (contentFrame != null)
+                    contentFrame.Navigate(new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative));
                 if (listeComptes != null)
-                    listeComptes.Reload();   
-            
-            }
-        }
+                    listeComptes.Reload();
 
-        
+            }
+
+        }      
 
         private static void serviceEIP_TwitterGetUserInfoCompleted(object sender, ServiceEIP.TwitterGetUserInfoCompletedEventArgs e)
         {

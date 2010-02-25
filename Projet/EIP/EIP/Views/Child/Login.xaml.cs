@@ -14,9 +14,18 @@ namespace EIP.Views.Child
 {
     public partial class Login : ChildWindow
     {
-        public Login()
+        private bool addAccount;
+
+        public Login(bool addAnAccount)
         {
+            this.addAccount = addAnAccount;
             InitializeComponent();
+            LoadDropDownType();
+
+            if (!this.addAccount)
+                this.Title = "Veuillez choisir un réseau social pour vous connecter";
+            else
+                this.Title = "Veuillez choisir le réseau social à ajouter";
         }
 
         private void LoadDropDownType()
@@ -34,12 +43,50 @@ namespace EIP.Views.Child
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+
+            if (!this.addAccount)
+            {
+
+            }
+            else
+            {
+
+            }
+
             this.DialogResult = true;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
+        }
+
+        private void DropDownTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch ((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedItem.ToString(),true) )
+            {
+                case Account.TypeAccount.Facebook:
+                    pseudoText.Visibility = System.Windows.Visibility.Collapsed;
+                    pseudoBox.Visibility = System.Windows.Visibility.Collapsed;
+                    mdpText.Visibility = System.Windows.Visibility.Collapsed;
+                    mdpBox.Visibility = System.Windows.Visibility.Collapsed;
+                    break;
+                case Account.TypeAccount.Twitter:
+
+                    if (!this.addAccount)
+                    {
+                        pseudoText.Visibility = System.Windows.Visibility.Visible;
+                        pseudoBox.Visibility = System.Windows.Visibility.Visible;
+                        mdpText.Visibility = System.Windows.Visibility.Visible;
+                        mdpBox.Visibility = System.Windows.Visibility.Visible;
+                    }
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 }
