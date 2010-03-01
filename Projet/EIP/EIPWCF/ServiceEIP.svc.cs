@@ -19,6 +19,28 @@ namespace EIPWCF
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     public class ServiceEIP : IServiceEIP
     {
+
+        public string test()
+        {
+            return "";
+        }
+
+        public Account GetAccountByUserID(long userID)
+        {
+            Model model = new Model();
+            return model.GetAccount(userID);
+        }
+
+        public AccountFacebook testfb()
+        {
+            return  new AccountFacebook();
+        }
+        public AccountTwitter testT()
+        {
+            return new AccountTwitter();
+        }
+
+
 /*
         public string AuthorizeDesktop(string consumerKey, string consumerSecret)
         {

@@ -15,6 +15,18 @@ namespace EIPWCF
     [ServiceContract]
     public interface IServiceEIP
     {
+        [OperationContract]
+        string test();
+
+        [OperationContract]
+        Account GetAccountByUserID(long userID);
+
+        [OperationContract]
+        AccountFacebook testfb();
+
+        [OperationContract]
+        AccountTwitter testT();
+     
 
         /*[OperationContract]
         string AuthorizeDesktop(string consumerKey, string consumerSecret);

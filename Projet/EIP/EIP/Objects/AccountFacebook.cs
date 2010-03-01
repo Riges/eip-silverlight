@@ -12,20 +12,20 @@ using System.Runtime.Serialization;
 
 namespace EIP
 {
-    [KnownTypeAttribute(typeof(AccountFacebook))]
-    public class AccountFacebook: Account
+    [KnownTypeAttribute(typeof(AccountFacebookLight))]
+    public class AccountFacebookLight : AccountLight
     {
         //public long accountID { get; set; }
         //public TypeAccount typeAccount { get; set; }
         //public long userID { get; set; }
-
+        /*
         public bool sessionExpires { get; set; }
         public string sessionKey { get; set; }
         public string sessionSecret { get; set; }
 
+        */
 
-
-        public AccountFacebook()
+        public AccountFacebookLight()
         {
             
         }

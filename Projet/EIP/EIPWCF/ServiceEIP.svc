@@ -1,1 +1,2 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="EIPWCF.ServiceEIP, EIPWCF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0cc6dfd31b30f6b2" CodeBehind="ServiceEIP.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="EIPWCF.ServiceEIP" CodeBehind="ServiceEIP.svc.cs" %>
+

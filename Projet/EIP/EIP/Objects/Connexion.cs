@@ -19,6 +19,8 @@ using EIP.Views.Controls;
 using System.Runtime.Serialization;
 using System.Windows.Threading;
 using EIP.ServiceEIP;
+ 
+
 
 using System.Windows.Navigation;
 using EIP.Views;
@@ -45,9 +47,9 @@ namespace EIP
         public const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
 
         //Accounts
-        public static List<Account> currentAccounts { get; set; }
-        public static List<Account> storageAccounts { get; set; }
-        public static Account currentAccount { get; set; }
+        public static List<AccountLight> currentAccounts { get; set; }
+        public static List<AccountLight> storageAccounts { get; set; }
+        public static AccountLight currentAccount { get; set; }
 
         private static IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
        
@@ -59,6 +61,11 @@ namespace EIP
         //WCF
         public static ServiceEIP.ServiceEIPClient serviceEIP = new ServiceEIP.ServiceEIPClient();
 
+        //Autre
+        private static bool addAccount = false;
+       
+        /////////
+   
         public static void Start()
         {
             browserSession = new BrowserSession(ApplicationKey);
@@ -68,12 +75,12 @@ namespace EIP
 
         private static void LoadFromStorage()
         {
-            storageAccounts = new List<Account>();
+            storageAccounts = new List<AccountLight>();
             foreach (string key in storage.Keys)
             {
                 if (key.StartsWith("Account-"))
                 {
-                    storageAccounts.Add((Account)storage[key]);
+                    storageAccounts.Add((AccountLight)storage[key]);
                 }
             }
 
@@ -101,7 +108,6 @@ namespace EIP
                 }
             }
         }
-
 
         private static void GetSession()
         {
@@ -143,6 +149,38 @@ namespace EIP
         {
             storage["CurrentAccount"] = null;
             currentAccounts = null;
+        }
+
+        public static void Login(Account.TypeAccount type, string pseudo, string password)
+        {
+            addAccount = false;
+            switch (type)
+            {
+                case Account.TypeAccount.Facebook:
+
+                    if (facebookAPI != null)
+                    {
+                        browserSession = (BrowserSession)facebookAPI.Session;
+                        facebookAPI = null;
+                        browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
+                        browserSession.Logout();
+                    }
+                    else
+                    {
+                        browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
+                        browserSession.Logout();
+                    }
+                   
+
+                    break;
+                case Account.TypeAccount.Twitter:
+
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            }
         }
 
         public static void AddAccount(Account.TypeAccount type)
@@ -236,7 +274,7 @@ namespace EIP
             FluentBase<TwitterResult>.SetClientInfo(clientInfo);
         }
 
-        public static void AddTwitterAccount(AccountTwitter accountTwitter)//, Dispatcher dispatch
+        public static void AddTwitterAccount(AccountTwitterLight accountTwitter)//, Dispatcher dispatch
         {
             var accessToken = FluentTwitter.CreateRequest()
                 .Configuration.UseTransparentProxy(ProxyUrl)
@@ -401,52 +439,66 @@ namespace EIP
         {
             if (users.Count > 0)
             {
-                long accountId;
-                bool currentSessionExpires = true;
-                string currentSessionKey = string.Empty;
-                string currentSessionSecret = string.Empty;
-                if (currentAccounts != null)
+                if (addAccount)
                 {
-                    accountId = currentAccounts[0].accountID;
-                    //currentSessionExpires = ((AccountFacebook)currentAccount).sessionExpires;
-                    //currentSessionKey = ((AccountFacebook)currentAccount).sessionKey;
-                    //currentSessionSecret = ((AccountFacebook)currentAccount).sessionSecret;
+                    long accountId;
+                    bool currentSessionExpires = true;
+                    string currentSessionKey = string.Empty;
+                    string currentSessionSecret = string.Empty;
+                    if (currentAccounts != null)
+                    {
+                        accountId = currentAccounts[0].accountID;
+                        //currentSessionExpires = ((AccountFacebook)currentAccount).sessionExpires;
+                        //currentSessionKey = ((AccountFacebook)currentAccount).sessionKey;
+                        //currentSessionSecret = ((AccountFacebook)currentAccount).sessionSecret;
+                    }
+                    else
+                    {
+                        accountId = (long)users[0].uid;
+
+                    }
+                    currentSessionExpires = facebookAPI.Session.SessionExpires;
+                    currentSessionKey = facebookAPI.Session.SessionKey;
+                    currentSessionSecret = facebookAPI.Session.SessionSecret;
+
+                    AccountFacebook newAccount = new AccountFacebook()
+                    {
+                        accountID = accountId,
+                        typeAccount = Account.TypeAccount.Facebook,
+                        userID = facebookAPI.Session.UserId,
+                        name = users[0].name,
+                        sessionExpires = currentSessionExpires,
+                        sessionKey = currentSessionKey,
+                        sessionSecret = currentSessionSecret
+                    };
+                    currentAccount = newAccount;
+                    SetSession();
+
+                    //Ajouter la verif sur cpt de type Facebook
+                    var theAccountID = from Account account in storageAccounts
+                                       where account.userID == currentAccount.userID
+                                       select account.accountID;
+                    if (theAccountID.Count() == 0)
+                    {
+                        storage["Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID] = (AccountFacebook)currentAccount;
+                    }
+
+                    LoadFromStorage();
+                    listeComptes.Reload();
+                    LoginToAccount();
                 }
                 else
                 {
-                    accountId = (long)users[0].uid;
-                    
+                    serviceEIP.GetAccountByUserIDCompleted += new EventHandler<GetAccountByUserIDCompletedEventArgs>(serviceEIP_GetAccountByUserIDCompleted);
+                    serviceEIP.GetAccountByUserIDAsync((long)users[0].uid);
                 }
-                currentSessionExpires = facebookAPI.Session.SessionExpires;
-                currentSessionKey = facebookAPI.Session.SessionKey;
-                currentSessionSecret = facebookAPI.Session.SessionSecret;
-
-                AccountFacebook newAccount = new AccountFacebook()
-                {
-                    accountID = accountId,
-                    typeAccount = Account.TypeAccount.Facebook,
-                    userID = facebookAPI.Session.UserId,
-                    name = users[0].name,
-                    sessionExpires = currentSessionExpires,
-                    sessionKey = currentSessionKey,
-                    sessionSecret = currentSessionSecret
-                };
-                currentAccount = newAccount;
-                SetSession();
-
-                //Ajouter la verif sur cpt de type Facebook
-                var theAccountID = from Account account in storageAccounts
-                                   where account.userID == currentAccount.userID
-                                   select account.accountID;
-                if (theAccountID.Count() == 0)
-                {
-                    storage["Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID] = (AccountFacebook)currentAccount;
-                }
-
-                LoadFromStorage();
-                listeComptes.Reload();
-                LoginToAccount();
             }
+        }
+
+        static void serviceEIP_GetAccountByUserIDCompleted(object sender, GetAccountByUserIDCompletedEventArgs e)
+        {
+            //currentAccount = e.Result;
+            //ServiceEIP.AccountFacebook
         }
 
         private static void LoginFacebook_LoginCompleted(object sender, EventArgs e)

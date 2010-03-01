@@ -9,32 +9,22 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization;
+using EIP.ServiceEIP;
 
 namespace EIP
 {
     //[KnownTypeAttribute(typeof(Account))]
-    public class Account : Object
+    public class AccountLight
     {
-        public long accountID { get; set; }
-        public TypeAccount typeAccount { get; set; }
-        public long userID { get; set; }
-        public string name { get; set; }
-        
-        
+        public Account account { get; set; }
 
-        public enum TypeAccount
-        {
-            Facebook,
-            Twitter,
-            Myspace
-        }
-
-
-        public Account()
+ 
+        public AccountLight()
         {
             
         }
 
-    
     }
+
+    
 }

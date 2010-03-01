@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIP", "EIP\EIP.csproj", "{12572F17-853E-41D1-BEDD-6C7F81F72046}"
+	ProjectSection(ProjectDependencies) = postProject
+		{715A15B1-A693-4A3E-8A4B-953BB9D95453} = {715A15B1-A693-4A3E-8A4B-953BB9D95453}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIP.Web", "EIP.Web\EIP.Web.csproj", "{B6BB3F83-219A-445E-876B-46401B96E405}"
 EndProject

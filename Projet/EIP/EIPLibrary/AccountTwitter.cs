@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Dimebrain.TweetSharp.Model;
+//using Dimebrain.TweetSharp.Model;
+
 
 namespace EIPLibrary
 {
@@ -15,8 +16,8 @@ namespace EIPLibrary
         public string token { get; set; }
         public string tokenSecret { get; set; }
         public string pin { get; set; }
-        public TwitterUser user { get; set; }
-        public IEnumerable<TwitterStatus> homeStatuses { get; set; }
+        //public TwitterUser user { get; set; }
+        //public IEnumerable<TwitterStatus> homeStatuses { get; set; }
 
         public AccountTwitter()
         {
