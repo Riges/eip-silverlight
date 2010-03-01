@@ -14,8 +14,8 @@ namespace EIP
 {
     public partial class TwitterPin : ChildWindow
     {
-        private AccountTwitter _accountTwitter;
-        public TwitterPin(AccountTwitter accountTwitter, Uri url)
+        private AccountTwitterLight _accountTwitter;
+        public TwitterPin(AccountTwitterLight accountTwitter, Uri url)
         {
             InitializeComponent();
             _accountTwitter = accountTwitter;

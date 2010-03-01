@@ -29,9 +29,9 @@ namespace EIP
         public string currentSessionKey { get; set; }
         public string currentSessionSecret { get; set; }
         public long currentUserID { get; set; }
-        public List<Account> currentAccounts { get; set; }
-        public List<Account> storageAccounts { get; set; }
-        public Account currentAccount { get; set; }
+       // public List<Account> currentAccounts { get; set; }
+        //public List<Account> storageAccounts { get; set; }
+        //public Account currentAccount { get; set; }
 
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
 

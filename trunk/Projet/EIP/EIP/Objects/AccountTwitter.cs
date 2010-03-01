@@ -14,11 +14,12 @@ using System.Collections.Generic;
 using TweetSharp.Fluent;
 using TweetSharp.Model;
 using TweetSharp.Extensions;
+using EIP.ServiceEIP;
 
 namespace EIP
 {
-    [KnownTypeAttribute(typeof(AccountTwitter))]
-    public class AccountTwitter : Account
+    [KnownTypeAttribute(typeof(AccountTwitterLight))]
+    public class AccountTwitterLight : AccountLight
     {
         //public long accountID { get; set; }
         //public TypeAccount typeAccount { get; set; }
@@ -32,7 +33,7 @@ namespace EIP
 
         private ItemsControl itemsControl;
 
-        public AccountTwitter()
+        public AccountTwitterLight()
         {
             
         }
@@ -42,7 +43,7 @@ namespace EIP
         //***********************************\\
 
         /// <summary>
-        /// Met à jour l'attribut "homeStatuses"
+        /// Met à jour l'attribut "homeStatuses" (les tweets de la homepage)
         /// </summary>
         public void LoadHomeStatuses()
         {
@@ -63,7 +64,7 @@ namespace EIP
         {
             var statuses = result.AsStatuses();
 
-            if ((this.typeAccount == Account.TypeAccount.Twitter) && (result.AsError() == null) && (statuses != null))
+            if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (result.AsError() == null) && (statuses != null))
             {
                 this.homeStatuses = statuses;
                 Connexion.SaveAccount();

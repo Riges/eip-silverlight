@@ -37,7 +37,7 @@ namespace EIP.Views
         {
             if (Connexion.currentAccount != null)
             {
-                switch (Connexion.currentAccount.typeAccount)
+                switch (Connexion.currentAccount.account.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
                         facebookAPI = Connexion.facebookAPI;
