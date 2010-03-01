@@ -5,40 +5,41 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-
+/*
 using Dimebrain.TweetSharp;
 using Dimebrain.TweetSharp.Fluent;
 using Dimebrain.TweetSharp.Extensions;
-using Dimebrain.TweetSharp.Model;
+using Dimebrain.TweetSharp.Model;*/
 using System.Threading;
-using EIP;
+using EIPLibrary;
+
 
 namespace EIPWCF
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     public class ServiceEIP : IServiceEIP
     {
-
+/*
         public string AuthorizeDesktop(string consumerKey, string consumerSecret)
         {
             var requestToken = GetRequestToken(consumerKey, consumerSecret);
             
-            /*
+            
             FluentTwitter.CreateRequest()
                .Authentication
                .AuthorizeDesktop(consumerKey,
                                  consumerSecret,
                                  requestToken.Token);
-             */
+             
             
             return requestToken.Token;
-        }
-
+        }*/
+        /*
         public IFluentTwitter GetFluent()
         {
             return FluentTwitter.CreateRequest();
-        }
-
+        }*/
+        /*
         private static void GetResponse(TwitterResult response)
         {
             var identity = response.AsUser();
@@ -54,8 +55,8 @@ namespace EIPWCF
                     Console.WriteLine(error.ErrorMessage);
                 }
             }
-        }
-
+        }*/
+        /*
         private static OAuthToken GetRequestToken(string consumerKey, string consumerSecret)
         {
             var requestToken = FluentTwitter.CreateRequest()
@@ -74,8 +75,8 @@ namespace EIPWCF
             }
 
             return result;
-        }
-
+        }*/
+        /*
         public AccountTwitter GetAccessToken(string consumerKey, string consumerSecret, string token, string pin)
         {
            
@@ -105,7 +106,8 @@ namespace EIPWCF
 
             return accountTwitter;// result.TokenSecret;
         }
-
+        */
+        /*
         public TwitterUser TwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId)
         {
             var userInfo = FluentTwitter.CreateRequest()
@@ -116,8 +118,8 @@ namespace EIPWCF
             var result = response.AsUser();
 
             return result;
-        }
-
+        }*/
+        /*
         public long TwitterCheckUserInfo(string username, string password)
         {
             var userInfo = FluentTwitter.CreateRequest()
@@ -128,8 +130,8 @@ namespace EIPWCF
             var result = response.AsToken();
 
             return Convert.ToInt64(result.UserId);
-        }
-
+        }*/
+        /*
         public IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret)
         {
             var userInfo = FluentTwitter.CreateRequest()
@@ -140,11 +142,9 @@ namespace EIPWCF
             var result = response.AsStatuses();
 
             return result;
-        }
+        }*/
 
 
-
-        
         
 
         

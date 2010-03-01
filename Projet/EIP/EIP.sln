@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIP.Web", "EIP.Web\EIP.Web.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIPWCF", "EIPWCF\EIPWCF.csproj", "{715A15B1-A693-4A3E-8A4B-953BB9D95453}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIPLibrary", "EIPLibrary\EIPLibrary.csproj", "{10F3BBD2-119F-4F56-803F-05966756C028}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{715A15B1-A693-4A3E-8A4B-953BB9D95453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{715A15B1-A693-4A3E-8A4B-953BB9D95453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{715A15B1-A693-4A3E-8A4B-953BB9D95453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10F3BBD2-119F-4F56-803F-05966756C028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10F3BBD2-119F-4F56-803F-05966756C028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10F3BBD2-119F-4F56-803F-05966756C028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10F3BBD2-119F-4F56-803F-05966756C028}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

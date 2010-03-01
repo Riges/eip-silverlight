@@ -14,8 +14,9 @@ using Facebook.Rest;
 using Facebook.Utility;
 using System.Windows.Media.Imaging;
 using Facebook.Session;
-using EIP.ServiceEIP;
+//using EIP.ServiceEIP;
 using System.Windows.Data;
+using TweetSharp.Model;
 
 
 namespace EIP.Views.Controls
@@ -27,7 +28,6 @@ namespace EIP.Views.Controls
         public stream_post post { get; set; }
         public TwitterStatus status { get; set; }
       
-
         private Api facebookAPI;
 
         public Feed()
