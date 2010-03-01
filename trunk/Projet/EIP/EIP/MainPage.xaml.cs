@@ -31,6 +31,7 @@ namespace EIP
             Connexion.listeComptes = liste;
             Connexion.contentFrame = ContentFrame;
             Connexion.LoginToAccount();
+            Connexion.dispatcher = Dispatcher;
             LoadInterface();
         }
 

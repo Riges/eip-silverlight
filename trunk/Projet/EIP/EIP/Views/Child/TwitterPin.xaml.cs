@@ -15,18 +15,18 @@ namespace EIP
     public partial class TwitterPin : ChildWindow
     {
         private AccountTwitter _accountTwitter;
-        public TwitterPin(AccountTwitter accountTwitter)
+        public TwitterPin(AccountTwitter accountTwitter, Uri url)
         {
             InitializeComponent();
             _accountTwitter = accountTwitter;
-            link.NavigateUri = new Uri("http://api.twitter.com/oauth/authorize?oauth_token=" + _accountTwitter.token, UriKind.Absolute);
+            link.NavigateUri = url;//new Uri("http://api.twitter.com/oauth/authorize?oauth_token=" + _accountTwitter.token, UriKind.Absolute);
             link.TargetName = "_blank";
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             _accountTwitter.pin = pinBox.Text.Trim();
-            Connexion.AddTwitterAccount(_accountTwitter, Dispatcher);
+            Connexion.AddTwitterAccount(_accountTwitter);//, Dispatcher
             this.DialogResult = true;
         }
 

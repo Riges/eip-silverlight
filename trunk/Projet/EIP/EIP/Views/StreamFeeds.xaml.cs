@@ -17,7 +17,8 @@ using System.Collections;
 using System.Windows.Browser;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using EIP.ServiceEIP;
+using TweetSharp.Model;
+//using EIP.ServiceEIP;
 
 namespace EIP.Views
 {
@@ -72,7 +73,7 @@ namespace EIP.Views
                 }
                 
                 DispatcherTimer dt = new DispatcherTimer();
-                dt.Interval = new TimeSpan(0, 0, 10, 20, 000);
+                dt.Interval = new TimeSpan(0, 0, 0, 30, 000);
                 dt.Tick += new EventHandler(dt_Tick);
                 dt.Start();
 
@@ -88,7 +89,6 @@ namespace EIP.Views
                 case Account.TypeAccount.Facebook:
                     break;
                 case Account.TypeAccount.Twitter:
-                    //Connexion.TwitterReloadHomeStatuses();
                     ((AccountTwitter)Connexion.currentAccount).LoadHomeStatuses();
                     
                     if (((AccountTwitter)Connexion.currentAccount).homeStatuses != null)

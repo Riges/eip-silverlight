@@ -5,9 +5,9 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-using EIP;
-using Dimebrain.TweetSharp.Model;
-using Dimebrain.TweetSharp.Fluent;
+using EIPLibrary;
+//using Dimebrain.TweetSharp.Model;
+//using Dimebrain.TweetSharp.Fluent;
 
 namespace EIPWCF
 {
@@ -16,26 +16,27 @@ namespace EIPWCF
     public interface IServiceEIP
     {
 
-        [OperationContract]
+        /*[OperationContract]
         string AuthorizeDesktop(string consumerKey, string consumerSecret);
-
-        [OperationContract]
+        */
+       /* [OperationContract]
         AccountTwitter GetAccessToken(string consumerKey, string consumerSecret, string token, string pin);
-
-        [OperationContract]
+        */
+       /* [OperationContract]
         TwitterUser TwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId);
-
-        [OperationContract]
+        */
+        /*[OperationContract]
         long TwitterCheckUserInfo(string username, string password);
-
-        [OperationContract]
+        */
+       /* [OperationContract]
         IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret);
 
 
         [OperationContract]
         IFluentTwitter GetFluent();
-
+        */
         
+    
     }
 
 

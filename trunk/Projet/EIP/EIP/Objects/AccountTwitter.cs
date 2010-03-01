@@ -9,8 +9,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization;
-using EIP.ServiceEIP;
+//using EIP.ServiceEIP;
 using System.Collections.Generic;
+using TweetSharp.Fluent;
+using TweetSharp.Model;
+using TweetSharp.Extensions;
 
 namespace EIP
 {
@@ -27,6 +30,8 @@ namespace EIP
         public TwitterUser user { get; set; }
         public IEnumerable<TwitterStatus> homeStatuses { get; set; }
 
+        private ItemsControl itemsControl;
+
         public AccountTwitter()
         {
             
@@ -41,15 +46,26 @@ namespace EIP
         /// </summary>
         public void LoadHomeStatuses()
         {
-            Connexion.serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
-            Connexion.serviceEIP.TwitterGetHomeStatusesAsync(Connexion.consumerKey, Connexion.consumerSecret, this.token, this.tokenSecret);
+            //Connexion.serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
+            //Connexion.serviceEIP.TwitterGetHomeStatusesAsync(Connexion.consumerKey, Connexion.consumerSecret, this.token, this.tokenSecret);
+
+            var homeTimeline = FluentTwitter.CreateRequest()
+               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
+               .AuthenticateWith(token, tokenSecret)
+               .Statuses().OnHomeTimeline()
+               .CallbackTo(HomeTimelineReceived);
+
+            homeTimeline.RequestAsync();
         }
 
-        private  void serviceEIP_TwitterGetHomeStatusesCompleted(object sender, TwitterGetHomeStatusesCompletedEventArgs e)
+        //private  void serviceEIP_TwitterGetHomeStatusesCompleted(object sender, TwitterGetHomeStatusesCompletedEventArgs e)
+        private void HomeTimelineReceived(object sender, TwitterResult result)
         {
-            if (this.typeAccount == Account.TypeAccount.Twitter && e != null && e.Result != null)
+            var statuses = result.AsStatuses();
+
+            if ((this.typeAccount == Account.TypeAccount.Twitter) && (result.AsError() == null) && (statuses != null))
             {
-                this.homeStatuses = e.Result;
+                this.homeStatuses = statuses;
                 Connexion.SaveAccount();
             }
         }

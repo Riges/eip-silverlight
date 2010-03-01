@@ -23,6 +23,10 @@ using EIP.ServiceEIP;
 using System.Windows.Navigation;
 using EIP.Views;
 using System.ComponentModel;
+using TweetSharp.Fluent;
+using TweetSharp.Extensions;
+using TweetSharp.Model;
+using TweetSharp;
 
 namespace EIP
 {
@@ -36,6 +40,7 @@ namespace EIP
         private const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
 
         //api key Twitter
+        public const string ProxyUrl = "http://localhost:4164/proxy";
         public const string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
         public const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
 
@@ -48,7 +53,7 @@ namespace EIP
        
         //Controls
         public static ListeComptes listeComptes;
-        private static Dispatcher dispatcher;
+        public static Dispatcher dispatcher;
         public static Frame contentFrame;
 
         //WCF
@@ -162,8 +167,25 @@ namespace EIP
 
                     break;
                 case Account.TypeAccount.Twitter:
-                    serviceEIP.AuthorizeDesktopCompleted += new EventHandler<ServiceEIP.AuthorizeDesktopCompletedEventArgs>(test_AuthorizeDesktopCompleted);
-                    serviceEIP.AuthorizeDesktopAsync(consumerKey, consumerSecret);
+
+                    //serviceEIP.AuthorizeDesktopCompleted += new EventHandler<ServiceEIP.AuthorizeDesktopCompletedEventArgs>(test_AuthorizeDesktopCompleted);
+                    //serviceEIP.AuthorizeDesktopAsync(consumerKey, consumerSecret);
+
+
+                    SetTwitterClientInfo();
+
+                   // OAuthBus.RequestTokenRetrieved += OAuthBus_RequestTokenRetrieved;
+                    //OAuthBus.AccessTokenRetrieved += OAuthBus_AccessTokenRetrieved;
+
+                     var requestToken = FluentTwitter.CreateRequest()
+                        .Configuration.UseTransparentProxy(ProxyUrl)
+                        .Authentication.GetRequestToken()
+                        .CallbackTo(TwitterRequestTokenReceived);
+
+                    requestToken.RequestAsync();
+
+
+
                     break;
                 case Account.TypeAccount.Myspace:
                     break;
@@ -172,69 +194,113 @@ namespace EIP
             }
         }
 
-        private static void test_AuthorizeDesktopCompleted(object sender, ServiceEIP.AuthorizeDesktopCompletedEventArgs e)
+        private static void TwitterRequestTokenReceived(object sender, TwitterResult result)
         {
-            string token = e.Result;
+            var tokenRes = result.AsToken();
+
+            var authorizeUrl = FluentTwitter.CreateRequest()
+                .Authentication.GetAuthorizationUrl(tokenRes.Token);
+            var uri = new Uri(authorizeUrl);
+
+            dispatcher.BeginInvoke(() =>
+            {
+                string token = tokenRes.Token;
+                AccountTwitter accountTwitter = new AccountTwitter();
+                accountTwitter.token = token;
+                TwitterPin twitterPin = new TwitterPin(accountTwitter, uri);
+                twitterPin.Show();
+            });
+
+        }
+
+
+        //private static void test_AuthorizeDesktopCompleted(object sender, ServiceEIP.AuthorizeDesktopCompletedEventArgs e)
+        private static void Twitter_AuthorizeDesktop(object sender, TwitterResult result)
+        {
+            var tokenRes = result.AsToken();
+            string token = tokenRes.Token;// e.Result;
             AccountTwitter accountTwitter = new AccountTwitter();
             accountTwitter.token = token;
-            TwitterPin twitterPin = new TwitterPin(accountTwitter);
+            TwitterPin twitterPin = new TwitterPin(accountTwitter, new Uri(""));
             twitterPin.Show();
         }
 
-        public static void AddTwitterAccount(AccountTwitter accountTwitter, Dispatcher dispatch)
+        private static void SetTwitterClientInfo()
         {
+            var clientInfo = new TwitterClientInfo
+            {
+                ConsumerKey = consumerKey,
+                ConsumerSecret = consumerSecret
+            };
 
-
-            dispatcher = dispatch;
-            serviceEIP.GetAccessTokenCompleted += new EventHandler<ServiceEIP.GetAccessTokenCompletedEventArgs>(serviceEIP_GetAccessTokenCompleted);
-            serviceEIP.GetAccessTokenAsync(consumerKey, consumerSecret, accountTwitter.token, accountTwitter.pin);
+            FluentBase<TwitterResult>.SetClientInfo(clientInfo);
         }
 
-        static void serviceEIP_GetAccessTokenCompleted(object sender, ServiceEIP.GetAccessTokenCompletedEventArgs e)
+        public static void AddTwitterAccount(AccountTwitter accountTwitter)//, Dispatcher dispatch
         {
-            /*
-            MessageBox msgBox = new MessageBox("", "token : " + e.Result.token 
-                + " - secret : " + e.Result.tokenSecret
-                + " - name : " + e.Result.name 
-                + " - userId : " + e.Result.userID);
-            msgBox.Show();*/
-            
-            
-            EIP.ServiceEIP.AccountTwitter tmp = e.Result;
-            currentAccount = new AccountTwitter();
-            currentAccount.name = tmp.name;
-            currentAccount.typeAccount = Account.TypeAccount.Twitter;
-            currentAccount.userID = tmp.userID;
-            ((AccountTwitter)currentAccount).pin = tmp.pin;
-            ((AccountTwitter)currentAccount).token = tmp.token;
-            ((AccountTwitter)currentAccount).tokenSecret = tmp.tokenSecret;
+            var accessToken = FluentTwitter.CreateRequest()
+                .Configuration.UseTransparentProxy(ProxyUrl)
+                .Authentication.GetAccessToken(accountTwitter.token, accountTwitter.pin)
+                .CallbackTo(TwitterAccessTokenReceived);
 
-            
-            if (currentAccounts != null)
+             accessToken.RequestAsync();
+             
+
+            //dispatcher = dispatch;
+            //serviceEIP.GetAccessTokenCompleted += new EventHandler<ServiceEIP.GetAccessTokenCompletedEventArgs>(serviceEIP_GetAccessTokenCompleted);
+            //serviceEIP.GetAccessTokenAsync(consumerKey, consumerSecret, accountTwitter.token, accountTwitter.pin);
+        }
+
+        //static void serviceEIP_GetAccessTokenCompleted(object sender, ServiceEIP.GetAccessTokenCompletedEventArgs e)
+        private static void TwitterAccessTokenReceived(object sender, TwitterResult result)
+        {
+            var token = result.AsToken();
+
+            if (token == null)
             {
-                currentAccount.accountID = currentAccounts[0].accountID;
+                var error = result.AsError();
+                if (error != null)
+                {
+                    throw new Exception(error.ErrorMessage);
+                }
             }
             else
             {
-                currentAccount.accountID = (long)tmp.userID;
-            }
+                AccountTwitter accountTwitter = new AccountTwitter();
 
-            SetSession();
-            
-            //Ajouter la verif sur cpt de type Twitter
-            var theAccountID = from Account account in storageAccounts
-                               where account.userID == currentAccount.userID
-                               select account.accountID;
+                accountTwitter.typeAccount = Account.TypeAccount.Twitter;
+                accountTwitter.token = token.Token;
+                accountTwitter.tokenSecret = token.TokenSecret;
+                accountTwitter.name = token.ScreenName;
+                accountTwitter.userID = Convert.ToInt64(token.UserId);
 
-            
-            if (theAccountID.Count() == 0)
-            {
-                storage["Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID] = (AccountTwitter)currentAccount;
+                if (currentAccounts != null)
+                {
+                    accountTwitter.accountID = currentAccounts[0].accountID;
+                }
+                else
+                {
+                    accountTwitter.accountID = Convert.ToInt64(token.UserId);// (long)tmp.userID;
+                }
+                currentAccount = accountTwitter;
+                SetSession();
+
+                //Ajouter la verif sur cpt de type Twitter
+                var theAccountID = from Account account in storageAccounts
+                                   where account.userID == currentAccount.userID
+                                   && account.typeAccount == Account.TypeAccount.Twitter
+                                   select account.accountID;
+
+
+                if (theAccountID.Count() == 0)
+                {
+                    storage["Account-" + currentAccount.typeAccount.ToString() + "-" + currentAccount.userID] = (AccountTwitter)currentAccount;
+                }
+
+                LoadFromStorage();
+                listeComptes.Reload();
+                LoginToAccount();
             }
-           
-            LoadFromStorage();
-            listeComptes.Reload();
-            LoginToAccount();
         }
 
         private static void BrowserSession_LogoutCompleted(object sender, EventArgs e)
@@ -286,8 +352,8 @@ namespace EIP
                         break;
                     case Account.TypeAccount.Twitter:
 
-                        serviceEIP.TwitterGetUserInfoCompleted += new EventHandler<TwitterGetUserInfoCompletedEventArgs>(serviceEIP_TwitterGetUserInfoCompleted);
-                        serviceEIP.TwitterGetUserInfoAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret, ((AccountTwitter)currentAccount).userID);
+                        //serviceEIP.TwitterGetUserInfoCompleted += new EventHandler<TwitterGetUserInfoCompletedEventArgs>(serviceEIP_TwitterGetUserInfoCompleted);
+                        //serviceEIP.TwitterGetUserInfoAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret, ((AccountTwitter)currentAccount).userID);
 
                         ((AccountTwitter)currentAccount).LoadHomeStatuses();
                         //serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
@@ -300,9 +366,11 @@ namespace EIP
                         break;
                 }
 
-
-                MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
-                msgBox.Show();
+                dispatcher.BeginInvoke(() =>
+                    {
+                        MessageBox msgBox = new MessageBox(null, "Vous êtes connecté sur le compte " + currentAccount.typeAccount.ToString() + " : " + currentAccount.name);
+                        msgBox.Show();
+                    });
 
                 if (contentFrame != null)
                     contentFrame.Navigate(new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative));
@@ -313,11 +381,11 @@ namespace EIP
 
         }      
 
-        private static void serviceEIP_TwitterGetUserInfoCompleted(object sender, ServiceEIP.TwitterGetUserInfoCompletedEventArgs e)
+        /*private static void serviceEIP_TwitterGetUserInfoCompleted(object sender, ServiceEIP.TwitterGetUserInfoCompletedEventArgs e)
         {
             if (currentAccount.typeAccount == Account.TypeAccount.Twitter)
                 ((AccountTwitter)currentAccount).user = e.Result;
-        }
+        }*/
 
         private static void NewAccountFacebook_LoginCompleted(object sender, EventArgs e)
         {
