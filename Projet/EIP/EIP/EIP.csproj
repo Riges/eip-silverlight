@@ -87,8 +87,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OAuth\OAuthBus.cs" />
-    <Compile Include="OAuth\OAuthEventArgs.cs" />
     <Compile Include="Objects\Account.cs" />
     <Compile Include="Objects\AccountFacebook.cs" />
     <Compile Include="Objects\Connexion.cs" />
