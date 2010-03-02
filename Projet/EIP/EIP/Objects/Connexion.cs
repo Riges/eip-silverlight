@@ -71,6 +71,7 @@ namespace EIP
             browserSession = new BrowserSession(ApplicationKey);
             browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
             LoadFromStorage();
+            SetTwitterClientInfo();
         }
 
         private static void LoadFromStorage()
@@ -174,6 +175,12 @@ namespace EIP
 
                     break;
                 case Account.TypeAccount.Twitter:
+                     var requestToken = FluentTwitter.CreateRequest()
+                        .Configuration.UseTransparentProxy(ProxyUrl)
+                        .AuthenticateAs(pseudo, password)
+                        .CallbackTo(TwitterAuthenticateAsCompleted);
+
+                    requestToken.RequestAsync();
 
                     break;
                 case Account.TypeAccount.Myspace:
@@ -210,7 +217,7 @@ namespace EIP
                     //serviceEIP.AuthorizeDesktopAsync(consumerKey, consumerSecret);
 
 
-                    SetTwitterClientInfo();
+                    //SetTwitterClientInfo();
 
                    // OAuthBus.RequestTokenRetrieved += OAuthBus_RequestTokenRetrieved;
                     //OAuthBus.AccessTokenRetrieved += OAuthBus_AccessTokenRetrieved;
@@ -248,6 +255,15 @@ namespace EIP
                 TwitterPin twitterPin = new TwitterPin(accountTwitter, uri);
                 twitterPin.Show();
             });
+
+        }
+
+        private static void TwitterAuthenticateAsCompleted(object sender, TwitterResult result)
+        {
+            var user = result.AsUser();
+
+            serviceEIP.GetAccountByUserIDCompleted += new EventHandler<GetAccountByUserIDCompletedEventArgs>(serviceEIP_GetAccountByUserIDCompleted);
+            serviceEIP.GetAccountByUserIDAsync((long)user.Id);
 
         }
 
@@ -495,7 +511,20 @@ namespace EIP
 
         static void serviceEIP_GetAccountByUserIDCompleted(object sender, GetAccountByUserIDCompletedEventArgs e)
         {
-            currentAccount = new AccountFacebookLight();
+            switch (e.Result.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    currentAccount = new AccountFacebookLight();
+                    break;
+                case Account.TypeAccount.Twitter:
+                    currentAccount = new AccountTwitterLight();
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            }
+            
             if (e.Result != null)
             {
                 currentAccount.account = e.Result;
