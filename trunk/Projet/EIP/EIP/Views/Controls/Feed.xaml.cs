@@ -17,6 +17,7 @@ using Facebook.Session;
 //using EIP.ServiceEIP;
 using System.Windows.Data;
 using TweetSharp.Model;
+using EIP.ServiceEIP;
 
 
 namespace EIP.Views.Controls
@@ -69,7 +70,7 @@ namespace EIP.Views.Controls
         void Feed_Loaded(object sender, RoutedEventArgs e)
         {
             if(Connexion.currentAccount != null)
-                switch (Connexion.currentAccount.typeAccount)
+                switch (Connexion.currentAccount.account.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
                         facebookAPI = Connexion.facebookAPI;

@@ -18,10 +18,10 @@ namespace EIPLibrary
         {
             List<NpgsqlParameter> parms = new List<NpgsqlParameter>();
             StringBuilder cmdText = new StringBuilder();
-            cmdText.Append(" SELECT * FROM Account a ");
-            cmdText.Append(" LEFT JOIN  AccountFacebook f ON a.AccountID=f.AccountID ");
-            cmdText.Append(" LEFT JOIN  AccountTwitter t ON a.AccountID=t.AccountID ");
-            cmdText.Append(" WHERE a.UserID=@USERID");
+            cmdText.Append(" SELECT * FROM account a ");
+            cmdText.Append(" LEFT JOIN  accountfacebook f ON a.accountid=f.accountid ");
+            cmdText.Append(" LEFT JOIN  accounttwitter t ON a.accountid=t.accountid ");
+            cmdText.Append(" WHERE a.userid=@USERID");
 
             parms.Add(new NpgsqlParameter("@USERID", userID));
 

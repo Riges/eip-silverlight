@@ -31,9 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Npgsql, Version=2.0.8.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="policy.2.0.Npgsql, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\policy.2.0.Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

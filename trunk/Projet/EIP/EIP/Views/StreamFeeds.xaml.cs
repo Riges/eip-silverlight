@@ -18,6 +18,7 @@ using System.Windows.Browser;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using TweetSharp.Model;
+using EIP.ServiceEIP;
 //using EIP.ServiceEIP;
 
 namespace EIP.Views
@@ -59,9 +60,9 @@ namespace EIP.Views
                         break;
                     case Account.TypeAccount.Twitter:
                         dt_Tick(null, null);
-                        if (((AccountTwitter)Connexion.currentAccount).homeStatuses != null)
+                        if (((AccountTwitterLight)Connexion.currentAccount).homeStatuses != null)
                         {
-                            FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                            FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
                             ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
                             ContentPanel.Visibility = System.Windows.Visibility.Visible;
                         }
@@ -84,23 +85,23 @@ namespace EIP.Views
 
         void dt_Tick(object sender, EventArgs e)
         {
-            switch (Connexion.currentAccount.typeAccount)
+            switch (Connexion.currentAccount.account.typeAccount)
             {
                 case Account.TypeAccount.Facebook:
                     break;
                 case Account.TypeAccount.Twitter:
-                    ((AccountTwitter)Connexion.currentAccount).LoadHomeStatuses();
+                    ((AccountTwitterLight)Connexion.currentAccount).LoadHomeStatuses();
                     
-                    if (((AccountTwitter)Connexion.currentAccount).homeStatuses != null)
+                    if (((AccountTwitterLight)Connexion.currentAccount).homeStatuses != null)
                     {
                         if (FeedsControl.DataContext != null)
                         {
                             TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
-                            if (last.Id != ((AccountTwitter)Connexion.currentAccount).homeStatuses.First().Id)
-                                FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                            if (last.Id != ((AccountTwitterLight)Connexion.currentAccount).homeStatuses.First().Id)
+                                FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
                         }
                         else
-                            FeedsControl.DataContext = ((AccountTwitter)Connexion.currentAccount).homeStatuses;
+                            FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
                         ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
                         ContentPanel.Visibility = System.Windows.Visibility.Visible;
                     }

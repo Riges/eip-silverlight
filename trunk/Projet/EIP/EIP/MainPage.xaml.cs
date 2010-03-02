@@ -15,6 +15,7 @@ using Facebook.Schema;
 using Facebook.Rest;
 using Facebook.Session;
 using System.IO.IsolatedStorage;
+using EIP.ServiceEIP;
 
 namespace EIP
 {
