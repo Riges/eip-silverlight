@@ -35,7 +35,7 @@ namespace EIP
 
         public AccountTwitterLight()
         {
-            
+            this.account = new Account();
         }
 
           //*******************************\\

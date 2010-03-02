@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using EIP.ServiceEIP;
 
 namespace EIP.Views.Controls
 {
@@ -40,15 +41,15 @@ namespace EIP.Views.Controls
                         LayoutPanel.Children.Clear();
                     
                    
-                    foreach (Account oneAccount in Connexion.currentAccounts)
+                    foreach (AccountLight oneAccount in Connexion.currentAccounts)
                     {
                         //Dispatcher.BeginInvoke(() =>
                             //{
                         Button btnAccount = new Button();
-                        btnAccount.Content = oneAccount.name;
+                        btnAccount.Content = oneAccount.account.name;
                         btnAccount.Click += btnAccount_Click;
                         btnAccount.CommandParameter = oneAccount;
-                        if (Connexion.currentAccount.typeAccount == oneAccount.typeAccount && Connexion.currentAccount.userID == oneAccount.userID)
+                        if (Connexion.currentAccount.account.typeAccount == oneAccount.account.typeAccount && Connexion.currentAccount.account.userID == oneAccount.account.userID)
                             btnAccount.IsEnabled = false;
                         LayoutPanel.Children.Add(btnAccount);
                             //});
@@ -69,7 +70,7 @@ namespace EIP.Views.Controls
        void btnAccount_Click(object sender, RoutedEventArgs e)
         {
             //app.LoadAccount((Account)((Button)sender).CommandParameter);
-            Connexion.LoadAccount((Account)((Button)sender).CommandParameter);
+            Connexion.LoadAccount((AccountLight)((Button)sender).CommandParameter);
         }
     }
 }
