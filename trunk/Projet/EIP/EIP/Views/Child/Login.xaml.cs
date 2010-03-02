@@ -24,9 +24,15 @@ namespace EIP.Views.Child
             LoadDropDownType();
 
             if (!this.addAccount)
+            {
                 this.Title = "Veuillez choisir un réseau social pour vous connecter";
+                linkAddAccount.Visibility = System.Windows.Visibility.Visible;
+            }
             else
+            {
                 this.Title = "Veuillez choisir le réseau social à ajouter";
+                linkAddAccount.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
 
         private void LoadDropDownType()
@@ -51,7 +57,7 @@ namespace EIP.Views.Child
             }
             else
             {
-
+                Connexion.AddAccount((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedValue.ToString(), true));
             }
 
             this.DialogResult = true;
@@ -88,6 +94,15 @@ namespace EIP.Views.Child
                     break;
             }
 
+        }
+
+        private void linkAddAccount_Click(object sender, RoutedEventArgs e)
+        {
+            Login loginBox = new Login(true);
+            loginBox.Show();
+
+            
+            this.DialogResult = false;
         }
     }
 }
