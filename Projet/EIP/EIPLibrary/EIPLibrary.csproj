@@ -59,6 +59,7 @@
     <Compile Include="AccountFacebook.cs" />
     <Compile Include="AccountTwitter.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="DBUtility\DbUtil.cs" />
     <Compile Include="DBUtility\PgSqlHelper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

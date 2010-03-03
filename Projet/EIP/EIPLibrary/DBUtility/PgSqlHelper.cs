@@ -84,12 +84,12 @@ namespace EIPLibrary.DBUtility
 
         }
 
-        public static int ExecuteScalar(CommandType cmdType, string cmdText, List<NpgsqlParameter> commandParameters, string table)
+        public static int ExecuteScalar(CommandType cmdType, string cmdText, List<NpgsqlParameter> commandParameters, string sequence)
         {
             using (NpgsqlConnection conn = new NpgsqlConnection(Context.Instance.ConnectStr))
             {
                 NpgsqlCommand cmd = new NpgsqlCommand();
-                PrepareCommand(conn, cmd, cmdType, cmdText + ";SELECT IDENT_CURRENT('" + table + "')", commandParameters);
+                PrepareCommand(conn, cmd, cmdType, cmdText + ";SELECT CURRVAL('" + sequence + "')", commandParameters);
                 object ob = cmd.ExecuteScalar();
                 int lastId = Convert.ToInt32(ob);
                 cmd.Parameters.Clear();

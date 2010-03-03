@@ -14,6 +14,9 @@ namespace EIPLibrary
         public long accountID { get; set; }
 
         [DataMember]
+        public long groupID { get; set; }
+
+        [DataMember]
         public TypeAccount typeAccount { get; set; }
 
         [DataMember]
