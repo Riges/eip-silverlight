@@ -20,8 +20,6 @@ using System.Runtime.Serialization;
 using System.Windows.Threading;
 using EIP.ServiceEIP;
  
-
-
 using System.Windows.Navigation;
 using EIP.Views;
 using System.ComponentModel;
@@ -29,6 +27,8 @@ using TweetSharp.Fluent;
 using TweetSharp.Extensions;
 using TweetSharp.Model;
 using TweetSharp;
+
+
 
 namespace EIP
 {
@@ -47,6 +47,7 @@ namespace EIP
         public const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
 
         //Accounts
+        public static List<AccountLight> accounts { get; set; }
         public static List<AccountLight> currentAccounts { get; set; }
         public static List<AccountLight> storageAccounts { get; set; }
         public static AccountLight currentAccount { get; set; }
@@ -59,7 +60,7 @@ namespace EIP
         public static Frame contentFrame;
 
         //WCF
-        public static ServiceEIP.ServiceEIPClient serviceEIP = new ServiceEIP.ServiceEIPClient();
+        public static ServiceEIP.ServiceEIPClient serviceEIP;
 
         //Autre
         private static bool addAccount = false;
@@ -70,8 +71,19 @@ namespace EIP
         {
             browserSession = new BrowserSession(ApplicationKey);
             browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
-            LoadFromStorage();
+            accounts = new List<AccountLight>();
+            serviceEIP = new ServiceEIP.ServiceEIPClient();
+            //LoadFromStorage();
             SetTwitterClientInfo();
+            GetSession();
+
+            
+
+        }
+
+        public static void StartDisplay()
+        {
+            listeComptes.Reload();
         }
 
         private static void LoadFromStorage()
@@ -100,18 +112,20 @@ namespace EIP
                                           where account.account.accountID == theAccountID.First()
                                           select account;
 
-                        currentAccounts = new List<AccountLight>();
+                        accounts = new List<AccountLight>();
                         foreach (AccountLight acc in theAccounts)
                         {
-                            currentAccounts.Add(acc);
+                            accounts.Add(acc);
                         }
                     }
                 }
             }
+
         }
 
         private static void GetSession()
         {
+            /*
             if (storage.Contains("CurrentAccount"))
             {
                 if (storage["CurrentAccount"] != null)
@@ -120,36 +134,87 @@ namespace EIP
                     if (storage.Contains(curAccountKey))
                         currentAccount = (AccountLight)storage[curAccountKey];
                 }
+            }*/
+            if (storage.Contains("groupID"))
+            {
+                if (storage["groupID"] != null)
+                {
+                    /*
+                    string curAccountKey = storage["groupID"].ToString();
+                    if (storage.Contains(curAccountKey))
+                        currentAccount = (AccountLight)storage[curAccountKey];
+                     */
+                    serviceEIP.GetAccountsByGroupIDCompleted += new EventHandler<GetAccountsByGroupIDCompletedEventArgs>(serviceEIP_GetAccountsByGroupIDCompleted);
+                    serviceEIP.GetAccountsByGroupIDAsync(Convert.ToInt64(storage["groupID"].ToString()));
+                    //serviceEIP.GetAccountsAsync(storage["groupID"]
+                    if (listeComptes != null)
+                        listeComptes.Reload();
+                }
             }
         }
 
-        private static void SetSession()
+        private static void SetSession(long groupID)
         {
+            storage["groupID"] = groupID.ToString();
             //storage["CurrentAccount"] = currentAccount;
-            storage["CurrentAccount"] = "Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID;
+            //storage["CurrentAccount"] = "Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID;
         }
 
-        public static void SaveAccount()
+        public static void SaveAccount(AccountLight accountToSave)
         {
-            switch (currentAccount.account.typeAccount)
+            switch (accountToSave.account.typeAccount)
             {
                 case Account.TypeAccount.Facebook:
-                    storage["Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID] = (AccountFacebookLight)currentAccount;
+                    storage["Account-" + accountToSave.account.typeAccount.ToString() + "-" + accountToSave.account.userID] = accountToSave;
                     break;
                 case Account.TypeAccount.Twitter:
-                    storage["Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID] = (AccountTwitterLight)currentAccount;
+                    storage["Account-" + accountToSave.account.typeAccount.ToString() + "-" + accountToSave.account.userID] = accountToSave;
                     break;
                 case Account.TypeAccount.Myspace:
                     break;
                 default:
                     break;
             }
+            if (addAccount)
+                serviceEIP.AddAccountAsync(accountToSave.account);
+            else
+                serviceEIP.SaveAccountAsync(accountToSave.account);
+            
+        }
+
+        static void serviceEIP_GetAccountsByGroupIDCompleted(object sender, GetAccountsByGroupIDCompletedEventArgs e)
+        {
+            if (e.Result != null)
+            {
+                foreach (Account oneAccount in e.Result)
+                {
+                    switch (oneAccount.typeAccount)
+                    {
+                        case Account.TypeAccount.Facebook:
+                            AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
+                            newAccountFacebook.account = oneAccount;
+                            accounts.Add(newAccountFacebook);
+                            break;
+                        case Account.TypeAccount.Twitter:
+                            AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
+                            newAccountTwitter.account = oneAccount;
+                            accounts.Add(newAccountTwitter);
+                            break;
+                        case Account.TypeAccount.Myspace:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                listeComptes.Reload();
+            }
         }
 
         private static void DestroySession()
         {
-            storage["CurrentAccount"] = null;
-            currentAccounts = null;
+            //storage["CurrentAccount"] = null;
+            //currentAccounts = null;
+            accounts = null;
         }
 
         public static void Login(Account.TypeAccount type, string pseudo, string password)
@@ -175,6 +240,7 @@ namespace EIP
 
                     break;
                 case Account.TypeAccount.Twitter:
+                    
                      var requestToken = FluentTwitter.CreateRequest()
                         .Configuration.UseTransparentProxy(ProxyUrl)
                         .AuthenticateAs(pseudo, password)
@@ -194,6 +260,7 @@ namespace EIP
         {
             /*listeComptes = listes;
             contentFrame = frame;*/
+            addAccount = true;
             switch (type)
             {
                 case Account.TypeAccount.Facebook:
@@ -262,8 +329,8 @@ namespace EIP
         {
             var user = result.AsUser();
 
-            serviceEIP.GetAccountByUserIDCompleted += new EventHandler<GetAccountByUserIDCompletedEventArgs>(serviceEIP_GetAccountByUserIDCompleted);
-            serviceEIP.GetAccountByUserIDAsync((long)user.Id);
+            serviceEIP.GetAccountsByUserIDCompleted +=new EventHandler<GetAccountsByUserIDCompletedEventArgs>(serviceEIP_GetAccountsByUserIDCompleted);
+            serviceEIP.GetAccountsByUserIDAsync((long)user.Id);
 
         }
 
@@ -327,32 +394,46 @@ namespace EIP
                 accountTwitter.account.name = token.ScreenName;
                 accountTwitter.account.userID = Convert.ToInt64(token.UserId);
 
-                if (currentAccounts != null)
+                if (accounts.Count > 0)
                 {
-                    accountTwitter.account.accountID = currentAccounts[0].account.accountID;
+                    accountTwitter.account.groupID = accounts[0].account.groupID;
                 }
                 else
                 {
-                    accountTwitter.account.accountID = Convert.ToInt64(token.UserId);// (long)tmp.userID;
+                    accountTwitter.account.groupID = Convert.ToInt64(token.UserId);// (long)tmp.userID;
                 }
-                currentAccount = accountTwitter;
-                SetSession();
+
+                SetSession(accountTwitter.account.groupID);
+                serviceEIP.AddAccountCompleted += new EventHandler<AddAccountCompletedEventArgs>(serviceEIP_AddAccountCompleted);
+                serviceEIP.AddAccountAsync(accountTwitter.account);
+
+                
+                
+                /*SaveAccount(accountTwitter);
+                LoadFromStorage();
+                listeComptes.Reload();
+                */
+                //currentAccount = accountTwitter;
+                //SetSession();
 
                 //Ajouter la verif sur cpt de type Twitter
-                var theAccountID = from Account account in storageAccounts
+                /*var theAccountID = from Account account in storageAccounts
                                    where account.userID == currentAccount.account.userID
                                    && account.typeAccount == Account.TypeAccount.Twitter
                                    select account.accountID;
+                */
+                
+                //serviceEIP.GetAccountByUserIDCompleted +=new EventHandler<GetAccountByUserIDCompletedEventArgs>(serviceEIP_GetAccountByUserIDCompleted);
+                //serviceEIP.GetAccountByUserIDAsync(accountTwitter.account.userID);
 
-
-                if (theAccountID.Count() == 0)
+                /*if (theAccountID.Count() == 0)
                 {
                     storage["Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID] = (AccountTwitterLight)currentAccount;
-                }
-
+                }*/
+                /*
                 LoadFromStorage();
-                listeComptes.Reload();
-                LoginToAccount();
+                listeComptes.Reload();*/
+                //LoginToAccount();
             }
         }
 
@@ -456,81 +537,76 @@ namespace EIP
             {
                 if (addAccount)
                 {
-                    long accountId;
-                    bool currentSessionExpires = true;
-                    string currentSessionKey = string.Empty;
-                    string currentSessionSecret = string.Empty;
-                    if (currentAccounts != null)
-                    {
-                        accountId = currentAccounts[0].account.accountID;
-                        //currentSessionExpires = ((AccountFacebook)currentAccount).sessionExpires;
-                        //currentSessionKey = ((AccountFacebook)currentAccount).sessionKey;
-                        //currentSessionSecret = ((AccountFacebook)currentAccount).sessionSecret;
-                    }
+                  
+                    AccountFacebookLight newAccount = new AccountFacebookLight();
+                    if (accounts.Count > 0)
+                        newAccount.account.groupID = accounts[0].account.groupID;
                     else
-                    {
-                        accountId = (long)users[0].uid;
+                        newAccount.account.groupID = (long)users[0].uid;
 
-                    }
-                    currentSessionExpires = facebookAPI.Session.SessionExpires;
-                    currentSessionKey = facebookAPI.Session.SessionKey;
-                    currentSessionSecret = facebookAPI.Session.SessionSecret;
-
-                    AccountFacebookLight newAccount = new AccountFacebookLight();                                      
-                    newAccount.account.accountID = accountId;
                     newAccount.account.typeAccount = Account.TypeAccount.Facebook;
                     newAccount.account.userID = facebookAPI.Session.UserId;
                     newAccount.account.name = users[0].name;
-                    ((AccountFacebook)newAccount.account).sessionExpires = currentSessionExpires;
-                    ((AccountFacebook)newAccount.account).sessionKey = currentSessionKey;
-                    ((AccountFacebook)newAccount.account).sessionSecret = currentSessionSecret;
+                    ((AccountFacebook)newAccount.account).sessionExpires = facebookAPI.Session.SessionExpires;
+                    ((AccountFacebook)newAccount.account).sessionKey = facebookAPI.Session.SessionKey;
+                    ((AccountFacebook)newAccount.account).sessionSecret = facebookAPI.Session.SessionSecret;
                     
-                    currentAccount = newAccount;
-                    SetSession();
+                    //currentAccount = newAccount;
+                    SetSession(newAccount.account.groupID);
 
                     //Ajouter la verif sur cpt de type Facebook
-                    var theAccountID = from Account account in storageAccounts
+                    /*var theAccountID = from Account account in storageAccounts
                                        where account.userID == currentAccount.account.userID
                                        select account.accountID;
-                    if (theAccountID.Count() == 0)
-                    {
-                        storage["Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID] = (AccountFacebookLight)currentAccount;
-                    }
+                    */
+                    serviceEIP.AddAccountCompleted += new EventHandler<AddAccountCompletedEventArgs>(serviceEIP_AddAccountCompleted);
+                    serviceEIP.AddAccountAsync(newAccount.account);
 
-                    LoadFromStorage();
-                    listeComptes.Reload();
-                    LoginToAccount();
+       
+
                 }
                 else
                 {
-                    serviceEIP.GetAccountByUserIDCompleted += new EventHandler<GetAccountByUserIDCompletedEventArgs>(serviceEIP_GetAccountByUserIDCompleted);
-                    serviceEIP.GetAccountByUserIDAsync((long)users[0].uid);
+                    serviceEIP.GetAccountsByUserIDCompleted += new EventHandler<GetAccountsByUserIDCompletedEventArgs>(serviceEIP_GetAccountsByUserIDCompleted);
+                    serviceEIP.GetAccountsByUserIDAsync((long)users[0].uid);
+                    //serviceEIP.GetAccountByUserIDCompleted += new EventHandler<GetAccountByUserIDCompletedEventArgs>(serviceEIP_GetAccountByUserIDCompleted);
+                    //serviceEIP.GetAccountByUserIDAsync((long)users[0].uid);
                 }
             }
         }
 
-        static void serviceEIP_GetAccountByUserIDCompleted(object sender, GetAccountByUserIDCompletedEventArgs e)
+        static void serviceEIP_GetAccountsByUserIDCompleted(object sender, GetAccountsByUserIDCompletedEventArgs e)
         {
-            switch (e.Result.typeAccount)
-            {
-                case Account.TypeAccount.Facebook:
-                    currentAccount = new AccountFacebookLight();
-                    break;
-                case Account.TypeAccount.Twitter:
-                    currentAccount = new AccountTwitterLight();
-                    break;
-                case Account.TypeAccount.Myspace:
-                    break;
-                default:
-                    break;
-            }
-            
             if (e.Result != null)
             {
-                currentAccount.account = e.Result;
-                LoginToAccount();
-                SaveAccount();
-                LoadFromStorage();
+                foreach (Account oneAccount in e.Result)
+                {
+                    switch (oneAccount.typeAccount)
+                    {
+                        case Account.TypeAccount.Facebook:
+                            AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
+                            newAccountFacebook.account = oneAccount;
+                            accounts.Add(newAccountFacebook);
+                            break;
+                        case Account.TypeAccount.Twitter:
+                            AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
+                            newAccountTwitter.account = oneAccount;
+                            accounts.Add(newAccountTwitter);
+                            break;
+                        case Account.TypeAccount.Myspace:
+                            break;
+                        default:
+                            break;
+                    }
+                    SetSession(oneAccount.groupID);
+                }
+                
+                //currentAccount.account = e.Result;
+                //LoginToAccount();
+
+                //LoadFromStorage();
+                listeComptes.Reload();
+                addAccount = false;
             }
             else
             {
@@ -542,15 +618,34 @@ namespace EIP
             }
         }
 
+        static void serviceEIP_AddAccountCompleted(object sender, AddAccountCompletedEventArgs e)
+        {
+            if (e.Result)
+            {
+                GetSession();
+            }
+            else
+            {
+                dispatcher.BeginInvoke(() =>
+                {
+                    MessageBox msg = new MessageBox("Erreur", "Ce compte existe déjà !");
+                    msg.Show();
+                });
+            }
+
+        }
+
+
+
         private static void LoginFacebook_LoginCompleted(object sender, EventArgs e)
         {
             facebookAPI = new Api(browserSession);
-            SetSession();
+            //SetSession();
         }
 
         public static void Deconnexion()
         {
-            currentAccount = null;
+            //currentAccount = null;
             DestroySession();
         }
 

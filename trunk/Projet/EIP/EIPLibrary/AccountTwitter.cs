@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 //using Dimebrain.TweetSharp.Model;
+using System.ServiceModel;
+using System.Runtime.Serialization;
 
 
 namespace EIPLibrary
 {
+    [Serializable]
+    [DataContract]
+    [ServiceContract]
     public class AccountTwitter : Account
     {
         //public long accountID { get; set; }
         //public TypeAccount typeAccount { get; set; }
         //public long userID { get; set; }
 
+        [DataMember]
         public string token { get; set; }
+
+        [DataMember]
         public string tokenSecret { get; set; }
+
+        [DataMember]
         public string pin { get; set; }
         //public TwitterUser user { get; set; }
         //public IEnumerable<TwitterStatus> homeStatuses { get; set; }

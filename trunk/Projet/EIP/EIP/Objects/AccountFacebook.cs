@@ -27,7 +27,7 @@ namespace EIP
 
         public AccountFacebookLight()
         {
-            this.account = new ServiceEIP.Account();
+            this.account = new ServiceEIP.AccountFacebook();
         }
 
     

@@ -18,6 +18,7 @@ using EIP.ServiceEIP;
 
 namespace EIP
 {
+    
     [KnownTypeAttribute(typeof(AccountTwitterLight))]
     public class AccountTwitterLight : AccountLight
     {
@@ -35,7 +36,7 @@ namespace EIP
 
         public AccountTwitterLight()
         {
-            this.account = new Account();
+            this.account = new AccountTwitter();
         }
 
           //*******************************\\
@@ -67,7 +68,7 @@ namespace EIP
             if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (result.AsError() == null) && (statuses != null))
             {
                 this.homeStatuses = statuses;
-                Connexion.SaveAccount();
+                Connexion.SaveAccount(this);
             }
         }
 

@@ -16,6 +16,7 @@ using Facebook.Rest;
 using Facebook.Session;
 using System.IO.IsolatedStorage;
 using EIP.ServiceEIP;
+using EIP.Views.Child;
 
 namespace EIP
 {
@@ -33,6 +34,7 @@ namespace EIP
             Connexion.contentFrame = ContentFrame;
             Connexion.LoginToAccount();
             Connexion.dispatcher = Dispatcher;
+            Connexion.StartDisplay();
             LoadInterface();
         }
 
@@ -59,11 +61,18 @@ namespace EIP
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Connexion.currentAccount == null)
-            {
-                Views.Child.Login loginWindow = new Views.Child.Login(false);
-                loginWindow.Show();
-            }
+            bool showLogin = true;
+             if (storage.Contains("groupID"))
+                 if (storage["groupID"] != null)
+                 {
+                     showLogin = false;
+                 }
+             if (showLogin)
+             {
+                 Views.Child.Login loginWindow = new Views.Child.Login(false);
+                 loginWindow.Show();
+             }
+
         }
 
         private void browserSession_LoginCompleted(object sender, EventArgs e)
@@ -116,16 +125,12 @@ namespace EIP
             //LeftFrame.Navigate(new Uri("/Views/MenuFeeds.xaml", UriKind.Relative));
         }
 
-        private void LinkCreateNewFbAccount_Click(object sender, RoutedEventArgs e)
-        {
-            //app.AddAccount(Account.TypeAccount.Facebook);
-            
-            Connexion.AddAccount(Account.TypeAccount.Facebook);
-        }
 
-        private void LinkCreateNewTwitterAccount_Click(object sender, RoutedEventArgs e)
+
+        private void LinkCreateNewAccount_Click(object sender, RoutedEventArgs e)
         {
-            Connexion.AddAccount(Account.TypeAccount.Twitter);
+            Login loginBox = new Login(true);
+            loginBox.Show();
         }
 
 

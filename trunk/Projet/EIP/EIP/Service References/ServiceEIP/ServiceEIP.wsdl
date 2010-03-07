@@ -19,6 +19,30 @@
   <wsdl:message name="IServiceEIP_GetAccountByUserID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAccountByUserIDResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetAccountsByUserID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountsByUserID" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetAccountsByUserID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountsByUserIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetAccountsByGroupID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountsByGroupID" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetAccountsByGroupID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountsByGroupIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_AddAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAccount" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_AddAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_SaveAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAccount" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_SaveAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAccountResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_testfb_InputMessage">
     <wsdl:part name="parameters" element="tns:testfb" />
   </wsdl:message>
@@ -39,6 +63,22 @@
     <wsdl:operation name="GetAccountByUserID">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountByUserID" message="tns:IServiceEIP_GetAccountByUserID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountByUserIDResponse" message="tns:IServiceEIP_GetAccountByUserID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountsByUserID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByUserID" message="tns:IServiceEIP_GetAccountsByUserID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByUserIDResponse" message="tns:IServiceEIP_GetAccountsByUserID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountsByGroupID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByGroupID" message="tns:IServiceEIP_GetAccountsByGroupID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByGroupIDResponse" message="tns:IServiceEIP_GetAccountsByGroupID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/AddAccount" message="tns:IServiceEIP_AddAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/AddAccountResponse" message="tns:IServiceEIP_AddAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/SaveAccount" message="tns:IServiceEIP_SaveAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/SaveAccountResponse" message="tns:IServiceEIP_SaveAccount_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="testfb">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testfb" message="tns:IServiceEIP_testfb_InputMessage" />
@@ -62,6 +102,42 @@
     </wsdl:operation>
     <wsdl:operation name="GetAccountByUserID">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetAccountByUserID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountsByUserID">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetAccountsByUserID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountsByGroupID">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetAccountsByGroupID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddAccount">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/AddAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAccount">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/SaveAccount" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
