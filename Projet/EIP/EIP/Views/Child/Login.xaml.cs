@@ -53,10 +53,11 @@ namespace EIP.Views.Child
 
             if (!this.addAccount)
             {
-                Connexion.Login((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedValue.ToString(), true), string.Empty, string.Empty);
+                Connexion.Login((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedValue.ToString(), true), pseudoBox.Text.Trim(), mdpBox.Password.Trim());
             }
             else
             {
+                
                 Connexion.AddAccount((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedValue.ToString(), true));
             }
 

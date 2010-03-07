@@ -7,11 +7,16 @@ using System.Runtime.Serialization;
 
 namespace EIPLibrary
 {
+    //[SerializableAttribute()]
+    [KnownType(typeof(AccountFacebook))]
+    [KnownType(typeof(AccountTwitter))]
     [ServiceContract]
-    public class Account
+    [Serializable]
+    [DataContract]
+    public class Account : object
     {
         [DataMember]
-        public long accountID { get; set; }
+        public long accountID;
 
         [DataMember]
         public long groupID { get; set; }
@@ -33,6 +38,7 @@ namespace EIPLibrary
             Myspace
         }
 
+       
 
         public Account()
         {

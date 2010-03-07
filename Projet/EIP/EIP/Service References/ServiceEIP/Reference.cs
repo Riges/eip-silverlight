@@ -24,6 +24,8 @@ namespace EIP.ServiceEIP {
         
         private long accountIDField;
         
+        private long groupIDField;
+        
         private string nameField;
         
         private EIP.ServiceEIP.Account.TypeAccount typeAccountField;
@@ -39,6 +41,19 @@ namespace EIP.ServiceEIP {
                 if ((this.accountIDField.Equals(value) != true)) {
                     this.accountIDField = value;
                     this.RaisePropertyChanged("accountID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long groupID {
+            get {
+                return this.groupIDField;
+            }
+            set {
+                if ((this.groupIDField.Equals(value) != true)) {
+                    this.groupIDField = value;
+                    this.RaisePropertyChanged("groupID");
                 }
             }
         }
@@ -213,14 +228,34 @@ namespace EIP.ServiceEIP {
     public interface IServiceEIP {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/test", ReplyAction="http://tempuri.org/IServiceEIP/testResponse")]
-        System.IAsyncResult Begintest(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState);
         
-        string Endtest(System.IAsyncResult result);
+        bool Endtest(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetAccountByUserID", ReplyAction="http://tempuri.org/IServiceEIP/GetAccountByUserIDResponse")]
         System.IAsyncResult BeginGetAccountByUserID(long userID, System.AsyncCallback callback, object asyncState);
         
         EIP.ServiceEIP.Account EndGetAccountByUserID(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetAccountsByUserID", ReplyAction="http://tempuri.org/IServiceEIP/GetAccountsByUserIDResponse")]
+        System.IAsyncResult BeginGetAccountsByUserID(long userID, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByUserID(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetAccountsByGroupID", ReplyAction="http://tempuri.org/IServiceEIP/GetAccountsByGroupIDResponse")]
+        System.IAsyncResult BeginGetAccountsByGroupID(long groupID, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByGroupID(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/AddAccount", ReplyAction="http://tempuri.org/IServiceEIP/AddAccountResponse")]
+        System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState);
+        
+        bool EndAddAccount(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/SaveAccount", ReplyAction="http://tempuri.org/IServiceEIP/SaveAccountResponse")]
+        System.IAsyncResult BeginSaveAccount(EIP.ServiceEIP.Account accountToSave, System.AsyncCallback callback, object asyncState);
+        
+        bool EndSaveAccount(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/testfb", ReplyAction="http://tempuri.org/IServiceEIP/testfbResponse")]
         System.IAsyncResult Begintestfb(System.AsyncCallback callback, object asyncState);
@@ -248,10 +283,10 @@ namespace EIP.ServiceEIP {
             this.results = results;
         }
         
-        public string Result {
+        public bool Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -271,6 +306,82 @@ namespace EIP.ServiceEIP {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((EIP.ServiceEIP.Account)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetAccountsByUserIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetAccountsByUserIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<EIP.ServiceEIP.Account> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<EIP.ServiceEIP.Account>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetAccountsByGroupIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetAccountsByGroupIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<EIP.ServiceEIP.Account> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<EIP.ServiceEIP.Account>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class AddAccountCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public AddAccountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SaveAccountCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SaveAccountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -328,6 +439,30 @@ namespace EIP.ServiceEIP {
         private EndOperationDelegate onEndGetAccountByUserIDDelegate;
         
         private System.Threading.SendOrPostCallback onGetAccountByUserIDCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetAccountsByUserIDDelegate;
+        
+        private EndOperationDelegate onEndGetAccountsByUserIDDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetAccountsByUserIDCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetAccountsByGroupIDDelegate;
+        
+        private EndOperationDelegate onEndGetAccountsByGroupIDDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetAccountsByGroupIDCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginAddAccountDelegate;
+        
+        private EndOperationDelegate onEndAddAccountDelegate;
+        
+        private System.Threading.SendOrPostCallback onAddAccountCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSaveAccountDelegate;
+        
+        private EndOperationDelegate onEndSaveAccountDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveAccountCompletedDelegate;
         
         private BeginOperationDelegate onBegintestfbDelegate;
         
@@ -398,6 +533,14 @@ namespace EIP.ServiceEIP {
         
         public event System.EventHandler<GetAccountByUserIDCompletedEventArgs> GetAccountByUserIDCompleted;
         
+        public event System.EventHandler<GetAccountsByUserIDCompletedEventArgs> GetAccountsByUserIDCompleted;
+        
+        public event System.EventHandler<GetAccountsByGroupIDCompletedEventArgs> GetAccountsByGroupIDCompleted;
+        
+        public event System.EventHandler<AddAccountCompletedEventArgs> AddAccountCompleted;
+        
+        public event System.EventHandler<SaveAccountCompletedEventArgs> SaveAccountCompleted;
+        
         public event System.EventHandler<testfbCompletedEventArgs> testfbCompleted;
         
         public event System.EventHandler<testTCompletedEventArgs> testTCompleted;
@@ -407,21 +550,22 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.Begintest(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.Begintest(callback, asyncState);
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.Begintest(newAccount, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string EIP.ServiceEIP.IServiceEIP.Endtest(System.IAsyncResult result) {
+        bool EIP.ServiceEIP.IServiceEIP.Endtest(System.IAsyncResult result) {
             return base.Channel.Endtest(result);
         }
         
         private System.IAsyncResult OnBegintest(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).Begintest(callback, asyncState);
+            EIP.ServiceEIP.Account newAccount = ((EIP.ServiceEIP.Account)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).Begintest(newAccount, callback, asyncState);
         }
         
         private object[] OnEndtest(System.IAsyncResult result) {
-            string retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).Endtest(result);
+            bool retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).Endtest(result);
             return new object[] {
                     retVal};
         }
@@ -433,11 +577,11 @@ namespace EIP.ServiceEIP {
             }
         }
         
-        public void testAsync() {
-            this.testAsync(null);
+        public void testAsync(EIP.ServiceEIP.Account newAccount) {
+            this.testAsync(newAccount, null);
         }
         
-        public void testAsync(object userState) {
+        public void testAsync(EIP.ServiceEIP.Account newAccount, object userState) {
             if ((this.onBegintestDelegate == null)) {
                 this.onBegintestDelegate = new BeginOperationDelegate(this.OnBegintest);
             }
@@ -447,7 +591,8 @@ namespace EIP.ServiceEIP {
             if ((this.ontestCompletedDelegate == null)) {
                 this.ontestCompletedDelegate = new System.Threading.SendOrPostCallback(this.OntestCompleted);
             }
-            base.InvokeAsync(this.onBegintestDelegate, null, this.onEndtestDelegate, this.ontestCompletedDelegate, userState);
+            base.InvokeAsync(this.onBegintestDelegate, new object[] {
+                        newAccount}, this.onEndtestDelegate, this.ontestCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -494,6 +639,190 @@ namespace EIP.ServiceEIP {
             }
             base.InvokeAsync(this.onBeginGetAccountByUserIDDelegate, new object[] {
                         userID}, this.onEndGetAccountByUserIDDelegate, this.onGetAccountByUserIDCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetAccountsByUserID(long userID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAccountsByUserID(userID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<EIP.ServiceEIP.Account> EIP.ServiceEIP.IServiceEIP.EndGetAccountsByUserID(System.IAsyncResult result) {
+            return base.Channel.EndGetAccountsByUserID(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetAccountsByUserID(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            long userID = ((long)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetAccountsByUserID(userID, callback, asyncState);
+        }
+        
+        private object[] OnEndGetAccountsByUserID(System.IAsyncResult result) {
+            System.Collections.Generic.List<EIP.ServiceEIP.Account> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndGetAccountsByUserID(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetAccountsByUserIDCompleted(object state) {
+            if ((this.GetAccountsByUserIDCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetAccountsByUserIDCompleted(this, new GetAccountsByUserIDCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetAccountsByUserIDAsync(long userID) {
+            this.GetAccountsByUserIDAsync(userID, null);
+        }
+        
+        public void GetAccountsByUserIDAsync(long userID, object userState) {
+            if ((this.onBeginGetAccountsByUserIDDelegate == null)) {
+                this.onBeginGetAccountsByUserIDDelegate = new BeginOperationDelegate(this.OnBeginGetAccountsByUserID);
+            }
+            if ((this.onEndGetAccountsByUserIDDelegate == null)) {
+                this.onEndGetAccountsByUserIDDelegate = new EndOperationDelegate(this.OnEndGetAccountsByUserID);
+            }
+            if ((this.onGetAccountsByUserIDCompletedDelegate == null)) {
+                this.onGetAccountsByUserIDCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAccountsByUserIDCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetAccountsByUserIDDelegate, new object[] {
+                        userID}, this.onEndGetAccountsByUserIDDelegate, this.onGetAccountsByUserIDCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetAccountsByGroupID(long groupID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAccountsByGroupID(groupID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<EIP.ServiceEIP.Account> EIP.ServiceEIP.IServiceEIP.EndGetAccountsByGroupID(System.IAsyncResult result) {
+            return base.Channel.EndGetAccountsByGroupID(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetAccountsByGroupID(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            long groupID = ((long)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetAccountsByGroupID(groupID, callback, asyncState);
+        }
+        
+        private object[] OnEndGetAccountsByGroupID(System.IAsyncResult result) {
+            System.Collections.Generic.List<EIP.ServiceEIP.Account> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndGetAccountsByGroupID(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetAccountsByGroupIDCompleted(object state) {
+            if ((this.GetAccountsByGroupIDCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetAccountsByGroupIDCompleted(this, new GetAccountsByGroupIDCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetAccountsByGroupIDAsync(long groupID) {
+            this.GetAccountsByGroupIDAsync(groupID, null);
+        }
+        
+        public void GetAccountsByGroupIDAsync(long groupID, object userState) {
+            if ((this.onBeginGetAccountsByGroupIDDelegate == null)) {
+                this.onBeginGetAccountsByGroupIDDelegate = new BeginOperationDelegate(this.OnBeginGetAccountsByGroupID);
+            }
+            if ((this.onEndGetAccountsByGroupIDDelegate == null)) {
+                this.onEndGetAccountsByGroupIDDelegate = new EndOperationDelegate(this.OnEndGetAccountsByGroupID);
+            }
+            if ((this.onGetAccountsByGroupIDCompletedDelegate == null)) {
+                this.onGetAccountsByGroupIDCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAccountsByGroupIDCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetAccountsByGroupIDDelegate, new object[] {
+                        groupID}, this.onEndGetAccountsByGroupIDDelegate, this.onGetAccountsByGroupIDCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginAddAccount(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddAccount(newAccount, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool EIP.ServiceEIP.IServiceEIP.EndAddAccount(System.IAsyncResult result) {
+            return base.Channel.EndAddAccount(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddAccount(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            EIP.ServiceEIP.Account newAccount = ((EIP.ServiceEIP.Account)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginAddAccount(newAccount, callback, asyncState);
+        }
+        
+        private object[] OnEndAddAccount(System.IAsyncResult result) {
+            bool retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndAddAccount(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnAddAccountCompleted(object state) {
+            if ((this.AddAccountCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AddAccountCompleted(this, new AddAccountCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AddAccountAsync(EIP.ServiceEIP.Account newAccount) {
+            this.AddAccountAsync(newAccount, null);
+        }
+        
+        public void AddAccountAsync(EIP.ServiceEIP.Account newAccount, object userState) {
+            if ((this.onBeginAddAccountDelegate == null)) {
+                this.onBeginAddAccountDelegate = new BeginOperationDelegate(this.OnBeginAddAccount);
+            }
+            if ((this.onEndAddAccountDelegate == null)) {
+                this.onEndAddAccountDelegate = new EndOperationDelegate(this.OnEndAddAccount);
+            }
+            if ((this.onAddAccountCompletedDelegate == null)) {
+                this.onAddAccountCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddAccountCompleted);
+            }
+            base.InvokeAsync(this.onBeginAddAccountDelegate, new object[] {
+                        newAccount}, this.onEndAddAccountDelegate, this.onAddAccountCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginSaveAccount(EIP.ServiceEIP.Account accountToSave, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveAccount(accountToSave, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool EIP.ServiceEIP.IServiceEIP.EndSaveAccount(System.IAsyncResult result) {
+            return base.Channel.EndSaveAccount(result);
+        }
+        
+        private System.IAsyncResult OnBeginSaveAccount(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            EIP.ServiceEIP.Account accountToSave = ((EIP.ServiceEIP.Account)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginSaveAccount(accountToSave, callback, asyncState);
+        }
+        
+        private object[] OnEndSaveAccount(System.IAsyncResult result) {
+            bool retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndSaveAccount(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSaveAccountCompleted(object state) {
+            if ((this.SaveAccountCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveAccountCompleted(this, new SaveAccountCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveAccountAsync(EIP.ServiceEIP.Account accountToSave) {
+            this.SaveAccountAsync(accountToSave, null);
+        }
+        
+        public void SaveAccountAsync(EIP.ServiceEIP.Account accountToSave, object userState) {
+            if ((this.onBeginSaveAccountDelegate == null)) {
+                this.onBeginSaveAccountDelegate = new BeginOperationDelegate(this.OnBeginSaveAccount);
+            }
+            if ((this.onEndSaveAccountDelegate == null)) {
+                this.onEndSaveAccountDelegate = new EndOperationDelegate(this.OnEndSaveAccount);
+            }
+            if ((this.onSaveAccountCompletedDelegate == null)) {
+                this.onSaveAccountCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveAccountCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveAccountDelegate, new object[] {
+                        accountToSave}, this.onEndSaveAccountDelegate, this.onSaveAccountCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -660,15 +989,16 @@ namespace EIP.ServiceEIP {
                     base(client) {
             }
             
-            public System.IAsyncResult Begintest(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = newAccount;
                 System.IAsyncResult _result = base.BeginInvoke("test", _args, callback, asyncState);
                 return _result;
             }
             
-            public string Endtest(System.IAsyncResult result) {
+            public bool Endtest(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("test", _args, result)));
+                bool _result = ((bool)(base.EndInvoke("test", _args, result)));
                 return _result;
             }
             
@@ -682,6 +1012,58 @@ namespace EIP.ServiceEIP {
             public EIP.ServiceEIP.Account EndGetAccountByUserID(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 EIP.ServiceEIP.Account _result = ((EIP.ServiceEIP.Account)(base.EndInvoke("GetAccountByUserID", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetAccountsByUserID(long userID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = userID;
+                System.IAsyncResult _result = base.BeginInvoke("GetAccountsByUserID", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByUserID(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<EIP.ServiceEIP.Account> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.Account>)(base.EndInvoke("GetAccountsByUserID", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetAccountsByGroupID(long groupID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = groupID;
+                System.IAsyncResult _result = base.BeginInvoke("GetAccountsByGroupID", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByGroupID(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<EIP.ServiceEIP.Account> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.Account>)(base.EndInvoke("GetAccountsByGroupID", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = newAccount;
+                System.IAsyncResult _result = base.BeginInvoke("AddAccount", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndAddAccount(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("AddAccount", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSaveAccount(EIP.ServiceEIP.Account accountToSave, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = accountToSave;
+                System.IAsyncResult _result = base.BeginInvoke("SaveAccount", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSaveAccount(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SaveAccount", _args, result)));
                 return _result;
             }
             

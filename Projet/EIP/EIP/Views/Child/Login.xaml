@@ -26,7 +26,7 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Pseudo :" Name="pseudoText" VerticalAlignment="Center" Visibility="Collapsed"></TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Name="pseudoBox" Visibility="Collapsed"></TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Mot de passe :" Name="mdpText" VerticalAlignment="Center" Visibility="Collapsed"></TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="mdpBox" Visibility="Collapsed"></TextBox>
+        <PasswordBox Grid.Row="2" Grid.Column="1" Name="mdpBox" Visibility="Collapsed"></PasswordBox>
         
         
         <HyperlinkButton  Grid.Row="3" Grid.ColumnSpan="2" Name="linkAddAccount" Click="linkAddAccount_Click" Content="Cliquez ici pour ajouter un compte si ce n'est pas déjà fait"> </HyperlinkButton>

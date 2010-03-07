@@ -17,6 +17,7 @@ namespace EIP
     public class AccountLight
     {
         public Account account { get; set; }
+        public bool selected { get; set; }
 
  
         public AccountLight()

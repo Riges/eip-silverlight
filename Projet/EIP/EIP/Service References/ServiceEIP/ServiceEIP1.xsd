@@ -3,13 +3,15 @@
   <xs:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EIPLibrary" />
   <xs:element name="test">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="newAccount" nillable="true" type="q1:Account" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="testResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="testResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="testResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -23,7 +25,63 @@
   <xs:element name="GetAccountByUserIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="GetAccountByUserIDResult" nillable="true" type="q1:Account" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="GetAccountByUserIDResult" nillable="true" type="q2:Account" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountsByUserID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountsByUserIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="GetAccountsByUserIDResult" nillable="true" type="q3:ArrayOfAccount" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountsByGroupID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="groupID" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountsByGroupIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="GetAccountsByGroupIDResult" nillable="true" type="q4:ArrayOfAccount" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="newAccount" nillable="true" type="q5:Account" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddAccountResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="accountToSave" nillable="true" type="q6:Account" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SaveAccountResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -35,7 +93,7 @@
   <xs:element name="testfbResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testfbResult" nillable="true" type="q2:AccountFacebook" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testfbResult" nillable="true" type="q7:AccountFacebook" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -47,7 +105,7 @@
   <xs:element name="testTResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testTResult" nillable="true" type="q3:AccountTwitter" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testTResult" nillable="true" type="q8:AccountTwitter" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

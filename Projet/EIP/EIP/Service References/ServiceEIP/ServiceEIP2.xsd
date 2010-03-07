@@ -3,6 +3,7 @@
   <xs:complexType name="Account">
     <xs:sequence>
       <xs:element minOccurs="0" name="accountID" type="xs:long" />
+      <xs:element minOccurs="0" name="groupID" type="xs:long" />
       <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="typeAccount" type="tns:Account.TypeAccount" />
       <xs:element minOccurs="0" name="userID" type="xs:long" />
@@ -41,4 +42,10 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="AccountTwitter" nillable="true" type="tns:AccountTwitter" />
+  <xs:complexType name="ArrayOfAccount">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Account" nillable="true" type="tns:Account" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAccount" nillable="true" type="tns:ArrayOfAccount" />
 </xs:schema>

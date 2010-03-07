@@ -16,10 +16,24 @@ namespace EIPWCF
     public interface IServiceEIP
     {
         [OperationContract]
-        string test();
+        bool test(Account newAccount);
 
         [OperationContract]
         Account GetAccountByUserID(long userID);
+
+        [OperationContract]
+        List<Account> GetAccountsByUserID(long userID);
+
+        [OperationContract]
+        List<Account> GetAccountsByGroupID(long groupID);
+
+        [OperationContract]
+        bool AddAccount(Account newAccount);
+
+        [OperationContract]
+        bool SaveAccount(Account accountToSave);
+
+
 
         [OperationContract]
         AccountFacebook testfb();
