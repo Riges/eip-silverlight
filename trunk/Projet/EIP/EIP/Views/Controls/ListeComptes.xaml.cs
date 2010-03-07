@@ -23,17 +23,8 @@ namespace EIP.Views.Controls
         public ListeComptes()
         {
             InitializeComponent();
-            //app = (App)System.Windows.Application.Current;
-            LoadAccountButtons();
 
-
-            Button test = new Button();
-            test.Content = "MSN";
-            test.Name = "MSN";
-            LayoutPanel.Children.Add(test);
-
-            
-            
+            LoadAccountButtons();             
         }
 
         public void Reload()
