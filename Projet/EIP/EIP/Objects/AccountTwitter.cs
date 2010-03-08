@@ -26,8 +26,8 @@ namespace EIP
         //public TypeAccount typeAccount { get; set; }
         //public long userID { get; set; }
 
-        public string token { get; set; }
-        public string tokenSecret { get; set; }
+        //public string token { get; set; }
+        //public string tokenSecret { get; set; }
         public string pin { get; set; }
         public TwitterUser user { get; set; }
         public IEnumerable<TwitterStatus> homeStatuses { get; set; }
@@ -53,7 +53,7 @@ namespace EIP
 
             var homeTimeline = FluentTwitter.CreateRequest()
                .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
-               .AuthenticateWith(token, tokenSecret)
+               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
                .Statuses().OnHomeTimeline()
                .CallbackTo(HomeTimelineReceived);
 

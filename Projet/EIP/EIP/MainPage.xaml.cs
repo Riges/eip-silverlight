@@ -40,7 +40,7 @@ namespace EIP
 
         private void LoadInterface()
         {
-            if (Connexion.currentAccount == null)
+            if (Connexion.accounts.Count > 0)
             {
                 LinkHome.Visibility = System.Windows.Visibility.Collapsed;
                 DividerHome.Visibility = System.Windows.Visibility.Collapsed;
@@ -57,6 +57,7 @@ namespace EIP
                 DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
                 LinkSeDeco.Visibility = System.Windows.Visibility.Collapsed;
             }
+            LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)

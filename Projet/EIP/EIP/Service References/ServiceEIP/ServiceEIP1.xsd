@@ -57,10 +57,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetAccountsByTwitter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pseudo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAccountsByTwitterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="GetAccountsByTwitterResult" nillable="true" type="q5:ArrayOfAccount" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddAccount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="newAccount" nillable="true" type="q5:Account" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="newAccount" nillable="true" type="q6:Account" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -74,7 +89,7 @@
   <xs:element name="SaveAccount">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="accountToSave" nillable="true" type="q6:Account" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="accountToSave" nillable="true" type="q7:Account" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -93,7 +108,7 @@
   <xs:element name="testfbResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testfbResult" nillable="true" type="q7:AccountFacebook" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testfbResult" nillable="true" type="q8:AccountFacebook" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -105,7 +120,7 @@
   <xs:element name="testTResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testTResult" nillable="true" type="q8:AccountTwitter" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testTResult" nillable="true" type="q9:AccountTwitter" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

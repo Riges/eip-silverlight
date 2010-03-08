@@ -42,52 +42,42 @@ namespace EIP.Views.Controls
                     {
                         LayoutPanel.Children.Clear();
                     
-                   
-                    foreach (AccountLight oneAccount in Connexion.accounts)
-                    {
-                        //Dispatcher.BeginInvoke(() =>
-                            //{
-                        StackPanel panel = new StackPanel();
-                        panel.Orientation = Orientation.Horizontal;
-
-                        CheckBox box = new CheckBox();
-                        box.Name = oneAccount.account.accountID.ToString();
-                        panel.Children.Add(box);
-
-                        /*
-                        Button btnAccount = new Button();
-                        btnAccount.Content = oneAccount.account.name;
-                        btnAccount.Click += btnAccount_Click;
-                        btnAccount.CommandParameter = oneAccount;
-                        if (Connexion.currentAccount.account.typeAccount == oneAccount.account.typeAccount && Connexion.currentAccount.account.userID == oneAccount.account.userID)
-                            btnAccount.IsEnabled = false;
-                         * */
-
-                        Image img = new Image();
-                        img.Width = 16;
-                        switch (oneAccount.account.typeAccount)
+                        foreach (AccountLight oneAccount in Connexion.accounts)
                         {
-                            case Account.TypeAccount.Facebook:
-                                img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
-                                break;
-                            case Account.TypeAccount.Twitter:
-                                img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
-                                break;
-                            case Account.TypeAccount.Myspace:
-                                break;
-                            default:
-                                break;
+                            //Dispatcher.BeginInvoke(() =>
+                                //{
+                            StackPanel panel = new StackPanel();
+                            panel.Orientation = Orientation.Horizontal;
+
+                            CheckBox box = new CheckBox();
+                            box.Name = oneAccount.account.accountID.ToString();
+                            panel.Children.Add(box);
+
+                            Image img = new Image();
+                            img.Width = 16;
+                            switch (oneAccount.account.typeAccount)
+                            {
+                                case Account.TypeAccount.Facebook:
+                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
+                                    break;
+                                case Account.TypeAccount.Twitter:
+                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                                    break;
+                                case Account.TypeAccount.Myspace:
+                                    break;
+                                default:
+                                    break;
+                            }
+                            panel.Children.Add(img);
+
+                            TextBlock text = new TextBlock();
+                            text.Text = oneAccount.account.name;
+                            panel.Children.Add(text);
+                            
+
+                            LayoutPanel.Children.Add(panel);
+                                //});
                         }
-                        panel.Children.Add(img);
-
-                        TextBlock text = new TextBlock();
-                        text.Text = oneAccount.account.name;
-                        panel.Children.Add(text);
-                        
-
-                        LayoutPanel.Children.Add(panel);
-                            //});
-                    }
 
                     });
                 }
