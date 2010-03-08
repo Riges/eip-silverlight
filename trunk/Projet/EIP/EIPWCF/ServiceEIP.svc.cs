@@ -12,6 +12,8 @@ using Dimebrain.TweetSharp.Extensions;
 using Dimebrain.TweetSharp.Model;*/
 using System.Threading;
 using EIPLibrary;
+using Dimebrain.TweetSharp.Fluent;
+using Dimebrain.TweetSharp.Extensions;
 
 
 namespace EIPWCF
@@ -37,6 +39,21 @@ namespace EIPWCF
         public List<Account> GetAccountsByGroupID(long groupID)
         {
             return Model.GetAccountsByGroupID(groupID);
+        }
+
+        public List<Account> GetAccountsByTwitter(string pseudo, string password)
+        {
+
+            var query = FluentTwitter.CreateRequest()
+                 .AuthenticateAs(pseudo, password)
+                 .Account()
+                 .VerifyCredentials()
+                 .AsXml();
+
+            var response = query.Request();
+            var identity = response.AsUser();
+
+            return Model.GetAccountsByUserID(identity.Id);
         }
 
         public bool AddAccount(Account newAccount)

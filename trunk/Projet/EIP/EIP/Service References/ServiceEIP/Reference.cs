@@ -247,6 +247,11 @@ namespace EIP.ServiceEIP {
         
         System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByGroupID(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetAccountsByTwitter", ReplyAction="http://tempuri.org/IServiceEIP/GetAccountsByTwitterResponse")]
+        System.IAsyncResult BeginGetAccountsByTwitter(string pseudo, string password, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByTwitter(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/AddAccount", ReplyAction="http://tempuri.org/IServiceEIP/AddAccountResponse")]
         System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState);
         
@@ -336,6 +341,25 @@ namespace EIP.ServiceEIP {
         private object[] results;
         
         public GetAccountsByGroupIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<EIP.ServiceEIP.Account> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<EIP.ServiceEIP.Account>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetAccountsByTwitterCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetAccountsByTwitterCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -452,6 +476,12 @@ namespace EIP.ServiceEIP {
         
         private System.Threading.SendOrPostCallback onGetAccountsByGroupIDCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGetAccountsByTwitterDelegate;
+        
+        private EndOperationDelegate onEndGetAccountsByTwitterDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetAccountsByTwitterCompletedDelegate;
+        
         private BeginOperationDelegate onBeginAddAccountDelegate;
         
         private EndOperationDelegate onEndAddAccountDelegate;
@@ -536,6 +566,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<GetAccountsByUserIDCompletedEventArgs> GetAccountsByUserIDCompleted;
         
         public event System.EventHandler<GetAccountsByGroupIDCompletedEventArgs> GetAccountsByGroupIDCompleted;
+        
+        public event System.EventHandler<GetAccountsByTwitterCompletedEventArgs> GetAccountsByTwitterCompleted;
         
         public event System.EventHandler<AddAccountCompletedEventArgs> AddAccountCompleted;
         
@@ -731,6 +763,54 @@ namespace EIP.ServiceEIP {
             }
             base.InvokeAsync(this.onBeginGetAccountsByGroupIDDelegate, new object[] {
                         groupID}, this.onEndGetAccountsByGroupIDDelegate, this.onGetAccountsByGroupIDCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetAccountsByTwitter(string pseudo, string password, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAccountsByTwitter(pseudo, password, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<EIP.ServiceEIP.Account> EIP.ServiceEIP.IServiceEIP.EndGetAccountsByTwitter(System.IAsyncResult result) {
+            return base.Channel.EndGetAccountsByTwitter(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetAccountsByTwitter(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string pseudo = ((string)(inValues[0]));
+            string password = ((string)(inValues[1]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetAccountsByTwitter(pseudo, password, callback, asyncState);
+        }
+        
+        private object[] OnEndGetAccountsByTwitter(System.IAsyncResult result) {
+            System.Collections.Generic.List<EIP.ServiceEIP.Account> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndGetAccountsByTwitter(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetAccountsByTwitterCompleted(object state) {
+            if ((this.GetAccountsByTwitterCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetAccountsByTwitterCompleted(this, new GetAccountsByTwitterCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetAccountsByTwitterAsync(string pseudo, string password) {
+            this.GetAccountsByTwitterAsync(pseudo, password, null);
+        }
+        
+        public void GetAccountsByTwitterAsync(string pseudo, string password, object userState) {
+            if ((this.onBeginGetAccountsByTwitterDelegate == null)) {
+                this.onBeginGetAccountsByTwitterDelegate = new BeginOperationDelegate(this.OnBeginGetAccountsByTwitter);
+            }
+            if ((this.onEndGetAccountsByTwitterDelegate == null)) {
+                this.onEndGetAccountsByTwitterDelegate = new EndOperationDelegate(this.OnEndGetAccountsByTwitter);
+            }
+            if ((this.onGetAccountsByTwitterCompletedDelegate == null)) {
+                this.onGetAccountsByTwitterCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAccountsByTwitterCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetAccountsByTwitterDelegate, new object[] {
+                        pseudo,
+                        password}, this.onEndGetAccountsByTwitterDelegate, this.onGetAccountsByTwitterCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1038,6 +1118,20 @@ namespace EIP.ServiceEIP {
             public System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByGroupID(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<EIP.ServiceEIP.Account> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.Account>)(base.EndInvoke("GetAccountsByGroupID", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetAccountsByTwitter(string pseudo, string password, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = pseudo;
+                _args[1] = password;
+                System.IAsyncResult _result = base.BeginInvoke("GetAccountsByTwitter", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByTwitter(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<EIP.ServiceEIP.Account> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.Account>)(base.EndInvoke("GetAccountsByTwitter", _args, result)));
                 return _result;
             }
             

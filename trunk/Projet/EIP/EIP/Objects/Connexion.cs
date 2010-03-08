@@ -76,9 +76,6 @@ namespace EIP
             //LoadFromStorage();
             SetTwitterClientInfo();
             GetSession();
-
-            
-
         }
 
         public static void StartDisplay()
@@ -215,6 +212,7 @@ namespace EIP
             //storage["CurrentAccount"] = null;
             //currentAccounts = null;
             accounts = null;
+            storage["groupID"] = null;
         }
 
         public static void Login(Account.TypeAccount type, string pseudo, string password)
@@ -240,14 +238,19 @@ namespace EIP
 
                     break;
                 case Account.TypeAccount.Twitter:
-                    
-                     var requestToken = FluentTwitter.CreateRequest()
+                     /*var requestToken = FluentTwitter.CreateRequest()
                         .Configuration.UseTransparentProxy(ProxyUrl)
                         .AuthenticateAs(pseudo, password)
+                        .Account()
+                         .VerifyCredentials()
+                         .AsXml()
                         .CallbackTo(TwitterAuthenticateAsCompleted);
-
+                    
                     requestToken.RequestAsync();
-
+                    */
+                    serviceEIP.GetAccountsByTwitterCompleted += new EventHandler<GetAccountsByTwitterCompletedEventArgs>(serviceEIP_GetAccountsByTwitterCompleted);
+                    serviceEIP.GetAccountsByTwitterAsync(pseudo, password);
+                    
                     break;
                 case Account.TypeAccount.Myspace:
                     break;
@@ -255,6 +258,8 @@ namespace EIP
                     break;
             }
         }
+
+
 
         public static void AddAccount(Account.TypeAccount type)
         {
@@ -318,7 +323,7 @@ namespace EIP
             {
                 string token = tokenRes.Token;
                 AccountTwitterLight accountTwitter = new AccountTwitterLight();
-                accountTwitter.token = token;
+                ((AccountTwitter)accountTwitter.account).token = token;
                 TwitterPin twitterPin = new TwitterPin(accountTwitter, uri);
                 twitterPin.Show();
             });
@@ -328,6 +333,12 @@ namespace EIP
         private static void TwitterAuthenticateAsCompleted(object sender, TwitterResult result)
         {
             var user = result.AsUser();
+            var statuses = result.AsStatuses();
+
+             foreach (var status in statuses)
+                {
+                    string str = status.User.ScreenName;
+                }
 
             serviceEIP.GetAccountsByUserIDCompleted +=new EventHandler<GetAccountsByUserIDCompletedEventArgs>(serviceEIP_GetAccountsByUserIDCompleted);
             serviceEIP.GetAccountsByUserIDAsync((long)user.Id);
@@ -340,7 +351,7 @@ namespace EIP
             var tokenRes = result.AsToken();
             string token = tokenRes.Token;// e.Result;
             AccountTwitterLight accountTwitter = new AccountTwitterLight();
-            accountTwitter.token = token;
+            ((AccountTwitter)accountTwitter.account).token = token;
             TwitterPin twitterPin = new TwitterPin(accountTwitter, new Uri(""));
             twitterPin.Show();
         }
@@ -360,7 +371,7 @@ namespace EIP
         {
             var accessToken = FluentTwitter.CreateRequest()
                 .Configuration.UseTransparentProxy(ProxyUrl)
-                .Authentication.GetAccessToken(accountTwitter.token, accountTwitter.pin)
+                .Authentication.GetAccessToken(((AccountTwitter)accountTwitter.account).token, accountTwitter.pin)
                 .CallbackTo(TwitterAccessTokenReceived);
 
              accessToken.RequestAsync();
@@ -389,10 +400,11 @@ namespace EIP
                 AccountTwitterLight accountTwitter = new AccountTwitterLight();
 
                 accountTwitter.account.typeAccount = Account.TypeAccount.Twitter;
-                accountTwitter.token = token.Token;
-                accountTwitter.tokenSecret = token.TokenSecret;
                 accountTwitter.account.name = token.ScreenName;
                 accountTwitter.account.userID = Convert.ToInt64(token.UserId);
+                ((AccountTwitter)accountTwitter.account).token = token.Token;
+                ((AccountTwitter)accountTwitter.account).tokenSecret = token.TokenSecret;
+
 
                 if (accounts.Count > 0)
                 {
@@ -575,11 +587,21 @@ namespace EIP
             }
         }
 
+        static void serviceEIP_GetAccountsByTwitterCompleted(object sender, GetAccountsByTwitterCompletedEventArgs e)
+        {
+            LoadAccountsFromDB(e.Result);
+        }
+
         static void serviceEIP_GetAccountsByUserIDCompleted(object sender, GetAccountsByUserIDCompletedEventArgs e)
         {
-            if (e.Result != null)
+            LoadAccountsFromDB(e.Result);
+        }
+
+        private static void LoadAccountsFromDB(List<Account> result)
+        {
+            if (result != null)
             {
-                foreach (Account oneAccount in e.Result)
+                foreach (Account oneAccount in result)
                 {
                     switch (oneAccount.typeAccount)
                     {

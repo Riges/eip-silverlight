@@ -28,6 +28,9 @@ namespace EIPWCF
         List<Account> GetAccountsByGroupID(long groupID);
 
         [OperationContract]
+        List<Account> GetAccountsByTwitter(string pseudo, string password);
+
+        [OperationContract]
         bool AddAccount(Account newAccount);
 
         [OperationContract]

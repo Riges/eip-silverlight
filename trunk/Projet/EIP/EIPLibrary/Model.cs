@@ -42,7 +42,7 @@ namespace EIPLibrary
             cmdText.Append(" SELECT * FROM account a ");
             cmdText.Append(" LEFT JOIN  accountfacebook f ON a.accountid=f.accountid ");
             cmdText.Append(" LEFT JOIN  accounttwitter t ON a.accountid=t.accountid ");
-            cmdText.Append(" WHERE a.groupid = (SELECT groupid WHERE a.userid=@USERID)");
+            cmdText.Append(" WHERE a.groupid = (SELECT groupid FROM account WHERE userid=@USERID)");
 
             parms.Add(new NpgsqlParameter("@USERID", userID));
 
