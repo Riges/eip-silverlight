@@ -27,6 +27,7 @@ using TweetSharp.Fluent;
 using TweetSharp.Extensions;
 using TweetSharp.Model;
 using TweetSharp;
+using EIP.Views.Child;
 
 
 
@@ -64,6 +65,7 @@ namespace EIP
 
         //Autre
         private static bool addAccount = false;
+        private static Loading loadingChild;
        
         /////////
    
@@ -73,6 +75,7 @@ namespace EIP
             browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
             accounts = new List<AccountLight>();
             serviceEIP = new ServiceEIP.ServiceEIPClient();
+            loadingChild = new Loading();
             //LoadFromStorage();
             SetTwitterClientInfo();
             GetSession();
@@ -81,6 +84,15 @@ namespace EIP
         public static void StartDisplay()
         {
             listeComptes.Reload();
+        }
+
+        public static void Loading(bool isLoading)
+        {
+            if (isLoading)
+                loadingChild.Show();
+            else
+                loadingChild.Close();
+
         }
 
         private static void LoadFromStorage()
@@ -148,6 +160,7 @@ namespace EIP
                         listeComptes.Reload();
                 }
             }
+            
         }
 
         private static void SetSession(long groupID)
