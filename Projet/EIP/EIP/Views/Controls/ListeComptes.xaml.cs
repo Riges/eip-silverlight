@@ -30,6 +30,7 @@ namespace EIP.Views.Controls
         public void Reload()
         {
             LoadAccountButtons();
+            Connexion.Loading(false);
         }
 
         private void LoadAccountButtons()

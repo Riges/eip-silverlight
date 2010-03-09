@@ -28,6 +28,7 @@ namespace EIP
         public MainPage()
         {
             InitializeComponent();
+           
 
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             Connexion.listeComptes = liste;
@@ -62,6 +63,8 @@ namespace EIP
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            Connexion.Loading(true);
+
             bool showLogin = true;
              if (storage.Contains("groupID"))
                  if (storage["groupID"] != null)
@@ -73,7 +76,7 @@ namespace EIP
                  Views.Child.Login loginWindow = new Views.Child.Login(false);
                  loginWindow.Show();
              }
-
+             //Connexion.Loading(false);
         }
 
         private void browserSession_LoginCompleted(object sender, EventArgs e)
