@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using ProtoLinkedIn;
 using ProtoLinkedIn.ServiceLinkedin;
 
 namespace ProtoLinkedIn
@@ -27,10 +28,13 @@ namespace ProtoLinkedIn
            wcf.linkedInConnectCompleted +=new EventHandler<linkedInConnectCompletedEventArgs>(wcf_linkedInConnectCompleted);
            wcf.linkedInConnectAsync();
         }
+
         static void wcf_linkedInConnectCompleted(object sender, linkedInConnectCompletedEventArgs e)
         {
             if (e.Result != null)
             {
+                
+                //label2.Content = e.Result;
                 
             }
         }
