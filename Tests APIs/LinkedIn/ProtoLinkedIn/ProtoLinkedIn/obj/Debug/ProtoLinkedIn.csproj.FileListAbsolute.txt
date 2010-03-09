@@ -1,0 +1,4 @@
+C:\Documents and Settings\Caco\Mes documents\eip-silverlight\Tests APIs\LinkedIn\ProtoLinkedIn\ProtoLinkedIn\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Caco\Mes documents\eip-silverlight\Tests APIs\LinkedIn\ProtoLinkedIn\ProtoLinkedIn\obj\Debug\App.g.cs
+C:\Documents and Settings\Caco\Mes documents\eip-silverlight\Tests APIs\LinkedIn\ProtoLinkedIn\ProtoLinkedIn\obj\Debug\MainPage.g.cs
+C:\Documents and Settings\Caco\Mes documents\eip-silverlight\Tests APIs\LinkedIn\ProtoLinkedIn\ProtoLinkedIn\obj\Debug\ProtoLinkedIn.g.resources
