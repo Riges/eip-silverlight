@@ -11,6 +11,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using EIP.ServiceEIP;
 using System.Windows.Media.Imaging;
+using System.Windows.Browser;
+using System.Windows.Navigation;
 
 
 namespace EIP.Views.Controls
@@ -42,8 +44,8 @@ namespace EIP.Views.Controls
                     Dispatcher.BeginInvoke(() =>
                     {
                         LayoutPanel.Children.Clear();
-                    
-                        foreach (AccountLight oneAccount in Connexion.accounts)
+
+                        foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                         {
                             //Dispatcher.BeginInvoke(() =>
                                 //{
@@ -51,12 +53,17 @@ namespace EIP.Views.Controls
                             panel.Orientation = Orientation.Horizontal;
 
                             CheckBox box = new CheckBox();
-                            box.Name = oneAccount.account.accountID.ToString();
+                            box.Name = oneAccount.Value.account.accountID.ToString();
+                            box.Checked += new RoutedEventHandler(box_Checked);
+                            box.Unchecked += new RoutedEventHandler(box_Unchecked);
+                            box.CommandParameter = oneAccount.Value;
+                            if (oneAccount.Value.selected)
+                                box.IsChecked = true;
                             panel.Children.Add(box);
 
                             Image img = new Image();
                             img.Width = 16;
-                            switch (oneAccount.account.typeAccount)
+                            switch (oneAccount.Value.account.typeAccount)
                             {
                                 case Account.TypeAccount.Facebook:
                                     img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
@@ -72,7 +79,7 @@ namespace EIP.Views.Controls
                             panel.Children.Add(img);
 
                             TextBlock text = new TextBlock();
-                            text.Text = oneAccount.account.name;
+                            text.Text = oneAccount.Value.account.name;
                             panel.Children.Add(text);
                             
 
@@ -92,10 +99,42 @@ namespace EIP.Views.Controls
             }
         }
 
+        void box_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.userID].selected = false;
+            //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
+            ReloadPage();
+        }
+
+        void box_Checked(object sender, RoutedEventArgs e)
+        {
+            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.userID].selected = true;
+            //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
+            ReloadPage();
+        }
+
+        private void ReloadPage()
+        {
+            string sourceStr = Application.Current.Host.NavigationState;
+            string query = "?time=" + DateTime.Now.Ticks;
+
+            foreach (KeyValuePair<string, string> param in Connexion.navigationContext.QueryString)
+            {
+                if (param.Key != "time")
+                {
+                    //query += (query == string.Empty ? "?" : "&");
+                    query += string.Format("{0}{1}={2}", "&", param.Key, param.Value);
+                }
+            }
+            Uri source = new Uri(sourceStr.Substring(0, sourceStr.IndexOf('?')) + query, UriKind.Relative);
+            Connexion.navigationService.Navigate(source);
+        }
+
+        /*
        void btnAccount_Click(object sender, RoutedEventArgs e)
         {
             //app.LoadAccount((Account)((Button)sender).CommandParameter);
             Connexion.LoadAccount((AccountLight)((Button)sender).CommandParameter);
-        }
+        }*/
     }
 }

@@ -19,13 +19,17 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using TweetSharp.Model;
 using EIP.ServiceEIP;
+using EIP.Objects;
 //using EIP.ServiceEIP;
 
 namespace EIP.Views
 {
     public partial class StreamFeeds : Page
     {
-        private Api facebookAPI;
+        private List<Topic> topics = new List<Topic>();
+
+        public Dictionary<string, List<Topic>> allTopics = new Dictionary<string, List<Topic>>();
+
         public StreamFeeds()
         {
             InitializeComponent();
@@ -36,43 +40,44 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (Connexion.currentAccount != null)
+            Connexion.navigationContext = NavigationContext;
+            if (Connexion.accounts.Count > 0)
             {
-                switch (Connexion.currentAccount.account.typeAccount)
+                foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
-                    case Account.TypeAccount.Facebook:
-                        facebookAPI = Connexion.facebookAPI;
-
-                        Uri urlSource = System.Windows.Application.Current.Host.Source;
-                        string filter = string.Empty;
-
-                        if (this.NavigationContext.QueryString.ContainsKey("filter"))
-                            filter = this.NavigationContext.QueryString["filter"];
-                        else
-                            filter = null;
-                        /*FeedsControl.ClearValue(DataContextProperty);
-                        FeedsControl.Items.Clear();
-                        List<stream_post> test = new List<stream_post>();
-                        test.Add(new stream_post() { message = "test" });
-                        FeedsControl.DataContext = test;*/
-                        facebookAPI.Stream.GetAsync(facebookAPI.Session.UserId, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), null);
-
-                        break;
-                    case Account.TypeAccount.Twitter:
-                        dt_Tick(null, null);
-                        if (((AccountTwitterLight)Connexion.currentAccount).homeStatuses != null)
+                    if(accountLight.Value.selected)
+                        switch (accountLight.Value.account.typeAccount)
                         {
-                            FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
-                            ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                            ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                            case Account.TypeAccount.Facebook:
+                                Uri urlSource = System.Windows.Application.Current.Host.Source;
+                                string filter = string.Empty;
+
+                                if (this.NavigationContext.QueryString.ContainsKey("filter"))
+                                    filter = this.NavigationContext.QueryString["filter"];
+                                else
+                                    filter = null;
+                                ((AccountFacebookLight)accountLight.Value).facebookAPI.Stream.GetAsync(accountLight.Value.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), accountLight.Value);
+                                //Connexion.facebookAPI.Stream.GetAsync(accountLight.Value.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), accountLight.Value);
+
+                                break;
+                            case Account.TypeAccount.Twitter:
+                                dt_Tick(null, null);
+
+
+                                /*if (((AccountTwitterLight)accountLight).homeStatuses != null)
+                                {
+                                    FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
+                                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                                    ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                                }*/
+                                break;
+                            case Account.TypeAccount.Myspace:
+                                break;
+                            default:
+                                break;
                         }
-                        break;
-                    case Account.TypeAccount.Myspace:
-                        break;
-                    default:
-                        break;
                 }
-                
+
                 DispatcherTimer dt = new DispatcherTimer();
                 dt.Interval = new TimeSpan(0, 0, 0, 30, 000);
                 dt.Tick += new EventHandler(dt_Tick);
@@ -85,55 +90,107 @@ namespace EIP.Views
 
         void dt_Tick(object sender, EventArgs e)
         {
-            switch (Connexion.currentAccount.account.typeAccount)
+            if (Connexion.accounts.Count > 0)
             {
-                case Account.TypeAccount.Facebook:
-                    break;
-                case Account.TypeAccount.Twitter:
-                    ((AccountTwitterLight)Connexion.currentAccount).LoadHomeStatuses();
-                    
-                    if (((AccountTwitterLight)Connexion.currentAccount).homeStatuses != null)
+                foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
+                {
+                    switch (accountLight.Value.account.typeAccount)
                     {
-                        if (FeedsControl.DataContext != null)
-                        {
-                            TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
-                            if (last.Id != ((AccountTwitterLight)Connexion.currentAccount).homeStatuses.First().Id)
-                                FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
-                        }
-                        else
-                            FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
-                        ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                        ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                        case Account.TypeAccount.Facebook:
+                            break;
+                        case Account.TypeAccount.Twitter:
+                            ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this);
+                            /*
+                            if (((AccountTwitterLight)accountLight).homeStatuses.Count > 0)
+                            {
+
+                                List<Topic> t_topics = null;
+
+                                if (allTopics.ContainsKey(accountLight.account.userID.ToString()))
+                                    t_topics = (List<Topic>)allTopics[accountLight.account.userID.ToString()];
+                                if (t_topics != null)
+                                {
+                                    //TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
+                                    //if (last.Id != ((AccountTwitterLight)accountLight).homeStatuses.First().Id)
+                                    //    FeedsControl.DataContext = ((AccountTwitterLight)accountLight).homeStatuses;
+
+                                    TwitterStatus last = t_topics.First().t_post;
+                                    if (last.Id != ((AccountTwitterLight)accountLight).homeStatuses.First().t_post.Id)
+                                    {
+                                        //FeedsControl.DataContext = ((AccountTwitterLight)accountLight).homeStatuses;
+                                        allTopics[accountLight.account.userID.ToString()] = ((AccountTwitterLight)accountLight).homeStatuses;
+                                        LoadContext();
+                                    }
+                                }
+                                else
+                                {
+                                    allTopics[accountLight.account.userID.ToString()] = ((AccountTwitterLight)accountLight).homeStatuses;
+                                    LoadContext();
+                                }
+                          
+                              
+                            }  */
+                            break;
+                        case Account.TypeAccount.Myspace:
+                            break;
+                        default:
+                            break;
                     }
-                    break;
-                case Account.TypeAccount.Myspace:
-                    break;
-                default:
-                    break;
+                }
             }
             
         }
 
         private void GetStreamCompleted(stream_data data, object o, FacebookException ex)
         {
-            
             /*DataSource dt = new DataSource();
             foreach (stream_post post in data.posts.stream_post)
                 dt.Items.Add(post);*/
             
             Dispatcher.BeginInvoke(() =>
                 {
-                    FeedsControl.DataContext = data.posts.stream_post;
-                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                    ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                    AccountLight accountLight = (AccountLight)o;
+
+                    List<Topic> fb_topics = new List<Topic>();
+                    foreach (stream_post post in data.posts.stream_post)
+                    {
+                        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                        dateTime = dateTime.AddSeconds(post.updated_time).AddHours(1);
+                        fb_topics.Add(new Topic(dateTime, Account.TypeAccount.Facebook, accountLight.account.userID, post));
+                    }
+
+                    allTopics[accountLight.account.userID.ToString()] = fb_topics;
+
+                    LoadContext();
+                    
+
+                    //FeedsControl.DataContext = data.posts.stream_post;
+                    //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                    //ContentPanel.Visibility = System.Windows.Visibility.Visible;
                 }
                 );
-             
-
         }
 
+        public void LoadContext()
+        {
+            Dispatcher.BeginInvoke(() =>
+                {
+                    topics = new List<Topic>();
+                    foreach (KeyValuePair<string, List<Topic>> item in allTopics)
+                    {
+                        topics.AddRange(item.Value);
+                    }
+
+                    topics.Sort(delegate(Topic t1, Topic t2) { return t2.date.CompareTo(t1.date); });
+                    FeedsControl.DataContext = topics;
+                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                    ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                });
+        }
 
     }
+
+
 
     
 

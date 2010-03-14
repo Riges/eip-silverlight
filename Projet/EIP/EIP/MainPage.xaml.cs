@@ -43,11 +43,11 @@ namespace EIP
         {
             if (Connexion.accounts.Count > 0)
             {
-                LinkHome.Visibility = System.Windows.Visibility.Collapsed;
-                DividerHome.Visibility = System.Windows.Visibility.Collapsed;
+                LinkHome.Visibility = System.Windows.Visibility.Visible;
+                DividerHome.Visibility = System.Windows.Visibility.Visible;
                 LinkFriends.Visibility = System.Windows.Visibility.Collapsed;
                 DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
-                LinkSeDeco.Visibility = System.Windows.Visibility.Collapsed;
+                LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
 
             }
             else
@@ -58,7 +58,11 @@ namespace EIP
                 DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
                 LinkSeDeco.Visibility = System.Windows.Visibility.Collapsed;
             }
+            LinkHome.Visibility = System.Windows.Visibility.Visible;
+            DividerHome.Visibility = System.Windows.Visibility.Visible;
             LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
+
+            LinkHome.NavigateUri = new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative);
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -75,6 +79,7 @@ namespace EIP
              {
                  Views.Child.Login loginWindow = new Views.Child.Login(false);
                  loginWindow.Show();
+                 Connexion.Loading(false);
              }
              //Connexion.Loading(false);
         }
@@ -127,6 +132,7 @@ namespace EIP
            // if (((App)System.Windows.Application.Current)._facebookAPI == null)
             //    LoginFB();
             //LeftFrame.Navigate(new Uri("/Views/MenuFeeds.xaml", UriKind.Relative));
+            LinkHome.NavigateUri = new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative);
         }
 
 
@@ -135,6 +141,7 @@ namespace EIP
         {
             Login loginBox = new Login(true);
             loginBox.Show();
+          
         }
 
 

@@ -40,7 +40,7 @@ namespace EIP
         private static BrowserSession browserSession { get; set; }
 
         //api key Facebook
-        private const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
+        public const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
 
         //api key Twitter
         public const string ProxyUrl = "http://localhost:4164/proxy";
@@ -48,17 +48,20 @@ namespace EIP
         public const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
 
         //Accounts
-        public static List<AccountLight> accounts { get; set; }
+        //public static List<AccountLight> accounts { get; set; }
+        public static Dictionary<long, AccountLight> accounts { get; set; }
         public static List<AccountLight> currentAccounts { get; set; }
         public static List<AccountLight> storageAccounts { get; set; }
         public static AccountLight currentAccount { get; set; }
 
-        private static IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
+        public static IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
        
         //Controls
         public static ListeComptes listeComptes;
         public static Dispatcher dispatcher;
         public static Frame contentFrame;
+        public static NavigationContext navigationContext;
+        public static NavigationService navigationService;  
 
         //WCF
         public static ServiceEIP.ServiceEIPClient serviceEIP;
@@ -73,7 +76,7 @@ namespace EIP
         {
             browserSession = new BrowserSession(ApplicationKey);
             browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
-            accounts = new List<AccountLight>();
+            accounts = new Dictionary<long, AccountLight>();
             serviceEIP = new ServiceEIP.ServiceEIPClient();
             loadingChild = new Loading();
             //LoadFromStorage();
@@ -88,10 +91,13 @@ namespace EIP
 
         public static void Loading(bool isLoading)
         {
-            if (isLoading)
-                loadingChild.Show();
-            else
-                loadingChild.Close();
+            dispatcher.BeginInvoke(() =>
+                {
+                    if (isLoading)
+                        loadingChild.Show();
+                    else
+                        loadingChild.Close();
+                });
 
         }
 
@@ -121,10 +127,10 @@ namespace EIP
                                           where account.account.accountID == theAccountID.First()
                                           select account;
 
-                        accounts = new List<AccountLight>();
+                        accounts = new Dictionary<long, AccountLight>();
                         foreach (AccountLight acc in theAccounts)
                         {
-                            accounts.Add(acc);
+                            //accounts.Add(acc);
                         }
                     }
                 }
@@ -203,12 +209,22 @@ namespace EIP
                         case Account.TypeAccount.Facebook:
                             AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
                             newAccountFacebook.account = oneAccount;
-                            accounts.Add(newAccountFacebook);
+                            //accounts.Add(newAccountFacebook);
+                           
+                            newAccountFacebook.Login();
+                            /*accounts[newAccountFacebook.account.userID] = newAccountFacebook;
+                            
+                            browserSession.LoggedIn(((AccountFacebook)oneAccount).sessionKey,
+                                                           ((AccountFacebook)oneAccount).sessionSecret,
+                                                           Convert.ToInt32(((AccountFacebook)oneAccount).sessionExpires),
+                                                           oneAccount.userID);
+                           */
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
-                            accounts.Add(newAccountTwitter);
+                            //accounts.Add(newAccountTwitter);
+                            accounts[newAccountTwitter.account.userID] = newAccountTwitter;
                             break;
                         case Account.TypeAccount.Myspace:
                             break;
@@ -219,6 +235,8 @@ namespace EIP
                 listeComptes.Reload();
             }
         }
+
+
 
         private static void DestroySession()
         {
@@ -291,8 +309,11 @@ namespace EIP
                     }
                     else
                     {
+                        /*
                         browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
                         browserSession.Logout();
+                        */
+                        BrowserSession_LogoutCompleted(null, null);
                     }
 
                     break;
@@ -514,7 +535,7 @@ namespace EIP
                         //serviceEIP.TwitterGetUserInfoCompleted += new EventHandler<TwitterGetUserInfoCompletedEventArgs>(serviceEIP_TwitterGetUserInfoCompleted);
                         //serviceEIP.TwitterGetUserInfoAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret, ((AccountTwitter)currentAccount).userID);
 
-                        ((AccountTwitterLight)currentAccount).LoadHomeStatuses();
+                        ((AccountTwitterLight)currentAccount).LoadHomeStatuses(null);
                         //serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
                         //serviceEIP.TwitterGetHomeStatusesAsync(consumerKey, consumerSecret, ((AccountTwitter)currentAccount).token, ((AccountTwitter)currentAccount).tokenSecret);
 
@@ -562,10 +583,9 @@ namespace EIP
             {
                 if (addAccount)
                 {
-                  
                     AccountFacebookLight newAccount = new AccountFacebookLight();
                     if (accounts.Count > 0)
-                        newAccount.account.groupID = accounts[0].account.groupID;
+                        newAccount.account.groupID = accounts.First().Value.account.groupID;
                     else
                         newAccount.account.groupID = (long)users[0].uid;
 
@@ -576,6 +596,7 @@ namespace EIP
                     ((AccountFacebook)newAccount.account).sessionKey = facebookAPI.Session.SessionKey;
                     ((AccountFacebook)newAccount.account).sessionSecret = facebookAPI.Session.SessionSecret;
                     
+
                     //currentAccount = newAccount;
                     SetSession(newAccount.account.groupID);
 
@@ -621,12 +642,17 @@ namespace EIP
                         case Account.TypeAccount.Facebook:
                             AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
                             newAccountFacebook.account = oneAccount;
-                            accounts.Add(newAccountFacebook);
+                            //accounts.Add(newAccountFacebook);
+
+                            newAccountFacebook.Login();
+
+                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
-                            accounts.Add(newAccountTwitter);
+                            //accounts.Add(newAccountTwitter);
+                            accounts[newAccountTwitter.account.userID] = newAccountTwitter;
                             break;
                         case Account.TypeAccount.Myspace:
                             break;

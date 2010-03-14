@@ -15,6 +15,10 @@ using TweetSharp.Fluent;
 using TweetSharp.Model;
 using TweetSharp.Extensions;
 using EIP.ServiceEIP;
+using EIP.Objects;
+using EIP.Views;
+using System.Collections.ObjectModel;
+
 
 namespace EIP
 {
@@ -30,27 +34,28 @@ namespace EIP
         //public string tokenSecret { get; set; }
         public string pin { get; set; }
         public TwitterUser user { get; set; }
-        public IEnumerable<TwitterStatus> homeStatuses { get; set; }
+        public List<Topic> homeStatuses { get; set; }
 
-        private ItemsControl itemsControl;
+        //Controls
+        private StreamFeeds streamFeeds;
 
         public AccountTwitterLight()
         {
             this.account = new AccountTwitter();
+            this.homeStatuses = new List<Topic>();
         }
 
           //*******************************\\
-         //*Methode de récupération d'infos*\\
+         //*Methodes de récupération d'infos*\\
         //***********************************\\
 
         /// <summary>
         /// Met à jour l'attribut "homeStatuses" (les tweets de la homepage)
         /// </summary>
-        public void LoadHomeStatuses()
+        public void LoadHomeStatuses(StreamFeeds aStreamFeeds)
         {
-            //Connexion.serviceEIP.TwitterGetHomeStatusesCompleted += new EventHandler<TwitterGetHomeStatusesCompletedEventArgs>(serviceEIP_TwitterGetHomeStatusesCompleted);
-            //Connexion.serviceEIP.TwitterGetHomeStatusesAsync(Connexion.consumerKey, Connexion.consumerSecret, this.token, this.tokenSecret);
-
+            if(aStreamFeeds != null)
+                this.streamFeeds = aStreamFeeds;
             var homeTimeline = FluentTwitter.CreateRequest()
                .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
                .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
@@ -60,15 +65,45 @@ namespace EIP
             homeTimeline.RequestAsync();
         }
 
-        //private  void serviceEIP_TwitterGetHomeStatusesCompleted(object sender, TwitterGetHomeStatusesCompletedEventArgs e)
+        /// <summary>
+        /// Met à jour la liste des topics si streamFeeds  à été précédemment passé en parametre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="result"></param>
         private void HomeTimelineReceived(object sender, TwitterResult result)
         {
             var statuses = result.AsStatuses();
 
             if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (result.AsError() == null) && (statuses != null))
             {
-                this.homeStatuses = statuses;
-                Connexion.SaveAccount(this);
+                homeStatuses = new List<Topic>();
+                foreach(TwitterStatus status in statuses)
+                {
+                    homeStatuses.Add(new Topic(status.CreatedDate.AddHours(1), Account.TypeAccount.Twitter, this.account.userID, status));
+                }
+                if (streamFeeds != null)
+                {
+                    List<Topic> t_topics = null;
+
+                    if (streamFeeds.allTopics.ContainsKey(this.account.userID.ToString()))
+                        t_topics = (List<Topic>)streamFeeds.allTopics[this.account.userID.ToString()];
+                    if (t_topics != null)
+                    {
+                        TwitterStatus last = t_topics[0].t_post;
+                        if (last.Id != this.homeStatuses[0].t_post.Id)
+                        {
+                            streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
+                            streamFeeds.LoadContext();
+                        }
+                    }
+                    else
+                    {
+                        streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
+                        streamFeeds.LoadContext();
+                    }
+                }
+
+                //Connexion.SaveAccount(this);
             }
         }
 

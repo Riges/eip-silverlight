@@ -9,22 +9,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.Windows.Navigation;
 
-namespace EIP.Views
+namespace EIP.Views.Child
 {
-    public partial class HomeCenter : Page
+    public partial class Loading : ChildWindow
     {
-        public HomeCenter()
+        public Loading()
         {
             InitializeComponent();
         }
 
-        // Executes when the user navigates to this page.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            this.DialogResult = true;
         }
 
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
     }
 }
+

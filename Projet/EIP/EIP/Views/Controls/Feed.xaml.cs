@@ -18,6 +18,7 @@ using Facebook.Session;
 using System.Windows.Data;
 using TweetSharp.Model;
 using EIP.ServiceEIP;
+using EIP.Objects;
 
 
 namespace EIP.Views.Controls
@@ -29,8 +30,6 @@ namespace EIP.Views.Controls
         public stream_post post { get; set; }
         public TwitterStatus status { get; set; }
       
-        private Api facebookAPI;
-
         public Feed()
         {
             InitializeComponent();
@@ -69,44 +68,50 @@ namespace EIP.Views.Controls
 
         void Feed_Loaded(object sender, RoutedEventArgs e)
         {
-            if(Connexion.currentAccount != null)
-                switch (Connexion.currentAccount.account.typeAccount)
+            if (Connexion.accounts.Count > 0)
+            {
+                Topic topic = (Topic)this.DataContext;
+                switch (topic.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
-                        facebookAPI = Connexion.facebookAPI;
-                        stream_post typeF = new stream_post();
-                        if (this.DataContext.GetType() == typeF.GetType())
-                        {
-                            post = (stream_post)this.DataContext;
-                            if (post != null)
+                        //if (this.DataContext.GetType() == typeof(stream_post))
+                        //{
+                            //post = (stream_post)this.DataContext;
+                            if (topic.fb_post != null)
                             {
-                                facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
+                                post = topic.fb_post;
+                                ((AccountFacebookLight)Connexion.accounts[topic.userID]).facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
+                                
+                                //Connexion.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
                             }
-                        }
+                        //}
                         break;
                     case Account.TypeAccount.Twitter:
                         BitmapImage btImg = null;
-                        TwitterStatus typeT = new TwitterStatus();
-                        if (this.DataContext.GetType() == typeT.GetType())
+                        //if (this.DataContext.GetType() == typeof(TwitterStatus))
+                        //{
+                        if (topic.t_post != null)
                         {
-                            status = (TwitterStatus)this.DataContext;
+                            status = topic.t_post;// (TwitterStatus)this.DataContext;
                             if (status.User.ProfileImageUrl != null)
                             {
-                             Uri uriImg = new Uri(status.User.ProfileImageUrl);
-                             btImg = new BitmapImage(uriImg);
+                                Uri uriImg = new Uri(status.User.ProfileImageUrl);
+                                btImg = new BitmapImage(uriImg);
                             }
                             picUser.Source = btImg;
                             nameUser.Text = status.User.Name;
                             message.Text = status.Text;
-                            dateTimeFeed.Text = Day2Jour(status.CreatedDate) + ", à " + status.CreatedDate.AddHours(1).ToShortTimeString();
+                            dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(1)) + ", à " + status.CreatedDate.AddHours(1).ToShortTimeString();
                         }
+                        //}
 
                         break;
                     case Account.TypeAccount.Myspace:
                         break;
                     default:
                         break;
-                }  
+                }
+            }
             
         }
 
@@ -129,8 +134,8 @@ namespace EIP.Views.Controls
                             message.Text = post.message;
 
                             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                            dateTime = dateTime.AddSeconds(post.updated_time);
-                            dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.AddHours(1).ToShortTimeString();
+                            dateTime = dateTime.AddSeconds(post.updated_time).AddHours(1);
+                            dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
 
                         }
                     );
