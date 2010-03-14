@@ -24,7 +24,6 @@
                             
                             <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
                                      NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>
-                            
 
                             <Rectangle x:Name="DividerHome" Style="{StaticResource DividerStyle}"/>
 

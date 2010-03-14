@@ -52,14 +52,12 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Channel.html" />
     <Content Include="clientaccesspolicy.xml" />
     <Content Include="ClientBin\EIP.xap" />
     <Content Include="crossdomain.xml" />
     <Content Include="Default.aspx" />
     <Content Include="EIPTestPage.html" />
     <Content Include="fblogin.js" />
-    <Content Include="Privacy.html" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
