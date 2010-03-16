@@ -95,6 +95,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\Topic.cs" />
+    <Compile Include="Objects\TopicFB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ServiceEIP\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -162,7 +163,6 @@
     </Page>
     <Page Include="Views\Child\Loading.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Child\Login.xaml">
       <Generator>MSBuild:Compile</Generator>
