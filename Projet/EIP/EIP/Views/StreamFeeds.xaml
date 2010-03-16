@@ -26,7 +26,7 @@
                 <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
                     <ItemsControl.Template>
                     <ControlTemplate TargetType="ItemsControl">
-                        <Border BorderBrush="Blue" BorderThickness="1">
+                        <Border > <!--BorderBrush="Blue" BorderThickness="1"-->
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <ItemsPresenter />
                             </ScrollViewer>

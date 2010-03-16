@@ -126,7 +126,8 @@ namespace EIP.Views.Controls
                     query += string.Format("{0}{1}={2}", "&", param.Key, param.Value);
                 }
             }
-            Uri source = new Uri(sourceStr.Substring(0, sourceStr.IndexOf('?')) + query, UriKind.Relative);
+            
+            Uri source = new Uri((sourceStr.Contains('?')?sourceStr.Substring(0, sourceStr.IndexOf('?')):sourceStr) + query, UriKind.Relative);
             Connexion.navigationService.Navigate(source);
         }
 

@@ -27,7 +27,8 @@ namespace EIP.Views.Controls
     {
        //public stream_post post { get; set; }
 
-        public stream_post post { get; set; }
+        //public stream_post post { get; set; }
+        public TopicFB post { get; set; }
         public TwitterStatus status { get; set; }
       
         public Feed()
@@ -80,7 +81,25 @@ namespace EIP.Views.Controls
                             if (topic.fb_post != null)
                             {
                                 post = topic.fb_post;
-                                ((AccountFacebookLight)Connexion.accounts[topic.userID]).facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
+
+                                BitmapImage btImgFB = null;
+
+
+                                if (post.userSource.pic != null)
+                                {
+                                    Uri uriImg = new Uri(post.userSource.pic);
+                                    btImgFB = new BitmapImage(uriImg);
+                                }
+                                picUser.Source = btImgFB;
+                                nameUser.Text = post.userSource.name;
+                                message.Text = post.post.message;
+
+                                DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                                dateTime = dateTime.AddSeconds(post.post.updated_time).AddHours(1);
+                                dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
+
+
+                                //((AccountFacebookLight)Connexion.accounts[topic.userID]).facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
                                 
                                 //Connexion.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
                             }
@@ -115,7 +134,7 @@ namespace EIP.Views.Controls
             
         }
 
-
+        /*
         private void GetUser_Completed(IList<user> users, object o, FacebookException ex)
         {
             BitmapImage btImg = null;
@@ -140,7 +159,7 @@ namespace EIP.Views.Controls
                         }
                     );
                 }
-        }
+        }*/
 
         private string Day2Jour(DateTime date)
         {

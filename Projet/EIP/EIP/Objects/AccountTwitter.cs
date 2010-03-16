@@ -54,8 +54,11 @@ namespace EIP
         /// </summary>
         public void LoadHomeStatuses(StreamFeeds aStreamFeeds)
         {
-            if(aStreamFeeds != null)
+            if (aStreamFeeds != null)
+            {
                 this.streamFeeds = aStreamFeeds;
+                LoadStreamFeedsContext();
+            }
             var homeTimeline = FluentTwitter.CreateRequest()
                .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
                .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
@@ -81,6 +84,9 @@ namespace EIP
                 {
                     homeStatuses.Add(new Topic(status.CreatedDate.AddHours(1), Account.TypeAccount.Twitter, this.account.userID, status));
                 }
+
+                LoadStreamFeedsContext();
+                /*
                 if (streamFeeds != null)
                 {
                     List<Topic> t_topics = null;
@@ -101,9 +107,40 @@ namespace EIP
                         streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                         streamFeeds.LoadContext();
                     }
-                }
+                }*/
 
                 //Connexion.SaveAccount(this);
+            }
+        }
+
+        private void LoadStreamFeedsContext()
+        {
+            if (streamFeeds != null)
+            {
+                List<Topic> t_topics = null;
+
+                if (streamFeeds.allTopics.ContainsKey(this.account.userID.ToString()))
+                    t_topics = (List<Topic>)streamFeeds.allTopics[this.account.userID.ToString()];
+                if (t_topics != null && t_topics.Count > 0)
+                {
+                    if (this.homeStatuses.Count > 0)
+                    {
+                        TwitterStatus last = t_topics[0].t_post;
+                        if (last.Id != this.homeStatuses[0].t_post.Id)
+                        {
+                            streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
+                            streamFeeds.LoadContext();
+                        }
+                    }
+                }
+                else
+                {
+                    if (this.homeStatuses.Count > 0)
+                    {
+                        streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
+                        streamFeeds.LoadContext();
+                    }
+                }
             }
         }
 

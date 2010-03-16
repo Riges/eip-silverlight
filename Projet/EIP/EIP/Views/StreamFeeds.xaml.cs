@@ -49,7 +49,7 @@ namespace EIP.Views
                         switch (accountLight.Value.account.typeAccount)
                         {
                             case Account.TypeAccount.Facebook:
-                                Uri urlSource = System.Windows.Application.Current.Host.Source;
+                                /*Uri urlSource = System.Windows.Application.Current.Host.Source;
                                 string filter = string.Empty;
 
                                 if (this.NavigationContext.QueryString.ContainsKey("filter"))
@@ -57,8 +57,9 @@ namespace EIP.Views
                                 else
                                     filter = null;
                                 ((AccountFacebookLight)accountLight.Value).facebookAPI.Stream.GetAsync(accountLight.Value.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), accountLight.Value);
+                                */
                                 //Connexion.facebookAPI.Stream.GetAsync(accountLight.Value.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), accountLight.Value);
-
+                                dt_Tick(null, null);
                                 break;
                             case Account.TypeAccount.Twitter:
                                 dt_Tick(null, null);
@@ -94,48 +95,24 @@ namespace EIP.Views
             {
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
-                    switch (accountLight.Value.account.typeAccount)
-                    {
-                        case Account.TypeAccount.Facebook:
-                            break;
-                        case Account.TypeAccount.Twitter:
-                            ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this);
-                            /*
-                            if (((AccountTwitterLight)accountLight).homeStatuses.Count > 0)
-                            {
+                    if(accountLight.Value.selected)
+                        switch (accountLight.Value.account.typeAccount)
+                        {
+                            case Account.TypeAccount.Facebook:
+                                string filter = string.Empty;
 
-                                List<Topic> t_topics = null;
-
-                                if (allTopics.ContainsKey(accountLight.account.userID.ToString()))
-                                    t_topics = (List<Topic>)allTopics[accountLight.account.userID.ToString()];
-                                if (t_topics != null)
-                                {
-                                    //TwitterStatus last = ((IEnumerable<TwitterStatus>)FeedsControl.DataContext).First();
-                                    //if (last.Id != ((AccountTwitterLight)accountLight).homeStatuses.First().Id)
-                                    //    FeedsControl.DataContext = ((AccountTwitterLight)accountLight).homeStatuses;
-
-                                    TwitterStatus last = t_topics.First().t_post;
-                                    if (last.Id != ((AccountTwitterLight)accountLight).homeStatuses.First().t_post.Id)
-                                    {
-                                        //FeedsControl.DataContext = ((AccountTwitterLight)accountLight).homeStatuses;
-                                        allTopics[accountLight.account.userID.ToString()] = ((AccountTwitterLight)accountLight).homeStatuses;
-                                        LoadContext();
-                                    }
-                                }
-                                else
-                                {
-                                    allTopics[accountLight.account.userID.ToString()] = ((AccountTwitterLight)accountLight).homeStatuses;
-                                    LoadContext();
-                                }
-                          
-                              
-                            }  */
-                            break;
-                        case Account.TypeAccount.Myspace:
-                            break;
-                        default:
-                            break;
-                    }
+                                if (this.NavigationContext.QueryString.ContainsKey("filter"))
+                                    filter = this.NavigationContext.QueryString["filter"];
+                                ((AccountFacebookLight)accountLight.Value).LoadFeeds(filter, this);
+                                break;
+                            case Account.TypeAccount.Twitter:
+                                ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this);
+                                break;
+                            case Account.TypeAccount.Myspace:
+                                break;
+                            default:
+                                break;
+                        }
                 }
             }
             
@@ -143,10 +120,6 @@ namespace EIP.Views
 
         private void GetStreamCompleted(stream_data data, object o, FacebookException ex)
         {
-            /*DataSource dt = new DataSource();
-            foreach (stream_post post in data.posts.stream_post)
-                dt.Items.Add(post);*/
-            
             Dispatcher.BeginInvoke(() =>
                 {
                     AccountLight accountLight = (AccountLight)o;
@@ -156,7 +129,7 @@ namespace EIP.Views
                     {
                         DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                         dateTime = dateTime.AddSeconds(post.updated_time).AddHours(1);
-                        fb_topics.Add(new Topic(dateTime, Account.TypeAccount.Facebook, accountLight.account.userID, post));
+                        //fb_topics.Add(new Topic(dateTime, Account.TypeAccount.Facebook, accountLight.account.userID, post));
                     }
 
                     allTopics[accountLight.account.userID.ToString()] = fb_topics;
@@ -176,8 +149,10 @@ namespace EIP.Views
             Dispatcher.BeginInvoke(() =>
                 {
                     topics = new List<Topic>();
+                    topics.Capacity = topics.Capacity + allTopics.Count;
                     foreach (KeyValuePair<string, List<Topic>> item in allTopics)
                     {
+                        
                         topics.AddRange(item.Value);
                     }
 
