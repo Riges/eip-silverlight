@@ -8,3 +8,4 @@ C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\bin\ProtoWCF.pdb
 C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ResolveAssemblyReference.cache
 C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ProtoWCF.dll
 C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\obj\Debug\ProtoWCF.pdb
+C:\ETNA\EIP\proto\Tests APIs\Facebook\ProtoFB\ProtoWCF\bin\Bitly.dll
