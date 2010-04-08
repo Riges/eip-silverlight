@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bitly">
+      <HintPath>.\Bitly.dll</HintPath>
+    </Reference>
     <Reference Include="Dimebrain.TweetSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Dimebrain.TweetSharp.dll</HintPath>
