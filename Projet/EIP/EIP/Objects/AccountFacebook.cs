@@ -26,6 +26,7 @@ namespace EIP
         public Api facebookAPI { get; set; }
         private BrowserSession browserSession { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }
+        public List<user> friends { get; set; }
 
         //Controls
         private StreamFeeds streamFeeds;
@@ -55,6 +56,32 @@ namespace EIP
             Connexion.accounts[this.account.userID] = this;
         }
 
+
+        public void LoadFriends()
+        {
+            
+            this.facebookAPI.Friends.GetAsync(new Friends.GetFriendsCallback(GetFriendsIDs_Completed), null);
+        }
+
+        private void GetFriendsIDs_Completed(IList<long> usersIDs, Object obj, FacebookException ex)
+        {
+            if (usersIDs != null)
+                if (usersIDs.Count > 0)
+                 {
+                     this.facebookAPI.Users.GetInfoAsync((List<long>)usersIDs, new Users.GetInfoCallback(GetFriends_Completed), null);
+                 }
+        }
+
+        private void GetFriends_Completed(IList<user> users, Object obj, FacebookException ex)
+        {
+            if (users != null)
+                if (users.Count > 0)
+                 {
+                     this.friends = users as List<user>;
+                 }
+        }
+
+
         public void LoadFeeds(string filtre, StreamFeeds aStreamFeeds)
         {
             if(aStreamFeeds != null)
@@ -73,13 +100,13 @@ namespace EIP
             this.feeds[o.ToString()] = new List<Topic>();
             foreach (stream_post post in data.posts.stream_post)
             {
-                this.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), post);
+                this.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetStreamUser_Completed), post);
                 //fb_topics.Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, post));
             }
 
         }
 
-        private void GetUser_Completed(IList<user> users, object o, FacebookException ex)
+        private void GetStreamUser_Completed(IList<user> users, object o, FacebookException ex)
         {
             //stream_post post = (stream_post)o;
             if (users != null)

@@ -93,8 +93,9 @@
                             <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/WaitLoad.xaml" />
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />
                             <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
+                        <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
 
-                            <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>-->
+                        <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>-->
 
                         </uriMapper:UriMapper>
                     </navigation:Frame.UriMapper>

@@ -97,6 +97,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Objects\Friend.cs" />
     <Compile Include="Objects\Topic.cs" />
     <Compile Include="Objects\TopicFB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +121,9 @@
     <Compile Include="Views\Controls\FilterButton.xaml.cs">
       <DependentUpon>FilterButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\FriendInfo.xaml.cs">
+      <DependentUpon>FriendInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\ListeComptes.xaml.cs">
       <DependentUpon>ListeComptes.xaml</DependentUpon>
     </Compile>
@@ -137,6 +141,9 @@
     </Compile>
     <Compile Include="Views\Child\ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FriendList.xaml.cs">
+      <DependentUpon>FriendList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeCenter.xaml.cs">
       <DependentUpon>HomeCenter.xaml</DependentUpon>
@@ -183,6 +190,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\FriendInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\ListeComptes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +215,10 @@
     </Page>
     <Page Include="Views\Child\ErrorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FriendList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\HomeCenter.xaml">
       <Generator>MSBuild:Compile</Generator>
