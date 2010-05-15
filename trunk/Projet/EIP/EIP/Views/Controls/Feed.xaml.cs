@@ -84,7 +84,6 @@ namespace EIP.Views.Controls
 
                                 BitmapImage btImgFB = null;
 
-
                                 if (post.userSource.pic != null)
                                 {
                                     Uri uriImg = new Uri(post.userSource.pic);
