@@ -253,13 +253,16 @@ namespace EIPLibrary
                     account.typeAccount = (Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), dtr["Type"].ToString());
 
                 if (DbUtil.HasFieldNotNull(dtr, "accountid"))
-                    account.accountID = Convert.ToInt32(dtr["accountid"]);
+                    account.accountID = Convert.ToInt64(dtr["accountid"]);
+
                 if (DbUtil.HasFieldNotNull(dtr, "groupid"))
-                    account.groupID = Convert.ToInt32(dtr["groupid"]);
+                    account.groupID = Convert.ToInt64(dtr["groupid"]);
+
                 if (DbUtil.HasFieldNotNull(dtr, "name"))
                     account.name = dtr["name"].ToString();
+
                 if (DbUtil.HasFieldNotNull(dtr, "userid"))
-                    account.userID = Convert.ToInt32(dtr["userid"]);
+                    account.userID = Convert.ToInt64(dtr["userid"]);
 
                 switch (account.typeAccount)
                 {
