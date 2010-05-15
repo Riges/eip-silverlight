@@ -104,7 +104,7 @@ namespace EIP
         private void LoadStreamFeedsContext(string filtre)
         {
             if (this.feeds.ContainsKey(filtre))
-                if (streamFeeds != null && this.feeds[filtre].Count >= 30)
+                if (streamFeeds != null && this.feeds[filtre].Count >= 1)
                 {
                     streamFeeds.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
                     streamFeeds.LoadContext();
