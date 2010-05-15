@@ -9,14 +9,17 @@
     xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
              
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" >
+    d:DesignHeight="400" d:DesignWidth="800" >
 
     <Grid x:Name="LayoutRoot" Background="White">
-
+       
+        
+        
+        
         <my:DockPanel Background="White" LastChildFill="False">
             <StackPanel my:DockPanel.Dock="Top" Height="100">
                 <Grid x:Name="NavigationGrid" Style="{StaticResource NavigationGridStyle}">
-
+            
                     <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}">
                         <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
 
@@ -48,14 +51,14 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel my:DockPanel.Dock="Bottom"  Height="100" >
+            <!--<StackPanel my:DockPanel.Dock="Bottom"  Height="100" >
                 <Button  Content="bas"  ></Button>
-            </StackPanel>
+            </StackPanel>-->
 
             <!--<StackPanel my:DockPanel.Dock="Left" Width="120" >-->
 
                 <navigation:Frame x:Name="LeftFrame" my:DockPanel.Dock="Left" Width="120" 
-                               NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/MenuFeeds"-->
+                               NavigationFailed="ContentFrame_NavigationFailed" ><!--Source="/MenuFeeds"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>
                             <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
