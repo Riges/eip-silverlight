@@ -41,11 +41,11 @@ namespace EIP.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Connexion.navigationContext = NavigationContext;
-            if (Connexion.accounts.Count > 0)
+            if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
-                    if(accountLight.Value.selected)
+                    if (accountLight.Value.selected)
                         switch (accountLight.Value.account.typeAccount)
                         {
                             case Account.TypeAccount.Facebook:
@@ -86,6 +86,11 @@ namespace EIP.Views
 
 
             }
+            else
+            {
+                ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+            }
+           
            
         }
 

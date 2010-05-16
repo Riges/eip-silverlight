@@ -50,9 +50,9 @@ namespace EIP
         //Accounts
         //public static List<AccountLight> accounts { get; set; }
         public static Dictionary<long, AccountLight> accounts { get; set; }
-        public static List<AccountLight> currentAccounts { get; set; }
+        //public static List<AccountLight> currentAccounts { get; set; }
         public static List<AccountLight> storageAccounts { get; set; }
-        public static AccountLight currentAccount { get; set; }
+        //public static AccountLight currentAccount { get; set; }
 
         public static IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
        
@@ -74,8 +74,8 @@ namespace EIP
    
         public static void Start()
         {
-            browserSession = new BrowserSession(ApplicationKey);
-            browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
+            //browserSession = new BrowserSession(ApplicationKey);
+            //browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
             accounts = new Dictionary<long, AccountLight>();
             serviceEIP = new ServiceEIP.ServiceEIPClient();
             loadingChild = new Loading();
@@ -101,6 +101,7 @@ namespace EIP
 
         }
 
+        /* LoadFromStorage
         private static void LoadFromStorage()
         {
             storageAccounts = new List<AccountLight>();
@@ -137,6 +138,7 @@ namespace EIP
             }
 
         }
+         * */
 
         private static void GetSession()
         {
@@ -152,7 +154,7 @@ namespace EIP
             }*/
             if (storage.Contains("groupID"))
             {
-                if (storage["groupID"] != null)
+                if (storage["groupID"] != null && (storage["groupID"].ToString() != "0"))
                 {
                     /*
                     string curAccountKey = storage["groupID"].ToString();
@@ -200,7 +202,7 @@ namespace EIP
 
         static void serviceEIP_GetAccountsByGroupIDCompleted(object sender, GetAccountsByGroupIDCompletedEventArgs e)
         {
-            if (e.Result != null)
+            if (e.Result != null && e.Error == null)
             {
                 foreach (Account oneAccount in e.Result)
                 {
@@ -209,16 +211,8 @@ namespace EIP
                         case Account.TypeAccount.Facebook:
                             AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
                             newAccountFacebook.account = oneAccount;
-                            //accounts.Add(newAccountFacebook);
-                           
+                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
                             newAccountFacebook.Login();
-                            /*accounts[newAccountFacebook.account.userID] = newAccountFacebook;
-                            
-                            browserSession.LoggedIn(((AccountFacebook)oneAccount).sessionKey,
-                                                           ((AccountFacebook)oneAccount).sessionSecret,
-                                                           Convert.ToInt32(((AccountFacebook)oneAccount).sessionExpires),
-                                                           oneAccount.userID);
-                           */
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
@@ -233,6 +227,7 @@ namespace EIP
                     }
                 }
                 listeComptes.Reload();
+                Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
             }
         }
 
@@ -243,7 +238,7 @@ namespace EIP
             //storage["CurrentAccount"] = null;
             //currentAccounts = null;
             accounts = null;
-            storage["groupID"] = null;
+            storage["groupID"] = 0;
         }
 
         public static void Login(Account.TypeAccount type, string pseudo, string password)
@@ -262,8 +257,10 @@ namespace EIP
                     }
                     else
                     {
-                        browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
-                        browserSession.Logout();
+                        //browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
+                        //browserSession.Logout();
+
+                        BrowserSession_LogoutCompleted(null, null);
                     }
                    
 
@@ -490,11 +487,12 @@ namespace EIP
             browserSession.Login();
         }
 
+        /* LoadAccount
         public static void LoadAccount(AccountLight account)
         {
-            /*var theAccount = from Account oneAccount in this.currentAccounts
-                             where oneAccount.userID == account.userID
-                               select account;*/
+            //var theAccount = from Account oneAccount in this.currentAccounts
+             //                where oneAccount.userID == account.userID
+               //                select account;
             //dispatcher = dispatch;
             //contentFrame = frame;
             switch (account.account.typeAccount)
@@ -513,7 +511,9 @@ namespace EIP
                     break;
             }
         }
+    */
 
+        /* LoginToAccount
         public static void LoginToAccount()
         {
             if (currentAccount != null)
@@ -554,12 +554,14 @@ namespace EIP
 
                 if (contentFrame != null)
                     contentFrame.Navigate(new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative));
+
                 if (listeComptes != null)
                     listeComptes.Reload();
 
             }
 
         }      
+        */
 
         /*private static void serviceEIP_TwitterGetUserInfoCompleted(object sender, ServiceEIP.TwitterGetUserInfoCompletedEventArgs e)
         {
@@ -573,13 +575,18 @@ namespace EIP
             if (facebookAPI == null)
             {
                 facebookAPI = new Api(browserSession);
-                facebookAPI.Users.GetInfoAsync(browserSession.UserId, new Users.GetInfoCallback(GetUserFacebook_Completed), new object());
+
+               /* List<long> list = new List<long>();
+                list.Add(browserSession.UserId);
+                */
+               // facebookAPI.Users.GetInfoAsync(list, new Users.GetInfoCallback(GetUserFacebook_Completed), null);
+                facebookAPI.Users.GetInfoAsync(browserSession.UserId, new Users.GetInfoCallback(GetUserFacebook_Completed), null);
             }
         }
 
         private static void GetUserFacebook_Completed(IList<user> users, object o, FacebookException ex)
         {
-            if (users.Count > 0)
+            if (users != null && users.Count > 0)
             {
                 if (addAccount)
                 {
@@ -628,13 +635,15 @@ namespace EIP
 
         static void serviceEIP_GetAccountsByUserIDCompleted(object sender, GetAccountsByUserIDCompletedEventArgs e)
         {
-            LoadAccountsFromDB(e.Result);
+            if (e.Error != null)
+                LoadAccountsFromDB(e.Result);
         }
 
         private static void LoadAccountsFromDB(List<Account> result)
         {
             if (result != null)
             {
+                accounts = new Dictionary<long, AccountLight>();
                 foreach (Account oneAccount in result)
                 {
                     switch (oneAccount.typeAccount)
@@ -668,6 +677,8 @@ namespace EIP
                 //LoadFromStorage();
                 listeComptes.Reload();
                 addAccount = false;
+
+                Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
             }
             else
             {
@@ -684,6 +695,7 @@ namespace EIP
             if (e.Result)
             {
                 GetSession();
+                Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
             }
             else
             {

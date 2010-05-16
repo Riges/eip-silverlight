@@ -22,7 +22,7 @@ namespace EIP.Views
 {
     public partial class LeftMenu : Page
     {
-        private Api facebookAPI;
+        //private Api facebookAPI;
         private IList<stream_filter> filters;
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
 
@@ -34,6 +34,7 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            /*
             if (Connexion.currentAccount != null)
                 switch (Connexion.currentAccount.account.typeAccount)
                 {
@@ -60,15 +61,16 @@ namespace EIP.Views
                     default:
                         break;
                 }
-
+            */
             
         }
 
         private void GetFiltersCompleted(IList<stream_filter> filters, object o, FacebookException ex)
         {
+            /*
             storage["filters-" + facebookAPI.Session.UserId] = filters;
             this.filters = filters;
-            LoadFilters();
+            LoadFilters();*/
 
         }
 
