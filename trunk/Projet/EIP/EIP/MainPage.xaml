@@ -40,6 +40,11 @@
 
                             <Rectangle x:Name="Divider2" Style="{StaticResource DividerStyle}"/>
 
+                            <HyperlinkButton x:Name="LinkSeConnecter" Style="{StaticResource LinkStyle}"  Click="LinkSeConnecter_Click"
+                                     Content="Se connecter"/>
+
+                            <Rectangle x:Name="DividerSeCo" Style="{StaticResource DividerStyle}"/>
+
                             <HyperlinkButton x:Name="LinkSeDeco" Style="{StaticResource LinkStyle}" Click="LinkSeDeco_Click" 
                                       Content="Se déconnecter"/>
 
@@ -64,6 +69,7 @@
                             <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
                             <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/MenuFeeds.xaml"/>
                             <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/EmptyPage.xaml"/>
+                            <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/EmptyPage.xaml"/>
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
                             <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/EmptyPage.xaml" />
                             
@@ -91,6 +97,7 @@
                             <!--<uriMapper:UriMapping Uri="/User/{id}" MappedUri="/Views/UserDetail.xaml?id={id}" />-->
                             <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/StreamFeeds.xaml" />
                             <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/WaitLoad.xaml" />
+                            <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/IntroPage.xaml" />
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />
                             <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
                         <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />

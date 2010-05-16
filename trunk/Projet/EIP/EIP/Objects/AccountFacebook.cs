@@ -35,14 +35,19 @@ namespace EIP
         {
             this.account = new AccountFacebook();
             this.feeds = new Dictionary<string, List<Topic>>();
+
+            Connexion.dispatcher.BeginInvoke(() =>
+                {
+                    browserSession = new BrowserSession(Connexion.ApplicationKey);
+                    browserSession.LoginCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(browserSession_LoginCompleted);
+                });
         }
 
         public void Login()
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    browserSession = new BrowserSession(Connexion.ApplicationKey);
-                    browserSession.LoginCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(browserSession_LoginCompleted);
+                    
                     browserSession.LoggedIn(((AccountFacebook)this.account).sessionKey,
                                                                 ((AccountFacebook)this.account).sessionSecret,
                                                                 Convert.ToInt32(((AccountFacebook)this.account).sessionExpires),

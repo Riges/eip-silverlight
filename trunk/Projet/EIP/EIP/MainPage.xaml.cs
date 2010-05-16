@@ -33,21 +33,25 @@ namespace EIP
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             Connexion.listeComptes = liste;
             Connexion.contentFrame = ContentFrame;
-            Connexion.LoginToAccount();
+            //Connexion.LoginToAccount();
             Connexion.dispatcher = Dispatcher;
             Connexion.StartDisplay();
             LoadInterface();
+
         }
 
         private void LoadInterface()
         {
-            if (Connexion.accounts.Count > 0)
+            if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
                 LinkHome.Visibility = System.Windows.Visibility.Visible;
                 DividerHome.Visibility = System.Windows.Visibility.Visible;
                 LinkFriends.Visibility = System.Windows.Visibility.Collapsed;
                 DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
                 LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
+
+                LinkSeConnecter.Visibility = System.Windows.Visibility.Collapsed;
+                DividerSeCo.Visibility = System.Windows.Visibility.Collapsed;
 
             }
             else
@@ -57,10 +61,13 @@ namespace EIP
                 LinkFriends.Visibility = System.Windows.Visibility.Collapsed;
                 DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
                 LinkSeDeco.Visibility = System.Windows.Visibility.Collapsed;
+
+                LinkSeConnecter.Visibility = System.Windows.Visibility.Visible;
+                DividerSeCo.Visibility = System.Windows.Visibility.Visible;
             }
-            LinkHome.Visibility = System.Windows.Visibility.Visible;
-            DividerHome.Visibility = System.Windows.Visibility.Visible;
-            LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
+            //LinkHome.Visibility = System.Windows.Visibility.Visible;
+            //DividerHome.Visibility = System.Windows.Visibility.Visible;
+            //LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
 
             LinkHome.NavigateUri = new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative);
         }
@@ -71,25 +78,25 @@ namespace EIP
 
             bool showLogin = true;
              if (storage.Contains("groupID"))
-                 if (storage["groupID"] != null)
+                 if (storage["groupID"].ToString() != "0")
                  {
                      showLogin = false;
                  }
              if (showLogin)
              {
-                 Views.Child.Login loginWindow = new Views.Child.Login(false);
+                 Login loginWindow = new Login(false);
                  loginWindow.Show();
                  Connexion.Loading(false);
              }
              //Connexion.Loading(false);
         }
 
+        /* browserSession_LoginCompleted
         private void browserSession_LoginCompleted(object sender, EventArgs e)
         {
 
         }
-
-        
+        */
 
         // After the Frame navigates, ensure the HyperlinkButton representing the current page is selected
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
@@ -109,6 +116,7 @@ namespace EIP
                     }
                 }
             }
+            LoadInterface();
         }
 
         // If an error occurs during navigation, show an error window
@@ -124,7 +132,9 @@ namespace EIP
             Connexion.Deconnexion();
             liste.Reload();
             ContentFrame.Navigate(new Uri("/Deconnexion", UriKind.Relative));
-            
+
+            /*LinkSeConnecter.Visibility = System.Windows.Visibility.Visible;
+            DividerSeCo.Visibility = System.Windows.Visibility.Visible;*/
         }
 
         private void LinkHome_Click(object sender, RoutedEventArgs e)
@@ -142,6 +152,12 @@ namespace EIP
             Login loginBox = new Login(true);
             loginBox.Show();
           
+        }
+
+        private void LinkSeConnecter_Click(object sender, RoutedEventArgs e)
+        {
+            Login loginWindow = new Login(false);
+            loginWindow.Show();
         }
 
 
