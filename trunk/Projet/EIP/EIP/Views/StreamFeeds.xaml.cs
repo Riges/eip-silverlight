@@ -51,14 +51,9 @@ namespace EIP.Views
                             case Account.TypeAccount.Facebook:
                                 /*Uri urlSource = System.Windows.Application.Current.Host.Source;
                                 string filter = string.Empty;
-
                                 if (this.NavigationContext.QueryString.ContainsKey("filter"))
                                     filter = this.NavigationContext.QueryString["filter"];
-                                else
-                                    filter = null;
-                                ((AccountFacebookLight)accountLight.Value).facebookAPI.Stream.GetAsync(accountLight.Value.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), accountLight.Value);
-                                */
-                                //Connexion.facebookAPI.Stream.GetAsync(accountLight.Value.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filter, new Stream.GetCallback(GetStreamCompleted), accountLight.Value);
+                            */
                                 dt_Tick(null, null);
                                 break;
                             case Account.TypeAccount.Twitter:
@@ -96,7 +91,7 @@ namespace EIP.Views
 
         void dt_Tick(object sender, EventArgs e)
         {
-            if (Connexion.accounts.Count > 0)
+            if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
@@ -108,6 +103,7 @@ namespace EIP.Views
 
                                 if (this.NavigationContext.QueryString.ContainsKey("filter"))
                                     filter = this.NavigationContext.QueryString["filter"];
+
                                 ((AccountFacebookLight)accountLight.Value).LoadFeeds(filter, this);
                                 break;
                             case Account.TypeAccount.Twitter:

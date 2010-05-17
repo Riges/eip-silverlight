@@ -91,6 +91,8 @@ namespace EIP.Views.Controls
                                 }
                                 picUser.Source = btImgFB;
                                 nameUser.Text = post.userSource.name;
+                                if (post.userTarget != null)
+                                    nameUser.Text += " > " + post.userTarget.name;
                                 message.Text = post.post.message;
 
                                 DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
