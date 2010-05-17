@@ -9,6 +9,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
+using Facebook.Rest;
+using System.Collections.Generic;
+using Facebook.Utility;
 
 namespace EIP.Objects
 {
@@ -16,17 +19,21 @@ namespace EIP.Objects
     {
         public stream_post post { get; set; }
         public user userSource { get; set; }
+        public user userTarget { get; set; }
 
         public TopicFB()
         {
 
         }
 
-        public TopicFB(stream_post aPost, user aUserSource)
+        public TopicFB(stream_post aPost, user aUserSource, user aUserTarget)
         {
             this.post = aPost;
             this.userSource = aUserSource;
+            this.userTarget = aUserTarget;
         }
+
+        
 
     }
 }

@@ -27,6 +27,8 @@ namespace EIP
         private BrowserSession browserSession { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }
         public List<user> friends { get; set; }
+        private bool busy = false;
+        //private int nbFeeds = 0;
 
         //Controls
         private StreamFeeds streamFeeds;
@@ -92,26 +94,91 @@ namespace EIP
             if(aStreamFeeds != null)
             {
                 this.streamFeeds = aStreamFeeds;
-                LoadStreamFeedsContext(filtre);
+                //LoadStreamFeedsContext(filtre);
             }
-        
-            this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
+            
+            if(!busy)
+                this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
         }
 
-        private void GetStreamCompleted(stream_data data, object o, FacebookException ex)
+        private void GetStreamCompleted(stream_data data, object filtre, FacebookException ex)
         {
-            //string filtre = string.IsNullOrEmpty(o.ToString())?"all":o.ToString();
-            //List<Topic> fb_topics = new List<Topic>();
-            this.feeds[o.ToString()] = new List<Topic>();
-            foreach (stream_post post in data.posts.stream_post)
+            this.busy = true;
+
+            bool needUpdate = true;
+            if(this.feeds.ContainsKey(filtre.ToString()))
             {
-                this.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetStreamUser_Completed), post);
+                if(this.feeds[filtre.ToString()].Count > 0)
+                    if (data.posts.stream_post[0].post_id == this.feeds[filtre.ToString()][0].fb_post.post.post_id)
+                        needUpdate = false;
                 //fb_topics.Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, post));
             }
 
+
+
+            if(needUpdate)
+            {
+                this.feeds[filtre.ToString()] = new List<Topic>();
+
+
+                List<long> userIds = new List<long>();
+
+                foreach (stream_post post in data.posts.stream_post)
+                {
+                    //this.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), post);
+
+                    if (post.actor_id > 0 && post.actor_id != post.source_id)
+                        userIds.Add((long)post.actor_id);
+                    
+                    userIds.Add(post.source_id);
+                }
+
+                this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUsers_Completed), data.posts.stream_post);
+            }
+            else
+                this.busy = false;
         }
 
-        private void GetStreamUser_Completed(IList<user> users, object o, FacebookException ex)
+        
+
+        private void GetUsers_Completed(IList<user> users, object data, FacebookException ex)
+        {
+            if (users != null)
+                if (users.Count > 0)
+                {
+                    List<stream_post> posts = data as List<stream_post>;
+
+                    foreach (stream_post post in posts)
+                    {
+                        user userSource = null;
+                        user userTarget = null;
+                        foreach (user unUser in users)
+                        {
+                            if (post.actor_id > 0 && post.actor_id != post.source_id)
+                            {
+                                if (post.actor_id == unUser.uid)
+                                    userSource = unUser;
+                                if (post.source_id == unUser.uid)
+                                    userTarget = unUser;
+                            }
+                            else
+                            {
+                                if (post.source_id == unUser.uid)
+                                    userSource = unUser;
+                            }
+                        }
+                        TopicFB topicFB = new TopicFB(post, userSource, userTarget);
+                        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                        dateTime = dateTime.AddSeconds(post.updated_time).AddHours(1);
+                        this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, topicFB));
+
+                        LoadStreamFeedsContext(post.filter_key);
+                    }
+                }
+            this.busy = false;
+        }
+        /*
+        private void GetUser_Completed(IList<user> users, object o, FacebookException ex)
         {
             //stream_post post = (stream_post)o;
             if (users != null)
@@ -124,14 +191,14 @@ namespace EIP
                     this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, topicFB));
 
                     LoadStreamFeedsContext(post.filter_key);
-/*
-                    if (streamFeeds != null && this.feeds[post.filter_key].Count >= 30)
-                    {
-                        streamFeeds.allTopics[this.account.userID.ToString()] = this.feeds[post.filter_key];
-                        streamFeeds.LoadContext();
-                    }*/
+                    //
+                    //if (streamFeeds != null && this.feeds[post.filter_key].Count >= 30)
+                    //{
+                    //    streamFeeds.allTopics[this.account.userID.ToString()] = this.feeds[post.filter_key];
+                    //    streamFeeds.LoadContext();
+                    //}
                 }
-        }
+        }*/
 
         private void LoadStreamFeedsContext(string filtre)
         {
