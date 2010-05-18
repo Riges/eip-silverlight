@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Height="120" > <!--Width="700"-->
     <UserControl.Resources>
@@ -44,7 +45,8 @@
             </Image>
         <TextBlock Grid.Row="0" Grid.Column="1" Name="nameUser"></TextBlock>
         
-        <TextBlock Grid.Row="1" Grid.Column="1" Name="message" Text="{Binding Path=message}" HorizontalAlignment="Stretch" TextWrapping="Wrap"></TextBlock>
+        <!--<TextBlock Grid.Row="1" Grid.Column="1" Name="message" Text="{Binding Path=message}" HorizontalAlignment="Stretch" TextWrapping="Wrap"></TextBlock>-->
+        <toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="message"  HorizontalAlignment="Left" VerticalAlignment="Top"></toolkit:WrapPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                 <TextBlock  Name="dateTimeFeed"></TextBlock>
