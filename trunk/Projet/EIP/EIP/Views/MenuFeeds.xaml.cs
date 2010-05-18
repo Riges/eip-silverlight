@@ -17,6 +17,9 @@ using Facebook.Session;
 using Facebook.Utility;
 using System.IO.IsolatedStorage;
 using EIP.ServiceEIP;
+using System.Windows.Media.Imaging;
+using System.Windows.Data;
+
 
 namespace EIP.Views
 {
@@ -34,6 +37,69 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+            {
+                if (account.Value.selected)
+                {
+                    AccordionItem item = new AccordionItem();
+
+                    Image img = new Image();
+                    img.Width = 16;
+                    switch (account.Value.account.typeAccount)
+                    {
+                        case Account.TypeAccount.Facebook:
+                            img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
+                            break;
+                        case Account.TypeAccount.Twitter:
+                            img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                            break;
+                        case Account.TypeAccount.Myspace:
+                            break;
+                        default:
+                            break;
+                    }
+                    StackPanel panelHeader = new StackPanel();
+                    panelHeader.Orientation = Orientation.Horizontal;
+                    TextBlock textHeader = new TextBlock();
+                    textHeader.Text = account.Value.account.name;
+                    textHeader.Margin = new Thickness(5, 0, 0, 0);
+
+                    panelHeader.Children.Add(img);
+                    panelHeader.Children.Add(textHeader);
+
+                    item.Name = account.Value.account.accountID.ToString();
+                    item.Header = panelHeader;
+
+                    menufiltre.Items.Add(item);
+                }
+            }
+
+            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+            {
+                if (account.Value.selected)
+                {
+                    switch (account.Value.account.typeAccount)
+                    {
+                        case Account.TypeAccount.Facebook:
+                            ((AccountFacebookLight)account.Value).LoadFilters(this);
+                            break;
+                        case Account.TypeAccount.Twitter:
+                            break;
+                        case Account.TypeAccount.Myspace:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            /*
+            ((AccordionItem)FindName("Pocket Ino")).Content = "toto";
+
+            ((AccordionItem)FindName("Pocketino")).Content = "titi";
+
+            */
+
             /*
             if (Connexion.currentAccount != null)
                 switch (Connexion.currentAccount.account.typeAccount)
@@ -74,8 +140,40 @@ namespace EIP.Views
 
         }
 
-        private void LoadFilters()
+        public void LoadFilters(AccountLight account)
         {
+            Dispatcher.BeginInvoke(() =>
+            {
+                AccordionItem item = (AccordionItem)FindName(account.account.accountID.ToString());
+                StackPanel panelContent = new StackPanel();
+                switch (account.account.typeAccount)
+                {
+                    case Account.TypeAccount.Facebook:
+                        foreach (stream_filter filter in ((AccountFacebookLight)account).filters)
+                        {
+                            TextBlock linkFilter = new TextBlock();
+                            linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
+                            linkFilter.DataContext = filter;
+
+                            Binding binding = new Binding();
+                            binding.Source = filter;
+                            binding.Path = new PropertyPath("name");
+                            linkFilter.SetBinding(TextBlock.TextProperty, binding);
+                            panelContent.Children.Add(linkFilter);
+                        }
+                        break;
+                    case Account.TypeAccount.Twitter:
+                        break;
+                    case Account.TypeAccount.Myspace:
+                        break;
+                    default:
+                        break;
+                }
+                item.Content = panelContent;
+            }
+           );
+
+            /*
             Dispatcher.BeginInvoke(() =>
             {
                 foreach (stream_filter filter in this.filters)
@@ -90,6 +188,13 @@ namespace EIP.Views
                 }
             }
            );
+             * */
+        }
+
+        void linkFilter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            stream_filter filter = ((TextBlock)sender).DataContext as stream_filter;
+            Connexion.contentFrame.Navigate(new Uri(string.Format("/Feeds/{0}", filter.filter_key), UriKind.Relative));
         }
 
         void btn_Click(object sender, RoutedEventArgs e)

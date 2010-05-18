@@ -36,6 +36,16 @@ namespace EIP
         public TwitterUser user { get; set; }
         public List<Topic> homeStatuses { get; set; }
 
+        /*
+        OnFriendsTimeline
+        OnListTimeline
+        OnPublicTimeline
+        OnUserTimeline
+         * Retweet
+         * RetweetedByMe
+         * RetweetedToMe
+        */
+
         //Controls
         private StreamFeeds streamFeeds;
 
@@ -45,9 +55,9 @@ namespace EIP
             this.homeStatuses = new List<Topic>();
         }
 
-          //*******************************\\
+          //********************************\\
          //*Methodes de récupération d'infos*\\
-        //***********************************\\
+        //************************************\\
 
         /// <summary>
         /// Met à jour l'attribut "homeStatuses" (les tweets de la homepage)

@@ -27,11 +27,14 @@ namespace EIP
         private BrowserSession browserSession { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }
         public List<user> friends { get; set; }
+        public List<stream_filter> filters { get; set; }
+
         private bool busy = false;
         //private int nbFeeds = 0;
 
         //Controls
         private StreamFeeds streamFeeds;
+        private LeftMenu menuFeeds;
 
         public AccountFacebookLight()
         {
@@ -63,7 +66,6 @@ namespace EIP
             Connexion.accounts[this.account.userID] = this;
         }
 
-
         public void LoadFriends()
         {
             
@@ -88,7 +90,11 @@ namespace EIP
                  }
         }
 
-
+        /// <summary>
+        /// Méthode pour charger la liste des feeds correspondant au filtre passé en paramètre.
+        /// </summary>
+        /// <param name="filtre">Filtre de la liste des feeds.</param>
+        /// <param name="aStreamFeeds">object StreamFeeds permettant de vérifier s'il y a de nouveau feeds pour mettre à jour ou non la liste.</param>
         public void LoadFeeds(string filtre, StreamFeeds aStreamFeeds)
         {
             if(aStreamFeeds != null)
@@ -101,6 +107,12 @@ namespace EIP
                 this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
         }
 
+        /// <summary>
+        /// Callback de la méthode LoadFeeds
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="filtre"></param>
+        /// <param name="ex"></param>
         private void GetStreamCompleted(stream_data data, object filtre, FacebookException ex)
         {
             this.busy = true;
@@ -169,7 +181,7 @@ namespace EIP
                         }
                         TopicFB topicFB = new TopicFB(post, userSource, userTarget);
                         DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                        dateTime = dateTime.AddSeconds(post.updated_time).AddHours(1);
+                        dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
                         this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, topicFB));
 
                         LoadStreamFeedsContext(post.filter_key);
@@ -200,6 +212,11 @@ namespace EIP
                 }
         }*/
 
+
+        /// <summary>
+        /// Met à jour l'affichage avec les feeds récupérés
+        /// </summary>
+        /// <param name="filtre"></param>
         private void LoadStreamFeedsContext(string filtre)
         {
             if (this.feeds.ContainsKey(filtre))
@@ -210,6 +227,24 @@ namespace EIP
                 }
         }
 
+        public void LoadFilters(LeftMenu menuFeeds)
+        {
+            this.menuFeeds = menuFeeds;
+            if (this.filters == null)
+                this.facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), menuFeeds);
+            else
+                menuFeeds.LoadFilters(this);
+        }
+
+        private void GetFiltersCompleted(IList<stream_filter> filtres, object o, FacebookException ex)
+        {
+            if (filtres != null)
+            {
+                this.filters = filtres as List<stream_filter>;
+                menuFeeds.LoadFilters(this);
+            }
+        }
+        
     
     }
 }
