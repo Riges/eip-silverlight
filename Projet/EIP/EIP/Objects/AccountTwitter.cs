@@ -79,7 +79,7 @@ namespace EIP
         }
 
         /// <summary>
-        /// Met à jour la liste des topics si streamFeeds  à été précédemment passé en parametre
+        /// Met à jour la liste des topics si streamFeeds à été précédemment passé en parametre
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="result"></param>

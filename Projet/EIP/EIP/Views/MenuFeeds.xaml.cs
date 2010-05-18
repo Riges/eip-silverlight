@@ -60,6 +60,7 @@ namespace EIP.Views
                     }
                     StackPanel panelHeader = new StackPanel();
                     panelHeader.Orientation = Orientation.Horizontal;
+
                     TextBlock textHeader = new TextBlock();
                     textHeader.Text = account.Value.account.name;
                     textHeader.Margin = new Thickness(5, 0, 0, 0);
@@ -151,15 +152,29 @@ namespace EIP.Views
                     case Account.TypeAccount.Facebook:
                         foreach (stream_filter filter in ((AccountFacebookLight)account).filters)
                         {
+                            StackPanel panelFilter = new StackPanel();
+                            panelFilter.Orientation = Orientation.Horizontal;
+                            Image imgFilter = new Image();
+                            Uri uriImg = new Uri("http://localhost:4164/GifHandler.ashx?link=" + filter.icon_url, UriKind.Absolute);
+                            imgFilter.Source = new BitmapImage(uriImg);
+                            imgFilter.Width = 16;
+                            imgFilter.Stretch = Stretch.None;
+                            imgFilter.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                            imgFilter.FlowDirection = System.Windows.FlowDirection.RightToLeft;
+
                             TextBlock linkFilter = new TextBlock();
                             linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
                             linkFilter.DataContext = filter;
+                            linkFilter.Margin = new Thickness(5, 0, 0, 0);
 
                             Binding binding = new Binding();
                             binding.Source = filter;
                             binding.Path = new PropertyPath("name");
                             linkFilter.SetBinding(TextBlock.TextProperty, binding);
-                            panelContent.Children.Add(linkFilter);
+
+                            panelFilter.Children.Add(imgFilter);
+                            panelFilter.Children.Add(linkFilter);
+                            panelContent.Children.Add(panelFilter);
                         }
                         break;
                     case Account.TypeAccount.Twitter:

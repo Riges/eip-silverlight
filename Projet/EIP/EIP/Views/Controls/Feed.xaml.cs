@@ -93,7 +93,9 @@ namespace EIP.Views.Controls
                                 nameUser.Text = post.userSource.name;
                                 if (post.userTarget != null)
                                     nameUser.Text += " > " + post.userTarget.name;
-                                message.Text = post.post.message;
+
+                                LoadMessage(post.post.message);
+                                //message.Text = post.post.message;
 
                                 DateTime dateTime = topic.date;// new DateTime(1970, 1, 1, 0, 0, 0, 0);
                                // dateTime = dateTime.AddSeconds(post.post.created_time);//.AddHours(1);
@@ -120,7 +122,8 @@ namespace EIP.Views.Controls
                             }
                             picUser.Source = btImg;
                             nameUser.Text = status.User.Name;
-                            message.Text = status.Text;
+                            LoadMessage(status.Text);
+                            //message.Text = status.Text;
                             dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(1)) + ", à " + status.CreatedDate.AddHours(1).ToShortTimeString();
                         }
                         //}
@@ -161,6 +164,54 @@ namespace EIP.Views.Controls
                     );
                 }
         }*/
+
+        private void LoadMessage(string msg)
+        {
+            msg = msg.Replace("\n", " ");
+            char[] charTab = new char[1];
+            charTab[0] = ' ';
+            string[] mots = msg.Split(charTab, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string mot in mots)
+            {
+                if (mot.StartsWith("http://") || mot.StartsWith("https://") || mot.StartsWith("www."))
+                {
+                    string theMot = mot;
+                    if (mot.StartsWith("www."))
+                        theMot = "http://" + mot;
+                    HyperlinkButton link = new HyperlinkButton();
+                    link.NavigateUri = new Uri(theMot, UriKind.Absolute);
+                    link.Content = theMot + " ";
+                    link.TargetName = "_blank";
+                    message.Children.Add(link);
+                }
+                else if (mot.StartsWith("@"))
+                {
+                    HyperlinkButton link = new HyperlinkButton();
+                    if (mot.EndsWith("!"))
+                        link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
+                    else
+                        link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1), UriKind.Absolute);
+                    link.Content = mot + " ";
+                    link.TargetName = "_blank";
+                    message.Children.Add(link);
+                }
+                else if (mot.StartsWith("#"))
+                {
+                    HyperlinkButton link = new HyperlinkButton();
+                    link.NavigateUri = new Uri("http://twitter.com/search?q=" + mot, UriKind.Absolute);
+                    link.Content = mot + " ";
+                    link.TargetName = "_blank";
+                    message.Children.Add(link);
+                }
+                else
+                {
+                    TextBlock txtBlock = new TextBlock();
+                    txtBlock.Text = mot + " ";
+                    message.Children.Add(txtBlock);
+                }
+            }
+        }
 
         private string Day2Jour(DateTime date)
         {
