@@ -95,8 +95,8 @@ namespace EIP.Views.Controls
                                     nameUser.Text += " > " + post.userTarget.name;
                                 message.Text = post.post.message;
 
-                                DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                                dateTime = dateTime.AddSeconds(post.post.updated_time).AddHours(1);
+                                DateTime dateTime = topic.date;// new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                               // dateTime = dateTime.AddSeconds(post.post.created_time);//.AddHours(1);
                                 dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
 
 

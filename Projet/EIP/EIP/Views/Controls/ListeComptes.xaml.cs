@@ -80,6 +80,7 @@ namespace EIP.Views.Controls
 
                             TextBlock text = new TextBlock();
                             text.Text = oneAccount.Value.account.name;
+                            text.Margin = new Thickness(5, 0, 0, 0);
                             panel.Children.Add(text);
                             
 
