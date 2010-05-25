@@ -35,6 +35,8 @@ namespace EIP
         public string pin { get; set; }
         public TwitterUser user { get; set; }
         public List<Topic> homeStatuses { get; set; }
+        public List<TwitterFilter> filters { get; set; }
+        
 
         /*
         OnFriendsTimeline
@@ -53,6 +55,16 @@ namespace EIP
         {
             this.account = new AccountTwitter();
             this.homeStatuses = new List<Topic>();
+
+            this.filters = new List<TwitterFilter>();
+            filters.Add(new TwitterFilter("Home", "OnHomeTimeline"));
+            filters.Add(new TwitterFilter("", "OnFriendsTimeline"));
+            filters.Add(new TwitterFilter("", "OnListTimeline"));
+            filters.Add(new TwitterFilter("", "OnPublicTimeline"));
+            filters.Add(new TwitterFilter("Mes tweets", "OnUserTimeline"));
+            filters.Add(new TwitterFilter("", "Retweet"));
+            filters.Add(new TwitterFilter("", "RetweetedByMe"));
+            filters.Add(new TwitterFilter("", "RetweetedToMe"));
         }
 
           //********************************\\
@@ -155,5 +167,21 @@ namespace EIP
         }
 
     
+    }
+
+    public class TwitterFilter
+    {
+        public string name { get; set; }
+        public string value { get; set; }
+
+        public TwitterFilter()
+        {
+        }
+
+        public TwitterFilter(string name, string value)
+        {
+            this.name = name;
+            this.value = value;
+        }
     }
 }
