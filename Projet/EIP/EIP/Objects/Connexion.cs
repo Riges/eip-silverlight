@@ -51,7 +51,7 @@ namespace EIP
         //public static List<AccountLight> accounts { get; set; }
         public static Dictionary<long, AccountLight> accounts { get; set; }
         //public static List<AccountLight> currentAccounts { get; set; }
-        public static List<AccountLight> storageAccounts { get; set; }
+        //public static List<AccountLight> storageAccounts { get; set; }
         //public static AccountLight currentAccount { get; set; }
 
         public static IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
@@ -69,6 +69,7 @@ namespace EIP
         //Autre
         private static bool addAccount = false;
         private static Loading loadingChild;
+        private static bool connexionActive = false;
        
         /////////
    
@@ -79,10 +80,31 @@ namespace EIP
             accounts = new Dictionary<long, AccountLight>();
             serviceEIP = new ServiceEIP.ServiceEIPClient();
             loadingChild = new Loading();
-            //LoadFromStorage();
+
+            serviceEIP.IsUpCompleted += new EventHandler<IsUpCompletedEventArgs>(serviceEIP_IsUpCompleted);
+            try
+            {
+                serviceEIP.IsUpAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             SetTwitterClientInfo();
+            
+        }
+
+        static void serviceEIP_IsUpCompleted(object sender, IsUpCompletedEventArgs e)
+        {
+            if (e.Error == null && e.Result == true)
+            {
+                connexionActive = true;
+            }
             GetSession();
         }
+
+
 
         public static void StartDisplay()
         {
@@ -152,28 +174,54 @@ namespace EIP
                         currentAccount = (AccountLight)storage[curAccountKey];
                 }
             }*/
-            if (storage.Contains("groupID"))
+            if (connexionActive)
             {
-                if (storage["groupID"] != null && (storage["groupID"].ToString() != "0"))
+                if (storage.Contains("groupID"))
                 {
-                    /*
-                    string curAccountKey = storage["groupID"].ToString();
-                    if (storage.Contains(curAccountKey))
-                        currentAccount = (AccountLight)storage[curAccountKey];
-                     */
-                    serviceEIP.GetAccountsByGroupIDCompleted += new EventHandler<GetAccountsByGroupIDCompletedEventArgs>(serviceEIP_GetAccountsByGroupIDCompleted);
-                    serviceEIP.GetAccountsByGroupIDAsync(Convert.ToInt64(storage["groupID"].ToString()));
-                    //serviceEIP.GetAccountsAsync(storage["groupID"]
-                    if (listeComptes != null)
-                        listeComptes.Reload();
+                    if (storage["groupID"] != null && (storage["groupID"].ToString() != "0"))
+                    {
+                        /*
+                        string curAccountKey = storage["groupID"].ToString();
+                        if (storage.Contains(curAccountKey))
+                            currentAccount = (AccountLight)storage[curAccountKey];
+                         */
+                        serviceEIP.GetAccountsByGroupIDCompleted += new EventHandler<GetAccountsByGroupIDCompletedEventArgs>(serviceEIP_GetAccountsByGroupIDCompleted);
+                        serviceEIP.GetAccountsByGroupIDAsync(Convert.ToInt64(storage["groupID"].ToString()));
+                        
+                       // if (listeComptes != null)
+                        //    listeComptes.Reload();
+                    }
                 }
             }
+            else
+            {
+               // List<AccountLight> storageAccounts = new List<AccountLight>();
+                foreach (string key in storage.Keys)
+                {
+                    if (key.StartsWith("Account-"))
+                    {
+                        accounts[((AccountLight)storage[key]).account.accountID] = (AccountLight)storage[key];
+                    }
+                }
+               
+            }
+
+            if (listeComptes != null)
+                listeComptes.Reload();
+           
             
         }
 
         private static void SetSession(long groupID)
         {
             storage["groupID"] = groupID.ToString();
+
+            foreach (KeyValuePair<long, AccountLight> acc in accounts)
+            {
+                storage["Account-" + acc.Value.account.accountID] = acc.Value;
+            }
+
+
             //storage["CurrentAccount"] = currentAccount;
             //storage["CurrentAccount"] = "Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID;
         }
@@ -204,8 +252,10 @@ namespace EIP
         {
             if (e.Result != null && e.Error == null)
             {
+                long groupid = 0;
                 foreach (Account oneAccount in e.Result)
                 {
+                    groupid = oneAccount.groupID;
                     switch (oneAccount.typeAccount)
                     {
                         case Account.TypeAccount.Facebook:
@@ -226,6 +276,7 @@ namespace EIP
                             break;
                     }
                 }
+                SetSession(groupid);
                 listeComptes.Reload();
                 Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
             }
@@ -238,7 +289,8 @@ namespace EIP
             //storage["CurrentAccount"] = null;
             //currentAccounts = null;
             accounts = null;
-            storage["groupID"] = 0;
+            //storage["groupID"] = 0;
+            storage.Remove("groupID");
         }
 
         public static void Login(Account.TypeAccount type, string pseudo, string password)

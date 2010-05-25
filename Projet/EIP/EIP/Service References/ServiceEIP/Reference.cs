@@ -227,6 +227,11 @@ namespace EIP.ServiceEIP {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceEIP.IServiceEIP")]
     public interface IServiceEIP {
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/IsUp", ReplyAction="http://tempuri.org/IServiceEIP/IsUpResponse")]
+        System.IAsyncResult BeginIsUp(System.AsyncCallback callback, object asyncState);
+        
+        bool EndIsUp(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/test", ReplyAction="http://tempuri.org/IServiceEIP/testResponse")]
         System.IAsyncResult Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState);
         
@@ -275,6 +280,25 @@ namespace EIP.ServiceEIP {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServiceEIPChannel : EIP.ServiceEIP.IServiceEIP, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class IsUpCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public IsUpCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -452,6 +476,12 @@ namespace EIP.ServiceEIP {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ServiceEIPClient : System.ServiceModel.ClientBase<EIP.ServiceEIP.IServiceEIP>, EIP.ServiceEIP.IServiceEIP {
         
+        private BeginOperationDelegate onBeginIsUpDelegate;
+        
+        private EndOperationDelegate onEndIsUpDelegate;
+        
+        private System.Threading.SendOrPostCallback onIsUpCompletedDelegate;
+        
         private BeginOperationDelegate onBegintestDelegate;
         
         private EndOperationDelegate onEndtestDelegate;
@@ -559,6 +589,8 @@ namespace EIP.ServiceEIP {
             }
         }
         
+        public event System.EventHandler<IsUpCompletedEventArgs> IsUpCompleted;
+        
         public event System.EventHandler<testCompletedEventArgs> testCompleted;
         
         public event System.EventHandler<GetAccountByUserIDCompletedEventArgs> GetAccountByUserIDCompleted;
@@ -580,6 +612,50 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginIsUp(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginIsUp(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool EIP.ServiceEIP.IServiceEIP.EndIsUp(System.IAsyncResult result) {
+            return base.Channel.EndIsUp(result);
+        }
+        
+        private System.IAsyncResult OnBeginIsUp(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginIsUp(callback, asyncState);
+        }
+        
+        private object[] OnEndIsUp(System.IAsyncResult result) {
+            bool retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndIsUp(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnIsUpCompleted(object state) {
+            if ((this.IsUpCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.IsUpCompleted(this, new IsUpCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void IsUpAsync() {
+            this.IsUpAsync(null);
+        }
+        
+        public void IsUpAsync(object userState) {
+            if ((this.onBeginIsUpDelegate == null)) {
+                this.onBeginIsUpDelegate = new BeginOperationDelegate(this.OnBeginIsUp);
+            }
+            if ((this.onEndIsUpDelegate == null)) {
+                this.onEndIsUpDelegate = new EndOperationDelegate(this.OnEndIsUp);
+            }
+            if ((this.onIsUpCompletedDelegate == null)) {
+                this.onIsUpCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnIsUpCompleted);
+            }
+            base.InvokeAsync(this.onBeginIsUpDelegate, null, this.onEndIsUpDelegate, this.onIsUpCompletedDelegate, userState);
+        }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult EIP.ServiceEIP.IServiceEIP.Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
@@ -1067,6 +1143,18 @@ namespace EIP.ServiceEIP {
             
             public ServiceEIPClientChannel(System.ServiceModel.ClientBase<EIP.ServiceEIP.IServiceEIP> client) : 
                     base(client) {
+            }
+            
+            public System.IAsyncResult BeginIsUp(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("IsUp", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndIsUp(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("IsUp", _args, result)));
+                return _result;
             }
             
             public System.IAsyncResult Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {

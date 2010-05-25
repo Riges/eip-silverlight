@@ -21,6 +21,11 @@ namespace EIPWCF
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     public class ServiceEIP : IServiceEIP
     {
+        public bool IsUp()
+        {
+            return Model.IsDBUp();
+        }
+
         public bool test(Account newAccount)
         {
             return AddAccount(newAccount);
