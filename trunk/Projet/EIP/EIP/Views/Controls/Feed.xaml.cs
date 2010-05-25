@@ -184,6 +184,18 @@ namespace EIP.Views.Controls
                     link.Content = theMot + " ";
                     link.TargetName = "_blank";
                     message.Children.Add(link);
+/*
+                    System.Windows.Browser.HtmlElement myFrame = System.Windows.Browser.HtmlPage.Document.GetElementById("ifHtmlContent");
+                    if (myFrame != null)
+                    {
+                        myFrame.SetStyleAttribute("width", "1024");
+                        myFrame.SetStyleAttribute("height", "768");
+                        myFrame.SetAttribute("src", link.NavigateUri.ToString());
+                        myFrame.SetStyleAttribute("left", "0");
+                        myFrame.SetStyleAttribute("top", "50");
+                        myFrame.SetStyleAttribute("visibility", "visible");
+                    }
+ * */
                 }
                 else if (mot.StartsWith("@"))
                 {
@@ -195,6 +207,8 @@ namespace EIP.Views.Controls
                     link.Content = mot + " ";
                     link.TargetName = "_blank";
                     message.Children.Add(link);
+
+                    
                 }
                 else if (mot.StartsWith("#"))
                 {

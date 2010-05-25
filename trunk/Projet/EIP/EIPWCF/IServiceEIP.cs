@@ -16,6 +16,9 @@ namespace EIPWCF
     public interface IServiceEIP
     {
         [OperationContract]
+        bool IsUp();
+
+        [OperationContract]
         bool test(Account newAccount);
 
         [OperationContract]

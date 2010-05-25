@@ -7,6 +7,12 @@
       <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EIPLibrary" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IServiceEIP_IsUp_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsUp" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_IsUp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsUpResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_test_InputMessage">
     <wsdl:part name="parameters" element="tns:test" />
   </wsdl:message>
@@ -62,6 +68,10 @@
     <wsdl:part name="parameters" element="tns:testTResponse" />
   </wsdl:message>
   <wsdl:portType name="IServiceEIP">
+    <wsdl:operation name="IsUp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/IsUp" message="tns:IServiceEIP_IsUp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/IsUpResponse" message="tns:IServiceEIP_IsUp_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="test">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/test" message="tns:IServiceEIP_test_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testResponse" message="tns:IServiceEIP_test_OutputMessage" />
@@ -101,6 +111,15 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceEIP" type="tns:IServiceEIP">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsUp">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/IsUp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="test">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/test" style="document" />
       <wsdl:input>

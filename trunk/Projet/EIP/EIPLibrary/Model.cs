@@ -10,7 +10,27 @@ namespace EIPLibrary
 {
     public static class Model
     {
+        
+        public static bool IsDBUp()
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(Context.Instance.ConnectStr);
+            try
+            {
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                if (conn.State != ConnectionState.Closed)
+                    conn.Close();
+            }
 
+        }
 
         public static Account GetAccount(long userID)
         {
