@@ -95,16 +95,16 @@ namespace EIP
         /// </summary>
         /// <param name="filtre">Filtre de la liste des feeds.</param>
         /// <param name="aStreamFeeds">object StreamFeeds permettant de vérifier s'il y a de nouveau feeds pour mettre à jour ou non la liste.</param>
-        public void LoadFeeds(string filtre, StreamFeeds aStreamFeeds)
+        public void LoadFeeds(string filtre, StreamFeeds aStreamFeeds, bool first)
         {
             if(aStreamFeeds != null)
             {
                 this.streamFeeds = aStreamFeeds;
-                //LoadStreamFeedsContext(filtre);
+                if (first)
+                    LoadStreamFeedsContext(filtre);
             }
-            
             if(!busy)
-                this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), DateTime.Now.AddDays(-2), DateTime.Now, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
+                this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
         }
 
         /// <summary>
@@ -116,8 +116,9 @@ namespace EIP
         private void GetStreamCompleted(stream_data data, object filtre, FacebookException ex)
         {
             this.busy = true;
-
             bool needUpdate = true;
+
+
             if(this.feeds.ContainsKey(filtre.ToString()))
             {
                 if(this.feeds[filtre.ToString()].Count > 0)
@@ -183,9 +184,8 @@ namespace EIP
                         DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                         dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
                         this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, topicFB));
-
-                        LoadStreamFeedsContext(post.filter_key);
                     }
+                    LoadStreamFeedsContext(posts[0].filter_key);
                 }
             this.busy = false;
         }
@@ -219,12 +219,44 @@ namespace EIP
         /// <param name="filtre"></param>
         private void LoadStreamFeedsContext(string filtre)
         {
-            if (this.feeds.ContainsKey(filtre))
+           /* if (this.feeds.ContainsKey(filtre))
                 if (streamFeeds != null && this.feeds[filtre].Count >= 1)
                 {
-                    streamFeeds.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
+                    Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
                     streamFeeds.LoadContext();
                 }
+            */
+            if (streamFeeds != null && this.feeds.ContainsKey(filtre) && this.feeds[filtre].Count > 0)
+            {
+                /*List<Topic> f_topics = null;
+                if (checkLast)
+                {
+                    if (Connexion.allTopics.ContainsKey(this.account.userID.ToString()))
+                        f_topics = (List<Topic>)Connexion.allTopics[this.account.userID.ToString()];
+                    if (f_topics != null && f_topics.Count > 0)
+                    {
+
+                        stream_post last = f_topics[0].fb_post.post;
+                        if ((last.post_id != this.feeds[filtre][0].fb_post.post.post_id) || (last.filter_key != this.feeds[filtre][0].fb_post.post.filter_key) || first)
+                        {
+                            Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
+                            streamFeeds.LoadContext();
+                        }
+                        
+                    }
+                    else
+                    {
+                        Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
+                        streamFeeds.LoadContext();
+                       
+                    }
+                }
+                else
+                {*/
+                    Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
+                    streamFeeds.LoadContext();
+                //}
+            }
         }
 
         public void LoadFilters(LeftMenu menuFeeds)

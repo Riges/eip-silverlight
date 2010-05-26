@@ -124,7 +124,9 @@ namespace EIP.Views.Controls
                             nameUser.Text = status.User.Name;
                             LoadMessage(status.Text);
                             //message.Text = status.Text;
-                            dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(1)) + ", à " + status.CreatedDate.AddHours(1).ToShortTimeString();
+                            
+                            //dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(2)) + ", à " + status.CreatedDate.AddHours(2).ToShortTimeString();
+                            dateTimeFeed.Text = Day2Jour(topic.date) + ", à " + topic.date.ToShortTimeString();
                         }
                         //}
 
