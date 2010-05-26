@@ -28,6 +28,7 @@ using TweetSharp.Extensions;
 using TweetSharp.Model;
 using TweetSharp;
 using EIP.Views.Child;
+using EIP.Objects;
 
 
 
@@ -66,10 +67,15 @@ namespace EIP
         //WCF
         public static ServiceEIP.ServiceEIPClient serviceEIP;
 
+        //data
+        public static Dictionary<string, List<Topic>> allTopics = new Dictionary<string, List<Topic>>();
+
         //Autre
         private static bool addAccount = false;
         private static Loading loadingChild;
         private static bool connexionActive = false;
+
+        public static DispatcherTimer dt = new DispatcherTimer();
        
         /////////
    

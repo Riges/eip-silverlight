@@ -74,12 +74,12 @@ namespace EIP
         /// <summary>
         /// Met à jour l'attribut "homeStatuses" (les tweets de la homepage)
         /// </summary>
-        public void LoadHomeStatuses(StreamFeeds aStreamFeeds)
+        public void LoadHomeStatuses(StreamFeeds aStreamFeeds, bool first)
         {
             if (aStreamFeeds != null)
             {
                 this.streamFeeds = aStreamFeeds;
-                LoadStreamFeedsContext();
+                LoadStreamFeedsContext(first);
             }
             var homeTimeline = FluentTwitter.CreateRequest()
                .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
@@ -104,10 +104,10 @@ namespace EIP
                 homeStatuses = new List<Topic>();
                 foreach(TwitterStatus status in statuses)
                 {
-                    homeStatuses.Add(new Topic(status.CreatedDate.AddHours(1), Account.TypeAccount.Twitter, this.account.userID, status));
+                    homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.userID, status));
                 }
 
-                LoadStreamFeedsContext();
+                LoadStreamFeedsContext(false);
                 /*
                 if (streamFeeds != null)
                 {
@@ -135,34 +135,30 @@ namespace EIP
             }
         }
 
-        private void LoadStreamFeedsContext()
+        private void LoadStreamFeedsContext(bool first)
         {
             if (streamFeeds != null)
             {
                 List<Topic> t_topics = null;
 
-                if (streamFeeds.allTopics.ContainsKey(this.account.userID.ToString()))
-                    t_topics = (List<Topic>)streamFeeds.allTopics[this.account.userID.ToString()];
-                if (t_topics != null && t_topics.Count > 0)
-                {
-                    if (this.homeStatuses.Count > 0)
+                if (Connexion.allTopics.ContainsKey(this.account.userID.ToString()))
+                    t_topics = (List<Topic>)Connexion.allTopics[this.account.userID.ToString()];
+                if (this.homeStatuses.Count > 0)
+                    if (t_topics != null && t_topics.Count > 0 && !first)
                     {
                         TwitterStatus last = t_topics[0].t_post;
                         if (last.Id != this.homeStatuses[0].t_post.Id)
                         {
-                            streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
+                            Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                             streamFeeds.LoadContext();
                         }
                     }
-                }
-                else
-                {
-                    if (this.homeStatuses.Count > 0)
+                    else
                     {
-                        streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
+                        Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                         streamFeeds.LoadContext();
+
                     }
-                }
             }
         }
 

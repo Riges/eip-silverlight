@@ -27,8 +27,10 @@ namespace EIP.Views
     public partial class StreamFeeds : Page
     {
         private List<Topic> topics = new List<Topic>();
+        private string filterFB = string.Empty;
+       
 
-        public Dictionary<string, List<Topic>> allTopics = new Dictionary<string, List<Topic>>();
+        //public Dictionary<string, List<Topic>> allTopics = new Dictionary<string, List<Topic>>();
 
         public StreamFeeds()
         {
@@ -40,53 +42,44 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (this.NavigationContext.QueryString.ContainsKey("filter"))
+                this.filterFB = this.NavigationContext.QueryString["filter"];
+
+
+            Connexion.allTopics = new Dictionary<string, List<Topic>>();
             Connexion.navigationContext = NavigationContext;
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
+
+                dt_Tick(true, null);
+                /*
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
                     if (accountLight.Value.selected)
                         switch (accountLight.Value.account.typeAccount)
                         {
                             case Account.TypeAccount.Facebook:
-                                /*Uri urlSource = System.Windows.Application.Current.Host.Source;
-                                string filter = string.Empty;
-                                if (this.NavigationContext.QueryString.ContainsKey("filter"))
-                                    filter = this.NavigationContext.QueryString["filter"];
-                            */
                                 dt_Tick(null, null);
                                 break;
                             case Account.TypeAccount.Twitter:
                                 dt_Tick(null, null);
-
-
-                                /*if (((AccountTwitterLight)accountLight).homeStatuses != null)
-                                {
-                                    FeedsControl.DataContext = ((AccountTwitterLight)Connexion.currentAccount).homeStatuses;
-                                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                                    ContentPanel.Visibility = System.Windows.Visibility.Visible;
-                                }*/
                                 break;
                             case Account.TypeAccount.Myspace:
                                 break;
                             default:
                                 break;
                         }
-                }
-
-                DispatcherTimer dt = new DispatcherTimer();
-                dt.Interval = new TimeSpan(0, 0, 0, 30, 000);
-                dt.Tick += new EventHandler(dt_Tick);
-                dt.Start();
-
-
+                }*/
+                Connexion.dt.Stop();
+                Connexion.dt = new DispatcherTimer();
+                Connexion.dt.Interval = new TimeSpan(0, 0, 0, 30, 000);
+                Connexion.dt.Tick += new EventHandler(dt_Tick);
+                Connexion.dt.Start();
             }
             else
             {
                 ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
             }
-           
-           
         }
 
         void dt_Tick(object sender, EventArgs e)
@@ -99,15 +92,21 @@ namespace EIP.Views
                         switch (accountLight.Value.account.typeAccount)
                         {
                             case Account.TypeAccount.Facebook:
-                                string filter = string.Empty;
+                                //string filter = string.Empty;
 
-                                if (this.NavigationContext.QueryString.ContainsKey("filter"))
-                                    filter = this.NavigationContext.QueryString["filter"];
-
-                                ((AccountFacebookLight)accountLight.Value).LoadFeeds(filter, this);
+                                /*if (this.NavigationContext.QueryString.ContainsKey("filter"))
+                                    filter = this.NavigationContext.QueryString["filter"];*/
+                                if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
+                                    ((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, this, true);
+                                else
+                                    ((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, this, false);
                                 break;
                             case Account.TypeAccount.Twitter:
-                                ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this);
+                               
+                                if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
+                                    ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this, true);
+                                else
+                                    ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this, false);
                                 break;
                             case Account.TypeAccount.Myspace:
                                 break;
@@ -119,41 +118,14 @@ namespace EIP.Views
             
         }
 
-        private void GetStreamCompleted(stream_data data, object o, FacebookException ex)
-        {
-            Dispatcher.BeginInvoke(() =>
-                {
-                    AccountLight accountLight = (AccountLight)o;
-
-                    List<Topic> fb_topics = new List<Topic>();
-                    foreach (stream_post post in data.posts.stream_post)
-                    {
-                        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                        dateTime = dateTime.AddSeconds(post.updated_time).AddHours(1);
-                        //fb_topics.Add(new Topic(dateTime, Account.TypeAccount.Facebook, accountLight.account.userID, post));
-                    }
-
-                    allTopics[accountLight.account.userID.ToString()] = fb_topics;
-
-                    LoadContext();
-                    
-
-                    //FeedsControl.DataContext = data.posts.stream_post;
-                    //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                    //ContentPanel.Visibility = System.Windows.Visibility.Visible;
-                }
-                );
-        }
-
         public void LoadContext()
         {
             Dispatcher.BeginInvoke(() =>
                 {
                     topics = new List<Topic>();
-                    topics.Capacity = topics.Capacity + allTopics.Count;
-                    foreach (KeyValuePair<string, List<Topic>> item in allTopics)
+                    topics.Capacity = topics.Capacity + Connexion.allTopics.Count;
+                    foreach (KeyValuePair<string, List<Topic>> item in Connexion.allTopics)
                     {
-                        
                         topics.AddRange(item.Value);
                     }
 
