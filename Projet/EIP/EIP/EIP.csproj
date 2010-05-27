@@ -273,6 +273,14 @@
     <Resource Include="Assets\Images\facebook-icon.jpg" />
     <Resource Include="Assets\Images\twitter-icon.png" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
+    <Resource Include="Assets\Images\FiltresFB\friend_guy.png" />
+    <Resource Include="Assets\Images\FiltresFB\friend_list.png" />
+    <Resource Include="Assets\Images\FiltresFB\group.png" />
+    <Resource Include="Assets\Images\FiltresFB\motion.png" />
+    <Resource Include="Assets\Images\FiltresFB\newsfeed.png" />
+    <Resource Include="Assets\Images\FiltresFB\note.png" />
+    <Resource Include="Assets\Images\FiltresFB\photo.png" />
+    <Resource Include="Assets\Images\FiltresFB\post.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">
