@@ -1,0 +1,9 @@
+http://www.facebook.com/images/app_icons/newsfeed.gif
+http://www.facebook.com/images/app_icons/friend_list.gif
+http://www.facebook.com/images/app_icons/friend_guy.gif
+http://www.facebook.com/images/app_icons/photo.gif
+http://www.facebook.com/images/app_icons/post.gif
+http://www.facebook.com/images/app_icons/motion.gif
+http://www.facebook.com/images/app_icons/note.gif
+http://www.facebook.com/images/app_icons/group.gif
+
