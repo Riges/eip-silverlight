@@ -35,7 +35,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25*"></ColumnDefinition>
             <ColumnDefinition Width="75*"></ColumnDefinition>
-           
         </Grid.ColumnDefinitions>
 
         <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"  >
@@ -46,11 +45,14 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Name="nameUser"></TextBlock>
         
         <!--<TextBlock Grid.Row="1" Grid.Column="1" Name="message" Text="{Binding Path=message}" HorizontalAlignment="Stretch" TextWrapping="Wrap"></TextBlock>-->
-        <toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="message"  HorizontalAlignment="Left" VerticalAlignment="Top"></toolkit:WrapPanel>
+        <!--<toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="message"  HorizontalAlignment="Left" VerticalAlignment="Top"></toolkit:WrapPanel>-->
+        <toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="content"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></toolkit:WrapPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                 <TextBlock  Name="dateTimeFeed"></TextBlock>
-            </StackPanel>
+            <TextBlock Margin="3,0,0,0" Name="viaAppliText" Visibility="Collapsed">via</TextBlock>
+            <HyperlinkButton Margin="3,0,0,0" Name="viaAppli" Visibility="Collapsed"></HyperlinkButton>
+        </StackPanel>
         
         <Rectangle Grid.Row="3" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
             

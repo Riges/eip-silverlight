@@ -100,6 +100,7 @@
     <Compile Include="Objects\Friend.cs" />
     <Compile Include="Objects\Topic.cs" />
     <Compile Include="Objects\TopicFB.cs" />
+    <Compile Include="Objects\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ServiceEIP\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -117,6 +118,9 @@
     </Compile>
     <Compile Include="Views\Controls\Feed.xaml.cs">
       <DependentUpon>Feed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\Feeds\StatutFeed.xaml.cs">
+      <DependentUpon>StatutFeed.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\FilterButton.xaml.cs">
       <DependentUpon>FilterButton.xaml</DependentUpon>
@@ -186,6 +190,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Controls\Feed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Feeds\StatutFeed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
