@@ -105,7 +105,16 @@ namespace EIP
             }
             if(!busy)
                 this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
+
+            
+            //this.facebookAPI.Application.GetPublicInfoAsync(6628568379, "3e7c78e35a76a9299309885393b02d97", null, new Facebook.Rest.Application.GetPublicInfoCallback(test), null);
         }
+
+        /*
+        private void test(app_info info, object obj, FacebookException e)
+        {
+
+        }*/
 
         /// <summary>
         /// Callback de la méthode LoadFeeds
@@ -118,7 +127,7 @@ namespace EIP
             this.busy = true;
             bool needUpdate = true;
 
-
+           
             if(this.feeds.ContainsKey(filtre.ToString()))
             {
                 if(this.feeds[filtre.ToString()].Count > 0)

@@ -19,6 +19,7 @@ using System.Windows.Data;
 using TweetSharp.Model;
 using EIP.ServiceEIP;
 using EIP.Objects;
+using EIP.Views.Controls.Feeds;
 
 
 namespace EIP.Views.Controls
@@ -40,6 +41,10 @@ namespace EIP.Views.Controls
 
             picUser.MouseEnter += new MouseEventHandler(picUser_MouseEnter);
             picUser.MouseLeave += new MouseEventHandler(picUser_MouseLeave);
+
+
+           
+
 
             //SetBinding(DataContextWatcherProperty, new Binding());
         }
@@ -69,15 +74,14 @@ namespace EIP.Views.Controls
 
         void Feed_Loaded(object sender, RoutedEventArgs e)
         {
+
+
             if (Connexion.accounts.Count > 0)
             {
                 Topic topic = (Topic)this.DataContext;
                 switch (topic.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
-                        //if (this.DataContext.GetType() == typeof(stream_post))
-                        //{
-                            //post = (stream_post)this.DataContext;
                             if (topic.fb_post != null)
                             {
                                 post = topic.fb_post;
@@ -94,19 +98,37 @@ namespace EIP.Views.Controls
                                 if (post.userTarget != null)
                                     nameUser.Text += " > " + post.userTarget.name;
 
-                                LoadMessage(post.post.message);
+                                //LoadMessage(post.post.message);
                                 //message.Text = post.post.message;
 
                                 DateTime dateTime = topic.date;// new DateTime(1970, 1, 1, 0, 0, 0, 0);
                                // dateTime = dateTime.AddSeconds(post.post.created_time);//.AddHours(1);
-                                dateTimeFeed.Text = Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
+                                dateTimeFeed.Text = Utils.Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
 
+                                if (post.post.attribution != "")
+                                {
+                                    viaAppliText.Visibility = System.Windows.Visibility.Visible;
+                                    viaAppli.Content =post.post.attribution;
+                                    viaAppli.TargetName = "_blank";
+                                    viaAppli.NavigateUri = new Uri("http://www.facebook.com/apps/application.php?id="+post.post.app_id, UriKind.Absolute);
+                                    viaAppli.Visibility = System.Windows.Visibility.Visible;
+                                }
 
-                                //((AccountFacebookLight)Connexion.accounts[topic.userID]).facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
-                                
-                                //Connexion.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), new object());
+                                switch (post.post.type)
+                                {
+                                    case "46":
+                                        StatutFeed statut = new StatutFeed(post.post.message);
+                                        content.Children.Add(statut);
+                                        break;
+                                    default:
+                                        TextBlock block = new TextBlock();
+                                        block.Text = post.post.type + " - " + post.post.message;
+                                        content.Children.Add(block);
+                                        break;
+                                }
+                                //content
+                               
                             }
-                        //}
                         break;
                     case Account.TypeAccount.Twitter:
                         BitmapImage btImg = null;
@@ -122,11 +144,32 @@ namespace EIP.Views.Controls
                             }
                             picUser.Source = btImg;
                             nameUser.Text = status.User.Name;
-                            LoadMessage(status.Text);
+                            //LoadMessage(status.Text);
+                            StatutFeed statut = new StatutFeed(status.Text);
+                            content.Children.Add(statut);
                             //message.Text = status.Text;
                             
                             //dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(2)) + ", à " + status.CreatedDate.AddHours(2).ToShortTimeString();
-                            dateTimeFeed.Text = Day2Jour(topic.date) + ", à " + topic.date.ToShortTimeString();
+                            dateTimeFeed.Text = Utils.Day2Jour(topic.date) + ", à " + topic.date.ToShortTimeString();
+
+                            
+                            //string test = "<a href=\"http://github.com/cezarsa/chromed_bird\" rel=\"nofollow\">Chromed Bird</a>";
+                            string source = status.Source;
+                            if (source != "")
+                            {
+                                source = source.Remove(0, 9);
+                                source = source.Remove(source.Length - 4, 4);
+                                source = source.Replace("\" rel=\"nofollow\">", "|");
+
+                                string[] tab = source.Split('|');
+
+                                viaAppliText.Visibility = System.Windows.Visibility.Visible;
+                                viaAppli.Content = tab[1];
+                                viaAppli.TargetName = "_blank";
+                                viaAppli.NavigateUri = new Uri(tab[0], UriKind.Absolute);
+                                viaAppli.Visibility = System.Windows.Visibility.Visible;
+                            }
+
                         }
                         //}
 
@@ -167,6 +210,7 @@ namespace EIP.Views.Controls
                 }
         }*/
 
+        /*
         private void LoadMessage(string msg)
         {
             msg = msg.Replace("\n", " ");
@@ -186,18 +230,7 @@ namespace EIP.Views.Controls
                     link.Content = theMot + " ";
                     link.TargetName = "_blank";
                     message.Children.Add(link);
-/*
-                    System.Windows.Browser.HtmlElement myFrame = System.Windows.Browser.HtmlPage.Document.GetElementById("ifHtmlContent");
-                    if (myFrame != null)
-                    {
-                        myFrame.SetStyleAttribute("width", "1024");
-                        myFrame.SetStyleAttribute("height", "768");
-                        myFrame.SetAttribute("src", link.NavigateUri.ToString());
-                        myFrame.SetStyleAttribute("left", "0");
-                        myFrame.SetStyleAttribute("top", "50");
-                        myFrame.SetStyleAttribute("visibility", "visible");
-                    }
- * */
+
                 }
                 else if (mot.StartsWith("@"))
                 {
@@ -227,100 +260,22 @@ namespace EIP.Views.Controls
                     message.Children.Add(txtBlock);
                 }
             }
-        }
+        }*/
 
-        private string Day2Jour(DateTime date)
-        {
-            string jour = string.Empty;
+        /*
+                    System.Windows.Browser.HtmlElement myFrame = System.Windows.Browser.HtmlPage.Document.GetElementById("ifHtmlContent");
+                    if (myFrame != null)
+                    {
+                        myFrame.SetStyleAttribute("width", "1024");
+                        myFrame.SetStyleAttribute("height", "768");
+                        myFrame.SetAttribute("src", link.NavigateUri.ToString());
+                        myFrame.SetStyleAttribute("left", "0");
+                        myFrame.SetStyleAttribute("top", "50");
+                        myFrame.SetStyleAttribute("visibility", "visible");
+                    }
+ * */
 
-            if (date.Date == DateTime.Today)
-                return "Aujourd'hui";
-            if (date.Date == DateTime.Today.AddDays(-1))
-                return "Hier";
-            if (date.Date == DateTime.Today.AddDays(1))
-                return "Demain";
-            if (date.Date == DateTime.Today.AddDays(-2))
-                return "Avant-hier";
-            
-            switch (date.DayOfWeek)
-            {
-                case DayOfWeek.Sunday :
-                    jour = "Dimanche";
-                    break;
-                case DayOfWeek.Monday:
-                    jour = "Lundi";
-                    break;
-                case DayOfWeek.Tuesday:
-                    jour = "Mardi";
-                    break;
-                case DayOfWeek.Wednesday:
-                    jour = "Mercredi";
-                    break;
-                case DayOfWeek.Thursday:
-                    jour = "Jeudi";
-                    break;
-                case DayOfWeek.Friday:
-                    jour = "Vendredi";
-                    break;
-                case DayOfWeek.Saturday:
-                    jour = "Samedi";
-                    break;
-            }
-
-            if (date < DateTime.Today.AddDays(-6))
-            {
-                jour = "Le " + date.Day + " " + GetMonthFr(date.Month);
-            }
-
-
-            return jour;
-        }
-
-        private string GetMonthFr(int month)
-        {
-            string mois = string.Empty;
-            switch(month)
-            {
-                case 1:
-                    mois = "Janvier";
-                    break;
-                case 2:
-                    mois = "Février";
-                    break;
-                case 3:
-                    mois = "Mars";
-                    break;
-                case 4:
-                    mois = "Avril";
-                    break;
-                case 5:
-                    mois = "Mai";
-                    break;
-                case 6:
-                    mois = "Juin";
-                    break;
-                case 7:
-                    mois = "Juillet";
-                    break;
-                case 8:
-                    mois = "Août";
-                    break;
-                case 9:
-                    mois = "Septembre";
-                    break;
-                case 10:
-                    mois = "Octobre";
-                    break;
-                case 11:
-                    mois = "Novembre";
-                    break;
-                case 12:
-                    mois = "Décembre";
-                    break;
-                
-            }
-            return mois;
-        }
+       
 
     }
 }
