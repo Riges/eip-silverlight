@@ -119,8 +119,17 @@
     <Compile Include="Views\Controls\Feed.xaml.cs">
       <DependentUpon>Feed.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\Feeds\LienFeed.xaml.cs">
+      <DependentUpon>LienFeed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\Feeds\PhotosFeed.xaml.cs">
+      <DependentUpon>PhotosFeed.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Feeds\StatutFeed.xaml.cs">
       <DependentUpon>StatutFeed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\Feeds\VideoFeed.xaml.cs">
+      <DependentUpon>VideoFeed.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\FilterButton.xaml.cs">
       <DependentUpon>FilterButton.xaml</DependentUpon>
@@ -193,7 +202,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\Feeds\LienFeed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Feeds\PhotosFeed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\Feeds\StatutFeed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Feeds\VideoFeed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

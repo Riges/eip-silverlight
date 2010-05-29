@@ -5,9 +5,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="400" >
     
     <Grid x:Name="LayoutRoot" Background="White">
-    <toolkit:WrapPanel   Name="messagePanel" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></toolkit:WrapPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>    
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <toolkit:WrapPanel Name="messagePanel" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" ></toolkit:WrapPanel>
     </Grid>
 </UserControl>

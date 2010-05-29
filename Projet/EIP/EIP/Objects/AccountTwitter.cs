@@ -58,13 +58,13 @@ namespace EIP
 
             this.filters = new List<TwitterFilter>();
             filters.Add(new TwitterFilter("Home", "OnHomeTimeline"));
-            filters.Add(new TwitterFilter("", "OnFriendsTimeline"));
-            filters.Add(new TwitterFilter("", "OnListTimeline"));
-            filters.Add(new TwitterFilter("", "OnPublicTimeline"));
+            filters.Add(new TwitterFilter("OnFriendsTimeline", "OnFriendsTimeline"));
+            filters.Add(new TwitterFilter("OnListTimeline", "OnListTimeline"));
+            filters.Add(new TwitterFilter("OnPublicTimeline", "OnPublicTimeline"));
             filters.Add(new TwitterFilter("Mes tweets", "OnUserTimeline"));
-            filters.Add(new TwitterFilter("", "Retweet"));
-            filters.Add(new TwitterFilter("", "RetweetedByMe"));
-            filters.Add(new TwitterFilter("", "RetweetedToMe"));
+            filters.Add(new TwitterFilter("Retweet", "Retweet"));
+            filters.Add(new TwitterFilter("RetweetedByMe", "RetweetedByMe"));
+            filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
         }
 
           //********************************\\
