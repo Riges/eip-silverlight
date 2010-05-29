@@ -2,11 +2,22 @@
 
 
 46 - Pseudo simple (FB iphone)
-80 - youtube vids / event
+56
+80 - youtube vids / event / partage
 237 - Via appli
 247 - photos (attachement properties)
 273 to qq1
+128 - up video FB
 
 
 attachement
 href = url appli
+
+
+37 mp4 28.5
+22 mp 17
+
+
+35 FLV 10mo
+34 FLV 6
+5  FLV 2.5
