@@ -94,9 +94,12 @@ namespace EIP.Views.Controls
                                     btImgFB = new BitmapImage(uriImg);
                                 }
                                 picUser.Source = btImgFB;
-                                nameUser.Text = post.userSource.name;
+                                nameUser.Content = post.userSource.name;
                                 if (post.userTarget != null)
-                                    nameUser.Text += " > " + post.userTarget.name;
+                                    nameUser.Content += " > " + post.userTarget.name;
+                                
+                                imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
+                     
 
                                 //LoadMessage(post.post.message);
                                 //message.Text = post.post.message;
@@ -105,13 +108,22 @@ namespace EIP.Views.Controls
                                // dateTime = dateTime.AddSeconds(post.post.created_time);//.AddHours(1);
                                 dateTimeFeed.Text = Utils.Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
 
-                                if (post.post.attribution != "")
+                                if (post.post.attachment.icon != "" && post.post.attachment.icon != null)
                                 {
-                                    viaAppliText.Visibility = System.Windows.Visibility.Visible;
-                                    viaAppli.Content =post.post.attribution;
-                                    viaAppli.TargetName = "_blank";
-                                    viaAppli.NavigateUri = new Uri("http://www.facebook.com/apps/application.php?id="+post.post.app_id, UriKind.Absolute);
-                                    viaAppli.Visibility = System.Windows.Visibility.Visible;
+                                    imgVia.Source = new BitmapImage(new Uri("http://localhost:4164/GifHandler.ashx?link=" + post.post.attachment.icon, UriKind.Absolute));
+                                    imgVia.Visibility = System.Windows.Visibility.Visible;
+                                }
+
+                                if (post.post.attribution != "" && post.post.attribution != null)
+                                {
+                                    if (!post.post.attribution.StartsWith("via"))
+                                    {
+                                        viaAppliText.Visibility = System.Windows.Visibility.Visible;
+                                        viaAppli.Content = post.post.attribution;
+                                        viaAppli.TargetName = "_blank";
+                                        viaAppli.NavigateUri = new Uri("http://www.facebook.com/apps/application.php?id=" + post.post.app_id, UriKind.Absolute);
+                                        viaAppli.Visibility = System.Windows.Visibility.Visible;
+                                    }
                                 }
 
                                 switch (post.post.type)
@@ -119,6 +131,25 @@ namespace EIP.Views.Controls
                                     case "46":
                                         StatutFeed statut = new StatutFeed(post.post.message);
                                         content.Children.Add(statut);
+                                        break;
+                                    case "80":
+                                        LienFeed lienFeed = new LienFeed(post);
+                                        content.Children.Add(lienFeed);
+                                        this.Height = 220;
+                                        break;
+                                    case "128":
+                                        VideoFeed videoFeed = new VideoFeed();
+                                        content.Children.Add(videoFeed);
+                                        break;
+                                    case "247":
+                                        if (post.post.attachment.icon != "")
+                                        {
+                                            imgVia.Source = new BitmapImage(new Uri("http://localhost:4164/GifHandler.ashx?link=" + post.post.attachment.icon, UriKind.Absolute));
+                                            imgVia.Visibility = System.Windows.Visibility.Visible;
+                                        }
+                                        PhotosFeed photosFeed = new PhotosFeed(post);
+                                        content.Children.Add(photosFeed);
+                                        this.Height = 220;
                                         break;
                                     default:
                                         TextBlock block = new TextBlock();
@@ -143,7 +174,9 @@ namespace EIP.Views.Controls
                                 btImg = new BitmapImage(uriImg);
                             }
                             picUser.Source = btImg;
-                            nameUser.Text = status.User.Name;
+                            nameUser.Content = status.User.Name;
+                            imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+
                             //LoadMessage(status.Text);
                             StatutFeed statut = new StatutFeed(status.Text);
                             content.Children.Add(statut);
@@ -152,16 +185,24 @@ namespace EIP.Views.Controls
                             //dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(2)) + ", à " + status.CreatedDate.AddHours(2).ToShortTimeString();
                             dateTimeFeed.Text = Utils.Day2Jour(topic.date) + ", à " + topic.date.ToShortTimeString();
 
-                            
-                            //string test = "<a href=\"http://github.com/cezarsa/chromed_bird\" rel=\"nofollow\">Chromed Bird</a>";
                             string source = status.Source;
                             if (source != "")
                             {
-                                source = source.Remove(0, 9);
-                                source = source.Remove(source.Length - 4, 4);
-                                source = source.Replace("\" rel=\"nofollow\">", "|");
+                                string[] tab = new string[2];
+                                if (source != "web")
+                                {
+                                    source = source.Remove(0, 9);
+                                    source = source.Remove(source.Length - 4, 4);
+                                    source = source.Replace("\" rel=\"nofollow\">", "|");
+                                    tab = source.Split('|');
+                                }
+                                else
+                                {
+                                    tab[0] = "http://www.facebook.com";
+                                    tab[1] = source;
+                                }
 
-                                string[] tab = source.Split('|');
+                                 
 
                                 viaAppliText.Visibility = System.Windows.Visibility.Visible;
                                 viaAppli.Content = tab[1];

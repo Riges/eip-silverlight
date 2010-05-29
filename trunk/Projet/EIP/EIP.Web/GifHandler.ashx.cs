@@ -28,14 +28,23 @@ namespace EIP.Web
         private byte[] GetBufferFromImage(string imageLnk)
         {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(imageLnk);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Image myImage = Image.FromStream(response.GetResponseStream());
-            MemoryStream ImageStream = new MemoryStream();
-            myImage.Save(ImageStream, ImageFormat.Jpeg);
-            ImageStream.Position = 0;
-            byte[] Buffer = new byte[(int)ImageStream.Length];
-            ImageStream.Read(Buffer, 0, (int)ImageStream.Length);
-            return Buffer;
+
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Image myImage = Image.FromStream(response.GetResponseStream());
+                MemoryStream ImageStream = new MemoryStream();
+                myImage.Save(ImageStream, ImageFormat.Jpeg);
+                ImageStream.Position = 0;
+                byte[] Buffer = new byte[(int)ImageStream.Length];
+                ImageStream.Read(Buffer, 0, (int)ImageStream.Length);
+                return Buffer;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+           
         }
 
         public bool IsReusable

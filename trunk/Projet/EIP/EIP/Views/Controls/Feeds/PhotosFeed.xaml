@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="EIP.Views.Controls.Feeds.PhotosFeed"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Name="img1Border" BorderThickness="1" BorderBrush="Gray" Padding="5,5,5,5" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Visibility="Collapsed">
+            <Image Name="img1" Stretch="None"></Image>
+        </Border>
+        <Border Name="img2Border" BorderThickness="1" BorderBrush="Gray" Padding="5,5,5,5" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Visibility="Collapsed">
+            <Image Name="img2" Stretch="None"></Image>
+        </Border>
+        <Border Name="img3Border" BorderThickness="1" BorderBrush="Gray" Padding="5,5,5,5" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Visibility="Collapsed">
+            <Image Name="img3" Stretch="None"></Image>
+        </Border>
+
+        <StackPanel  Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,5,0,0">
+            <HyperlinkButton Name="albumName" Visibility="Collapsed"></HyperlinkButton>
+            <TextBlock Margin="3,0,0,0" Name="albumDescription" Visibility="Collapsed"></TextBlock>
+        </StackPanel>
+
+
+
+    </Grid>
+</UserControl>

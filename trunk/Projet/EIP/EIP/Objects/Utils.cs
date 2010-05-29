@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace EIP.Objects
 {
@@ -107,6 +108,57 @@ namespace EIP.Objects
 
             }
             return mois;
+        }
+
+        public static List<UIElement> LoadMessage(string msg)
+        {
+            List<UIElement> list = new List<UIElement>();
+            msg = msg.Replace("\n", " ");
+            char[] charTab = new char[1];
+            charTab[0] = ' ';
+            string[] mots = msg.Split(charTab, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string mot in mots)
+            {
+                if (mot.StartsWith("http://") || mot.StartsWith("https://") || mot.StartsWith("www."))
+                {
+                    string theMot = mot;
+                    if (mot.StartsWith("www."))
+                        theMot = "http://" + mot;
+                    HyperlinkButton link = new HyperlinkButton();
+                    link.NavigateUri = new Uri(theMot, UriKind.Absolute);
+                    link.Content = theMot + " ";
+                    link.TargetName = "_blank";
+                    list.Add(link);
+                }
+                else if (mot.StartsWith("@"))
+                {
+                    HyperlinkButton link = new HyperlinkButton();
+                    if (mot.EndsWith("!"))
+                        link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
+                    else
+                        link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1), UriKind.Absolute);
+                    link.Content = mot + " ";
+                    link.TargetName = "_blank";
+                    list.Add(link);
+                }
+                else if (mot.StartsWith("#"))
+                {
+                    HyperlinkButton link = new HyperlinkButton();
+                    link.NavigateUri = new Uri("http://twitter.com/search?q=" + mot, UriKind.Absolute);
+                    link.Content = mot + " ";
+                    link.TargetName = "_blank";
+                    list.Add(link);
+                }
+                else
+                {
+                    TextBlock txtBlock = new TextBlock();
+                    txtBlock.Text = mot + " ";
+                    list.Add(txtBlock);
+                }
+            }
+            return list;
+
         }
 
     }

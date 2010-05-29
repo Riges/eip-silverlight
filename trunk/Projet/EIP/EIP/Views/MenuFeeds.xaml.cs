@@ -85,6 +85,7 @@ namespace EIP.Views
                             ((AccountFacebookLight)account.Value).LoadFilters(this);
                             break;
                         case Account.TypeAccount.Twitter:
+                            LoadFilters(account.Value);
                             break;
                         case Account.TypeAccount.Myspace:
                             break;
@@ -161,11 +162,15 @@ namespace EIP.Views
                             imgFilter.Stretch = Stretch.None;
                             imgFilter.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
                             imgFilter.FlowDirection = System.Windows.FlowDirection.RightToLeft;
+                            imgFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
+                            imgFilter.Cursor = Cursors.Hand;
+                            imgFilter.DataContext = filter;
 
                             TextBlock linkFilter = new TextBlock();
                             linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
                             linkFilter.DataContext = filter;
                             linkFilter.Margin = new Thickness(5, 0, 0, 0);
+                            linkFilter.Cursor = Cursors.Hand;
 
                             Binding binding = new Binding();
                             binding.Source = filter;
@@ -178,6 +183,26 @@ namespace EIP.Views
                         }
                         break;
                     case Account.TypeAccount.Twitter:
+                        foreach (TwitterFilter filter in ((AccountTwitterLight)account).filters)
+                        {
+                            StackPanel panelFilter = new StackPanel();
+                            panelFilter.Orientation = Orientation.Horizontal;
+                            
+
+                            TextBlock linkFilter = new TextBlock();
+                            linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
+                            linkFilter.DataContext = filter;
+                            linkFilter.Margin = new Thickness(5, 0, 0, 0);
+                            linkFilter.Cursor = Cursors.Hand;
+
+                            Binding binding = new Binding();
+                            binding.Source = filter;
+                            binding.Path = new PropertyPath("name");
+                            linkFilter.SetBinding(TextBlock.TextProperty, binding);
+
+                            panelFilter.Children.Add(linkFilter);
+                            panelContent.Children.Add(panelFilter);
+                        }
                         break;
                     case Account.TypeAccount.Myspace:
                         break;
@@ -208,7 +233,13 @@ namespace EIP.Views
 
         void linkFilter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            stream_filter filter = ((TextBlock)sender).DataContext as stream_filter;
+            stream_filter filter = new stream_filter();
+            filter.name = "";
+
+            if(sender.GetType() == typeof(TextBlock))
+                filter = ((TextBlock)sender).DataContext as stream_filter;
+            else if(sender.GetType() == typeof(Image))
+                filter = ((Image)sender).DataContext as stream_filter;
             Connexion.contentFrame.Navigate(new Uri(string.Format("/Feeds/{0}", filter.filter_key), UriKind.Relative));
         }
 
