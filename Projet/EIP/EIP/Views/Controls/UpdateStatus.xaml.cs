@@ -11,29 +11,31 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using EIP.ServiceEIP;
 using System.Windows.Media.Imaging;
-using System.Windows.Browser;
-using System.Windows.Navigation;
-using System.Windows.Data;
-
 
 namespace EIP.Views.Controls
 {
-    public partial class ListeComptes : UserControl
+    public partial class UpdateStatus : UserControl
     {
-
-        public Frame contentFrame { get; set; }
-
-        public ListeComptes()
+        public UpdateStatus()
         {
             InitializeComponent();
 
-            LoadAccountButtons();             
+
+            
         }
 
-        public void Reload()
+        private void totoBtn_Click(object sender, RoutedEventArgs e)
         {
+            KeyValuePair<long, AccountLight> toto = Connexion.accounts.First();
+
+            if (toto.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook)
+            {
+                AccountFacebookLight totoLight = (AccountFacebookLight)toto.Value;
+
+
+                checktoto.DataContext = totoLight;
+            }
             LoadAccountButtons();
-            Connexion.Loading(false);
         }
 
         private void LoadAccountButtons()
@@ -44,12 +46,12 @@ namespace EIP.Views.Controls
                 {
                     Dispatcher.BeginInvoke(() =>
                     {
-                        LayoutPanel.Children.Clear();
-
+                        TwitterStackPanel.Children.Clear();
+                        FaceBookStackPanel.Children.Clear();
                         foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                         {
                             //Dispatcher.BeginInvoke(() =>
-                                //{
+                            //{
                             StackPanel panel = new StackPanel();
                             panel.Orientation = Orientation.Horizontal;
 
@@ -90,12 +92,21 @@ namespace EIP.Views.Controls
 
                             TextBlock text = new TextBlock();
                             text.Text = oneAccount.Value.account.name;
-                            text.Margin = new Thickness(5, 0, 0, 0);
                             panel.Children.Add(text);
-                            
 
-                            LayoutPanel.Children.Add(panel);
-                                //});
+                            switch (oneAccount.Value.account.typeAccount)
+                            {
+                                case Account.TypeAccount.Facebook:
+                                    FaceBookStackPanel.Children.Add(panel);
+                                    break;
+                                case Account.TypeAccount.Twitter:
+                                    TwitterStackPanel.Children.Add(panel);
+                                    break;
+                                case Account.TypeAccount.Myspace:
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
 
                     });
@@ -104,52 +115,15 @@ namespace EIP.Views.Controls
             else
             {
                 Dispatcher.BeginInvoke(() =>
-                    {
-                        LayoutPanel.Children.Clear();
-                    });
-            }
-        }
-
-        void box_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.userID].selected = false;
-            //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
-            ReloadPage();
-        }
-
-        void box_Checked(object sender, RoutedEventArgs e)
-        {
-            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.userID].selected = true;
-            //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
-            ReloadPage();
-        }
-
-        private void ReloadPage()
-        {
-            string sourceStr = Application.Current.Host.NavigationState;
-            string query = "?time=" + DateTime.Now.Ticks;
-
-            foreach (KeyValuePair<string, string> param in Connexion.navigationContext.QueryString)
-            {
-                if (param.Key != "time")
                 {
-                    //query += (query == string.Empty ? "?" : "&");
-                    query += string.Format("{0}{1}={2}", "&", param.Key, param.Value);
-                }
+                    TwitterStackPanel.Children.Clear();
+                    FaceBookStackPanel.Children.Clear();
+                });
             }
-            
-            Uri source = new Uri((sourceStr.Contains('?')?sourceStr.Substring(0, sourceStr.IndexOf('?')):sourceStr) + query, UriKind.Relative);
-            if (Connexion.navigationService != null)
-                Connexion.navigationService.Navigate(source);
-            else
-                Connexion.contentFrame.Navigate(source);
         }
 
-        /*
-       void btnAccount_Click(object sender, RoutedEventArgs e)
-        {
-            //app.LoadAccount((Account)((Button)sender).CommandParameter);
-            Connexion.LoadAccount((AccountLight)((Button)sender).CommandParameter);
-        }*/
+        public RoutedEventHandler box_Checked { get; set; }
+
+        public RoutedEventHandler box_Unchecked { get; set; }
     }
 }
