@@ -267,13 +267,23 @@ namespace EIP
                         case Account.TypeAccount.Facebook:
                             AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
                             newAccountFacebook.account = oneAccount;
-                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
-                            newAccountFacebook.Login();
+<<<<<<< .mine                            //Connexion.accounts.Add(newAccountFacebook.account.accountID, newAccountFacebook);
+                           
+=======                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
+>>>>>>> .theirs                            newAccountFacebook.Login();
+<<<<<<< .mine                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
+                            /*
+                            browserSession.LoggedIn(((AccountFacebook)oneAccount).sessionKey,
+                                                           ((AccountFacebook)oneAccount).sessionSecret,
+                                                           Convert.ToInt32(((AccountFacebook)oneAccount).sessionExpires),
+                                                           oneAccount.userID);
+                           */
+=======>>>>>>> .theirs                            
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
-                            //accounts.Add(newAccountTwitter);
+                            //Connexion.accounts.Add(newAccountTwitter.account.accountID, newAccountTwitter);
                             accounts[newAccountTwitter.account.userID] = newAccountTwitter;
                             break;
                         case Account.TypeAccount.Myspace:
