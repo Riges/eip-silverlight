@@ -1,4 +1,13 @@
 ﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="EIP" EntryPointType="EIP.App" RuntimeVersion="4.0.50401.0">
+  <Deployment.OutOfBrowserSettings>
+    <OutOfBrowserSettings ShortName="EIP Application" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+      <OutOfBrowserSettings.Blurb>EIP Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
+      <OutOfBrowserSettings.WindowSettings>
+        <WindowSettings Title="EIP Application" />
+      </OutOfBrowserSettings.WindowSettings>
+      <OutOfBrowserSettings.Icons />
+    </OutOfBrowserSettings>
+  </Deployment.OutOfBrowserSettings>
   <Deployment.Parts>
     <AssemblyPart x:Name="EIP" Source="EIP.dll" />
     <AssemblyPart x:Name="Dimebrain.TweetSharp" Source="Dimebrain.TweetSharp.dll" />
@@ -16,6 +25,7 @@
     <AssemblyPart x:Name="TweetSharp.Silverlight" Source="TweetSharp.Silverlight.dll" />
     <AssemblyPart x:Name="System.Xml.Linq" Source="System.Xml.Linq.dll" />
     <AssemblyPart x:Name="System.Xml.Serialization" Source="System.Xml.Serialization.dll" />
+    <AssemblyPart x:Name="System.Json" Source="System.Json.dll" />
     <AssemblyPart x:Name="System.Reactive" Source="System.Reactive.dll" />
   </Deployment.Parts>
 </Deployment>
