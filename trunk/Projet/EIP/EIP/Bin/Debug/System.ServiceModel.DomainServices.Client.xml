@@ -17,10 +17,10 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationEventArgs.#ctor(System.Security.Principal.IPrincipal)">
             <summary>
-            Initiailizes a new instance of the AuthenticationEventArgs class.
+            Initiailizes a new instance of the <see cref="T:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationEventArgs"/> class.
             </summary>
             <param name="user">The user at the time the event occurred</param>
-            <exception cref="T:System.ArgumentNullException"> is thrown if <paramref name="user"/> is null.
+            <exception cref="T:System.ArgumentNullException"> is thrown if <paramref name="user"/> is <c>null</c>.
             </exception>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationEventArgs.User">
@@ -204,7 +204,7 @@
             Handles completion of the underlying async call.
             </summary>
             <remarks>
-            If <see cref="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationOperation.AsyncResult"/> is null (as in the case of a synchronous
+            If <see cref="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationOperation.AsyncResult"/> is <c>null</c> (as in the case of a synchronous
             completion), it will be set to <paramref name="asyncResult"/>.
             </remarks>
             <param name="asyncResult">The async result returned by the underlying Begin call</param>
@@ -254,7 +254,7 @@
             Gets the async result returned from <see cref="M:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationOperation.BeginCore(System.AsyncCallback)"/>.
             </summary>
             <remarks>
-            If <see cref="M:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationOperation.BeginCore(System.AsyncCallback)"/> has not been called, this may be null.
+            If <see cref="M:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationOperation.BeginCore(System.AsyncCallback)"/> has not been called, this may be <c>null</c>.
             </remarks>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationOperation.Service">
@@ -395,7 +395,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:System.ServiceModel.DomainServices.Client.ApplicationServices.LoginResult"/> class.
             </summary>
-            <param name="user">The logged in user or null if authentication failed</param>
+            <param name="user">The logged in user or <c>null</c> if authentication failed</param>
             <param name="loginSuccess">Whether the <c>Login</c> call completed successfully</param>
             <exception cref="T:System.InvalidOperationException"> is thrown if the <paramref name="user"/> is
             not authenticated when the <c>Login</c> call has finished successfully.
@@ -488,7 +488,7 @@
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.Entity">
             <summary>
-            Base class for all client entity types
+            Base class for all entity types.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.RaiseValidationErrorsChanged(System.String)">
@@ -573,9 +573,9 @@
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.AcceptChanges">
             <summary>
             Accept the current changes to this <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> applying the proper
-            state transition. If this <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> has compositional associations,
-            any changes made to those associations or the child entities themselves will be
-            accepted. 
+            state transitions. If this <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> has compositional associations,
+            any changes made to those associations or the child entities themselves will also
+            be accepted. 
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.RejectChanges">
@@ -697,7 +697,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.ValidateProperty(System.ComponentModel.DataAnnotations.ValidationContext,System.Object)">
             <summary>
-            Validate whether the specified property value is valid for the specified validation context.
+            Validate whether the specified property value is valid for the specified <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext"/>.
             </summary>
             <remarks>
             This method evaluates all the <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute"/>s associated with the property
@@ -727,12 +727,11 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.OnActionStateChanged">
             <summary>
-            Method called when the invoked action state changes
-            for this entity. 
+            Method called when the invoked action state changes for this entity. 
             </summary>
             <remarks>
-            This method is called when the state of CanInvoke 
-            changes.</remarks>
+            This method is called when the state of CanInvoke changes.
+            </remarks>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.UpdateActionState(System.ServiceModel.DomainServices.Client.EntityAction)">
             <summary>
@@ -770,6 +769,18 @@
             to BeginEdit
             </summary>
         </member>
+        <member name="M:System.ServiceModel.DomainServices.Client.Entity.UpdateRelatedAssociations(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Notify our EntitySet of the specified property notifications so related
+            associations can be updated.
+            <remarks>
+            </remarks>
+            When in an edit session, association updates are postponed until either
+            EndEdit or CancelEdit are called. At that point all updates will be
+            processed by this method.
+            </summary>
+            <param name="modifiedProperties">The collection of modified properties.</param>
+        </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.InvokeAction(System.String,System.Object[])">
             <summary>
             Called to register an action to be invoked for this entity during SubmitChanges.
@@ -778,16 +789,12 @@
             any validation on this object, the custom method or the specified parameters fails.
             </summary>
             <param name="actionName">The name of the action to invoke</param>
-            <param name="parameters">The list of parameters values to invoke the specified action with</param>
+            <param name="parameters">The parameters values to invoke the specified action with</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.CanInvokeAction(System.String)">
             <summary>
             Gets a value indicating whether the specified action can currently be invoked. 
             </summary>
-            <remarks>This property does not actually invoke Validation 
-            because we cannot guarantee property changed events
-            are raised whenever this state changes. Validation will
-            be executed as part of Invoke.</remarks>
             <param name="name">The name of the action corresponding to a custom method</param>
             <returns>True if the action can currently be invoked</returns>
         </member>
@@ -796,7 +803,7 @@
             Return the entity identity, suitable for hashing. If the entity
             does not yet have an identity, null will be returned.
             </summary>
-            <returns>the identity of this entity</returns>
+            <returns>The identity for this entity</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.Entity.ToString">
             <summary>
@@ -979,7 +986,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Entity.IsReadOnly">
             <summary>
-            Gets a value indicating whether this entity is read-only.
+            Gets a value indicating whether this entity is currently in a read-only state.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Entity.IsSubmitting">
@@ -994,11 +1001,12 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Entity.EntityActions">
             <summary>
-            Gets the list of custom method invocations pending for this entity 
-            in the current changeset. The current implementation only supports 
-            a single pending invocation.
+            Gets the list of custom method invocations pending for this entity.
             </summary>
-            <returns>list of custom method invocations pending for this entity</returns>
+            <remarks>
+            Currently only a single pending invocation is supported for an entity.
+            </remarks>
+            <returns>Collection of custom method invocations pending for this entity</returns>
         </member>
         <member name="E:System.ServiceModel.DomainServices.Client.Entity.PropertyChanged">
             <summary>
@@ -1030,10 +1038,16 @@
             entity since the session began.
             </summary>
         </member>
-        <member name="M:System.ServiceModel.DomainServices.Client.Entity.EditSession.OnDataMemberUpdate">
+        <member name="M:System.ServiceModel.DomainServices.Client.Entity.EditSession.OnDataMemberUpdate(System.String)">
             <summary>
             Called whenever a data member on the entity is modified, to allow
             the session to take a state snapshot.
+            </summary>
+            <param name="memberName">The name of the member that was updated.</param>
+        </member>
+        <member name="P:System.ServiceModel.DomainServices.Client.Entity.EditSession.ModifiedProperties">
+            <summary>
+            Returns the set properties modified in this edit session.
             </summary>
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.EntityQueryable">
@@ -1262,7 +1276,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.InvokeArgs.#ctor(System.String,System.Type,System.Collections.Generic.IDictionary{System.String,System.Object},System.Boolean)">
             <summary>
-            Public constructor
+            Initializes a new instance of the InvokeArgs class
             </summary>
             <param name="operationName">The name of the invoke operation.</param>
             <param name="returnType">The return Type of the invoke operation.</param>
@@ -1580,18 +1594,20 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.QueryResult`1.#ctor">
             <summary>
-            Public constructor
+            Initializes a new instance of the QueryResult class
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.QueryResult`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
             <summary>
-            Constructs a result with the specified collection of result items.
+            Initializes a new instance of the QueryResult class with the specified
+            collection of result items.
             </summary>
             <param name="results">The results</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.QueryResult`1.#ctor(System.Collections.Generic.IEnumerable{`0},System.Int32)">
             <summary>
-            Constructs a result with the specified collection of query result items.
+            Initializes a new instance of the QueryResult class with the specified
+            collection of result items and total count.
             </summary>
             <param name="results">The query results.</param>
             <param name="totalCount">The total number of rows based on the input query, but without 
@@ -1734,25 +1750,25 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainClientResult.CreateInvokeResult(System.Object,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationResult})">
             <summary>
-            Creates an invoke result.
+            Creates an Invoke operation result.
             </summary>
-            <param name="returnValue">The return value.</param>
+            <param name="returnValue">The return value of the Invoke operation.</param>
             <param name="validationErrors">Collection of validation errors for the invocation.</param>
             <returns>The result.</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainClientResult.CreateQueryResult(System.Collections.Generic.IEnumerable{System.ServiceModel.DomainServices.Client.Entity},System.Collections.Generic.IEnumerable{System.ServiceModel.DomainServices.Client.Entity},System.Int32,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationResult})">
             <summary>
-            Creates a query result.
+            Creates a Query operation result.
             </summary>
             <param name="entities">The top level entities returned from the query.</param>
-            <param name="allEntities">All entities returned from the query.</param>
+            <param name="allEntities">All entities returned from the query, including associated entities.</param>
             <param name="totalEntityCount">The total server count of entities.</param>
-            <param name="validationErrors">Collection of validation errors for the invocation.</param>
+            <param name="validationErrors">Collection of validation errors for the query.</param>
             <returns>The result.</returns>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainClientResult.Entities">
             <summary>
-            Gets the entity results.
+            Gets the top level entity results.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainClientResult.AllEntities">
@@ -1762,12 +1778,12 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainClientResult.ReturnValue">
             <summary>
-            Gets the return value of an invoke operation. Can be null.
+            Gets the return value of an Invoke operation. Can be null.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainClientResult.ValidationErrors">
             <summary>
-            Gets the colleciton or validation errors.
+            Gets the collection of validation errors.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainClientResult.TotalEntityCount">
@@ -1780,16 +1796,15 @@
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.EntityAction">
             <summary>
-            Represents an entity action object
+            Represents a custom method invocation on an entity.
             </summary>
-            <QualityBand>Preview</QualityBand>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityAction.#ctor(System.String,System.Object[])">
             <summary>
-            Public constructor
+            Initializes a new instance of the EntityAction class
             </summary>
-            <param name="name">name of the entity action</param>
-            <param name="parameters">parameters list to invoke entity action with</param>
+            <param name="name">Name of the entity action</param>
+            <param name="parameters">The parameters to pass to the entity action</param>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityAction.Name">
             <summary>
@@ -1798,12 +1813,12 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityAction.Parameters">
             <summary>
-            Gets the parameters to invoke the entity action with
+            Gets the parameters to pass to the entity action
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityAction.HasParameters">
             <summary>
-            Gets whether any parameters were associated with this action.
+            Gets a value indicating whether any parameters were associated with this action.
             </summary>
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.EntityCollectionChangedEventArgs`1">
@@ -1815,7 +1830,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityCollectionChangedEventArgs`1.#ctor(`0)">
             <summary>
-            Public constructor
+            Initializes a new instance of the EntityCollectionChangedEventArgs class
             </summary>
             <param name="entity">The affected <see cref="P:System.ServiceModel.DomainServices.Client.EntityCollectionChangedEventArgs`1.Entity"/></param>
         </member>
@@ -1857,7 +1872,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityQuery.#ctor(System.ServiceModel.DomainServices.Client.DomainClient,System.String,System.Type,System.Collections.Generic.IDictionary{System.String,System.Object},System.Boolean,System.Boolean)">
             <summary>
-            Public Constructor
+            Initializes a new instance of the EntityQuery class
             </summary>
             <param name="domainClient">The <see cref="P:System.ServiceModel.DomainServices.Client.EntityQuery.DomainClient"/> for the query.</param>
             <param name="queryName">The name of the query method.</param>
@@ -1869,8 +1884,8 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityQuery.#ctor(System.ServiceModel.DomainServices.Client.EntityQuery,System.Linq.IQueryable)">
             <summary>
-            Constructor used to create a new query based on an existing "base"
-            query. Constructs a query with the same properties as the base query
+            Initializes a new instance of the EntityQuery class based on an existing "base"
+            query. The query is constructed with the same properties as the base query
             using the specified IQueryable as the new query.
             </summary>
             <param name="baseQuery">The existing query.</param>
@@ -1878,7 +1893,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityQuery.DomainClient">
             <summary>
-            Gets the DomainClient for this query.
+            Gets the <see cref="P:System.ServiceModel.DomainServices.Client.EntityQuery.DomainClient"/> for this query.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityQuery.QueryName">
@@ -1904,7 +1919,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityQuery.Query">
             <summary>
-            Gets the LINQ query for the query method invocation. Returns
+            Gets the underlying <see cref="T:System.Linq.IQueryable"/> for the query. Returns
             null if no query exists.
             </summary>
         </member>
@@ -1932,11 +1947,15 @@
         </member>
         <member name="T:System.ServiceModel.DomainServices.ExternalReferenceAttribute">
             <summary>
+            Attribute used to indicate that an association references entities belonging to an external
+            DomainContext.
+            </summary>
+            <remarks>
             When applied to an entity association member, this attribute indicates that the framework should not
-            create a corresponding EntitySet in the generated client-side code output.  Consumers of the
+            create a corresponding EntitySet in the generated client-side code.  Consumers of the
             client-side property will need to add a DomainContext reference to the appropriate DomainContext
             containing the external entity type.
-            </summary>
+            </remarks>
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.InvokeOperation">
             <summary>
@@ -1945,7 +1964,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.InvokeOperation.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Action{System.ServiceModel.DomainServices.Client.InvokeOperation},System.Object,System.Action{System.ServiceModel.DomainServices.Client.InvokeOperation})">
             <summary>
-            Public Constructor
+            Initializes a new instance of the InvokeOperation class
             </summary>
             <param name="operationName">The operation to invoke.</param>
             <param name="parameters">Optional parameters to the operation. Specify null
@@ -2064,7 +2083,7 @@
         <member name="T:System.ServiceModel.DomainServices.Client.DomainClient">
             <summary>
             Base class for all <see cref="T:System.ServiceModel.DomainServices.Client.DomainClient"/> implementations. A <see cref="T:System.ServiceModel.DomainServices.Client.DomainClient"/> is
-            used to communicate with a data source asynchronously, providing query, method invocation
+            used to communicate with a DomainService asynchronously, providing query, method invocation
             and changeset submission functionality.
             </summary>
         </member>
@@ -2083,7 +2102,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainClient.BeginQueryCore(System.ServiceModel.DomainServices.Client.EntityQuery,System.AsyncCallback,System.Object)">
             <summary>
-            Method called by the framework to begin the asynchronous query operation
+            Method called by the framework to begin the asynchronous query operation.
             </summary>
             <param name="query">The query to invoke.</param>
             <param name="callback">The callback to invoke when the query has been executed.</param>
@@ -2122,19 +2141,19 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainClient.BeginSubmit(System.ServiceModel.DomainServices.Client.EntityChangeSet,System.AsyncCallback,System.Object)">
             <summary>
-            Submits the specified change set to the domain service asynchronously.
+            Submits the specified <see cref="T:System.ServiceModel.DomainServices.Client.EntityChangeSet"/> to the DomainService asynchronously.
             </summary>
-            <param name="changeSet">The <see cref="T:System.ServiceModel.DomainServices.Client.EntityChangeSet"/> to submit to the domain service.</param>
+            <param name="changeSet">The <see cref="T:System.ServiceModel.DomainServices.Client.EntityChangeSet"/> to submit to the DomainService.</param>
             <param name="callback">The callback to invoke when the submit has been executed.</param>
             <param name="userState">Optional user state associated with this operation.</param>
             <returns>An asynchronous result that identifies this submit request.</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainClient.BeginSubmitCore(System.ServiceModel.DomainServices.Client.EntityChangeSet,System.AsyncCallback,System.Object)">
             <summary>
-            Method called by the framework to asynchronously process the specified changeset.
+            Method called by the framework to asynchronously process the specified <see cref="T:System.ServiceModel.DomainServices.Client.EntityChangeSet"/>.
             Overrides should not call the base method.
             </summary>
-            <param name="changeSet">The <see cref="T:System.ServiceModel.DomainServices.Client.EntityChangeSet"/> to submit to the domain service.</param>
+            <param name="changeSet">The <see cref="T:System.ServiceModel.DomainServices.Client.EntityChangeSet"/> to submit to the DomainService.</param>
             <param name="callback">The callback to invoke when the submit has been executed.</param>
             <param name="userState">Optional user state associated with this operation.</param>
             <returns>An asynchronous result that identifies this submit request.</returns>
@@ -2157,7 +2176,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainClient.EndSubmit(System.IAsyncResult)">
             <summary>
-            Gets the results of a submit.
+            Gets the results of a submit request.
             </summary>
             <param name="asyncResult">An asynchronous result that identifies a submit request.</param>
             <returns>The results returned by the submit request.</returns>
@@ -2180,7 +2199,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainClient.BeginInvokeCore(System.ServiceModel.DomainServices.Client.InvokeArgs,System.AsyncCallback,System.Object)">
             <summary>
-            Method called by the framework to invoke an invoke operation asynchronously. Overrides
+            Method called by the framework to begin an Invoke operation asynchronously. Overrides
             should not call the base method.
             </summary>
             <param name="invokeArgs">The arguments to the Invoke operation.</param>
@@ -2250,7 +2269,7 @@
         <member name="T:System.ServiceModel.DomainServices.Client.DomainContext">
             <summary>
             A <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> is a stateful client side representation of a DomainService, providing
-            access to all the functionality of the DomainService.
+            access to all functionality of the service.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainContext.#ctor(System.ServiceModel.DomainServices.Client.DomainClient)">
@@ -2262,21 +2281,22 @@
         <member name="M:System.ServiceModel.DomainServices.Client.DomainContext.CreateEntityContainer">
             <summary>
             Creates and returns an entity container configured with <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/>s for all 
-            entities this context will provide access to. The return must be non-null.
+            entities this <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> will provide access to. The return must be non-null.
             </summary>
             <returns>The container</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainContext.AddReference(System.Type,System.ServiceModel.DomainServices.Client.DomainContext)">
             <summary>
-            Adds a reference to an external <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/>.  Once a reference is established, referenced
-            DomainContext instances will be consulted when resolving the <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/> for an <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> type.
+            Adds a reference to an external <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/>. Once a reference is established, referenced
+            <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> instances will be consulted when resolving the <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/> for an
+            <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> type.
             </summary>
             <param name="entityType">The entity type to lookup in the <paramref name="domainContext"/>.</param>
             <param name="domainContext">A <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> to register as an external reference.</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainContext.RejectChanges">
             <summary>
-            Revert all pending changes for this <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/>
+            Revert all pending changes for this <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/>.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainContext.SubmitChanges">
@@ -2410,7 +2430,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainContext.InvokeOperation``1(System.String,System.Type,System.Collections.Generic.IDictionary{System.String,System.Object},System.Boolean,System.Action{System.ServiceModel.DomainServices.Client.InvokeOperation{``0}},System.Object)">
             <summary>
-            Invokes an invoke operation.
+            Initiates an Invoke operation.
             </summary>
             <typeparam name="TValue">The type of value that will be returned.</typeparam>
             <param name="operationName">The name of the operation.</param>
@@ -2418,8 +2438,7 @@
             <param name="parameters">Optional parameters to the operation. Specify null
             if the operation takes no parameters.</param>
             <param name="hasSideEffects">True if the operation has side-effects, false otherwise.</param>
-            <param name="callback">Optional callback to be called when the operation completes. The callback must
-            be a delegate taking a single parameter that can accept an instance of the <see cref="T:System.ServiceModel.DomainServices.Client.InvokeOperation"/> Type returned.</param>
+            <param name="callback">Optional callback to be called when the operation completes.</param>
             <param name="userState">Optional user state for the operation.</param>
             <returns>The invoke operation.</returns>
         </member>
@@ -2432,14 +2451,13 @@
             <param name="parameters">Optional parameters to the operation. Specify null
             if the operation takes no parameters.</param>
             <param name="hasSideEffects">True if the operation has side-effects, false otherwise.</param>
-            <param name="callback">Optional callback to be called when the operation completes. The callback must
-            be a delegate taking a single parameter that can accept an instance of the <see cref="T:System.ServiceModel.DomainServices.Client.InvokeOperation"/> Type returned.</param>
+            <param name="callback">Optional callback to be called when the operation completes.</param>
             <param name="userState">Optional user state for the operation.</param>
             <returns>The invoke operation.</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainContext.RaisePropertyChanged(System.String)">
             <summary>
-            Raises the PropertyChanged event for the indicated property
+            Raises the PropertyChanged event for the specified property
             </summary>
             <param name="propertyName">The property to raise the event for</param>
         </member>
@@ -2466,18 +2484,17 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainContext.DomainClient">
             <summary>
-            Gets the DomainClient for this context, performing any
-            required initialization
+            Gets the <see cref="P:System.ServiceModel.DomainServices.Client.DomainContext.DomainClient"/> for this context
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainContext.IsLoading">
             <summary>
-            Gets a value indicating whether this context is currently performing a Load operation.
+            Gets a value indicating whether this <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> is currently performing a Load operation.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainContext.IsSubmitting">
             <summary>
-            Gets a value indicating whether this context is currently performing a SubmitChanges operation.
+            Gets a value indicating whether this <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> is currently performing a Submit operation.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.DomainContext.EntityContainer">
@@ -2506,7 +2523,7 @@
         <member name="T:System.ServiceModel.DomainServices.Client.DomainOperationException">
             <summary>
             This exception indicates that at least one error has occurred
-            during the processing of the data operations on the server.
+            during the processing of domain operations on the server.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainOperationException.#ctor">
@@ -2544,7 +2561,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.DomainOperationException.#ctor(System.String,System.ServiceModel.DomainServices.Client.OperationErrorStatus,System.Int32,System.String)">
             <summary>
-            Internal constructor accepting optional localized message, status, 
+            Constructor accepting optional localized message, status, 
             custom error code and stack trace of the exception. 
             </summary>
             <param name="message">The localized error message</param>
@@ -2869,9 +2886,9 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityChangeSet.GetChangeSetEntries">
             <summary>
-            Gets a list of changeset entries representing the current changeset.
+            Gets the collection of <see cref="T:System.ServiceModel.DomainServices.Client.ChangeSetEntry"/> items for this changeset.
             </summary>
-            <returns>A list of changeset entries.</returns>
+            <returns>A collection of <see cref="T:System.ServiceModel.DomainServices.Client.ChangeSetEntry"/> items.</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityChangeSet.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
             <summary>
@@ -2887,7 +2904,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityChangeSet.IsEmpty">
             <summary>
-            Gets a value indicating whether this changeset has no changes
+            Gets a value indicating whether this changeset has any changes
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityChangeSet.ModifiedEntities">
@@ -2943,7 +2960,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityCollection`1.#ctor(System.ServiceModel.DomainServices.Client.Entity,System.String,System.Func{`0,System.Boolean})">
             <summary>
-            Public constructor
+            Initializes a new instance of the EntityCollection class
             </summary>
             <param name="parent">The entity that this collection is a member of</param>
             <param name="memberName">The name of this EntityCollection member on the parent entity</param>
@@ -2952,7 +2969,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityCollection`1.#ctor(System.ServiceModel.DomainServices.Client.Entity,System.String,System.Func{`0,System.Boolean},System.Action{`0},System.Action{`0})">
             <summary>
-            Public constructor
+            Initializes a new instance of the EntityCollection class
             </summary>
             <param name="parent">The entity that this collection is a member of</param>
             <param name="memberName">The name of this EntityCollection member on the parent entity</param>
@@ -3120,9 +3137,9 @@
             Initializes a new instance of the <see cref="T:System.ServiceModel.DomainServices.Client.EntityConflict"/> class.
             </summary>
             <param name="currentEntity">The entity that the user tried to save.</param>
-            <param name="storeEntity">The entity that represents the last known state from the store.</param>
+            <param name="storeEntity">The entity that represents the current state of the entity in the store.</param>
             <param name="propertyNames">The names of properties that are in conflict.</param>
-            <param name="isDeleted">Whether the entity has already been deleted from the store.</param>
+            <param name="isDeleted">Whether the entity no longer exists in the store.</param>
             <exception cref="T:System.ArgumentNullException">if <paramref name="isDeleted"/> equals <c>false</c> and 
             <paramref name="storeEntity"/>, <paramref name="currentEntity"/> or <paramref name="propertyNames"/> 
             is null.</exception>
@@ -3144,7 +3161,7 @@
         <member name="P:System.ServiceModel.DomainServices.Client.EntityConflict.OriginalEntity">
             <summary>
             Gets the original <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> instance. May be null
-            if the entity is not modified.
+            if the entity is not modified, or if timestamp concurrency is used.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityConflict.StoreEntity">
@@ -3161,7 +3178,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntityConflict.IsDeleted">
             <summary>
-            Gets a value indicating whether the entity has already been deleted from the store.
+            Gets a value indicating whether the entity no longer exists in the store.
             </summary>
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.EntityContainer">
@@ -3186,8 +3203,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityContainer.AddReference(System.ServiceModel.DomainServices.Client.EntitySet)">
             <summary>
-            Adds a reference to an external <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/>.  Once a reference has been established, 
-            referenced <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/> will be consulted when resolving an <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> type.
+            Adds a reference to an external <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/>.
             </summary>
             <param name="entitySet">A <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/> to register as an external reference.</param>
         </member>
@@ -3285,7 +3301,7 @@
             <summary>
             Load the specified collection of entities into this <see cref="T:System.ServiceModel.DomainServices.Client.EntityContainer"/>.
             </summary>
-            <param name="entities">The Entities to load</param>
+            <param name="entities">The entities to load</param>
             <returns>The set of entities loaded. In cases where entities in the set
             are already cached locally, the return set will contain the cached instances.</returns>
         </member>
@@ -3293,8 +3309,8 @@
             <summary>
             Load the specified collection of entities into this <see cref="T:System.ServiceModel.DomainServices.Client.EntityContainer"/>.
             </summary>
-            <param name="entities">The Entities to load</param>
-            <param name="loadBehavior">The <see cref="T:System.ServiceModel.DomainServices.Client.LoadBehavior"/> to use for the Load</param>
+            <param name="entities">The entities to load</param>
+            <param name="loadBehavior">The <see cref="T:System.ServiceModel.DomainServices.Client.LoadBehavior"/> to use</param>
             <returns>The set of entities loaded. In cases where entities in the set
             are already cached locally, the return set will contain the cached instances.</returns>
         </member>
@@ -3348,7 +3364,7 @@
             <see cref="T:System.ServiceModel.DomainServices.Client.EntityContainer"/>.
             </summary>
             <value>
-            This value will be inherited by the <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> that
+            This value is inherited from the <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> that
             creates this container.
             </value>
         </member>
@@ -3510,7 +3526,7 @@
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.EntitySet">
             <summary>
-            Represents a collection of <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> instances, providing change tracking and other services.
+            Represents a collection of <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> instances.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.#ctor(System.Type)">
@@ -3522,7 +3538,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.Clear">
             <summary>
-            Clears all Entities from the set
+            Clears all entities from the set
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.TrackAsInteresting(System.ServiceModel.DomainServices.Client.Entity,System.Boolean)">
@@ -3536,9 +3552,9 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.CreateList">
             <summary>
-            Creates a new entity set.
+            Creates the storage list for the set.
             </summary>
-            <returns>The created entity set instance.</returns>
+            <returns>The created storage list instance.</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.CreateEntity">
             <summary>
@@ -3552,9 +3568,10 @@
             </summary>
             <returns>An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.</returns>
         </member>
-        <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.EntityPropertyChanged(System.ServiceModel.DomainServices.Client.Entity,System.String)">
+        <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.UpdateRelatedAssociations(System.ServiceModel.DomainServices.Client.Entity,System.String)">
             <summary>
-            Handles change notifications from changed properties of entities in this set.
+            Notifies any registered association update callbacks that the specified property
+            has changed.
             </summary>
             <param name="entity">The entity that was updated.</param>
             <param name="propertyName">The name of the property that was changed.</param>
@@ -3594,25 +3611,11 @@
             <summary>
             Removes the specified entity from the set.
             </summary>
+            <remarks>
+            If the entity is not in this set, an <see cref="T:System.InvalidOperationException"/> will be thrown.
+            If the entity is the root of a compositional hierarchy, all child entities will also be removed.
+            </remarks>
             <param name="entity">The entity to remove.</param>
-        </member>
-        <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.BeginEdit(System.ServiceModel.DomainServices.Client.Entity)">
-            <summary>
-            Begin editing the specified <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/>
-            </summary>
-            <param name="entity">The entity to edit</param>
-        </member>
-        <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.EndEdit(System.ServiceModel.DomainServices.Client.Entity)">
-            <summary>
-            End editing the specified <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/>
-            </summary>
-            <param name="entity">The entity to end editing</param>
-        </member>
-        <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.CancelEdit(System.ServiceModel.DomainServices.Client.Entity)">
-            <summary>
-            Cancel edits to the specified <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/>
-            </summary>
-            <param name="entity">The entity to cancel edits for</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.AcceptChanges">
             <summary>
@@ -3643,9 +3646,12 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.Detach(System.ServiceModel.DomainServices.Client.Entity)">
             <summary>
-            Detaches the specified <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> from this <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/>. If the entity
-            is not in this set, an <see cref="T:System.InvalidOperationException"/> will be thrown.
+            Detaches the specified <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> from this <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/>.
             </summary>
+            <remarks>
+            If the entity is not in this set, an <see cref="T:System.InvalidOperationException"/> will be thrown.
+            If the entity is the root of a compositional hierarchy, all child entities will also be detached.
+            </remarks>
             <param name="entity">The entity to detach</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet.LoadEntity(System.ServiceModel.DomainServices.Client.Entity)">
@@ -3735,23 +3741,23 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntitySet.CanAdd">
             <summary>
-            Gets a value indicating whether the collection allows new items to be added
+            Gets a value indicating whether the set allows new entities to be added
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntitySet.CanEdit">
             <summary>
-            Gets a value indicating whether members of the collection can be edited
+            Gets a value indicating whether entities in the set can be edited
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntitySet.CanRemove">
             <summary>
-            Gets a value indicating whether the collection allows items to be removed.
-            Note that newly added items can always be removed.
+            Gets a value indicating whether the set allows entities to be removed.
+            Note that newly added entities can always be removed.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntitySet.Count">
             <summary>
-            Gets the current count of Entities in the set
+            Gets the current count of entities in the set
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntitySet.EntityContainer">
@@ -3761,8 +3767,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntitySet.IsReadOnly">
             <summary>
-            Gets a value indicating whether this set supports update operations. Returns
-            true if update operations are not supported, false otherwise.
+            Gets a value indicating whether this set supports update operations.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.EntitySet.List">
@@ -3803,6 +3808,11 @@
             in a hierarchy.
             </summary>
         </member>
+        <member name="T:System.ServiceModel.DomainServices.Client.EntitySet.CompositionalChildDetacher">
+            <summary>
+            Visitor used to detach all compositional children for a specified entity.
+            </summary>
+        </member>
         <member name="T:System.ServiceModel.DomainServices.Client.EntitySet`1">
             <summary>
             Represents a collection of <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> instances, providing change tracking and other services.
@@ -3811,14 +3821,14 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet`1.#ctor">
             <summary>
-            Public constructor
+            Initializes a new instance of the EntitySet class
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet`1.CreateList">
             <summary>
-            Creates a new entity set.
+            Creates the storage list for the set.
             </summary>
-            <returns>The created entity set instance.</returns>
+            <returns>The created storage list instance.</returns>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet`1.CreateEntity">
             <summary>
@@ -3838,34 +3848,34 @@
             unmodified state, also recursively attaching all unattached entities reachable via
             associations.
             </summary>
-            <remarks>The <paramref name="entity"/> needs to be of type <typeparamref name="TEntity"/>, and cannot be a subclass.</remarks>
             <param name="entity">The entity to attach</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet`1.Detach(`0)">
             <summary>
-            Detaches the <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> from this <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/>.
+            Detaches the <see cref="T:System.ServiceModel.DomainServices.Client.Entity"/> from this <see cref="T:System.ServiceModel.DomainServices.Client.EntitySet"/>. If the entity
+            is not in this set, an <see cref="T:System.InvalidOperationException"/> will be thrown. If the entity
+            is the root of a compositional hierarchy, all child entities will also be detached.
             </summary>
             <param name="entity">The entity to detach</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet`1.Add(`0)">
             <summary>
-            Add the specified entity to the collection. If CanAdd is false, an <see cref="T:System.InvalidOperationException"/>
-            will be thrown.
+            Add the specified entity to the set, also recursively adding all unattached
+            entities reachable via associations.
             </summary>
             <remarks><paramref name="entity"/> needs to be of type <typeparamref name="TEntity"/>, and cannot be a subclass.</remarks>
             <param name="entity">The entity to add</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet`1.Remove(`0)">
             <summary>
-            Remove the specified entity from the collection. If CanRemove is false
-            and the specified entity is not newly added, an <see cref="T:System.InvalidOperationException"/>
-            will be thrown.
+            Removes the specified entity from the set. If the entity is the root
+            of a compositional hierarchy, all child entities will also be removed.
             </summary>
             <param name="entity">The entity to remove</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntitySet`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedAction,System.Object,System.Int32)">
             <summary>
-            Method called whenever the collection changes.
+            Method called whenever the set changes.
             </summary>
             <param name="action">The change action</param>
             <param name="affectedObject">For Reset events, this will be a collection of removed entities. For all other
@@ -3890,7 +3900,7 @@
         </member>
         <member name="F:System.ServiceModel.DomainServices.Client.EntitySetOperations.None">
             <summary>
-            Only Selection is permitted, no update operations are allowed.
+            Only read operations are permitted, no update operations are allowed.
             </summary>
         </member>
         <member name="F:System.ServiceModel.DomainServices.Client.EntitySetOperations.Add">
@@ -3916,34 +3926,35 @@
         <member name="T:System.ServiceModel.DomainServices.Client.ChangeSetEntry">
             <summary>
             Represents a domain operation to be performed on an entity. This is the message
-            type passed between data-client and domain service both for sending operations to
-            the domain service as well as for returning operation results back to the data-client.
+            type passed between <see cref="T:System.ServiceModel.DomainServices.Client.DomainClient"/> and DomainService both for sending operations to
+            the DomainService as well as for returning operation results back to the <see cref="T:System.ServiceModel.DomainServices.Client.DomainClient"/>.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.ChangeSetEntry.#ctor(System.ServiceModel.DomainServices.Client.Entity,System.Int32,System.ServiceModel.DomainServices.Client.EntityOperationType)">
             <summary>
-            Public constructor
+            Initializes a new instance of the <see cref="T:System.ServiceModel.DomainServices.Client.ChangeSetEntry"/> class
             </summary>
             <param name="entity">The entity being operated on</param>
-            <param name="id">The client ID for the entity</param>
+            <param name="id">The client ID for the entity, used to correlate server results
+            with their client entity instances.</param>
             <param name="operationType">The operation to be performed</param>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.HasError">
             <summary>
-            Gets a value indicating whether validation errors or conflicts were encountered 
-            during processing of the property.
+            Gets a value indicating whether any errors were encountered 
+            during processing of the operation.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.HasConflict">
             <summary>
-            Gets a value indicating whether the operation contains conflicts.
+            Gets a value indicating whether the <see cref="T:System.ServiceModel.DomainServices.Client.ChangeSetEntry"/> contains conflicts.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.Entity">
             <summary>
             Gets or sets the <see cref="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.Entity"/> being operated on. After a submit operation
             has completed, this member may contain updated entity state returned from the
-            domain service.
+            DomainService.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.OriginalEntity">
@@ -3964,7 +3975,8 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.Id">
             <summary>
-            Gets or sets the Client Id for the entity
+            Gets or sets the client Id for the entity. This value is used to correlate server
+            results with their client entity instances.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.HasMemberChanges">
@@ -3972,7 +3984,7 @@
             Gets or sets a value indicating whether the entity for
             this operation has property modifications.
             <remarks>Note that even if OriginalEntity hasn't been
-            set, in the case of entities using a timestamp field
+            set, in the case of entities using a timestamp member
             for concurrency, the entity may still be modified. This
             flag allows us to distinguish that case from an Update
             operation that represents a custom method invocation only.
@@ -3987,7 +3999,7 @@
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.EntityActions">
             <summary>
             Gets or sets the custom methods invoked on the entity, as a set
-            of method name / parameter pairs.
+            of method name / parameter set pairs.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.ValidationErrors">
@@ -3997,25 +4009,25 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.ConflictMembers">
             <summary>
-            Gets or sets the collection of members in conflict. The Entity property
-            contains the current store value for each property.
+            Gets or sets the collection of members in conflict. The <see cref="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.StoreEntity"/> property
+            contains the current store value for each member in conflict.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.IsDeleteConflict">
             <summary>
-            Gets or sets a value indicating whether the confict (if there is one) is a delete conflict.
+            Gets or sets whether the conflict is a delete conflict, meaning the
+            entity no longer exists in the store.
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.Associations">
             <summary>
-            Gets or sets the collection of Ids of the associated entities for
+            Gets or sets the collection of IDs of the associated entities for
             each association of the Entity
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.OriginalAssociations">
             <summary>
-            Gets or sets the collection of Ids of the associated entities for
-            each association of the OriginalEntity
+            Gets or sets the collection of IDs for each association of the <see cref="P:System.ServiceModel.DomainServices.Client.ChangeSetEntry.OriginalEntity"/>
             </summary>
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.EntityRef`1">
@@ -4054,7 +4066,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.EntityRef`1.#ctor(System.ServiceModel.DomainServices.Client.Entity,System.String,System.Func{`0,System.Boolean})">
             <summary>
-            Public constructor
+            Initializes a new instance of the EntityRef class
             </summary>
             <param name="parent">The entity that this association is a member of</param>
             <param name="memberName">The name of this EntityRef member on the parent entity</param>
@@ -4168,18 +4180,18 @@
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.InvokeCompletedResult">
             <summary>
-            Represents the result of an asynchronous operation.
+            Represents the result of an invoke operation.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.InvokeCompletedResult.#ctor(System.Object)">
             <summary>
-            Public constructor
+            Initializes a new instance of the InvokeCompletedResult class
             </summary>
             <param name="returnValue">The value returned from the server.</param>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.InvokeCompletedResult.#ctor(System.Object,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationResult})">
             <summary>
-            Public constructor
+            Initializes a new instance of the InvokeCompletedResult class
             </summary>
             <param name="returnValue">The value returned from the server.</param>
             <param name="validationErrors">A collection of validation errors.</param>
@@ -4330,7 +4342,7 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.QueryCompletedResult.#ctor(System.Collections.Generic.IEnumerable{System.ServiceModel.DomainServices.Client.Entity},System.Collections.Generic.IEnumerable{System.ServiceModel.DomainServices.Client.Entity},System.Int32,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationResult})">
             <summary>
-            Public constructor
+            Initializes a new instance of the QueryCompletedResult class
             </summary>
             <param name="entities">The entities returned from the query</param>
             <param name="includedEntities">The included entities returned from the query</param>
@@ -4381,7 +4393,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.DomainClient_EmptyChangeSet">
             <summary>
-              Looks up a localized string similar to The submitted change set was empty..
+              Looks up a localized string similar to The submitted change-set was empty..
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.DomainClient_EntityTypesAlreadyInitialized">
@@ -4464,9 +4476,9 @@
               Looks up a localized string similar to A custom method cannot be invoked on an entity in a Deleted state..
             </summary>
         </member>
-        <member name="P:System.ServiceModel.DomainServices.Client.Resource.Entity_InvokeOnUnattachedEntity">
+        <member name="P:System.ServiceModel.DomainServices.Client.Resource.Entity_InvokeOnDetachedEntity">
             <summary>
-              Looks up a localized string similar to A custom method cannot be invoked on an unattached Entity..
+              Looks up a localized string similar to A custom method cannot be invoked on a Detached Entity..
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.Entity_InvokeWhileSubmitting">
@@ -4496,7 +4508,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.Entity_Property_Is_ReadOnly">
             <summary>
-              Looks up a localized string similar to The {0} property is read only..
+              Looks up a localized string similar to The &apos;{0}&apos; property is read only..
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.Entity_Property_NotChangeTracked">
@@ -4506,7 +4518,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.Entity_ReadOnly">
             <summary>
-              Looks up a localized string similar to This entity is currently read-only. One of the following conditions exist: a domain methods has been invoked, a submit operation is in progress, or edit operations are not supported for the entity Type..
+              Looks up a localized string similar to This entity is currently read-only. One of the following conditions exist: a custom method has been invoked, a submit operation is in progress, or edit operations are not supported for the entity Type..
             </summary>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.Entity_UncommittedChanges">
@@ -4651,11 +4663,11 @@
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.SubmitCompletedResult.#ctor(System.ServiceModel.DomainServices.Client.EntityChangeSet,System.Collections.Generic.IEnumerable{System.ServiceModel.DomainServices.Client.ChangeSetEntry})">
             <summary>
-            Public constructor
+            Initializes a new instance of the SubmitCompletedResult class
             </summary>
             <param name="changeSet">The changeset that was submitted.</param>
             <param name="operationResults">The <see cref="T:System.ServiceModel.DomainServices.Client.ChangeSetEntry"/> results sent back from the 
-            domain service for the submit operation.</param>
+            DomainService for the submit operation.</param>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.SubmitCompletedResult.ChangeSet">
             <summary>
@@ -4665,7 +4677,7 @@
         <member name="P:System.ServiceModel.DomainServices.Client.SubmitCompletedResult.Results">
             <summary>
             Gets the <see cref="T:System.ServiceModel.DomainServices.Client.ChangeSetEntry"/> results that were returned
-            from the domain service.
+            from the DomainService.
             </summary>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.ValidationUtilities.CreateValidationContext(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
@@ -5085,8 +5097,8 @@
             returns normally, a <see cref="E:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.LoggedIn"/> event may be raised. Also, successful
             completion of this operation will update the <see cref="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.User"/>.
             </remarks>
-            <returns>Returns the login operation.</returns>
             <param name="parameters">Login parameters that specify the user to authenticate</param>
+            <returns>Returns the login operation.</returns>
             <exception cref="T:System.InvalidOperationException"> is thrown if this method is called while
             another asynchronous operation is still being processed.
             </exception>
@@ -5297,12 +5309,12 @@
             </summary>
             <remarks>
             This method will be invoked by <see cref="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.User"/> when it is accessed before the value
-            is set. The returned value is then stored and return on all subsequent gets until a
+            is set. The returned value is then stored and returned on all subsequent gets until a
             <c>Login</c>, <c>Logout</c>, or <c>LoadUser</c> operation completes successfully.
             </remarks>
-            <returns>A default user. This value may not be null.</returns>
+            <returns>A default user. This value may not be <c>null</c>.</returns>
             <exception cref="T:System.InvalidOperationException"> is thrown from <see cref="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.User"/> if
-            this operation returns null.
+            this operation returns <c>null</c>.
             </exception>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.BeginLogin(System.ServiceModel.DomainServices.Client.ApplicationServices.LoginParameters,System.AsyncCallback,System.Object)">
@@ -5617,17 +5629,17 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.User">
             <summary>
-            Gets a principal representing the authenticated user.
+            Gets the current user.
             </summary>
             <remarks>
             This value may be updated by the <c>Login</c>, <c>Logout</c>, and <c>LoadUser</c>
-            operations. If none of the aforementioned methods has completed successfully, this
-            property will contain a default user.
+            operations. Prior to one of those methods completing successfully, this property
+            will contain a default user.
             </remarks>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.Operation">
             <summary>
-            Gets and sets the current operation.
+            Gets or sets the current operation.
             </summary>
             <remarks>
             Only one operation can be active at a time. This property should not be set directly
@@ -5640,8 +5652,8 @@
             cancellation.
             </summary>
             <remarks>
-            This value is <c>false</c> by default. When a derived class sets it to true, it is
-            assumed that all cancellation methods have also been implemented.
+            This value is <c>false</c> by default. When a derived class sets it to <c>true</c>,
+            it is assumed that all cancellation methods have also been implemented.
             </remarks>
         </member>
         <member name="E:System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationService.System#ComponentModel#INotifyPropertyChanged#PropertyChanged">

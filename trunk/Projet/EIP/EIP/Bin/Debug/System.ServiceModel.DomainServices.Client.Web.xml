@@ -333,6 +333,11 @@
             The binding element that specifies the .NET Binary Format for XML used to encode messages.
             </summary>
         </member>
+        <member name="F:System.ServiceModel.DomainServices.Client.WebHttpQueryInspector.MaximumUriLength">
+            <summary>
+            For cross-browser compatibility support, the maximum supported URI length is 2083 characters.
+            </summary>
+        </member>
         <member name="T:System.ServiceModel.DomainServices.Client.Resource">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -384,6 +389,11 @@
               Looks up a localized string similar to The PoxBinaryMessageEncoder only supports MessageVersion.None..
             </summary>
         </member>
+        <member name="P:System.ServiceModel.DomainServices.Client.Resource.WebDomainClient_MaximumUriLengthExceeded">
+            <summary>
+              Looks up a localized string similar to The maximum uri length of {0} was exceeded..
+            </summary>
+        </member>
         <member name="P:System.ServiceModel.DomainServices.Client.Resource.WebDomainClient_OperationDoesNotExist">
             <summary>
               Looks up a localized string similar to Operation &apos;{0}&apos; does not exist..
@@ -425,9 +435,6 @@
             a <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> generated from a domain service
             implementing <c>System.ServiceModel.DomainServices.Server.ApplicationServices.IAuthentication&lt;T&gt;</c>.
             </summary>
-            <remarks>
-            This implementation sets the user authentication type to <c>"Forms"</c>.
-            </remarks>
         </member>
         <member name="T:System.ServiceModel.DomainServices.Client.ApplicationServices.WebAuthenticationService">
             <summary>
@@ -447,8 +454,7 @@
             Creates a default user.
             </summary>
             <remarks>
-            Creates a user by deserializing one from the application init params. If no
-            user was included, one will be created using the default constructor.
+            Creates a user using the default constructor.
             </remarks>
             <returns>A default user</returns>
             <exception cref="T:System.InvalidOperationException"> is thrown if the
@@ -666,7 +672,7 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ApplicationServices.WebAuthenticationService.DomainContextType">
             <summary>
-            Gets and sets the type of the domain context.
+            Gets or sets the type of the domain context.
             </summary>
             <remarks>
             If the <see cref="P:System.ServiceModel.DomainServices.Client.ApplicationServices.WebAuthenticationService.DomainContext"/> is not set when this service is
@@ -712,8 +718,9 @@
             Context for the application.
             </summary>
             <remarks>
-            This context makes services and other values available for consumption
-            from code and xaml.
+            This context makes services and other values available from code and xaml. When
+            a context is created, it should be registered as a lifetime-object with
+            <see cref="P:System.Windows.Application.ApplicationLifetimeObjects"/>.
             </remarks>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.ApplicationServices.WebContextBase.#ctor">
@@ -744,7 +751,7 @@
             </summary>
             <param name="propertyName">The property to raise an event for</param>
             <exception cref="T:System.ArgumentNullException"> is thrown if the 
-            <paramref name="propertyName"/> is null.
+            <paramref name="propertyName"/> is <c>null</c>.
             </exception>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.ApplicationServices.WebContextBase.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
@@ -773,11 +780,10 @@
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ApplicationServices.WebContextBase.Current">
             <summary>
-            Gets the context that is registered as a lifetime object with the current application.
+            Gets the current context.
             </summary>
             <exception cref="T:System.InvalidOperationException"> is thrown if no contexts have been added.
             </exception>
-            <seealso cref="P:System.Windows.Application.ApplicationLifetimeObjects"/>
         </member>
         <member name="P:System.ServiceModel.DomainServices.Client.ApplicationServices.WebContextBase.User">
             <summary>
@@ -791,7 +797,7 @@
             <summary>
             Gets or sets the authentication context for the application.
             </summary>
-            <exception cref="T:System.ArgumentNullException"> is thrown if <paramref name="value"/> is null.
+            <exception cref="T:System.ArgumentNullException"> is thrown if <paramref name="value"/> is <c>null</c>.
             </exception>
         </member>
         <member name="E:System.ServiceModel.DomainServices.Client.ApplicationServices.WebContextBase.System#ComponentModel#INotifyPropertyChanged#PropertyChanged">
@@ -805,9 +811,6 @@
             a <see cref="T:System.ServiceModel.DomainServices.Client.DomainContext"/> generated from a domain service
             implementing <c>System.ServiceModel.DomainServices.Server.ApplicationServices.IAuthentication&lt;T&gt;</c>.
             </summary>
-            <remarks>
-            This implementation sets the user authentication type to <c>"Windows"</c>.
-            </remarks>
         </member>
         <member name="M:System.ServiceModel.DomainServices.Client.ApplicationServices.WindowsAuthentication.#ctor">
             <summary>
