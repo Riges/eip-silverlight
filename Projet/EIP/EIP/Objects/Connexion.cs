@@ -267,29 +267,20 @@ namespace EIP
                         case Account.TypeAccount.Facebook:
                             AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
                             newAccountFacebook.account = oneAccount;
-<<<<<<< .mine                            //Connexion.accounts.Add(newAccountFacebook.account.accountID, newAccountFacebook);
-                           
-=======                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
->>>>>>> .theirs                            newAccountFacebook.Login();
-<<<<<<< .mine                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
-                            /*
-                            browserSession.LoggedIn(((AccountFacebook)oneAccount).sessionKey,
-                                                           ((AccountFacebook)oneAccount).sessionSecret,
-                                                           Convert.ToInt32(((AccountFacebook)oneAccount).sessionExpires),
-                                                           oneAccount.userID);
-                           */
-=======>>>>>>> .theirs                            
+                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
+                            newAccountFacebook.Login();
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
-                            //Connexion.accounts.Add(newAccountTwitter.account.accountID, newAccountTwitter);
+                            //accounts.Add(newAccountTwitter);
                             accounts[newAccountTwitter.account.userID] = newAccountTwitter;
                             break;
                         case Account.TypeAccount.Myspace:
                             break;
                         default:
                             break;
+
                     }
                 }
                 SetSession(groupid);
