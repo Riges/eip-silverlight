@@ -18,29 +18,12 @@ namespace EIP.Views.Controls
     {
         public UpdateStatus()
         {
-            InitializeComponent();
-
-
-            
-        }
-
-        private void totoBtn_Click(object sender, RoutedEventArgs e)
-        {
-            KeyValuePair<long, AccountLight> toto = Connexion.accounts.First();
-
-            if (toto.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook)
-            {
-                AccountFacebookLight totoLight = (AccountFacebookLight)toto.Value;
-
-
-                checktoto.DataContext = totoLight;
-            }
-            LoadAccountButtons();
+            InitializeComponent(); 
         }
 
         private void LoadAccountButtons()
         {
-            if (Connexion.accounts != null)
+           if (Connexion.accounts != null)
             {
                 if (Connexion.accounts.Count > 0)
                 {
@@ -66,8 +49,6 @@ namespace EIP.Views.Controls
                             */
 
                             box.Name = oneAccount.Value.account.accountID.ToString();
-                            box.Checked += new RoutedEventHandler(box_Checked);
-                            box.Unchecked += new RoutedEventHandler(box_Unchecked);
                             box.CommandParameter = oneAccount.Value;
                             if (oneAccount.Value.selected)
                                 box.IsChecked = true;
@@ -125,5 +106,35 @@ namespace EIP.Views.Controls
         public RoutedEventHandler box_Checked { get; set; }
 
         public RoutedEventHandler box_Unchecked { get; set; }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            LoadAccountButtons();
+        }
+
+        private void LayoutRoot_MouseEnter(object sender, MouseEventArgs e)
+        {
+            LoadAccountButtons();
+        }
+
+        private void sendStatu_Click(object sender, RoutedEventArgs e)
+        {
+            if (Connexion.accounts != null)
+            {
+                if (Connexion.accounts.Count > 0)
+                {
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
+                        {
+                            if(oneAccount.Value.selected)
+                            {
+                               statuValue.Text += " " + oneAccount.Value.account.name;
+                            }
+                        }
+                    });
+                }
+            }
+        }
     }
 }
