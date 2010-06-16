@@ -66,6 +66,11 @@ namespace EIP
             Connexion.accounts[this.account.userID] = this;
         }
 
+        public void sendStatu(string statu)
+        {
+                
+        }
+
         public void LoadFriends()
         {
             

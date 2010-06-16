@@ -67,6 +67,19 @@ namespace EIP
             filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
         }
 
+
+        /// <summary>
+        /// Envoyer un nouveau Tweet
+        /// <param name="statu">Statu à envoyer</param>
+        /// </summary>
+        public void sendStatu(string statu)
+        {
+            var reqStatu = FluentTwitter.CreateRequest()
+                .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
+               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account)
+               .tokenSecret).Statuses().Update(statu);
+        }
+
           //********************************\\
          //*Methodes de récupération d'infos*\\
         //************************************\\
