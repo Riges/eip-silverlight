@@ -117,6 +117,19 @@ namespace EIP.Views.Controls
             LoadAccountButtons();
         }
 
+
+        private bool cheackIfTwitterActiveAccount()
+        {
+            foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
+            {
+                if (oneAccount.Value.selected && oneAccount.Value.account.typeAccount == Account.TypeAccount.Twitter)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void sendStatu_Click(object sender, RoutedEventArgs e)
         {
             if (Connexion.accounts != null)
@@ -129,7 +142,22 @@ namespace EIP.Views.Controls
                         {
                             if(oneAccount.Value.selected)
                             {
-                               statuValue.Text += " " + oneAccount.Value.account.name;
+                               //statuValue.Text += " " + oneAccount.Value.account.name;
+                            
+                                if ((cheackIfTwitterActiveAccount() && statuValue.Text.Count() < 140) || !cheackIfTwitterActiveAccount())
+                                {
+                                    switch (oneAccount.Value.account.typeAccount)
+                                    {
+                                        case Account.TypeAccount.Facebook:
+
+                                            break;
+                                        case Account.TypeAccount.Twitter:
+                                            ((AccountTwitterLight)oneAccount.Value).sendStatu(statuValue.Text);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
                             }
                         }
                     });
