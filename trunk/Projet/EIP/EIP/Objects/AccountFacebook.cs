@@ -68,7 +68,22 @@ namespace EIP
 
         public void sendStatu(string statu)
         {
+            this.facebookAPI.Status.SetAsync(statu, SetStatusCompleted, null);
+        }
+
+        void SetStatusCompleted(bool result, Object state, FacebookException e)
+        {
+            if (e == null)
+            {
+                if (result == false)
+                {
+                    
+                }
+            }
+            else
+            {
                 
+            }
         }
 
         public void LoadFriends()
