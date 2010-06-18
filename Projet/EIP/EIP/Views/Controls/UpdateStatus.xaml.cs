@@ -11,6 +11,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using EIP.ServiceEIP;
 using System.Windows.Media.Imaging;
+using System.Text.RegularExpressions;
+using Hammock;
+using Newtonsoft.Json;
+using Hammock.Web;
 
 namespace EIP.Views.Controls
 {
@@ -130,8 +134,36 @@ namespace EIP.Views.Controls
             return false;
         }
 
+        public string getShorter(string url)
+        {
+            string returnUrl = url;
+            var client = new RestClient
+            {
+                Authority = "http://tinyurl.com",
+                UserAgent = "Hammock",
+                SilverlightAuthorizationHeader = "X-Twitter-Auth",
+                SilverlightMethodHeader = "X-Twitter-Method",
+                SilverlightUserAgentHeader = "X-Twitter-Agent",
+                SilverlightAcceptEncodingHeader = "X-Twitter-Accept"
+            };
+
+            var request = new RestRequest
+            {
+                Path = "Home/SleepReport",
+                Method = WebMethod.Get
+            };
+            request.AddParameter("url", url);
+
+            // The shortened URL is contained in response.Content
+            //RestResponse response = client.Request(request);
+            IAsyncResult result = client.BeginRequest(request);
+            returnUrl = result.ToString();
+            return returnUrl + " TOTO ";
+        }
+
         private void sendStatu_Click(object sender, RoutedEventArgs e)
         {
+            Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
             if (Connexion.accounts != null)
             {
                 if (Connexion.accounts.Count > 0)
@@ -146,6 +178,11 @@ namespace EIP.Views.Controls
                             
                                 if ((cheackIfTwitterActiveAccount() && statuValue.Text.Count() < 140) || !cheackIfTwitterActiveAccount())
                                 {
+                                    MatchCollection mactches = regx.Matches(statuValue.Text); 
+    
+                                    foreach (Match match in mactches) {
+                                        statuValue.Text = statuValue.Text.Replace(match.Value, getShorter(match.Value));
+                                    }
                                     switch (oneAccount.Value.account.typeAccount)
                                     {
                                         case Account.TypeAccount.Facebook:

@@ -17,12 +17,15 @@ using Facebook.Schema;
 using Facebook.Utility;
 using EIP.Views;
 using EIP.Objects;
+using System.Windows.Threading;
 
 namespace EIP
 {
     [KnownTypeAttribute(typeof(AccountFacebookLight))]
     public class AccountFacebookLight : AccountLight
     {
+
+        public static Dispatcher dispatcher;
         public Api facebookAPI { get; set; }
         private BrowserSession browserSession { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }
@@ -77,12 +80,20 @@ namespace EIP
             {
                 if (result == false)
                 {
-                    
+                    dispatcher.BeginInvoke(() =>
+                    {
+                        MessageBox msg = new MessageBox("Erreur", "Ce compte existe déjà !");
+                        msg.Show();
+                    });
                 }
             }
             else
             {
-                
+                dispatcher.BeginInvoke(() =>
+                {
+                    MessageBox msg = new MessageBox("Erreur", "T'es Null !");
+                    msg.Show();
+                });
             }
         }
 

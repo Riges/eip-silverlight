@@ -12,6 +12,7 @@
     <AssemblyPart x:Name="EIP" Source="EIP.dll" />
     <AssemblyPart x:Name="Dimebrain.TweetSharp" Source="Dimebrain.TweetSharp.dll" />
     <AssemblyPart x:Name="Facebook.Silverlight" Source="Facebook.Silverlight.dll" />
+    <AssemblyPart x:Name="Hammock.Silverlight" Source="Hammock.Silverlight.dll" />
     <AssemblyPart x:Name="Newtonsoft.Json.Silverlight" Source="Newtonsoft.Json.Silverlight.dll" />
     <AssemblyPart x:Name="System.ComponentModel.DataAnnotations" Source="System.ComponentModel.DataAnnotations.dll" />
     <AssemblyPart x:Name="System.ServiceModel.DomainServices.Client" Source="System.ServiceModel.DomainServices.Client.dll" />
@@ -25,5 +26,6 @@
     <AssemblyPart x:Name="TweetSharp.Silverlight" Source="TweetSharp.Silverlight.dll" />
     <AssemblyPart x:Name="System.Xml.Linq" Source="System.Xml.Linq.dll" />
     <AssemblyPart x:Name="System.Xml.Serialization" Source="System.Xml.Serialization.dll" />
+    <AssemblyPart x:Name="ICSharpCode.SharpZipLib.Silverlight" Source="ICSharpCode.SharpZipLib.Silverlight.dll" />
   </Deployment.Parts>
 </Deployment>
