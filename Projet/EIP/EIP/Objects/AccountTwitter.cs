@@ -36,7 +36,8 @@ namespace EIP
         public TwitterUser user { get; set; }
         public List<Topic> homeStatuses { get; set; }
         public List<TwitterFilter> filters { get; set; }
-        
+        public List<TwitterUser> friends { get; set; }
+        public List<TwitterUser> followers { get; set; }
 
         /*
         OnFriendsTimeline
@@ -102,8 +103,62 @@ namespace EIP
                .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
                .Statuses().OnHomeTimeline()
                .CallbackTo(HomeTimelineReceived);
-
+           
             homeTimeline.RequestAsync();
+        }
+
+        /// <summary>
+        /// methode pour charger les amis (gens que l'on suit)
+        /// </summary>
+        public void LoadFriends()
+        {
+
+            var getFriends = FluentTwitter.CreateRequest()
+               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
+               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
+               .Users().GetFriends()
+               .CallbackTo(FriendsReceived);
+            getFriends.RequestAsync();
+        }
+
+        /// <summary>
+        /// callback de la methode loadfriends
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="result"></param>
+        private void FriendsReceived(object sender, TwitterResult result)
+        {
+            if (!result.IsTwitterError)
+            {
+                var friendsTmp = result.AsUsers();
+                this.friends = friendsTmp as List<TwitterUser>;
+            }
+        }
+
+        /// <summary>
+        /// methode pour charger les followers (gens qui nous suivent)
+        /// </summary>
+        public void LoadFollowers()
+        {
+            var homeTimeline = FluentTwitter.CreateRequest()
+               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
+               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
+               .Users().GetFollowers()
+               .CallbackTo(FollowersReceived);
+        }
+
+        /// <summary>
+        /// callback de la methode loadfollowers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="result"></param>
+        private void FollowersReceived(object sender, TwitterResult result)
+        {
+            if (!result.IsTwitterError)
+            {
+                var followersTmp = result.AsUsers();
+                this.followers = followersTmp as List<TwitterUser>;
+            }
         }
 
         /// <summary>
