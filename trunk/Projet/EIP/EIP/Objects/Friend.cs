@@ -20,15 +20,6 @@ namespace EIP.Objects
         public TwitterUser userTW { get; set; }
 
 
-        /// <summary>
-        /// methode aui per;et de renvoyer tq ;ere
-        /// </summary>
-        /// <param name="name">nom de ton papa</param>
-        public void toto(string name)
-        {
-
-        }
-
 
     }
 }

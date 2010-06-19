@@ -80,6 +80,7 @@ namespace EIP.Views.Controls
                                     break;
                                 case Account.TypeAccount.Twitter:
                                     img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                                    ((AccountTwitterLight)oneAccount.Value).LoadFriends();
                                     break;
                                 case Account.TypeAccount.Myspace:
                                     break;
