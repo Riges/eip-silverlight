@@ -22,7 +22,7 @@ namespace EIP.Views
         public FriendList()
         {
             InitializeComponent();
-            friends = new Dictionary<string, Friend>();
+            friends = new Dictionary<String, Friend>();
         }
 
         // Executes when the user navigates to this page.
