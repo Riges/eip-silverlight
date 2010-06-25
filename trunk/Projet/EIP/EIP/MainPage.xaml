@@ -33,6 +33,11 @@
                             
                             <Rectangle x:Name="DividerFriends" Style="{StaticResource DividerStyle}"/>
 
+                            <HyperlinkButton x:Name="LinkProfil" Style="{StaticResource LinkStyle}" 
+                                     NavigateUri="/Profil" TargetName="ContentFrame" Content="Profil"/>
+
+                            <Rectangle x:Name="DividerProfil" Style="{StaticResource DividerStyle}"/>
+
                             <HyperlinkButton x:Name="LinkCreateNewAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewAccount_Click"
                                       Content="Ajouter un compte"/>
 
@@ -98,7 +103,8 @@
                             <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/IntroPage.xaml" />
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />
                             <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
-                        <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
+                            <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
+                            <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/Profil.xaml" />
 
                         <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>-->
 
