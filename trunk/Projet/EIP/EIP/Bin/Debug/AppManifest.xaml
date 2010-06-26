@@ -28,6 +28,6 @@
     <AssemblyPart x:Name="System.Xml.Serialization" Source="System.Xml.Serialization.dll" />
     <AssemblyPart x:Name="System.Json" Source="System.Json.dll" />
     <AssemblyPart x:Name="ICSharpCode.SharpZipLib.Silverlight" Source="ICSharpCode.SharpZipLib.Silverlight.dll" />
-    <AssemblyPart x:Name="System.Reactive" Source="System.Reactive.dll" />
+    <AssemblyPart x:Name="System.Windows.Controls.Toolkit.Internals" Source="System.Windows.Controls.Toolkit.Internals.dll" />
   </Deployment.Parts>
 </Deployment>
