@@ -71,16 +71,17 @@ namespace EIP
 
         /// <summary>
         /// Envoyer un nouveau Tweet
-        /// <param name="statu">Statu à envoyer</param>
+        /// <param name="statut">Statut à envoyer</param>
         /// </summary>
-        public void sendStatu(string statu)
+        public void SendStatus(string status)
         {
             // Send a status update with automatic URL shortening
             var twitter = FluentTwitter.CreateRequest()
                  .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
                  .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-                 .Statuses().Update(statu).AsXml();
-            // Send an asynchronous call
+                 .Statuses().Update(status).AsXml()
+                 .CallbackTo(StatusSended);
+            
             twitter.RequestAsync();
         }
 
@@ -118,6 +119,7 @@ namespace EIP
                .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
                .Users().GetFriends()
                .CallbackTo(FriendsReceived);
+
             getFriends.RequestAsync();
         }
 
@@ -158,6 +160,14 @@ namespace EIP
             {
                 var followersTmp = result.AsUsers();
                 this.followers = followersTmp as List<TwitterUser>;
+            }
+        }
+
+        private void StatusSended(object sender, TwitterResult result)
+        {
+            if (!result.IsTwitterError)
+            {
+               
             }
         }
 

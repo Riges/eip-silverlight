@@ -189,7 +189,7 @@ namespace EIP.Views.Controls
 
                                             break;
                                         case Account.TypeAccount.Twitter:
-                                            ((AccountTwitterLight)oneAccount.Value).sendStatu(statuValue.Text);
+                                            ((AccountTwitterLight)oneAccount.Value).SendStatus(statuValue.Text);
                                             break;
                                         default:
                                             break;
