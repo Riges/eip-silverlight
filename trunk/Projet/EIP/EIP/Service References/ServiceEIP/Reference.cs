@@ -232,11 +232,6 @@ namespace EIP.ServiceEIP {
         
         bool EndIsUp(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/test", ReplyAction="http://tempuri.org/IServiceEIP/testResponse")]
-        System.IAsyncResult Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState);
-        
-        bool Endtest(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetAccountByUserID", ReplyAction="http://tempuri.org/IServiceEIP/GetAccountByUserIDResponse")]
         System.IAsyncResult BeginGetAccountByUserID(long userID, System.AsyncCallback callback, object asyncState);
         
@@ -258,7 +253,7 @@ namespace EIP.ServiceEIP {
         System.Collections.Generic.List<EIP.ServiceEIP.Account> EndGetAccountsByTwitter(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/AddAccount", ReplyAction="http://tempuri.org/IServiceEIP/AddAccountResponse")]
-        System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, string token, string pin, System.AsyncCallback callback, object asyncState);
         
         bool EndAddAccount(System.IAsyncResult result);
         
@@ -276,6 +271,11 @@ namespace EIP.ServiceEIP {
         System.IAsyncResult BegintestT(System.AsyncCallback callback, object asyncState);
         
         EIP.ServiceEIP.AccountTwitter EndtestT(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetRequestToken", ReplyAction="http://tempuri.org/IServiceEIP/GetRequestTokenResponse")]
+        System.IAsyncResult BeginGetRequestToken(string consumerKey, string consumerSecret, System.AsyncCallback callback, object asyncState);
+        
+        string EndGetRequestToken(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -289,25 +289,6 @@ namespace EIP.ServiceEIP {
         private object[] results;
         
         public IsUpCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public bool Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class testCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public testCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -474,6 +455,25 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetRequestTokenCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetRequestTokenCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ServiceEIPClient : System.ServiceModel.ClientBase<EIP.ServiceEIP.IServiceEIP>, EIP.ServiceEIP.IServiceEIP {
         
         private BeginOperationDelegate onBeginIsUpDelegate;
@@ -481,12 +481,6 @@ namespace EIP.ServiceEIP {
         private EndOperationDelegate onEndIsUpDelegate;
         
         private System.Threading.SendOrPostCallback onIsUpCompletedDelegate;
-        
-        private BeginOperationDelegate onBegintestDelegate;
-        
-        private EndOperationDelegate onEndtestDelegate;
-        
-        private System.Threading.SendOrPostCallback ontestCompletedDelegate;
         
         private BeginOperationDelegate onBeginGetAccountByUserIDDelegate;
         
@@ -535,6 +529,12 @@ namespace EIP.ServiceEIP {
         private EndOperationDelegate onEndtestTDelegate;
         
         private System.Threading.SendOrPostCallback ontestTCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetRequestTokenDelegate;
+        
+        private EndOperationDelegate onEndGetRequestTokenDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetRequestTokenCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -591,8 +591,6 @@ namespace EIP.ServiceEIP {
         
         public event System.EventHandler<IsUpCompletedEventArgs> IsUpCompleted;
         
-        public event System.EventHandler<testCompletedEventArgs> testCompleted;
-        
         public event System.EventHandler<GetAccountByUserIDCompletedEventArgs> GetAccountByUserIDCompleted;
         
         public event System.EventHandler<GetAccountsByUserIDCompletedEventArgs> GetAccountsByUserIDCompleted;
@@ -608,6 +606,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<testfbCompletedEventArgs> testfbCompleted;
         
         public event System.EventHandler<testTCompletedEventArgs> testTCompleted;
+        
+        public event System.EventHandler<GetRequestTokenCompletedEventArgs> GetRequestTokenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -655,52 +655,6 @@ namespace EIP.ServiceEIP {
                 this.onIsUpCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnIsUpCompleted);
             }
             base.InvokeAsync(this.onBeginIsUpDelegate, null, this.onEndIsUpDelegate, this.onIsUpCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.Begintest(newAccount, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool EIP.ServiceEIP.IServiceEIP.Endtest(System.IAsyncResult result) {
-            return base.Channel.Endtest(result);
-        }
-        
-        private System.IAsyncResult OnBegintest(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            EIP.ServiceEIP.Account newAccount = ((EIP.ServiceEIP.Account)(inValues[0]));
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).Begintest(newAccount, callback, asyncState);
-        }
-        
-        private object[] OnEndtest(System.IAsyncResult result) {
-            bool retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).Endtest(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OntestCompleted(object state) {
-            if ((this.testCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.testCompleted(this, new testCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void testAsync(EIP.ServiceEIP.Account newAccount) {
-            this.testAsync(newAccount, null);
-        }
-        
-        public void testAsync(EIP.ServiceEIP.Account newAccount, object userState) {
-            if ((this.onBegintestDelegate == null)) {
-                this.onBegintestDelegate = new BeginOperationDelegate(this.OnBegintest);
-            }
-            if ((this.onEndtestDelegate == null)) {
-                this.onEndtestDelegate = new EndOperationDelegate(this.OnEndtest);
-            }
-            if ((this.ontestCompletedDelegate == null)) {
-                this.ontestCompletedDelegate = new System.Threading.SendOrPostCallback(this.OntestCompleted);
-            }
-            base.InvokeAsync(this.onBegintestDelegate, new object[] {
-                        newAccount}, this.onEndtestDelegate, this.ontestCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -890,8 +844,8 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginAddAccount(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginAddAccount(newAccount, callback, asyncState);
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginAddAccount(EIP.ServiceEIP.Account newAccount, string token, string pin, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddAccount(newAccount, token, pin, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -901,7 +855,9 @@ namespace EIP.ServiceEIP {
         
         private System.IAsyncResult OnBeginAddAccount(object[] inValues, System.AsyncCallback callback, object asyncState) {
             EIP.ServiceEIP.Account newAccount = ((EIP.ServiceEIP.Account)(inValues[0]));
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginAddAccount(newAccount, callback, asyncState);
+            string token = ((string)(inValues[1]));
+            string pin = ((string)(inValues[2]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginAddAccount(newAccount, token, pin, callback, asyncState);
         }
         
         private object[] OnEndAddAccount(System.IAsyncResult result) {
@@ -917,11 +873,11 @@ namespace EIP.ServiceEIP {
             }
         }
         
-        public void AddAccountAsync(EIP.ServiceEIP.Account newAccount) {
-            this.AddAccountAsync(newAccount, null);
+        public void AddAccountAsync(EIP.ServiceEIP.Account newAccount, string token, string pin) {
+            this.AddAccountAsync(newAccount, token, pin, null);
         }
         
-        public void AddAccountAsync(EIP.ServiceEIP.Account newAccount, object userState) {
+        public void AddAccountAsync(EIP.ServiceEIP.Account newAccount, string token, string pin, object userState) {
             if ((this.onBeginAddAccountDelegate == null)) {
                 this.onBeginAddAccountDelegate = new BeginOperationDelegate(this.OnBeginAddAccount);
             }
@@ -932,7 +888,9 @@ namespace EIP.ServiceEIP {
                 this.onAddAccountCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddAccountCompleted);
             }
             base.InvokeAsync(this.onBeginAddAccountDelegate, new object[] {
-                        newAccount}, this.onEndAddAccountDelegate, this.onAddAccountCompletedDelegate, userState);
+                        newAccount,
+                        token,
+                        pin}, this.onEndAddAccountDelegate, this.onAddAccountCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1069,6 +1027,54 @@ namespace EIP.ServiceEIP {
             base.InvokeAsync(this.onBegintestTDelegate, null, this.onEndtestTDelegate, this.ontestTCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetRequestToken(string consumerKey, string consumerSecret, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetRequestToken(consumerKey, consumerSecret, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string EIP.ServiceEIP.IServiceEIP.EndGetRequestToken(System.IAsyncResult result) {
+            return base.Channel.EndGetRequestToken(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetRequestToken(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string consumerKey = ((string)(inValues[0]));
+            string consumerSecret = ((string)(inValues[1]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetRequestToken(consumerKey, consumerSecret, callback, asyncState);
+        }
+        
+        private object[] OnEndGetRequestToken(System.IAsyncResult result) {
+            string retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndGetRequestToken(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetRequestTokenCompleted(object state) {
+            if ((this.GetRequestTokenCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetRequestTokenCompleted(this, new GetRequestTokenCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetRequestTokenAsync(string consumerKey, string consumerSecret) {
+            this.GetRequestTokenAsync(consumerKey, consumerSecret, null);
+        }
+        
+        public void GetRequestTokenAsync(string consumerKey, string consumerSecret, object userState) {
+            if ((this.onBeginGetRequestTokenDelegate == null)) {
+                this.onBeginGetRequestTokenDelegate = new BeginOperationDelegate(this.OnBeginGetRequestToken);
+            }
+            if ((this.onEndGetRequestTokenDelegate == null)) {
+                this.onEndGetRequestTokenDelegate = new EndOperationDelegate(this.OnEndGetRequestToken);
+            }
+            if ((this.onGetRequestTokenCompletedDelegate == null)) {
+                this.onGetRequestTokenCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetRequestTokenCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetRequestTokenDelegate, new object[] {
+                        consumerKey,
+                        consumerSecret}, this.onEndGetRequestTokenDelegate, this.onGetRequestTokenCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1157,19 +1163,6 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult Begintest(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = newAccount;
-                System.IAsyncResult _result = base.BeginInvoke("test", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public bool Endtest(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("test", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginGetAccountByUserID(long userID, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = userID;
@@ -1223,9 +1216,11 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, string token, string pin, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = newAccount;
+                _args[1] = token;
+                _args[2] = pin;
                 System.IAsyncResult _result = base.BeginInvoke("AddAccount", _args, callback, asyncState);
                 return _result;
             }
@@ -1270,6 +1265,20 @@ namespace EIP.ServiceEIP {
             public EIP.ServiceEIP.AccountTwitter EndtestT(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 EIP.ServiceEIP.AccountTwitter _result = ((EIP.ServiceEIP.AccountTwitter)(base.EndInvoke("testT", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetRequestToken(string consumerKey, string consumerSecret, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = consumerKey;
+                _args[1] = consumerSecret;
+                System.IAsyncResult _result = base.BeginInvoke("GetRequestToken", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndGetRequestToken(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("GetRequestToken", _args, result)));
                 return _result;
             }
         }

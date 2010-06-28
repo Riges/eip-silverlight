@@ -50,7 +50,7 @@ namespace EIP.Views.Child
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-
+            System.Diagnostics.Debugger.Break();
             if (!this.addAccount)
             {
                 Connexion.Login((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedValue.ToString(), true), pseudoBox.Text.Trim(), mdpBox.Password.Trim());

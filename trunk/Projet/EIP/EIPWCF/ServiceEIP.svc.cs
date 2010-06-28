@@ -12,8 +12,13 @@ using Dimebrain.TweetSharp.Extensions;
 using Dimebrain.TweetSharp.Model;*/
 using System.Threading;
 using EIPLibrary;
-using Dimebrain.TweetSharp.Fluent;
-using Dimebrain.TweetSharp.Extensions;
+
+using TweetSharp.Twitter.Model;
+using TweetSharp.Twitter.Fluent;
+using TweetSharp.Twitter.Extensions;
+using System.Configuration;
+using TweetSharp;
+using TweetSharp.Fluent;
 
 
 namespace EIPWCF
@@ -25,11 +30,11 @@ namespace EIPWCF
         {
             return Model.IsDBUp();
         }
-
+        /*
         public bool test(Account newAccount)
         {
             return AddAccount(newAccount);
-        }
+        }*/
 
         public Account GetAccountByUserID(long userID)
         {
@@ -48,7 +53,7 @@ namespace EIPWCF
 
         public List<Account> GetAccountsByTwitter(string pseudo, string password)
         {
-
+            SetClientInfo();
             var query = FluentTwitter.CreateRequest()
                  .AuthenticateAs(pseudo, password)
                  .Account()
@@ -61,8 +66,32 @@ namespace EIPWCF
             return Model.GetAccountsByUserID(identity.Id);
         }
 
-        public bool AddAccount(Account newAccount)
+        public bool AddAccount(Account newAccount, string token, string pin)
         {
+            SetClientInfo();
+            switch (newAccount.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    break;
+                case Account.TypeAccount.Twitter:
+                    var accessToken = FluentTwitter.CreateRequest()
+                    .Authentication.GetAccessToken(token, pin);
+
+                    TwitterResult result = accessToken.Request();
+                    var tokenResult = result.AsToken();
+
+                    newAccount.name = tokenResult.ScreenName;
+                    newAccount.userID = Convert.ToInt64(tokenResult.UserId);
+                    ((AccountTwitter)newAccount).token = tokenResult.Token;
+                    ((AccountTwitter)newAccount).tokenSecret = tokenResult.TokenSecret;
+
+                    break;
+                case Account.TypeAccount.Myspace:
+                    break;
+                default:
+                    break;
+            }
+
             return Model.AddAccount(newAccount);
         }
 
@@ -87,6 +116,17 @@ namespace EIPWCF
         public AccountTwitter testT()
         {
             return new AccountTwitter();
+        }
+
+        private void SetClientInfo()
+        {
+            var clientInfo = new TwitterClientInfo
+            {
+                ConsumerKey = ConfigurationManager.AppSettings["ConsumerKey"],
+                ConsumerSecret = ConfigurationManager.AppSettings["ConsumerSecret"]
+            };
+
+            FluentBase<TwitterResult>.SetClientInfo(clientInfo);
         }
 
 
@@ -127,8 +167,9 @@ namespace EIPWCF
                 }
             }
         }*/
-        /*
-        private static OAuthToken GetRequestToken(string consumerKey, string consumerSecret)
+        
+
+        public string GetRequestToken(string consumerKey, string consumerSecret)
         {
             var requestToken = FluentTwitter.CreateRequest()
                 .Authentication.GetRequestToken(consumerKey, consumerSecret);
@@ -136,17 +177,16 @@ namespace EIPWCF
             var response = requestToken.Request();
             var result = response.AsToken();
 
-            if (result == null)
+            if (!response.IsTwitterError)
             {
-                var error = response.AsError();
-                if (error != null)
+                if (result != null)
                 {
-                    throw new Exception(error.ErrorMessage);
+                    return result.Token;
                 }
             }
 
-            return result;
-        }*/
+            return null;
+        }
         /*
         public AccountTwitter GetAccessToken(string consumerKey, string consumerSecret, string token, string pin)
         {

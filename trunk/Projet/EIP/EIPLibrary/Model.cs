@@ -63,6 +63,7 @@ namespace EIPLibrary
             cmdText.Append(" LEFT JOIN  accountfacebook f ON a.accountid=f.accountid ");
             cmdText.Append(" LEFT JOIN  accounttwitter t ON a.accountid=t.accountid ");
             cmdText.Append(" WHERE a.groupid = (SELECT groupid FROM account WHERE userid=@USERID)");
+            cmdText.Append(" ORDER BY a.name ");
 
             parms.Add(new NpgsqlParameter("@USERID", userID));
 
@@ -87,6 +88,7 @@ namespace EIPLibrary
             cmdText.Append(" LEFT JOIN  accountfacebook f ON a.accountid=f.accountid ");
             cmdText.Append(" LEFT JOIN  accounttwitter t ON a.accountid=t.accountid ");
             cmdText.Append(" WHERE a.groupid = @GROUPID");
+            cmdText.Append(" ORDER BY a.name ");
 
             parms.Add(new NpgsqlParameter("@GROUPID", groupID));
 
