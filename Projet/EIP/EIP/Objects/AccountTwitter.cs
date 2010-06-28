@@ -102,7 +102,7 @@ namespace EIP
             var homeTimeline = FluentTwitter.CreateRequest()
                .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
                .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-               .Statuses().OnHomeTimeline()
+               .Statuses().OnHomeTimeline().Take(10)
                .CallbackTo(HomeTimelineReceived);
            
             homeTimeline.RequestAsync();

@@ -18,8 +18,10 @@ namespace EIPWCF
         [OperationContract]
         bool IsUp();
 
+        /*
         [OperationContract]
         bool test(Account newAccount);
+         * */
 
         [OperationContract]
         Account GetAccountByUserID(long userID);
@@ -34,7 +36,7 @@ namespace EIPWCF
         List<Account> GetAccountsByTwitter(string pseudo, string password);
 
         [OperationContract]
-        bool AddAccount(Account newAccount);
+        bool AddAccount(Account newAccount, string token, string pin);
 
         [OperationContract]
         bool SaveAccount(Account accountToSave);
@@ -46,6 +48,12 @@ namespace EIPWCF
 
         [OperationContract]
         AccountTwitter testT();
+
+
+
+
+        [OperationContract]
+        string GetRequestToken(string consumerKey, string consumerSecret);
      
 
         /*[OperationContract]

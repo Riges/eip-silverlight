@@ -97,6 +97,8 @@ namespace EIP.Web.Modules
 
             var url = context.Request.Headers[ProxyQueryHeader];
 
+            var auth_test = context.Request.Headers[ProxyAuthorizationHeader];
+
             Trace.WriteLine(String.Format("Proxy request handled for {0} from {1}.",
                                           request.Path,
                                           request.UserHostAddress));
