@@ -245,6 +245,27 @@ namespace EIPLibrary
             return false;
         }
 
+        public static long DeleteAccount(long accountID)
+        {
+            List<NpgsqlParameter> parms = new List<NpgsqlParameter>();
+            StringBuilder cmdText = new StringBuilder();
+            cmdText.Append(" DELETE FROM accountfacebook WHERE accountid=@ACCOUNTID;");
+            cmdText.Append(" DELETE FROM accounttwitter WHERE accountid=@ACCOUNTID;");
+            cmdText.Append(" DELETE FROM account WHERE accountid=@ACCOUNTID;");
+
+
+
+            parms.Add(new NpgsqlParameter("@ACCOUNTID", accountID));
+
+            int result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
+
+            if (result > 0)
+            {
+                return accountID;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// Méthode permettant de peupler un object Account à partir d'une DataRow
         /// </summary>

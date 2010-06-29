@@ -68,6 +68,7 @@ namespace EIP.Views.Controls.Feeds
                 else
                 {
                     TextBlock txtBlock = new TextBlock();
+                    
                     txtBlock.Text = mot + " ";
                     messagePanel.Children.Add(txtBlock);
                 }

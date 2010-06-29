@@ -117,6 +117,11 @@ namespace EIPWCF
             return Model.SaveAccount(accountToSave);
         }
 
+        public long DeleteAccount(long accountID)
+        {
+            return Model.DeleteAccount(accountID);
+        }
+
 
 
 

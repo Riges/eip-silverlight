@@ -97,9 +97,13 @@ namespace EIP
 
             }
 
-            SetTwitterClientInfo();
+            //SetTwitterClientInfo();
+
+            Connexion.serviceEIP.DeleteAccountCompleted += new EventHandler<DeleteAccountCompletedEventArgs>(serviceEIP_DeleteAccountCompleted);
             
         }
+
+        
 
         static void serviceEIP_IsUpCompleted(object sender, IsUpCompletedEventArgs e)
         {
@@ -273,14 +277,14 @@ namespace EIP
                         case Account.TypeAccount.Facebook:
                             AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
                             newAccountFacebook.account = oneAccount;
-                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
+                            accounts[newAccountFacebook.account.accountID] = newAccountFacebook;
                             newAccountFacebook.Login();
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
                             //accounts.Add(newAccountTwitter);
-                            accounts[newAccountTwitter.account.userID] = newAccountTwitter;
+                            accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
                             break;
                         case Account.TypeAccount.Myspace:
                             break;
@@ -407,7 +411,7 @@ namespace EIP
 
         static void serviceEIP_GetRequestTokenCompleted(object sender, GetRequestTokenCompletedEventArgs e)
         {
-            if (e.Error == null)
+            if (e.Error == null && e.Result != null)
             {
                 string token = e.Result;
                 Uri uri = new Uri("http://api.twitter.com/oauth/authorize?oauth_token=" + token);
@@ -415,6 +419,10 @@ namespace EIP
                 ((AccountTwitter)accountTwitter.account).token = token;
                 TwitterPin twitterPin = new TwitterPin(accountTwitter, uri);
                 twitterPin.Show();
+            }
+            else
+            {
+                MessageBox msgBox = new MessageBox("Erreur", "Erreur lors de la réception du token de connexion !", MessageBoxButton.OK);
             }
 
         }
@@ -739,13 +747,13 @@ namespace EIP
 
                             newAccountFacebook.Login();
 
-                            accounts[newAccountFacebook.account.userID] = newAccountFacebook;
+                            accounts[newAccountFacebook.account.accountID] = newAccountFacebook;
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
                             //accounts.Add(newAccountTwitter);
-                            accounts[newAccountTwitter.account.userID] = newAccountTwitter;
+                            accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
                             break;
                         case Account.TypeAccount.Myspace:
                             break;
@@ -812,6 +820,24 @@ namespace EIP
         {
             //currentAccount = null;
             DestroySession();
+        }
+
+        static void serviceEIP_DeleteAccountCompleted(object sender, DeleteAccountCompletedEventArgs e)
+        {
+            if (e.Error == null && e.Result != 0)
+            {
+                MessageBox msgBox = new MessageBox("Confirmation", "Le compte à été supprimé avec succès", MessageBoxButton.OK);
+                msgBox.Show();
+
+                DeleteAccount(e.Result);
+                
+            }
+        }
+
+        private static void DeleteAccount(long accountID)
+        {
+            accounts.Remove(accountID);
+            listeComptes.Reload();
         }
 
     }

@@ -67,7 +67,7 @@ namespace EIP
         void browserSession_LoginCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             facebookAPI = new Api(browserSession);
-            Connexion.accounts[this.account.userID] = this;
+            Connexion.accounts[this.account.accountID] = this;
         }
 
         public void sendStatu(string statu)
