@@ -25,11 +25,13 @@
     <MetadataSource Address="http://localhost:6080/ServiceEIP.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServiceEIP.wsdl" MetadataType="Wsdl" ID="a8f3e54a-de06-42c2-a90f-8670ccff54d7" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?wsdl" />
     <MetadataFile FileName="ServiceEIP.disco" MetadataType="Disco" ID="aee38ba4-1ff4-400e-b9f5-202c3e6501c4" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?disco" />
-    <MetadataFile FileName="ServiceEIP.xsd" MetadataType="Schema" ID="9396b496-7d59-4403-a821-0f29d41a44f3" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd1" />
     <MetadataFile FileName="ServiceEIP1.xsd" MetadataType="Schema" ID="8ab0d319-7cb7-4ab1-87e6-67824cc0f074" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServiceEIP3.xsd" MetadataType="Schema" ID="19acf8d2-e45d-429e-a2cd-ebb8cc72b43d" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd3" />
     <MetadataFile FileName="ServiceEIP2.xsd" MetadataType="Schema" ID="f1f77e4f-ed83-45f9-aa0f-f6f736747b17" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServiceEIP31.xsd" MetadataType="Schema" ID="c01463a7-98a2-4331-a4e9-b2004150dd2a" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd4" />
+    <MetadataFile FileName="ServiceEIP.xsd" MetadataType="Schema" ID="9396b496-7d59-4403-a821-0f29d41a44f3" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServiceEIP.wsdl" MetadataType="Wsdl" ID="a8f3e54a-de06-42c2-a90f-8670ccff54d7" SourceId="1" SourceUrl="http://localhost:6080/ServiceEIP.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

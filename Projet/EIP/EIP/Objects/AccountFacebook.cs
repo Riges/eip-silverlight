@@ -26,6 +26,7 @@ namespace EIP
     {
 
         public static Dispatcher dispatcher;
+        
         public Api facebookAPI { get; set; }
         private BrowserSession browserSession { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }

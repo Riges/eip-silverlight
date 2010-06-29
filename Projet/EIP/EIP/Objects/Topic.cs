@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
 using EIP.ServiceEIP;
-using TweetSharp.Model;
+//using TweetSharp.Model;
 
 namespace EIP.Objects
 {
@@ -26,7 +26,7 @@ namespace EIP.Objects
 
         //public stream_post fb_post  {get; set; }
         public TopicFB fb_post { get; set; }
-        public TwitterStatus t_post { get; set; }
+        public ServiceEIP.TwitterStatus t_post { get; set; }
         
 
 
