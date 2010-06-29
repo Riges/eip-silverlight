@@ -93,6 +93,9 @@ namespace EIP.Views.Controls
                             text.Text = oneAccount.Value.account.name;
                             text.Margin = new Thickness(5, 0, 0, 0);
                             panel.Children.Add(text);
+
+                            Image imgDel = new Image();
+                            imgDel.Source = new BitmapImage(new Uri("../../Assets/Images/bullet_delete.png", UriKind.Relative));
                             
 
                             LayoutPanel.Children.Add(panel);
