@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using Facebook.Session;
 //using EIP.ServiceEIP;
 using System.Windows.Data;
-using TweetSharp.Model;
+//using TweetSharp.Model;
 using EIP.ServiceEIP;
 using EIP.Objects;
 using EIP.Views.Controls.Feeds;

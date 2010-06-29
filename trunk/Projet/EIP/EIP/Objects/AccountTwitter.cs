@@ -11,9 +11,9 @@ using System.Windows.Shapes;
 using System.Runtime.Serialization;
 //using EIP.ServiceEIP;
 using System.Collections.Generic;
-using TweetSharp.Fluent;
-using TweetSharp.Model;
-using TweetSharp.Extensions;
+//using TweetSharp.Fluent;
+//using TweetSharp.Model;
+//using TweetSharp.Extensions;
 using EIP.ServiceEIP;
 using EIP.Objects;
 using EIP.Views;
@@ -66,6 +66,8 @@ namespace EIP
             filters.Add(new TwitterFilter("Retweet", "Retweet"));
             filters.Add(new TwitterFilter("RetweetedByMe", "RetweetedByMe"));
             filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
+
+            Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
         }
 
 
@@ -76,6 +78,7 @@ namespace EIP
         public void SendStatus(string status)
         {
             // Send a status update with automatic URL shortening
+            /*
             var twitter = FluentTwitter.CreateRequest()
                  .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
                  .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
@@ -83,6 +86,7 @@ namespace EIP
                  .CallbackTo(StatusSended);
             
             twitter.RequestAsync();
+             * */
         }
 
           //********************************\\
@@ -99,6 +103,7 @@ namespace EIP
                 this.streamFeeds = aStreamFeeds;
                 LoadStreamFeedsContext(first);
             }
+            /*
             var homeTimeline = FluentTwitter.CreateRequest()
                .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
                .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
@@ -106,71 +111,28 @@ namespace EIP
                .CallbackTo(HomeTimelineReceived);
            
             homeTimeline.RequestAsync();
+             */
+
+            Connexion.serviceEIP.LoadHomeStatusesAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret);
         }
 
-        /// <summary>
-        /// methode pour charger les amis (gens que l'on suit)
-        /// </summary>
-        public void LoadFriends()
+        void serviceEIP_LoadHomeStatusesCompleted(object sender, LoadHomeStatusesCompletedEventArgs e)
         {
+            List<ServiceEIP.TwitterStatus> statuses = e.Result;
 
-            var getFriends = FluentTwitter.CreateRequest()
-               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
-               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-               .Users().GetFriends()
-               .CallbackTo(FriendsReceived);
-
-            getFriends.RequestAsync();
-        }
-
-        /// <summary>
-        /// callback de la methode loadfriends
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="result"></param>
-        private void FriendsReceived(object sender, TwitterResult result)
-        {
-            if (!result.IsTwitterError)
+            if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (e.Error == null) && (statuses != null))
             {
-                var friendsTmp = result.AsUsers();
-                this.friends = friendsTmp as List<TwitterUser>;
+                homeStatuses = new List<Topic>();
+                foreach (ServiceEIP.TwitterStatus status in statuses)
+                {
+                    homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.userID, status));
+                }
+
+                LoadStreamFeedsContext(false);
             }
         }
 
-        /// <summary>
-        /// methode pour charger les followers (gens qui nous suivent)
-        /// </summary>
-        public void LoadFollowers()
-        {
-            var homeTimeline = FluentTwitter.CreateRequest()
-               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
-               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-               .Users().GetFollowers()
-               .CallbackTo(FollowersReceived);
-        }
-
-        /// <summary>
-        /// callback de la methode loadfollowers
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="result"></param>
-        private void FollowersReceived(object sender, TwitterResult result)
-        {
-            if (!result.IsTwitterError)
-            {
-                var followersTmp = result.AsUsers();
-                this.followers = followersTmp as List<TwitterUser>;
-            }
-        }
-
-        private void StatusSended(object sender, TwitterResult result)
-        {
-            if (!result.IsTwitterError)
-            {
-               
-            }
-        }
-
+        /*
         /// <summary>
         /// Met à jour la liste des topics si streamFeeds à été précédemment passé en parametre
         /// </summary>
@@ -183,7 +145,7 @@ namespace EIP
             if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (result.AsError() == null) && (statuses != null))
             {
                 homeStatuses = new List<Topic>();
-                foreach(TwitterStatus status in statuses)
+                foreach (TwitterStatus status in statuses)
                 {
                     homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.userID, status));
                 }
@@ -210,11 +172,83 @@ namespace EIP
                         streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                         streamFeeds.LoadContext();
                     }
-                }*/
+                }
 
                 //Connexion.SaveAccount(this);
             }
         }
+*/
+        /// <summary>
+        /// methode pour charger les amis (gens que l'on suit)
+        /// </summary>
+        public void LoadFriends()
+        {
+            /*
+            var getFriends = FluentTwitter.CreateRequest()
+               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
+               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
+               .Users().GetFriends()
+               .CallbackTo(FriendsReceived);
+
+            getFriends.RequestAsync();
+             * */
+        }
+
+        /// <summary>
+        /// callback de la methode loadfriends
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="result"></param>
+        /*
+        private void FriendsReceived(object sender, TwitterResult result)
+        {
+            if (!result.IsTwitterError)
+            {
+                var friendsTmp = result.AsUsers();
+                this.friends = friendsTmp as List<TwitterUser>;
+            }
+        }
+        */
+        /// <summary>
+        /// methode pour charger les followers (gens qui nous suivent)
+        /// </summary>
+        public void LoadFollowers()
+        {
+            /*
+            var homeTimeline = FluentTwitter.CreateRequest()
+               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
+               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
+               .Users().GetFollowers()
+               .CallbackTo(FollowersReceived);
+             * */
+        }
+
+        /// <summary>
+        /// callback de la methode loadfollowers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="result"></param>
+       
+        /*
+        private void FollowersReceived(object sender, TwitterResult result)
+        {
+            if (!result.IsTwitterError)
+            {
+                var followersTmp = result.AsUsers();
+                this.followers = followersTmp as List<TwitterUser>;
+            }
+        }
+        */
+        /*
+        private void StatusSended(object sender, TwitterResult result)
+        {
+            if (!result.IsTwitterError)
+            {
+               
+            }
+        }
+        */
+       
 
         private void LoadStreamFeedsContext(bool first)
         {

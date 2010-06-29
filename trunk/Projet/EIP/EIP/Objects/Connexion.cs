@@ -206,7 +206,9 @@ namespace EIP
                 {
                     if (key.StartsWith("Account-"))
                     {
-                        accounts[((AccountLight)storage[key]).account.accountID] = (AccountLight)storage[key];
+                        AccountLight tmp = new AccountLight();
+                        tmp.account = (Account)storage[key];
+                        accounts[((AccountLight)storage[key]).account.accountID] = tmp;// (AccountLight)storage[key];
                     }
                 }
                
@@ -225,10 +227,10 @@ namespace EIP
 
             foreach (KeyValuePair<long, AccountLight> acc in accounts)
             {
-                storage["Account-" + acc.Value.account.accountID] = acc.Value;
+                storage["Account-" + acc.Value.account.accountID] = acc.Value.account;
             }
             storage.Save();
-
+            
 
             //storage["CurrentAccount"] = currentAccount;
             //storage["CurrentAccount"] = "Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID;
@@ -649,8 +651,11 @@ namespace EIP
         private static void NewAccountFacebook_LoginCompleted(object sender, EventArgs e)
         {
             //LoginFacebook_LoginCompleted(sender, e);
+
+           
             if (facebookAPI == null)
             {
+                
                 facebookAPI = new Api(browserSession);
 
                /* List<long> list = new List<long>();
@@ -663,6 +668,7 @@ namespace EIP
 
         private static void GetUserFacebook_Completed(IList<user> users, object o, FacebookException ex)
         {
+          
             if (users != null && users.Count > 0)
             {
                 if (addAccount)
@@ -712,6 +718,7 @@ namespace EIP
 
         static void serviceEIP_GetAccountsByUserIDCompleted(object sender, GetAccountsByUserIDCompletedEventArgs e)
         {
+            
             if (e.Error == null)
                 LoadAccountsFromDB(e.Result);
         }
@@ -794,12 +801,12 @@ namespace EIP
         }
 
 
-
+        /*
         private static void LoginFacebook_LoginCompleted(object sender, EventArgs e)
         {
             facebookAPI = new Api(browserSession);
             //SetSession();
-        }
+        }*/
 
         public static void Deconnexion()
         {

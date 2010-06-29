@@ -95,6 +95,22 @@ namespace EIPWCF
             return Model.AddAccount(newAccount);
         }
 
+        public IEnumerable<TwitterStatus> LoadHomeStatuses(string token, string tokenSecret)
+        {
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .Statuses().OnHomeTimeline();
+
+            var response = query.Request();
+            if (!response.IsTwitterError)
+            {
+                var statuses = response.AsStatuses();
+                return statuses;
+            }
+
+            return null;
+        }
+
         public bool SaveAccount(Account accountToSave)
         {
             return Model.SaveAccount(accountToSave);

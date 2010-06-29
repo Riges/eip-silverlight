@@ -302,12 +302,21 @@
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountTwitter.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceEIP\ServiceEIP.disco" />
     <None Include="Service References\ServiceEIP\configuration91.svcinfo" />
     <None Include="Service References\ServiceEIP\configuration.svcinfo" />
     <None Include="Service References\ServiceEIP\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceEIP\ServiceEIP3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceEIP\ServiceEIP31.xsd">
+      <SubType>Designer</SubType>
     </None>
     <Resource Include="Assets\Images\facebook-icon.jpg" />
     <Resource Include="Assets\Images\twitter-icon.png" />

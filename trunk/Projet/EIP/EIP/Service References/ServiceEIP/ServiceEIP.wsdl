@@ -5,6 +5,8 @@
       <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EIPLibrary" />
+      <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" />
+      <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/TweetSharp.Model" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IServiceEIP_IsUp_InputMessage">
@@ -67,6 +69,12 @@
   <wsdl:message name="IServiceEIP_GetRequestToken_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetRequestTokenResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadHomeStatuses_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHomeStatuses" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadHomeStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadHomeStatusesResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServiceEIP">
     <wsdl:operation name="IsUp">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/IsUp" message="tns:IServiceEIP_IsUp_InputMessage" />
@@ -107,6 +115,10 @@
     <wsdl:operation name="GetRequestToken">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetRequestToken" message="tns:IServiceEIP_GetRequestToken_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetRequestTokenResponse" message="tns:IServiceEIP_GetRequestToken_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadHomeStatuses">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadHomeStatuses" message="tns:IServiceEIP_LoadHomeStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadHomeStatusesResponse" message="tns:IServiceEIP_LoadHomeStatuses_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceEIP" type="tns:IServiceEIP">
@@ -194,6 +206,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetRequestToken">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetRequestToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadHomeStatuses">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadHomeStatuses" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
