@@ -52,16 +52,9 @@ namespace EIP.Views.Controls
                                 //{
                             StackPanel panel = new StackPanel();
                             panel.Orientation = Orientation.Horizontal;
-
+                            
                             CheckBox box = new CheckBox();
 
-                            //box.DataContext = oneAccount.Value.account;
-                            /*
-                            Binding binding = new Binding();
-                            binding.Source = oneAccount.Value.account;
-                            binding.Path = new PropertyPath("name");
-                            box.SetBinding(CheckBox.ContentProperty, binding);
-                            */
 
                             box.Name = oneAccount.Value.account.accountID.ToString();
                             box.Checked += new RoutedEventHandler(box_Checked);
@@ -80,7 +73,7 @@ namespace EIP.Views.Controls
                                     break;
                                 case Account.TypeAccount.Twitter:
                                     img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
-                                    ((AccountTwitterLight)oneAccount.Value).LoadFriends();
+                                    //((AccountTwitterLight)oneAccount.Value).LoadFriends();
                                     break;
                                 case Account.TypeAccount.Myspace:
                                     break;
@@ -109,7 +102,7 @@ namespace EIP.Views.Controls
                             imgDel.MouseLeftButtonUp += new MouseButtonEventHandler(imgDel_Click);
                             imgDel.DataContext = oneAccount.Value.account.accountID;
                             panel.Children.Add(imgDel);
-
+                            
                             panel.MouseMove += new MouseEventHandler(img_MouseMove);
                             panel.MouseLeave += new MouseEventHandler(img_MouseLeave);
                             panel.DataContext = oneAccount.Value.account.accountID;

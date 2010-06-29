@@ -125,7 +125,7 @@ namespace EIP
                 homeStatuses = new List<Topic>();
                 foreach (ServiceEIP.TwitterStatus status in statuses)
                 {
-                    homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.userID, status));
+                    homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
                 }
 
                 LoadStreamFeedsContext(false);

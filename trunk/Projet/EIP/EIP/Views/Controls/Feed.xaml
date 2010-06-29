@@ -30,6 +30,7 @@
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="2"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -60,8 +61,11 @@
             <TextBlock Margin="3,0,0,0" Name="viaAppliText" Visibility="Collapsed">via</TextBlock>
             <HyperlinkButton Margin="3,0,0,0" Name="viaAppli" Visibility="Collapsed"></HyperlinkButton>
         </StackPanel>
+
+
+        <StackPanel  Grid.Row="3" Grid.ColumnSpan="2"></StackPanel>
         
-        <Rectangle Grid.Row="3" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
+        <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
             
        
     </Grid>

@@ -168,7 +168,7 @@ namespace EIP.Views
 
                             TextBlock linkFilter = new TextBlock();
                             linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
-                            linkFilter.DataContext = filter;
+                            linkFilter.DataContext = filter.filter_key;
                             linkFilter.Margin = new Thickness(5, 0, 0, 0);
                             linkFilter.Cursor = Cursors.Hand;
 
@@ -191,14 +191,18 @@ namespace EIP.Views
 
                             TextBlock linkFilter = new TextBlock();
                             linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
-                            linkFilter.DataContext = filter;
+                            
                             linkFilter.Margin = new Thickness(5, 0, 0, 0);
                             linkFilter.Cursor = Cursors.Hand;
+
+                            linkFilter.DataContext = filter.value;
 
                             Binding binding = new Binding();
                             binding.Source = filter;
                             binding.Path = new PropertyPath("name");
                             linkFilter.SetBinding(TextBlock.TextProperty, binding);
+
+                           
 
                             panelFilter.Children.Add(linkFilter);
                             panelContent.Children.Add(panelFilter);
@@ -233,14 +237,20 @@ namespace EIP.Views
 
         void linkFilter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            /*
             stream_filter filter = new stream_filter();
             filter.name = "";
 
             if(sender.GetType() == typeof(TextBlock))
-                filter = ((TextBlock)sender).DataContext as stream_filter;
+                filter = (((TextBlock)sender).DataContext) as stream_filter;
             else if(sender.GetType() == typeof(Image))
-                filter = ((Image)sender).DataContext as stream_filter;
-            Connexion.contentFrame.Navigate(new Uri(string.Format("/Feeds/{0}", filter.filter_key), UriKind.Relative));
+                filter = (((Image)sender).DataContext) as stream_filter;*/
+            string filter = string.Empty;
+            if (sender.GetType() == typeof(TextBlock))
+                filter = ((TextBlock)sender).DataContext.ToString();
+            else if (sender.GetType() == typeof(Image))
+                filter = ((Image)sender).DataContext.ToString();
+            Connexion.contentFrame.Navigate(new Uri(string.Format("/Feeds/{0}", filter), UriKind.Relative));
         }
 
         void btn_Click(object sender, RoutedEventArgs e)

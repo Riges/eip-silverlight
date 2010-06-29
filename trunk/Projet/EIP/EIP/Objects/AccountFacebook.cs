@@ -32,6 +32,7 @@ namespace EIP
         public Dictionary<string, List<Topic>> feeds { get; set; }
         public List<user> friends { get; set; }
         public List<stream_filter> filters { get; set; }
+        public List<profile> profiles { get; set; }
 
         private bool busy = false;
         //private int nbFeeds = 0;
@@ -177,15 +178,22 @@ namespace EIP
 
                 List<long> userIds = new List<long>();
 
+                profiles = data.profiles.profile;
+
                 foreach (stream_post post in data.posts.stream_post)
                 {
                     //this.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), post);
 
                     if (post.actor_id > 0 && post.actor_id != post.source_id)
-                        userIds.Add((long)post.actor_id);
+                        if (!userIds.Contains(post.actor_id))
+                            userIds.Add((long)post.actor_id);
+
+                    if(!userIds.Contains(post.source_id))
+                        userIds.Add(post.source_id);
                     
-                    userIds.Add(post.source_id);
                 }
+                 
+
 
                 this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUsers_Completed), data.posts.stream_post);
             }
@@ -224,7 +232,7 @@ namespace EIP
                         TopicFB topicFB = new TopicFB(post, userSource, userTarget);
                         DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                         dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
-                        this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, topicFB));
+                        this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
                     }
                     LoadStreamFeedsContext(posts[0].filter_key);
                 }
