@@ -105,93 +105,98 @@ namespace EIP.Web.Modules
 
             string response;
 
-            try
+            if (url != null)
             {
-                // Set stock properties for the proxied call
-                var proxyRequest = (HttpWebRequest)WebRequest.Create(url);
+                url = url.Replace("http", "https");
 
-                // Set the HTTP method, preferring a proxy header
-                var methodOverride = request.Headers[ProxyMethodHeader];
-                proxyRequest.Method = methodOverride != null
-                                          ? request.Headers[ProxyMethodHeader]
-                                          : request.HttpMethod;
-
-                // Set the user agent, preferring a proxy header
-                var userAgent = request.Headers[ProxyAgentHeader];
-                proxyRequest.UserAgent = userAgent != null
-                                             ? request.Headers[ProxyAgentHeader]
-                                             : request.UserAgent;
-
-                // Set compression support, preferring a proxy header
-                // Use compression if indicated
-                var acceptEncoding =
-                    request.Headers[ProxyAcceptHeader] ??
-                    request.Headers["Accept-Encoding"];
-
-                if (acceptEncoding != null)
+                try
                 {
-                    acceptEncoding = acceptEncoding.ToLower();
-                    if (acceptEncoding.Contains("gzip"))
+                    // Set stock properties for the proxied call
+                    var proxyRequest = (HttpWebRequest)WebRequest.Create(url);
+
+                    // Set the HTTP method, preferring a proxy header
+                    var methodOverride = request.Headers[ProxyMethodHeader];
+                    proxyRequest.Method = methodOverride != null
+                                              ? request.Headers[ProxyMethodHeader]
+                                              : request.HttpMethod;
+
+                    // Set the user agent, preferring a proxy header
+                    var userAgent = request.Headers[ProxyAgentHeader];
+                    proxyRequest.UserAgent = userAgent != null
+                                                 ? request.Headers[ProxyAgentHeader]
+                                                 : request.UserAgent;
+
+                    // Set compression support, preferring a proxy header
+                    // Use compression if indicated
+                    var acceptEncoding =
+                        request.Headers[ProxyAcceptHeader] ??
+                        request.Headers["Accept-Encoding"];
+
+                    if (acceptEncoding != null)
                     {
-                        proxyRequest.AutomaticDecompression =
-                            DecompressionMethods.GZip;
+                        acceptEncoding = acceptEncoding.ToLower();
+                        if (acceptEncoding.Contains("gzip"))
+                        {
+                            proxyRequest.AutomaticDecompression =
+                                DecompressionMethods.GZip;
+                        }
+                        else if (acceptEncoding.Contains("deflate"))
+                        {
+                            proxyRequest.AutomaticDecompression =
+                                DecompressionMethods.Deflate;
+                        }
                     }
-                    else if (acceptEncoding.Contains("deflate"))
+
+                    //proxyRequest.ContentType = request.ContentType;
+                    proxyRequest.ContentLength = request.ContentLength;
+
+                    // Set referer, preferring a proxy header
+                    proxyRequest.Referer = request.UrlReferrer != null
+                                               ? request.UrlReferrer.ToString()
+                                               : null;
+                    proxyRequest.KeepAlive = true;
+
+                    if (request.Headers[ProxyAuthorizationHeader] != null)
                     {
-                        proxyRequest.AutomaticDecompression =
-                            DecompressionMethods.Deflate;
+                        proxyRequest.Headers["Authorization"] =
+                            request.Headers[ProxyAuthorizationHeader];
+                    }
+
+                    foreach (var header in request.Headers.Keys)
+                    {
+                        var name = header.ToString();
+                        if (_skipHeaders.Contains(name))
+                        {
+                            continue;
+                        }
+
+                        var value = request.Headers[name];
+                        proxyRequest.Headers[name] = value;
+                    }
+
+                    var stream = context.Request.InputStream;
+                    var content = new byte[context.Request.InputStream.Length];
+                    stream.Read(content, 0, (int)context.Request.InputStream.Length);
+
+                    response = ProxyRequest(proxyRequest, content);
+                }
+                catch (WebException ex)
+                {
+                    response = HandleWebException(ex);
+                    if (ex.Response is HttpWebResponse)
+                    {
+                        var http = (HttpWebResponse)ex.Response;
+
+                        // [DC]: AddHeader required for IIS Classic Mode
+                        context.Response.AddHeader(ProxyStatusCode, ((int)http.StatusCode).ToString());
+                        context.Response.AddHeader(ProxyStatusDescription, http.StatusDescription);
                     }
                 }
 
-                proxyRequest.ContentType = request.ContentType;
-                proxyRequest.ContentLength = request.ContentLength;
-
-                // Set referer, preferring a proxy header
-                proxyRequest.Referer = request.UrlReferrer != null
-                                           ? request.UrlReferrer.ToString()
-                                           : null;
-                proxyRequest.KeepAlive = true;
-
-                if (request.Headers[ProxyAuthorizationHeader] != null)
-                {
-                    proxyRequest.Headers["Authorization"] =
-                        request.Headers[ProxyAuthorizationHeader];
-                }
-
-                foreach (var header in request.Headers.Keys)
-                {
-                    var name = header.ToString();
-                    if (_skipHeaders.Contains(name))
-                    {
-                        continue;
-                    }
-
-                    var value = request.Headers[name];
-                    proxyRequest.Headers[name] = value;
-                }
-
-                var stream = context.Request.InputStream;
-                var content = new byte[context.Request.InputStream.Length];
-                stream.Read(content, 0, (int)context.Request.InputStream.Length);
-
-                response = ProxyRequest(proxyRequest, content);
+                context.Response.ClearContent();
+                context.Response.Write(response);
+                context.Response.End(); // calls flush
             }
-            catch (WebException ex)
-            {
-                response = HandleWebException(ex);
-                if (ex.Response is HttpWebResponse)
-                {
-                    var http = (HttpWebResponse)ex.Response;
-
-                    // [DC]: AddHeader required for IIS Classic Mode
-                    context.Response.AddHeader(ProxyStatusCode, ((int)http.StatusCode).ToString());
-                    context.Response.AddHeader(ProxyStatusDescription, http.StatusDescription);
-                }
-            }
-
-            context.Response.ClearContent();
-            context.Response.Write(response);
-            context.Response.End(); // calls flush
         }
 
         private static string ProxyRequest(WebRequest proxyRequest, byte[] content)

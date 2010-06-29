@@ -22,7 +22,7 @@ namespace EIP.Objects
 
         public DateTime date { get; set; }
         public Account.TypeAccount typeAccount { get; set; }
-        public long userID { get; set; }
+        public long accountID { get; set; }
 
         //public stream_post fb_post  {get; set; }
         public TopicFB fb_post { get; set; }
@@ -40,11 +40,11 @@ namespace EIP.Objects
         /// </summary>
         /// <param name="aDate">Date du post</param>
         /// <param name="aFb_post">value du post Facebook</param>
-        public Topic(DateTime aDate, Account.TypeAccount aTypeAccount, long aUserID, TopicFB aFb_post)
+        public Topic(DateTime aDate, Account.TypeAccount aTypeAccount, long aAccountID, TopicFB aFb_post)
         {
             this.date = aDate;
             this.typeAccount = aTypeAccount;
-            this.userID = aUserID;
+            this.accountID = aAccountID;
 
             this.fb_post = aFb_post;
         }
@@ -54,11 +54,11 @@ namespace EIP.Objects
         /// </summary>
         /// <param name="aDate">Date du post</param>
         /// <param name="aFb_post">value du post Facebook</param>
-        public Topic(DateTime aDate, Account.TypeAccount aTypeAccount, long aUserID, TwitterStatus aT_post)
+        public Topic(DateTime aDate, Account.TypeAccount aTypeAccount, long aAccountID, TwitterStatus aT_post)
         {
             this.date = aDate;
             this.typeAccount = aTypeAccount;
-            this.userID = aUserID;
+            this.accountID = aAccountID;
 
             this.t_post = aT_post;
         }

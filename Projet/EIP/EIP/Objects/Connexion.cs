@@ -23,12 +23,20 @@ using EIP.ServiceEIP;
 using System.Windows.Navigation;
 using EIP.Views;
 using System.ComponentModel;
-using TweetSharp.Fluent;
-using TweetSharp.Extensions;
-using TweetSharp.Model;
+
+//using TweetSharp.Fluent;
+//using TweetSharp.Extensions;
+//using TweetSharp.Model;
+
+//using TweetSharp.Twitter.Fluent;
+//using TweetSharp.Twitter.Extensions;
+//using TweetSharp.Twitter.Model;
+
 using TweetSharp;
 using EIP.Views.Child;
 using EIP.Objects;
+using TweetSharp.Fluent;
+
 
 
 
@@ -88,6 +96,7 @@ namespace EIP
             loadingChild = new Loading();
 
             serviceEIP.IsUpCompleted += new EventHandler<IsUpCompletedEventArgs>(serviceEIP_IsUpCompleted);
+
             try
             {
                 serviceEIP.IsUpAsync();
@@ -306,9 +315,17 @@ namespace EIP
             //storage["CurrentAccount"] = null;
             //currentAccounts = null;
             accounts = null;
-            //storage["groupID"] = 0;
+            //storage["groupID"] = "0";
             storage.Remove("groupID");
             storage.Save();
+            /*foreach (string key in storage.Keys)
+            {
+                if (key.StartsWith("Account-"))
+                {
+                    storage.Remove(key);
+                }
+                   
+            }*/
         }
 
         public static void Login(Account.TypeAccount type, string pseudo, string password)
@@ -321,8 +338,8 @@ namespace EIP
                     if (facebookAPI != null)
                     {
                         browserSession = (BrowserSession)facebookAPI.Session;
-                        facebookAPI = null;
                         browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
+                        facebookAPI = null;
                         browserSession.Logout();
                     }
                     else
@@ -336,16 +353,7 @@ namespace EIP
 
                     break;
                 case Account.TypeAccount.Twitter:
-                     /*var requestToken = FluentTwitter.CreateRequest()
-                        .Configuration.UseTransparentProxy(ProxyUrl)
-                        .AuthenticateAs(pseudo, password)
-                        .Account()
-                         .VerifyCredentials()
-                         .AsXml()
-                        .CallbackTo(TwitterAuthenticateAsCompleted);
-                    
-                    requestToken.RequestAsync();
-                    */
+
                     serviceEIP.GetAccountsByTwitterCompleted += new EventHandler<GetAccountsByTwitterCompletedEventArgs>(serviceEIP_GetAccountsByTwitterCompleted);
                     serviceEIP.GetAccountsByTwitterAsync(pseudo, password);
                     
@@ -387,12 +395,13 @@ namespace EIP
                 case Account.TypeAccount.Twitter:
 
                     /*
-                     var requestToken = FluentTwitter.CreateRequest()
-                        .Configuration.UseTransparentProxy(ProxyUrl)
-                        .Authentication.GetRequestToken()
-                        .CallbackTo(TwitterRequestTokenReceived);
+                    var requestToken = FluentTwitter.CreateRequest()
+                       .Configuration.UseTransparentProxy(ProxyUrl)
+                       .Authentication.GetRequestToken()
+                       .CallbackTo(TwitterRequestTokenReceived);
 
-                    requestToken.RequestAsync();
+                    //requestToken.BeginRequest();
+                    requestToken.BeginRequest();
                      * 
                      */
 
@@ -449,6 +458,7 @@ namespace EIP
         }
          * */
 
+        /*
         private static void TwitterAuthenticateAsCompleted(object sender, TwitterResult result)
         {
             var user = result.AsUser();
@@ -463,6 +473,7 @@ namespace EIP
             serviceEIP.GetAccountsByUserIDAsync((long)user.Id);
 
         }
+         * */
 
         //private static void test_AuthorizeDesktopCompleted(object sender, ServiceEIP.AuthorizeDesktopCompletedEventArgs e)
         /*private static void Twitter_AuthorizeDesktop(object sender, TwitterResult result)
@@ -475,7 +486,8 @@ namespace EIP
             twitterPin.Show();
         }*/
 
-        private static void SetTwitterClientInfo()
+        /*
+        public static void SetTwitterClientInfo()
         {
             var clientInfo = new TwitterClientInfo
             {
@@ -485,6 +497,7 @@ namespace EIP
 
             FluentBase<TwitterResult>.SetClientInfo(clientInfo);
         }
+         * */
 
         public static void AddTwitterAccount(AccountTwitterLight accountTwitter)//, Dispatcher dispatch
         {
@@ -527,7 +540,7 @@ namespace EIP
         }
 
         /*
-        private static void TwitterAccessTokenReceived(object sender, TwitterResult result)
+        private static void TwitterAccessTokenReceived(object sender, TwitterResult result, object state)
         {
             var token = result.AsToken();
 
@@ -552,7 +565,7 @@ namespace EIP
 
                 if (accounts.Count > 0)
                 {
-                    accountTwitter.account.groupID = accounts[0].account.groupID;
+                    accountTwitter.account.groupID = accounts.First().Value.account.groupID;
                 }
                 else
                 {

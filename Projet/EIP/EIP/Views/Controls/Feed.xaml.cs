@@ -157,8 +157,19 @@ namespace EIP.Views.Controls
                                         content.Children.Add(block);
                                         break;
                                 }
-                                //content
-                               
+
+
+
+
+                                //commentaires
+                                List<comment> coms = topic.fb_post.post.comments.comment_list.comment;
+                       
+                                List<profile> profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
+
+                                var theProfile = from profile prof in profiles
+                                                   where prof.id == Convert.ToInt64(coms[0].post_id)
+                                                   select prof;
+
                             }
                         break;
                     case Account.TypeAccount.Twitter:

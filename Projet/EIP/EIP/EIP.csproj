@@ -119,6 +119,9 @@
     <Compile Include="Views\Child\TwitterPin.xaml.cs">
       <DependentUpon>TwitterPin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\Com.xaml.cs">
+      <DependentUpon>Com.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Feed.xaml.cs">
       <DependentUpon>Feed.xaml</DependentUpon>
     </Compile>
@@ -203,6 +206,10 @@
     <Page Include="Views\Child\TwitterPin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\Com.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\Feed.xaml">
       <SubType>Designer</SubType>
