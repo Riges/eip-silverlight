@@ -97,6 +97,7 @@ namespace EIPWCF
 
         public IEnumerable<TwitterStatus> LoadHomeStatuses(string token, string tokenSecret)
         {
+            SetClientInfo();
             var query = FluentTwitter.CreateRequest()
                    .AuthenticateWith(token, tokenSecret)
                    .Statuses().OnHomeTimeline();
