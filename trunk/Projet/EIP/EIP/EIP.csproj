@@ -329,6 +329,11 @@
     <Resource Include="Assets\Images\FiltresFB\note.png" />
     <Resource Include="Assets\Images\FiltresFB\photo.png" />
     <Resource Include="Assets\Images\FiltresFB\post.png" />
+    <Resource Include="Assets\Images\bullet_delete.png" />
+    <Resource Include="Assets\Images\comment.png" />
+    <Resource Include="Assets\Images\comments.png" />
+    <Resource Include="Assets\Images\comment_add.png" />
+    <Resource Include="Assets\Images\comment_delete.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">

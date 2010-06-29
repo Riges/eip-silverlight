@@ -1003,6 +1003,11 @@ namespace EIP.ServiceEIP {
         
         bool EndSaveAccount(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/DeleteAccount", ReplyAction="http://tempuri.org/IServiceEIP/DeleteAccountResponse")]
+        System.IAsyncResult BeginDeleteAccount(long accountID, System.AsyncCallback callback, object asyncState);
+        
+        long EndDeleteAccount(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/testfb", ReplyAction="http://tempuri.org/IServiceEIP/testfbResponse")]
         System.IAsyncResult Begintestfb(System.AsyncCallback callback, object asyncState);
         
@@ -1163,6 +1168,25 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class DeleteAccountCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public DeleteAccountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class testfbCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -1283,6 +1307,12 @@ namespace EIP.ServiceEIP {
         
         private System.Threading.SendOrPostCallback onSaveAccountCompletedDelegate;
         
+        private BeginOperationDelegate onBeginDeleteAccountDelegate;
+        
+        private EndOperationDelegate onEndDeleteAccountDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeleteAccountCompletedDelegate;
+        
         private BeginOperationDelegate onBegintestfbDelegate;
         
         private EndOperationDelegate onEndtestfbDelegate;
@@ -1373,6 +1403,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<AddAccountCompletedEventArgs> AddAccountCompleted;
         
         public event System.EventHandler<SaveAccountCompletedEventArgs> SaveAccountCompleted;
+        
+        public event System.EventHandler<DeleteAccountCompletedEventArgs> DeleteAccountCompleted;
         
         public event System.EventHandler<testfbCompletedEventArgs> testfbCompleted;
         
@@ -1710,6 +1742,52 @@ namespace EIP.ServiceEIP {
             }
             base.InvokeAsync(this.onBeginSaveAccountDelegate, new object[] {
                         accountToSave}, this.onEndSaveAccountDelegate, this.onSaveAccountCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginDeleteAccount(long accountID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeleteAccount(accountID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        long EIP.ServiceEIP.IServiceEIP.EndDeleteAccount(System.IAsyncResult result) {
+            return base.Channel.EndDeleteAccount(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeleteAccount(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            long accountID = ((long)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginDeleteAccount(accountID, callback, asyncState);
+        }
+        
+        private object[] OnEndDeleteAccount(System.IAsyncResult result) {
+            long retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndDeleteAccount(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnDeleteAccountCompleted(object state) {
+            if ((this.DeleteAccountCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeleteAccountCompleted(this, new DeleteAccountCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeleteAccountAsync(long accountID) {
+            this.DeleteAccountAsync(accountID, null);
+        }
+        
+        public void DeleteAccountAsync(long accountID, object userState) {
+            if ((this.onBeginDeleteAccountDelegate == null)) {
+                this.onBeginDeleteAccountDelegate = new BeginOperationDelegate(this.OnBeginDeleteAccount);
+            }
+            if ((this.onEndDeleteAccountDelegate == null)) {
+                this.onEndDeleteAccountDelegate = new EndOperationDelegate(this.OnEndDeleteAccount);
+            }
+            if ((this.onDeleteAccountCompletedDelegate == null)) {
+                this.onDeleteAccountCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeleteAccountCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeleteAccountDelegate, new object[] {
+                        accountID}, this.onEndDeleteAccountDelegate, this.onDeleteAccountCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2062,6 +2140,19 @@ namespace EIP.ServiceEIP {
             public bool EndSaveAccount(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("SaveAccount", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeleteAccount(long accountID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = accountID;
+                System.IAsyncResult _result = base.BeginInvoke("DeleteAccount", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public long EndDeleteAccount(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                long _result = ((long)(base.EndInvoke("DeleteAccount", _args, result)));
                 return _result;
             }
             

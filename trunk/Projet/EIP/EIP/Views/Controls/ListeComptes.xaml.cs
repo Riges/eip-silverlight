@@ -91,11 +91,28 @@ namespace EIP.Views.Controls
 
                             TextBlock text = new TextBlock();
                             text.Text = oneAccount.Value.account.name;
-                            text.Margin = new Thickness(5, 0, 0, 0);
+                            //text.Margin = new Thickness(5, 0, 0, 0);
+                            text.Padding = new Thickness(5, 0, 5, 0);
+                            //text.MouseMove += new MouseEventHandler(img_MouseMove);
+                            //text.MouseLeave += new MouseEventHandler(img_MouseLeave);
+                            //text.DataContext = oneAccount.Value.account.accountID;
                             panel.Children.Add(text);
 
                             Image imgDel = new Image();
                             imgDel.Source = new BitmapImage(new Uri("../../Assets/Images/bullet_delete.png", UriKind.Relative));
+                            imgDel.Width = 16;
+                            imgDel.Name = "imgDel" + oneAccount.Value.account.accountID;
+                            //imgDel.Margin = new Thickness(5, 0, 0, 0);
+                            imgDel.Visibility = System.Windows.Visibility.Collapsed;
+                            //imgDel.MouseMove += new MouseEventHandler(img_MouseMove);
+                            //imgDel.MouseLeave += new MouseEventHandler(img_MouseLeave);
+                            imgDel.MouseLeftButtonUp += new MouseButtonEventHandler(imgDel_Click);
+                            imgDel.DataContext = oneAccount.Value.account.accountID;
+                            panel.Children.Add(imgDel);
+
+                            panel.MouseMove += new MouseEventHandler(img_MouseMove);
+                            panel.MouseLeave += new MouseEventHandler(img_MouseLeave);
+                            panel.DataContext = oneAccount.Value.account.accountID;
                             
 
                             LayoutPanel.Children.Add(panel);
@@ -114,16 +131,53 @@ namespace EIP.Views.Controls
             }
         }
 
+        void imgDel_Click(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox msgBox = new MessageBox("Demande de confirmation", "Etes vous sur de vouloir supprimer définitivement ce compte ?", MessageBoxButton.OKCancel);
+            msgBox.Closed += new EventHandler(msgBox_Closed);
+            msgBox.DataContext = (long)((Image)sender).DataContext;
+            msgBox.Show();
+            
+            
+        }
+
+        void msgBox_Closed(object sender, EventArgs e)
+        {
+            MessageBox msgBox = (MessageBox)sender;
+
+            bool result = (bool)msgBox.DialogResult;
+            if (result)
+            {
+                Connexion.serviceEIP.DeleteAccountAsync((long)msgBox.DataContext);
+            }
+        }
+
+        void img_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Cursor = Cursors.Arrow;
+            string obj = "imgDel" + (long)((StackPanel)sender).DataContext;
+            Image imgDel = (Image)FindName(obj);
+            imgDel.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        void img_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor = Cursors.Hand;
+            string obj = "imgDel" + (long)((StackPanel)sender).DataContext;
+            Image imgDel = (Image)FindName(obj);
+            imgDel.Visibility = System.Windows.Visibility.Visible;
+        }
+
         void box_Unchecked(object sender, RoutedEventArgs e)
         {
-            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.userID].selected = false;
+            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.accountID].selected = false;
             //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
             ReloadPage();
         }
 
         void box_Checked(object sender, RoutedEventArgs e)
         {
-            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.userID].selected = true;
+            Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.accountID].selected = true;
             //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
             ReloadPage();
         }

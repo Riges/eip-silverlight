@@ -14,10 +14,15 @@
       <TextBox x:Name="MessageTextBox" Grid.Row="0" Height="90" TextWrapping="Wrap" IsReadOnly="True"
                VerticalScrollBarVisibility="Auto"/>
 
-    <Button x:Name="OKButton" Grid.Row="1" Click="OKButton_Click"
+        <Button x:Name="OKButton" Grid.Row="1" Click="OKButton_Click"
+        Width="75" Height="23" HorizontalAlignment="Right" Margin="0,10,90,0"
+        TabIndex="0" Content="OK" Visibility="Collapsed"/>
+        <Button x:Name="CancelButton" Grid.Row="1" Click="CancelButton_Click"
         Width="75" Height="23" HorizontalAlignment="Right" Margin="0,10,0,0"
-        TabIndex="0" Content="OK"/>
+        TabIndex="0" Content="Annuler" Visibility="Collapsed"/>
+      
+        
 
-  </Grid>
+    </Grid>
 
 </controls:ChildWindow>

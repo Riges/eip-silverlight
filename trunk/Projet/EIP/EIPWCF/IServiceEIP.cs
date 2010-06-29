@@ -42,6 +42,9 @@ namespace EIPWCF
         [OperationContract]
         bool SaveAccount(Account accountToSave);
 
+        [OperationContract]
+        long DeleteAccount(long accountID);
+
 
 
         [OperationContract]

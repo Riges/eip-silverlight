@@ -6,6 +6,7 @@ namespace EIP
 {
     public partial class MessageBox : ChildWindow
     {
+
         public MessageBox(string title, string details)
         {
             InitializeComponent();
@@ -13,10 +14,36 @@ namespace EIP
                 this.Title = title;
             MessageTextBox.Text = details;
         }
+        public MessageBox(string title, string details, MessageBoxButton boutons)
+        {
+            InitializeComponent();
+            if (title != null)
+                this.Title = title;
+            MessageTextBox.Text = details;
+
+            switch (boutons)
+            {
+                case MessageBoxButton.OK:
+                    OKButton.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case MessageBoxButton.OKCancel:
+                    OKButton.Visibility = System.Windows.Visibility.Visible;
+                    CancelButton.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
+        }
+
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }
