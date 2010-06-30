@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Control="clr-namespace:EIP.Views.Controls"
     xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Height="Auto" > <!--Width="700"-->
@@ -62,8 +63,8 @@
             <HyperlinkButton Margin="3,0,0,0" Name="viaAppli" Visibility="Collapsed"></HyperlinkButton>
         </StackPanel>
 
-
-        <StackPanel  Grid.Row="3" Grid.ColumnSpan="2"></StackPanel>
+        <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" x:Name="comsControl"></Control:Coms>
+        
         
         <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
             

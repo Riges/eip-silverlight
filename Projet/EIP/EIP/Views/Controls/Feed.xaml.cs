@@ -162,14 +162,17 @@ namespace EIP.Views.Controls
 
 
                                 //commentaires
-                                List<comment> coms = topic.fb_post.post.comments.comment_list.comment;
-                       
+                               // stream_comments stream_coms = topic.fb_post.post.comments;
+                                comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
+                                comsControl.coms = topic.fb_post.post.comments;
+                                    
+                                /*
                                 List<profile> profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
 
                                 var theProfile = from profile prof in profiles
                                                    where prof.id == Convert.ToInt64(coms[0].post_id)
                                                    select prof;
-
+                                */
                             }
                         break;
                     case Account.TypeAccount.Twitter:
