@@ -15,7 +15,12 @@ namespace EIP.Objects
     public static class Utils
     {
 
-
+        public static DateTime DateFromStamp(long time)
+        {
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            dateTime = dateTime.AddSeconds(time).AddHours(2);
+            return dateTime;
+        }
 
         public static string Day2Jour(DateTime date)
         {

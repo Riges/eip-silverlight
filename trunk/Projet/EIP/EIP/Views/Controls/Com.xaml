@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
     
@@ -17,13 +18,15 @@
         </Grid.ColumnDefinitions>
 
 
-        <Image Grid.RowSpan="2" Grid.Column="0" Name="picUser" Width="80" Height="80" Stretch="Uniform" Margin="0,5,0,5" >
-            <Image.Projection>
-                <PlaneProjection  RotationY="-35" CenterOfRotationX="0"  />
-            </Image.Projection>
-        </Image>
+        <Image Grid.RowSpan="2" Grid.Column="0" Name="imgUser" Width="80" Height="80" Stretch="Uniform" Margin="0,5,0,5" ></Image>
 
-        <HyperlinkButton Grid.Row="0" Grid.Column="1" Name="nameUser" Margin="5,0,0,0"></HyperlinkButton>
+       <!--<HyperlinkButton Grid.Row="0" Grid.Column="1" Name="nameUser" Margin="5,0,0,0"></HyperlinkButton>-->
+
+        <toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="content"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></toolkit:WrapPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,2">
+            <TextBlock Name="dateTimeFeed"></TextBlock>
+        </StackPanel>
 
     </Grid>
 </UserControl>
