@@ -23,7 +23,10 @@ namespace EIP.Views.Controls
         public Coms()
         {
             InitializeComponent();
+            
         }
+
+ 
 
         public stream_comments Commentaires
         {
@@ -34,7 +37,9 @@ namespace EIP.Views.Controls
             set
             {
                 this.commentaires = value;
+                
                 LoadComs();
+
             }
         }
 
@@ -43,11 +48,12 @@ namespace EIP.Views.Controls
 
         private void LoadComs()
         {
-
-            if (this.Commentaires.count > 0)
+            //comsPanel.Children.Add(new TextBlock() { Text = "jaime" });
+            if (this.Commentaires.comment_list.comment.Count > 0)
             {
                 foreach (comment com in Commentaires.comment_list.comment)
-                { 
+                {
+                    //comsPanel.Children.Add(new TextBlock() { Text = com.text });
                     var theProfile = from profile prof in profiles
                                      where prof.id == Convert.ToInt64(com.fromid)
                                      select prof;

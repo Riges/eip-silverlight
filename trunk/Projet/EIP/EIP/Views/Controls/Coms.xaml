@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="400" Height="Auto">
     
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
@@ -14,13 +14,18 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Name="jaimePanel" Orientation="Horizontal"></StackPanel>
+        <StackPanel Grid.Row="0" Name="jaimePanel" Orientation="Horizontal">
+        </StackPanel>
 
         <StackPanel Grid.Row="1" Name="displayAllComsPanel" Orientation="Horizontal"></StackPanel>
 
-        <StackPanel Grid.Row="2" Name="comsPanel"></StackPanel>
+        <StackPanel Grid.Row="2" Name="comsPanel">
+            
+        </StackPanel>
 
-        <StackPanel Grid.Row="3" Name="addComPanel" Orientation="Horizontal"></StackPanel>
+        <StackPanel Grid.Row="3" Name="addComPanel" Orientation="Horizontal">
+            
+        </StackPanel>
 
     </Grid>
 </UserControl>
