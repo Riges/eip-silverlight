@@ -30,7 +30,7 @@ namespace EIP.Views.Controls
         {
             InitializeComponent();
 
-            this.com = com;
+            this.com = unCom;
             this.profile = unProfile;
 
             if (profile.pic_square != null)

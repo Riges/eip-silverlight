@@ -135,7 +135,7 @@ namespace EIP.Views.Controls
                                     case "80":
                                         LienFeed lienFeed = new LienFeed(post);
                                         content.Children.Add(lienFeed);
-                                        this.Height = 220;
+                                        //this.Height = 220;
                                         break;
                                     case "128":
                                         VideoFeed videoFeed = new VideoFeed();
@@ -149,7 +149,7 @@ namespace EIP.Views.Controls
                                         }
                                         PhotosFeed photosFeed = new PhotosFeed(post);
                                         content.Children.Add(photosFeed);
-                                        this.Height = 220;
+                                        //this.Height = 220;
                                         break;
                                     default:
                                         TextBlock block = new TextBlock();
@@ -165,6 +165,7 @@ namespace EIP.Views.Controls
                                // stream_comments stream_coms = topic.fb_post.post.comments;
                                 comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
                                 comsControl.Commentaires = topic.fb_post.post.comments;
+                                comsControl.Width = this.ActualWidth * 0.7;
                                     
                                 /*
                                 List<profile> profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;

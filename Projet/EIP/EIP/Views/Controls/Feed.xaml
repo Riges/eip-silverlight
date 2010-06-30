@@ -25,11 +25,12 @@
         </Storyboard>
 
     </UserControl.Resources>
+    
     <!--<Border BorderBrush="Red" BorderThickness="3">-->
     <Grid x:Name="LayoutRoot" Background="White"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="2"></RowDefinition>
@@ -39,7 +40,7 @@
             <ColumnDefinition Width="75*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform" Margin="0,5,0,5" >
+        <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"  Margin="0,5,0,5" >
                 <Image.Projection>
                     <PlaneProjection  RotationY="-35" CenterOfRotationX="0"  />
                 </Image.Projection>
@@ -53,7 +54,7 @@
         
         <!--<TextBlock Grid.Row="1" Grid.Column="1" Name="message" Text="{Binding Path=message}" HorizontalAlignment="Stretch" TextWrapping="Wrap"></TextBlock>-->
         <!--<toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="message"  HorizontalAlignment="Left" VerticalAlignment="Top"></toolkit:WrapPanel>-->
-        <toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="content"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></toolkit:WrapPanel>
+        <toolkit:WrapPanel  Grid.Row="1" Grid.Column="1" Name="content"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto" ></toolkit:WrapPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,2">
 
@@ -63,13 +64,13 @@
             <HyperlinkButton Margin="3,0,0,0" Name="viaAppli" Visibility="Collapsed"></HyperlinkButton>
         </StackPanel>
 
-        <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" x:Name="comsControl"></Control:Coms>
+        <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" x:Name="comsControl" HorizontalAlignment="Center" VerticalAlignment="Stretch" ></Control:Coms>
         
         
         <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
             
        
     </Grid>
-        <!--</Border>-->
+       <!--</Border>-->
     
 </UserControl>
