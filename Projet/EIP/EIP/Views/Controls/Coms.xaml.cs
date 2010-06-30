@@ -16,40 +16,43 @@ namespace EIP.Views.Controls
     public partial class Coms : UserControl
     {
 
+        private stream_comments commentaires;
 
         public List<profile> profiles { get; set; }
-        public stream_comments coms 
-        {
-            get
-            {
-                return this.coms;
-            }
-            set
-            {
-                LoadComs();
-            }
-        }
-
 
         public Coms()
         {
             InitializeComponent();
         }
 
+        public stream_comments Commentaires
+        {
+            get
+            {
+                return commentaires;
+            }
+            set
+            {
+                this.commentaires = value;
+                LoadComs();
+            }
+        }
+
+
+       
+
         private void LoadComs()
         {
-            
-            if (coms.count > 0)
+
+            if (this.Commentaires.count > 0)
             {
-                foreach (comment com in coms.comment_list.comment)
-                {
+                foreach (comment com in Commentaires.comment_list.comment)
+                { 
                     var theProfile = from profile prof in profiles
-                                     where prof.id == Convert.ToInt64(com.post_id)
+                                     where prof.id == Convert.ToInt64(com.fromid)
                                      select prof;
-                   
 
-
-                    Com comControl = new Com(com, (profile)theProfile);
+                    Com comControl = new Com(com, (profile)theProfile.First());
 
 
                     comsPanel.Children.Add(comControl);

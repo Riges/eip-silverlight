@@ -164,7 +164,7 @@ namespace EIP.Views.Controls
                                 //commentaires
                                // stream_comments stream_coms = topic.fb_post.post.comments;
                                 comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
-                                comsControl.coms = topic.fb_post.post.comments;
+                                comsControl.Commentaires = topic.fb_post.post.comments;
                                     
                                 /*
                                 List<profile> profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
