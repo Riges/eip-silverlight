@@ -18,6 +18,8 @@ namespace EIP.Views.Controls
 
         private stream_comments commentaires;
 
+        public long accountID { get; set; }
+        public string xid { get; set; }
         public List<profile> profiles { get; set; }
 
         public Coms()
@@ -38,7 +40,7 @@ namespace EIP.Views.Controls
             {
                 this.commentaires = value;
                 
-                LoadComs();
+                LoadComsControl();
 
             }
         }
@@ -46,13 +48,29 @@ namespace EIP.Views.Controls
 
        
 
-        private void LoadComs()
+        private void LoadComsControl()
         {
             //comsPanel.Children.Add(new TextBlock() { Text = "jaime" });
+            
+            if (this.Commentaires.count > this.Commentaires.comment_list.comment.Count())
+            {
+                HyperlinkButton linkBtn = new HyperlinkButton();
+                linkBtn.Content = "Afficher les " + this.Commentaires.count + " commentaires";
+                linkBtn.Click += new RoutedEventHandler(linkBtn_Click);
+                displayAllComsPanel.Children.Add(linkBtn);
+            }
+
+            LoadComs();
+        }
+
+        private void LoadComs()
+        {
             if (this.Commentaires.comment_list.comment.Count > 0)
             {
+                comsPanel.Children.Clear();
                 foreach (comment com in Commentaires.comment_list.comment)
                 {
+
                     //comsPanel.Children.Add(new TextBlock() { Text = com.text });
                     var theProfile = from profile prof in profiles
                                      where prof.id == Convert.ToInt64(com.fromid)
@@ -64,6 +82,25 @@ namespace EIP.Views.Controls
                     comsPanel.Children.Add(comControl);
                 }
             }
+        }
+
+        void linkBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComsCalled += new AccountFacebookLight.OnGetComsCompleted(Coms_GetComsCalled);
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComs(xid, AccountFacebookLight.FBobjectType.Feed);
+
+        }
+
+        void Coms_GetComsCalled(List<comment> coms)
+        {
+
+            MessageBox toto = new MessageBox("", "invoked");
+            toto.Show();
+
+
+            this.Commentaires = new stream_comments() { comment_list = new stream_commentsComment_list() { comment = coms } };
+            LoadComs();
+            displayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }
