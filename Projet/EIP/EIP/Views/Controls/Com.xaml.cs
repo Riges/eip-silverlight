@@ -32,7 +32,7 @@ namespace EIP.Views.Controls
 
             this.com = unCom;
             this.profile = unProfile;
-
+            
             if (profile.pic_square != null)
             {
                 BitmapImage btImgFB = null;

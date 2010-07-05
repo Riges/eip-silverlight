@@ -325,6 +325,72 @@ namespace EIP
                 menuFeeds.LoadFilters(this);
             }
         }
+
+        public enum FBobjectType
+        {
+            Feed,
+            Photo,
+            Video
+        }
+
+        public delegate void OnGetComsCompleted(List<comment> coms);
+        public event OnGetComsCompleted GetComsCalled;
+
+        public void GetComs(string xid, FBobjectType type)
+        {
+            this.facebookAPI.Comments.GetAsync(xid, new Comments.GetCallback(GetComs_Completed), type);
+        }
+
+        public void GetComs_Completed(IList<comment> coms, object obj, FacebookException ex)
+        {
+            FBobjectType type = (FBobjectType)obj;
+
+            switch (type)
+            {
+                case FBobjectType.Feed:
+                    break;
+                case FBobjectType.Photo:
+                    break;
+                case FBobjectType.Video:
+                    break;
+                default:
+                    break;
+            }
+            
+            MessageBox toto = new MessageBox("", coms.Count.ToString());
+            toto.Show();
+
+            if(this.GetComsCalled != null)//evite que ca plante si pas dabo
+                this.GetComsCalled.Invoke((List<comment>)coms);
+        }
+
+        public void AddCom(comment com)
+        {
+            //this.facebookAPI.Comments.AddAsync();
+        }
+
+        public void DeleteCom(comment com)
+        {
+            this.facebookAPI.Comments.RemoveAsync(com.xid, Convert.ToInt32(com.id), new Comments.RemoveCallback(DeleteCom_Completed), null);
+        }
+
+        private void DeleteCom_Completed(bool result, object o, FacebookException ex)
+        {
+            if (ex == null)
+            {
+                if (result)
+                {
+                    MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
+                    msgBox.Show();
+                }
+                else
+                {
+                    MessageBox msgBox = new MessageBox("Erreur", "Le commentaire n'a pas pu être supprimé.", MessageBoxButton.OK);
+                    msgBox.Show();
+                }
+            }
+        }
+
         
     
     }
