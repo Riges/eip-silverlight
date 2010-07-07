@@ -31,6 +31,7 @@ namespace EIP.Views.Controls
         //public stream_post post { get; set; }
         public TopicFB post { get; set; }
         public TwitterStatus status { get; set; }
+        private Topic topic;
       
         public Feed()
         {
@@ -74,11 +75,12 @@ namespace EIP.Views.Controls
 
         void Feed_Loaded(object sender, RoutedEventArgs e)
         {
-
-
             if (Connexion.accounts.Count > 0)
             {
-                Topic topic = (Topic)this.DataContext;
+                this.topic = (Topic)this.DataContext;
+
+                
+
                 switch (topic.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
@@ -158,8 +160,11 @@ namespace EIP.Views.Controls
                                         break;
                                 }
 
-
-
+                                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).AddLikeCalled += new AccountFacebookLight.OnAddLikeCompleted(Feed_AddLikeCalled);
+                                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).RemoveLikeCalled += new AccountFacebookLight.OnRemoveLikeCompleted(Feed_RemoveLikeCalled);
+                                
+                                LoadJaimeButton(post.post.likes.user_likes);
+                                stream_likes test = post.post.likes;
 
                                 //commentaires
                                // stream_comments stream_coms = topic.fb_post.post.comments;
@@ -239,6 +244,41 @@ namespace EIP.Views.Controls
                 }
             }
             
+        }
+
+
+
+        void Feed_RemoveLikeCalled(bool ok, string postId)
+        {
+            if (ok && post.post.post_id == postId)
+                LoadJaimeButton(false);
+        }
+
+        void Feed_AddLikeCalled(bool ok, string postId)
+        {
+            if (ok && post.post.post_id == postId)
+                LoadJaimeButton(true);
+        }
+
+        private void jaimebutton_Click(object sender, RoutedEventArgs e)
+        {
+            bool jaime = (bool)((HyperlinkButton)sender).DataContext;
+            if(jaime)
+                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).RemoveLike(post.post.post_id);
+            else
+                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).AddLike(post.post.post_id);
+        }
+
+        private void LoadJaimeButton(bool jaime)
+        {
+            Connexion.dispatcher.BeginInvoke(() =>
+                {
+                    if (jaime)
+                        jaimebutton.Content = "Je n'aime plus";
+                    else
+                        jaimebutton.Content = "J'aime";
+                    jaimebutton.DataContext = jaime;
+                });
         }
 
         /*

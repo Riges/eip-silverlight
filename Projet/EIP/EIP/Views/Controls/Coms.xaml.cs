@@ -21,6 +21,7 @@ namespace EIP.Views.Controls
         public long accountID { get; set; }
         public string xid { get; set; }
         public List<profile> profiles { get; set; }
+        public stream_likes likes { get; set; }
 
         public Coms()
         {
@@ -28,7 +29,6 @@ namespace EIP.Views.Controls
             
         }
 
- 
 
         public stream_comments Commentaires
         {
@@ -45,8 +45,6 @@ namespace EIP.Views.Controls
             }
         }
 
-
-       
 
         private void LoadComsControl()
         {

@@ -391,6 +391,34 @@ namespace EIP
             }
         }
 
+        public delegate void OnAddLikeCompleted(bool ok, string postId);
+        public event OnAddLikeCompleted AddLikeCalled;
+
+        public void AddLike(string postId)
+        {
+            this.facebookAPI.Stream.AddLikeAsync(postId, new Stream.AddLikeCallback(AddLike_Completed), postId);
+        }
+
+        private void AddLike_Completed(bool result, object o, FacebookException ex)
+        {
+            if (this.AddLikeCalled != null)//evite que ca plante si pas dabo
+                this.AddLikeCalled.Invoke(result, o.ToString());
+        }
+
+        public delegate void OnRemoveLikeCompleted(bool ok, string postId);
+        public event OnRemoveLikeCompleted RemoveLikeCalled;
+
+        public void RemoveLike(string postId)
+        {
+            this.facebookAPI.Stream.RemoveLikeAsync(postId, new Stream.RemoveLikeCallback(RemoveLike_Completed), postId);
+        }
+
+        private void RemoveLike_Completed(bool result, object o, FacebookException ex)
+        {
+            if (this.RemoveLikeCalled != null)//evite que ca plante si pas dabo
+                this.RemoveLikeCalled.Invoke(result, o.ToString());
+        }
+
         
     
     }
