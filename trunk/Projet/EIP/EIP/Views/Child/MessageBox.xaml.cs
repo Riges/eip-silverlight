@@ -7,19 +7,14 @@ namespace EIP
     public partial class MessageBox : ChildWindow
     {
 
-        public MessageBox(string title, string details)
-        {
-            InitializeComponent();
-            if (title != null)
-                this.Title = title;
-            MessageTextBox.Text = details;
-        }
+        
         public MessageBox(string title, string details, MessageBoxButton boutons)
         {
             InitializeComponent();
             if (title != null)
                 this.Title = title;
-            MessageTextBox.Text = details;
+            if (details != null)
+                MessageTextBox.Text = details;
 
             switch (boutons)
             {
@@ -33,6 +28,16 @@ namespace EIP
                 default:
                     break;
             }
+        }
+        public MessageBox(string title, string details)
+        {
+            InitializeComponent();
+            if (title != null)
+                this.Title = title;
+            if (details != null)
+                MessageTextBox.Text = details;
+
+            OKButton.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)

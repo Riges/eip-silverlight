@@ -160,10 +160,9 @@ namespace EIP.Views.Controls
                                         break;
                                 }
 
-                                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).AddLikeCalled += new AccountFacebookLight.OnAddLikeCompleted(Feed_AddLikeCalled);
-                                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).RemoveLikeCalled += new AccountFacebookLight.OnRemoveLikeCompleted(Feed_RemoveLikeCalled);
-                                
-                                LoadJaimeButton(post.post.likes.user_likes);
+                                jaimeButton.accountID = topic.accountID;
+                                jaimeButton.postId = post.post.post_id;
+                                jaimeButton.LoadJaimeButton(post.post.likes.user_likes);
                                 stream_likes test = post.post.likes;
 
                                 //commentaires
@@ -173,6 +172,8 @@ namespace EIP.Views.Controls
                                 comsControl.accountID = topic.accountID;
                                 comsControl.Commentaires = topic.fb_post.post.comments;
                                 comsControl.Width = this.ActualWidth * 0.7;
+
+                                
                                     
                                 /*
                                 List<profile> profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
@@ -248,38 +249,6 @@ namespace EIP.Views.Controls
 
 
 
-        void Feed_RemoveLikeCalled(bool ok, string postId)
-        {
-            if (ok && post.post.post_id == postId)
-                LoadJaimeButton(false);
-        }
-
-        void Feed_AddLikeCalled(bool ok, string postId)
-        {
-            if (ok && post.post.post_id == postId)
-                LoadJaimeButton(true);
-        }
-
-        private void jaimebutton_Click(object sender, RoutedEventArgs e)
-        {
-            bool jaime = (bool)((HyperlinkButton)sender).DataContext;
-            if(jaime)
-                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).RemoveLike(post.post.post_id);
-            else
-                ((AccountFacebookLight)Connexion.accounts[topic.accountID]).AddLike(post.post.post_id);
-        }
-
-        private void LoadJaimeButton(bool jaime)
-        {
-            Connexion.dispatcher.BeginInvoke(() =>
-                {
-                    if (jaime)
-                        jaimebutton.Content = "Je n'aime plus";
-                    else
-                        jaimebutton.Content = "J'aime";
-                    jaimebutton.DataContext = jaime;
-                });
-        }
 
         /*
         private void GetUser_Completed(IList<user> users, object o, FacebookException ex)

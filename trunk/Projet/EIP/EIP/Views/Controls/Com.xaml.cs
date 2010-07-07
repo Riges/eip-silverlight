@@ -19,6 +19,7 @@ namespace EIP.Views.Controls
     {
         public comment com { get; set; }
         public profile profile { get; set; }
+        public long accountID { get; set; }
 
 
         public Com()
@@ -26,12 +27,13 @@ namespace EIP.Views.Controls
             InitializeComponent();
         }
 
-        public Com(comment unCom, profile unProfile)
+        public Com(comment unCom, profile unProfile, long unAccountID)
         {
             InitializeComponent();
 
             this.com = unCom;
             this.profile = unProfile;
+            this.accountID = unAccountID;
             
             if (profile.pic_square != null)
             {
@@ -55,6 +57,14 @@ namespace EIP.Views.Controls
                     content.Children.Add(element);
             }
 
+            
+
+
+        }
+
+        private void deleteCom_Click(object sender, RoutedEventArgs e)
+        {
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).DeleteCom(this.com);
         }
     }
 }
