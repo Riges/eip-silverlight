@@ -62,6 +62,7 @@
             <TextBlock Name="dateTimeFeed"></TextBlock>
             <TextBlock Margin="3,0,0,0" Name="viaAppliText" Visibility="Collapsed">via</TextBlock>
             <HyperlinkButton Margin="3,0,0,0" Name="viaAppli" Visibility="Collapsed"></HyperlinkButton>
+            <HyperlinkButton Margin="3,0,0,0" Name="jaimebutton" Click="jaimebutton_Click" ></HyperlinkButton>
         </StackPanel>
 
         <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" x:Name="comsControl" HorizontalAlignment="Center" VerticalAlignment="Stretch" ></Control:Coms>

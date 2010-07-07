@@ -146,6 +146,9 @@
     <Compile Include="Views\Controls\FriendInfo.xaml.cs">
       <DependentUpon>FriendInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\jaime.xaml.cs">
+      <DependentUpon>jaime.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\ListeComptes.xaml.cs">
       <DependentUpon>ListeComptes.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\FriendInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\jaime.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
