@@ -7,6 +7,6 @@
     d:DesignHeight="300" d:DesignWidth="400">
     
     <Grid x:Name="LayoutRoot" Background="White">
-
+        <HyperlinkButton Margin="3,0,0,0" Name="jaimebutton" Click="jaimebutton_Click" ></HyperlinkButton>
     </Grid>
 </UserControl>

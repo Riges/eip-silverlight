@@ -74,7 +74,7 @@ namespace EIP.Views.Controls
                                      where prof.id == Convert.ToInt64(com.fromid)
                                      select prof;
 
-                    Com comControl = new Com(com, (profile)theProfile.First());
+                    Com comControl = new Com(com, (profile)theProfile.First(), this.accountID);
 
 
                     comsPanel.Children.Add(comControl);

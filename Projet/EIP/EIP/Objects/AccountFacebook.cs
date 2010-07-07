@@ -357,8 +357,8 @@ namespace EIP
                     break;
             }
             
-            MessageBox toto = new MessageBox("", coms.Count.ToString());
-            toto.Show();
+            //MessageBox toto = new MessageBox("", coms.Count.ToString());
+            //toto.Show();
 
             if(this.GetComsCalled != null)//evite que ca plante si pas dabo
                 this.GetComsCalled.Invoke((List<comment>)coms);
@@ -371,24 +371,34 @@ namespace EIP
 
         public void DeleteCom(comment com)
         {
-            this.facebookAPI.Comments.RemoveAsync(com.xid, Convert.ToInt32(com.id), new Comments.RemoveCallback(DeleteCom_Completed), null);
+            MessageBox msgBox = new MessageBox(com.id, com.post_id, MessageBoxButton.OK);
+            msgBox.Show();
+            string[] tmp = com.id.Split('_');
+            this.facebookAPI.Comments.RemoveAsync(com.xid, Convert.ToInt32(tmp[2]), true, new Comments.RemoveCallback(DeleteCom_Completed), com.post_id);
         }
 
-        private void DeleteCom_Completed(bool result, object o, FacebookException ex)
+        private void DeleteCom_Completed(bool result, object obj, FacebookException ex)
         {
-            if (ex == null)
-            {
-                if (result)
+            Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
-                    msgBox.Show();
-                }
-                else
-                {
-                    MessageBox msgBox = new MessageBox("Erreur", "Le commentaire n'a pas pu être supprimé.", MessageBoxButton.OK);
-                    msgBox.Show();
-                }
-            }
+                    MessageBox msgBoxs = new MessageBox(result.ToString(), ex.Message, MessageBoxButton.OK);
+                    msgBoxs.Show();
+                    if (ex == null)
+                    {
+                        if (result)
+                        {
+                            MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
+                            msgBox.Show();
+                            this.GetComs(obj.ToString(), FBobjectType.Feed);
+                        }
+                        else
+                        {
+                            MessageBox msgBox = new MessageBox("Erreur", "Le commentaire n'a pas pu être supprimé.", MessageBoxButton.OK);
+                            msgBox.Show();
+                        }
+                    }
+                    
+                });
         }
 
         public delegate void OnAddLikeCompleted(bool ok, string postId);
@@ -418,6 +428,8 @@ namespace EIP
             if (this.RemoveLikeCalled != null)//evite que ca plante si pas dabo
                 this.RemoveLikeCalled.Invoke(result, o.ToString());
         }
+
+        
 
         
     

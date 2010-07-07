@@ -22,7 +22,10 @@ namespace EIP.Web
             string imageLink = context.Request.Params["link"];
 
             context.Response.ContentType = "image/jpeg";
-            context.Response.BinaryWrite(GetBufferFromImage(imageLink));
+
+            byte[] tmpImg = GetBufferFromImage(imageLink);
+            if(tmpImg != null)
+                context.Response.BinaryWrite(tmpImg);
         }
 
         private byte[] GetBufferFromImage(string imageLnk)
