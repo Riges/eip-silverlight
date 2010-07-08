@@ -19,6 +19,7 @@ function facebook_login() {
         facebook_prompt_permission("read_stream");
         facebook_prompt_permission("offline_access");
         facebook_prompt_permission("publish_stream");
+        facebook_prompt_permission("read_mailbox");
     });
 }
 
