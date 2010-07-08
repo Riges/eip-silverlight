@@ -33,6 +33,16 @@ namespace EIP
         public List<user> friends { get; set; }
         public List<stream_filter> filters { get; set; }
         public List<profile> profiles { get; set; }
+        public List<thread> inbox { get; set; }
+        public List<thread> outbox { get; set; }
+
+        public enum MsgFolder
+        {
+            Inbox = 0,
+            Outbox = 1,
+            Updates = 4
+        }
+
 
         private bool busy = false;
         //private int nbFeeds = 0;
@@ -99,6 +109,36 @@ namespace EIP
             }
         }
 
+
+
+
+
+         ///  Messages
+
+        public void LoadInboxMessages()
+        {
+            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Inbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesInboxCompleted), null);
+        }
+        public void LoadOutboxMessages()
+        {
+            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesOutboxCompleted), null);
+        }
+
+        private void LoadMessagesInboxCompleted(IList<thread> liste, Object state, FacebookException e)
+        {
+            this.inbox = liste as List<thread>;
+        }
+
+        private void LoadMessagesOutboxCompleted(IList<thread> liste, Object state, FacebookException e)
+        {
+            this.outbox = liste as List<thread>;
+        }
+
+
+
+
+
+
         public void LoadFriends()
         {
             
@@ -122,6 +162,7 @@ namespace EIP
                      this.friends = users as List<user>;
                  }
         }
+
 
         /// <summary>
         /// Méthode pour charger la liste des feeds correspondant au filtre passé en paramètre.

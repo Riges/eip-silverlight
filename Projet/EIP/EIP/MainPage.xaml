@@ -30,8 +30,13 @@
 
                             <HyperlinkButton x:Name="LinkFriends" Style="{StaticResource LinkStyle}" 
                                      NavigateUri="/Friends" TargetName="ContentFrame" Content="Friends"/>
-                            
+
                             <Rectangle x:Name="DividerFriends" Style="{StaticResource DividerStyle}"/>
+
+                            <HyperlinkButton x:Name="LinkMessages" Style="{StaticResource LinkStyle}"  Click="LinkMessages_Click"
+                                     NavigateUri="/Messages" TargetName="ContentFrame" Content="Messages"/>
+
+                            <Rectangle x:Name="DividerMessages" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="LinkProfil" Style="{StaticResource LinkStyle}" 
                                      NavigateUri="/Profil" TargetName="ContentFrame" Content="Profil"/>
