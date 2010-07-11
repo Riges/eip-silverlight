@@ -374,36 +374,25 @@ namespace EIP
             Video
         }
 
-        public delegate void OnGetComsCompleted(List<comment> coms);
+        public delegate void OnGetComsCompleted(List<comment> coms, string postId);
         public event OnGetComsCompleted GetComsCalled;
 
-        public void GetComs(string xid, FBobjectType type)
+        public void GetComs(string postId)
         {
-            this.facebookAPI.Comments.GetAsync(xid, new Comments.GetCallback(GetComs_Completed), type);
+            //this.facebookAPI.Comments.GetAsync(xid.Split('_')[1], new Comments.GetCallback(GetComs_Completed), type);
+            this.facebookAPI.Fql.QueryAsync<comments_get_response>("SELECT xid, fromid, time, text, id,username FROM comment WHERE object_id=" + postId.Split('_')[1], new Fql.QueryCallback<comments_get_response>(GetComsFQL_Completed), postId);
         }
 
-        public void GetComs_Completed(IList<comment> coms, object obj, FacebookException ex)
+        public void GetComsFQL_Completed(comments_get_response coms, object obj, FacebookException ex)
         {
-            FBobjectType type = (FBobjectType)obj;
-
-            switch (type)
-            {
-                case FBobjectType.Feed:
-                    break;
-                case FBobjectType.Photo:
-                    break;
-                case FBobjectType.Video:
-                    break;
-                default:
-                    break;
-            }
-            
-            //MessageBox toto = new MessageBox("", coms.Count.ToString());
-            //toto.Show();
-
-            if(this.GetComsCalled != null)//evite que ca plante si pas dabo
-                this.GetComsCalled.Invoke((List<comment>)coms);
+            if (this.GetComsCalled != null)//evite que ca plante si pas dabo
+                this.GetComsCalled.Invoke(coms.comment, obj.ToString());
         }
+
+       /* public void GetComs_Completed(IList<comment> coms, object obj, FacebookException ex)
+        {
+           
+        }*/
 
         public void AddCom(comment com)
         {
@@ -430,7 +419,7 @@ namespace EIP
                         {
                             MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
                             msgBox.Show();
-                            this.GetComs(obj.ToString(), FBobjectType.Feed);
+                            this.GetComs(obj.ToString());
                         }
                         else
                         {
