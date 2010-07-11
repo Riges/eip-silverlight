@@ -19,7 +19,7 @@ namespace EIP.Views.Controls
         private stream_comments commentaires;
 
         public long accountID { get; set; }
-        public string xid { get; set; }
+        public string postId { get; set; }
         public List<profile> profiles { get; set; }
         public stream_likes likes { get; set; }
 
@@ -49,6 +49,7 @@ namespace EIP.Views.Controls
         private void LoadComsControl()
         {
             //comsPanel.Children.Add(new TextBlock() { Text = "jaime" });
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComsCalled += new AccountFacebookLight.OnGetComsCompleted(Coms_GetComsCalled); 
             
             if (this.Commentaires.count > this.Commentaires.comment_list.comment.Count())
             {
@@ -61,44 +62,53 @@ namespace EIP.Views.Controls
             LoadComs();
         }
 
+        
         private void LoadComs()
         {
-            if (this.Commentaires.comment_list.comment.Count > 0)
-            {
-                comsPanel.Children.Clear();
-                foreach (comment com in Commentaires.comment_list.comment)
+            Connexion.dispatcher.BeginInvoke(() =>
                 {
+                    if (this.Commentaires.comment_list.comment.Count > 0)
+                    {
+                        comsPanel.Children.Clear();
+                        foreach (comment com in Commentaires.comment_list.comment)
+                        {
 
-                    //comsPanel.Children.Add(new TextBlock() { Text = com.text });
-                    var theProfile = from profile prof in profiles
-                                     where prof.id == Convert.ToInt64(com.fromid)
-                                     select prof;
+                            //comsPanel.Children.Add(new TextBlock() { Text = com.text });
+                            var theProfile = from profile prof in profiles
+                                             where prof.id == Convert.ToInt64(com.fromid)
+                                             select prof;
 
-                    Com comControl = new Com(com, (profile)theProfile.First(), this.accountID);
+                            Com comControl = new Com(com, (profile)theProfile.First(), this.accountID);
 
 
-                    comsPanel.Children.Add(comControl);
-                }
-            }
+                            comsPanel.Children.Add(comControl);
+                        }
+                    }
+                });
         }
 
         void linkBtn_Click(object sender, RoutedEventArgs e)
         {
-            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComsCalled += new AccountFacebookLight.OnGetComsCompleted(Coms_GetComsCalled);
-            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComs(xid, AccountFacebookLight.FBobjectType.Feed);
+
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComs(this.postId);
 
         }
 
-        void Coms_GetComsCalled(List<comment> coms)
+        void Coms_GetComsCalled(List<comment> coms, string postId)
         {
 
-            MessageBox toto = new MessageBox("", "invoked");
-            toto.Show();
+            //MessageBox toto = new MessageBox("", "invoked");
+            //toto.Show();
 
-
-            this.Commentaires = new stream_comments() { comment_list = new stream_commentsComment_list() { comment = coms } };
-            LoadComs();
-            displayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
+            if (postId == this.postId)
+            {
+                this.Commentaires = new stream_comments() { comment_list = new stream_commentsComment_list() { comment = coms } };
+                LoadComs();
+                Connexion.dispatcher.BeginInvoke(() =>
+                    {
+                        displayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
+                    });
+            }
         }
     }
 }

@@ -168,7 +168,7 @@ namespace EIP.Views.Controls
                                 //commentaires
                                // stream_comments stream_coms = topic.fb_post.post.comments;
                                 comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
-                                comsControl.xid = post.post.post_id;
+                                comsControl.postId = post.post.post_id;
                                 comsControl.accountID = topic.accountID;
                                 comsControl.Commentaires = topic.fb_post.post.comments;
                                 comsControl.Width = this.ActualWidth * 0.7;
