@@ -158,6 +158,9 @@
     <Compile Include="Views\Controls\UpdateStatus.xaml.cs">
       <DependentUpon>UpdateStatus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MenuMessagesBox.xaml.cs">
+      <DependentUpon>MenuMessagesBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MessagesBox.xaml.cs">
       <DependentUpon>MessagesBox.xaml</DependentUpon>
     </Compile>
@@ -267,6 +270,10 @@
     <Page Include="Views\Controls\UpdateStatus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenuMessagesBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MessagesBox.xaml">
       <Generator>MSBuild:Compile</Generator>
