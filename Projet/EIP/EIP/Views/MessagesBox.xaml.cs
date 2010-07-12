@@ -20,6 +20,7 @@ namespace EIP.Views
         //public Dictionary<String, Friend> friends;
         public List<thread> inbox;
         public List<thread> outbox;
+        public String boxActive;
 
         public MessagesBox()
         {
@@ -46,7 +47,9 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
+            if (this.NavigationContext.QueryString.ContainsKey("box"))
+                this.boxActive = this.NavigationContext.QueryString["box"];
+            HeaderText.Text = boxActive;
 
 
         }

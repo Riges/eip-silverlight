@@ -33,7 +33,7 @@
 
                             <Rectangle x:Name="DividerFriends" Style="{StaticResource DividerStyle}"/>
 
-                            <HyperlinkButton x:Name="LinkMessages" Style="{StaticResource LinkStyle}"  Click="LinkMessages_Click"
+                            <HyperlinkButton x:Name="LinkMessages" Style="{StaticResource LinkStyle}"
                                      NavigateUri="/Messages" TargetName="ContentFrame" Content="Messages"/>
 
                             <Rectangle x:Name="DividerMessages" Style="{StaticResource DividerStyle}"/>
@@ -76,6 +76,8 @@
                         <uriMapper:UriMapper>
                             <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
                             <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/MenuFeeds.xaml"/>
+                            <uriMapper:UriMapping Uri="/Messages" MappedUri="/Views/MenuMessagesBox.xaml?box=Inbox"/>
+                            <uriMapper:UriMapping Uri="/Messages/{filter}" MappedUri="/Views/MenuMessagesBox.xaml?box={filter}"/>
                             <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/EmptyPage.xaml"/>
                             <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/EmptyPage.xaml"/>
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
@@ -104,6 +106,8 @@
                             <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
                             <!--<uriMapper:UriMapping Uri="/User/{id}" MappedUri="/Views/UserDetail.xaml?id={id}" />-->
                             <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/StreamFeeds.xaml" />
+                            <uriMapper:UriMapping Uri="/Messages" MappedUri="/Views/MessagesBox.xaml?box=Inbox"/>
+                            <uriMapper:UriMapping Uri="/Messages/{filter}" MappedUri="/Views/MessagesBox.xaml?box={filter}"/>
                             <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/WaitLoad.xaml" />
                             <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/IntroPage.xaml" />
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />

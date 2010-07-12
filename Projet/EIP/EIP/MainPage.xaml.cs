@@ -144,13 +144,7 @@ namespace EIP
             //LeftFrame.Navigate(new Uri("/Views/MenuFeeds.xaml", UriKind.Relative));
             LinkHome.NavigateUri = new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative);
         }
-
-        private void LinkMessages_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-
+        
 
         private void LinkCreateNewAccount_Click(object sender, RoutedEventArgs e)
         {
