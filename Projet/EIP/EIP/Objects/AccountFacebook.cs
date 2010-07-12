@@ -35,6 +35,8 @@ namespace EIP
         public List<profile> profiles { get; set; }
         public List<thread> inbox { get; set; }
         public List<thread> outbox { get; set; }
+        Dictionary<long, List<album>> albums  { get; set; }
+        Dictionary<string, List<photo>> photos { get; set; }
 
         public enum MsgFolder
         {
@@ -385,8 +387,55 @@ namespace EIP
 
         public void GetComsFQL_Completed(comments_get_response coms, object obj, FacebookException ex)
         {
-            if (this.GetComsCalled != null)//evite que ca plante si pas dabo
-                this.GetComsCalled.Invoke(coms.comment, obj.ToString());
+            if (ex == null && coms.comment.Count > 0)
+            {
+                List<long> userIds = new List<long>();
+                foreach (comment com in coms.comment)
+                {
+
+                    bool exist = false;
+                    foreach (profile prof in this.profiles)
+                    {
+                        if (com.fromid == prof.id)
+                            exist = true;
+                    }
+                    if (!exist)
+                        userIds.Add(com.fromid);
+                }
+
+                if (userIds.Count == 0)
+                {
+                    if (this.GetComsCalled != null)//evite que ca plante si pas dabo
+                        this.GetComsCalled.Invoke(coms.comment, obj.ToString());
+                }
+                else
+                {
+                    List<object> list = new List<object>();
+                    list.Add(coms.comment);//[0]
+                    list.Add(obj);//[1]
+
+                    this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUserComs_Completed), list);
+                }
+            }
+        }
+
+        private void GetUserComs_Completed(IList<user> users, object obj, FacebookException ex)
+        {
+            if (ex == null)
+            {
+                foreach (user user in users)
+                {
+                    profile prof = new profile();
+                    prof.id = (long)user.uid;
+                    prof.name = user.name;
+                    prof.pic_square = user.pic_square;
+                    prof.url = user.profile_url;
+                    this.profiles.Add(prof);
+                }
+                List<object> list = (List<object>)obj;
+                if (this.GetComsCalled != null)//evite que ca plante si pas d'abo
+                    this.GetComsCalled.Invoke((List<comment>)list[0], list[1].ToString());
+            }
         }
 
        /* public void GetComs_Completed(IList<comment> coms, object obj, FacebookException ex)
@@ -458,6 +507,38 @@ namespace EIP
             if (this.RemoveLikeCalled != null)//evite que ca plante si pas dabo
                 this.RemoveLikeCalled.Invoke(result, o.ToString());
         }
+
+
+
+        public void GetAlbums(long uid)
+        {
+            if(!this.albums.ContainsKey(uid))
+                this.facebookAPI.Photos.GetAlbumsAsync(uid, new Photos.GetAlbumsCallback(GetAlbums_Completed), uid);
+        }
+
+        private void GetAlbums_Completed(IList<album> albums, object uid, FacebookException ex)
+        {
+            if (ex == null)
+            {
+                this.albums[(long)uid] = (List<album>)albums;
+            }
+        }
+
+        public void GetPhotos(string aid)
+        {
+            if (!this.photos.ContainsKey(aid))
+                this.facebookAPI.Photos.GetAsync(null, aid, null, new Photos.GetCallback(GetPhotos_Completed), aid);
+        }
+
+        private void GetPhotos_Completed(IList<photo> photos, object aid, FacebookException ex)
+        {
+            if (ex == null)
+            {
+                this.photos[aid.ToString()] = (List<photo>)photos;
+            }
+        }
+
+        
 
         
 

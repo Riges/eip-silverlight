@@ -57,6 +57,12 @@ namespace EIP.Views.Controls
                     content.Children.Add(element);
             }
 
+            if (Connexion.accounts[this.accountID].account.userID == com.fromid)
+                deleteCom.Visibility = System.Windows.Visibility.Visible;
+            else
+                deleteCom.Visibility = System.Windows.Visibility.Collapsed;
+
+
             
 
 
