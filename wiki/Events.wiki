@@ -40,7 +40,7 @@ prototype de la fonction "Coms_GetComsCalled" avec les paremtre défini dans le 
 
 Puis retournons dans notre classe AccountFacebookLight et plus particulièrement dans le callback de la fonction ui nous intéresse, la ou sera déclencher l'event pr envoyer les données que l'on a recu.
 
- public void GetComsFQL_Completed(comments_get_response coms, object postId, FacebookException ex)
+public void GetComsFQL_Completed(comments_get_response coms, object postId, FacebookException ex)
 {
    if (ex == null && coms.comment.Count > 0)
    {
