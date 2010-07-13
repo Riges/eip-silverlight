@@ -1,0 +1,60 @@
+#labels Phase-Implementation
+Création d'un Event
+
+Dans "AccountFacebookLight" fichier AccountFacebook.cs
+
+On déclare un type :
+
+public delegate void OnGetComsCompleted(List<comment> coms, string postId);
+
+OnGetComsCompleted : nom du type
+List<comment> coms : premier paramètre
+string postId : deuxième paramètre
+
+On met les parametres que l'on veut, ici des commentaires car c'est ce que l'on va récupérer, et aussi le postId pr savoir quel post cela va impacter.
+
+Ensuite on déclare un event du type que l'on vient de définir
+
+public event OnGetComsCompleted GetComsCalled;
+
+OnGetComsCompleted : type précédemment déclaré
+GetComsCalled : Nom de l'event
+
+
+
+Ensuite du coté de l'affichage il faut s'abonner à cet Event pr définir une action lorsque l'on déclenchera l'event
+
+
+ex dans le userControl Coms :
+
+((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComsCalled += new AccountFacebookLight.OnGetComsCompleted(Coms_GetComsCalled);
+
+
+Je récupère le compte sur lequel on travail qui est dans mon  objet "accounts" qui est ds la classe statique "Connexion" je le cast comme un objet "AccountFacebookLight" afin de pvr accéder à l'event (car ds accounts mon objet est sous la forme d'un AccountLight)
+
+Ensuite je m'abonne a cet event. (la méthode "Coms_GetComsCalled" sera appelé au déclenchement de l'"event")
+
+prototype de la fonction "Coms_GetComsCalled" avec les paremtre défini dans le type "OnGetComsCompleted" qui est le type de notre event :
+void Coms_GetComsCalled(List<comment> coms, string postId)
+
+
+Puis retournons dans notre classe AccountFacebookLight et plus particulièrement dans le callback de la fonction ui nous intéresse, la ou sera déclencher l'event pr envoyer les données que l'on a recu.
+
+ public void GetComsFQL_Completed(comments_get_response coms, object postId, FacebookException ex)
+{
+   if (ex == null && coms.comment.Count > 0)
+   {
+      if (this.GetComsCalled != null)//OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
+         this.GetComsCalled.Invoke(coms.comment, postId.ToString());
+        // on déclenche l'event avec les bon parametre, en l'occurrence avec les données  que l'on vient de recevoir. 
+   }
+}
+
+
+
+
+
+
+
+
+
