@@ -14,6 +14,7 @@ using EIP.Objects;
 using Facebook.Schema;
 using EIP.ServiceEIP;
 using System.Windows.Media.Imaging;
+using System.Windows.Data;
 
 namespace EIP.Views
 {
@@ -49,13 +50,11 @@ namespace EIP.Views
                         case Account.TypeAccount.Facebook:
                             img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
                             break;
+
                         case Account.TypeAccount.Twitter:
-                            img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
-                            break;
                         case Account.TypeAccount.Myspace:
-                            break;
                         default:
-                            break;
+                            continue;
                     }
                     StackPanel panelHeader = new StackPanel();
                     panelHeader.Orientation = Orientation.Horizontal;
@@ -81,12 +80,11 @@ namespace EIP.Views
                     switch (account.Value.account.typeAccount)
                     {
                         case Account.TypeAccount.Facebook:
-                            //((AccountFacebookLight)account.Value).LoadFilters(this);
+                            this.LoadMessages(account.Value);
                             break;
+
                         case Account.TypeAccount.Twitter:
-                            break;
                         case Account.TypeAccount.Myspace:
-                            break;
                         default:
                             break;
                     }
@@ -95,8 +93,8 @@ namespace EIP.Views
         }
 
 
-/*
-        public void LoadFilters(AccountLight account)
+
+        public void LoadMessages(AccountLight account)
         {
             Dispatcher.BeginInvoke(() =>
             {
@@ -105,38 +103,26 @@ namespace EIP.Views
                 switch (account.account.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
-                        /*foreach (stream_filter filter in ((AccountFacebookLight)account).filters)
-                        {
-                            StackPanel panelFilter = new StackPanel();
-                            panelFilter.Orientation = Orientation.Horizontal;
-                            Image imgFilter = new Image();
-                            Uri uriImg = new Uri("http://localhost:4164/GifHandler.ashx?link=" + filter.icon_url, UriKind.Absolute);
-                            imgFilter.Source = new BitmapImage(uriImg);
-                            imgFilter.Width = 16;
-                            imgFilter.Stretch = Stretch.None;
-                            imgFilter.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-                            imgFilter.FlowDirection = System.Windows.FlowDirection.RightToLeft;
-                            imgFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
-                            imgFilter.Cursor = Cursors.Hand;
-                            imgFilter.DataContext = filter;
+                        StackPanel panelFilter = new StackPanel();
 
-                            TextBlock linkFilter = new TextBlock();
-                            linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
-                            linkFilter.DataContext = filter.filter_key;
-                            linkFilter.Margin = new Thickness(5, 0, 0, 0);
-                            linkFilter.Cursor = Cursors.Hand;
+                        TextBlock linkFilter = new TextBlock();
+                        linkFilter.Margin = new Thickness(5, 0, 0, 0);
+                        linkFilter.Cursor = Cursors.Hand;
+                        linkFilter.Text = "Boîte de réception";
+                        linkFilter.Tag = "inbox";
+                        linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkMessage_MouseLeftButtonUp);
 
-                            Binding binding = new Binding();
-                            binding.Source = filter;
-                            binding.Path = new PropertyPath("name");
-                            linkFilter.SetBinding(TextBlock.TextProperty, binding);
-
-                            panelFilter.Children.Add(imgFilter);
-                            panelFilter.Children.Add(linkFilter);
-                            panelContent.Children.Add(panelFilter);
-                        }*//*
-                        foreach (AccountFacebookLight.MsgFolder folder in 
-                        { }
+                        TextBlock linkFilter2 = new TextBlock();
+                        linkFilter2.Margin = new Thickness(5, 0, 0, 0);
+                        linkFilter2.Cursor = Cursors.Hand;
+                        linkFilter2.Text = "Boîte d'envoi";
+                        linkFilter2.Tag = "outbox";
+                        
+                        linkFilter2.MouseLeftButtonUp += new MouseButtonEventHandler(linkMessage_MouseLeftButtonUp);
+                        
+                        panelFilter.Children.Add(linkFilter);
+                        panelFilter.Children.Add(linkFilter2);
+                        panelContent.Children.Add(panelFilter);
                         break;
 
                     case Account.TypeAccount.Twitter:
@@ -148,6 +134,11 @@ namespace EIP.Views
                 item.Content = panelContent;
             }
            );
-        }*/
+        }
+
+        void linkMessage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Connexion.contentFrame.Navigate(new Uri(string.Format("/Messages/{0}", ((TextBlock)sender).Tag), UriKind.Relative));
+        }
     }
 }
