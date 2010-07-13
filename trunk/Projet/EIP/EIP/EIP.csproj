@@ -165,8 +165,14 @@
     <Compile Include="Views\Controls\ListeComptes.xaml.cs">
       <DependentUpon>ListeComptes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\listeMessages.xaml.cs">
+      <DependentUpon>listeMessages.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Loader.xaml.cs">
       <DependentUpon>Loader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\Message.xaml.cs">
+      <DependentUpon>Message.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\UpdateStatus.xaml.cs">
       <DependentUpon>UpdateStatus.xaml</DependentUpon>
@@ -280,7 +286,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\listeMessages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\Loader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Message.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
