@@ -1,5 +1,5 @@
+#summary Création d'un Event
 #labels Phase-Implementation
-#symmary Création d'un Event
 
 Dans "AccountFacebookLight" fichier AccountFacebook.cs
 
@@ -49,8 +49,6 @@ Puis retournons dans notre classe AccountFacebookLight et plus particulièrement
         // on déclenche l'event avec les bon parametre, en l'occurrence avec les données  que l'on vient de recevoir. 
    }
 }
-
-
 
 
 
