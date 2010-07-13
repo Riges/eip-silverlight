@@ -44,9 +44,7 @@ Puis retournons dans notre classe AccountFacebookLight et plus particulièrement
 {
    if (ex == null && coms.comment.Count > 0)
    {
-      if (this.GetComsCalled != null)//OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
-         this.GetComsCalled.Invoke(coms.comment, postId.ToString());
-        // on déclenche l'event avec les bon parametre, en l'occurrence avec les données  que l'on vient de recevoir. 
+      if (this.GetComsCalled != null)  //OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
+         this.GetComsCalled.Invoke(coms.comment, postId.ToString());  // on déclenche l'event avec les bon parametre, en l'occurrence avec les données  que l'on vient de recevoir. 
    }
 }
-
