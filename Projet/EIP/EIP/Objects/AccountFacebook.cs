@@ -483,6 +483,10 @@ namespace EIP
         public delegate void OnAddLikeCompleted(bool ok, string postId);
         public event OnAddLikeCompleted AddLikeCalled;
 
+        /// <summary>
+        /// Ajouter le "j'aime" sur un post
+        /// </summary>
+        /// <param name="postId">post id</param>
         public void AddLike(string postId)
         {
             this.facebookAPI.Stream.AddLikeAsync(postId, new Stream.AddLikeCallback(AddLike_Completed), postId);
@@ -497,6 +501,10 @@ namespace EIP
         public delegate void OnRemoveLikeCompleted(bool ok, string postId);
         public event OnRemoveLikeCompleted RemoveLikeCalled;
 
+        /// <summary>
+        /// Supprimer le "j'aime" sur un post
+        /// </summary>
+        /// <param name="postId">post id</param>
         public void RemoveLike(string postId)
         {
             this.facebookAPI.Stream.RemoveLikeAsync(postId, new Stream.RemoveLikeCallback(RemoveLike_Completed), postId);
@@ -508,8 +516,13 @@ namespace EIP
                 this.RemoveLikeCalled.Invoke(result, o.ToString());
         }
 
+        public delegate void OnGetAlbumsCompleted(bool ok, long userId);
+        public event OnGetAlbumsCompleted GetAlbumsCalled;
 
-
+        /// <summary>
+        /// Récupérer les albums d'un user
+        /// </summary>
+        /// <param name="uid">user id</param>
         public void GetAlbums(long uid)
         {
             if(!this.albums.ContainsKey(uid))
@@ -521,9 +534,16 @@ namespace EIP
             if (ex == null)
             {
                 this.albums[(long)uid] = (List<album>)albums;
+
+                if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
+                    this.GetAlbumsCalled.Invoke(true, (long)uid);
             }
         }
 
+        /// <summary>
+        /// Récupérer les photos d'un album
+        /// </summary>
+        /// <param name="aid">album id</param>
         public void GetPhotos(string aid)
         {
             if (!this.photos.ContainsKey(aid))

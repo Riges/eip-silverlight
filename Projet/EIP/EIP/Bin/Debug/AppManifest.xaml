@@ -17,6 +17,8 @@
     <AssemblyPart x:Name="Facebook.Silverlight" Source="Facebook.Silverlight.dll" />
     <AssemblyPart x:Name="Hammock.Silverlight" Source="Hammock.Silverlight.dll" />
     <AssemblyPart x:Name="Newtonsoft.Json.Silverlight" Source="Newtonsoft.Json.Silverlight.dll" />
+    <AssemblyPart x:Name="SStuff.FlowControls" Source="SStuff.FlowControls.dll" />
+    <AssemblyPart x:Name="SStuff.LayoutAlgorithms" Source="SStuff.LayoutAlgorithms.dll" />
     <AssemblyPart x:Name="System.ComponentModel.DataAnnotations" Source="System.ComponentModel.DataAnnotations.dll" />
     <AssemblyPart x:Name="System.ServiceModel.DomainServices.Client" Source="System.ServiceModel.DomainServices.Client.dll" />
     <AssemblyPart x:Name="System.ServiceModel.DomainServices.Client.Web" Source="System.ServiceModel.DomainServices.Client.Web.dll" />
