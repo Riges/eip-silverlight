@@ -33,8 +33,7 @@ namespace EIP
         public List<user> friends { get; set; }
         public List<stream_filter> filters { get; set; }
         public List<profile> profiles { get; set; }
-        public List<thread> inbox { get; set; }
-        public List<thread> outbox { get; set; }
+        public List<thread> box { get; set; }
         Dictionary<long, List<album>> albums  { get; set; }
         Dictionary<string, List<photo>> photos { get; set; }
 
@@ -117,24 +116,32 @@ namespace EIP
 
          ///  Messages
 
+        public delegate void OnGetMessagesCompleted(List<thread> liste);
+        public event OnGetMessagesCompleted GetMessagesCalled;
+
         public void LoadInboxMessages()
         {
-            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Inbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesInboxCompleted), null);
+            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Inbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
         }
         public void LoadOutboxMessages()
         {
-            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesOutboxCompleted), null);
+            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
         }
 
-        private void LoadMessagesInboxCompleted(IList<thread> liste, Object state, FacebookException e)
+        private void LoadMessagesCompleted(IList<thread> liste, Object state, FacebookException e)
         {
-            this.inbox = liste as List<thread>;
+            this.box = liste as List<thread>;
+
+            if (e == null && liste.Count > 0)
+            {
+
+                if (this.GetMessagesCalled != null) //OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
+
+                    this.GetMessagesCalled.Invoke(liste as List<thread>); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
+
+            } 
         }
 
-        private void LoadMessagesOutboxCompleted(IList<thread> liste, Object state, FacebookException e)
-        {
-            this.outbox = liste as List<thread>;
-        }
 
 
 
