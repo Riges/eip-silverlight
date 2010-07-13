@@ -66,6 +66,12 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="SStuff.FlowControls">
+      <HintPath>Bin\SStuff.FlowControls.dll</HintPath>
+    </Reference>
+    <Reference Include="SStuff.LayoutAlgorithms">
+      <HintPath>Bin\SStuff.LayoutAlgorithms.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -109,6 +115,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\InCoverFlowContentControlSampleData.cs" />
+    <Compile Include="ViewModels\SampleDataItem.cs" />
+    <Compile Include="ViewModels\SimpleCarouselAlgorithm.cs" />
+    <Compile Include="ViewModels\VirtualizationSampleData.cs" />
+    <Compile Include="Views\AlbumsView.xaml.cs">
+      <DependentUpon>AlbumsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Child\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
@@ -207,6 +220,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AlbumsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Child\Loading.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -34,7 +34,11 @@ namespace EIP.Views.Controls.Feeds
             {
                 
                 img1.Source = new BitmapImage(new Uri(topic.post.attachment.media.stream_media[0].src, UriKind.Absolute));
-                img1Border.Visibility = System.Windows.Visibility.Visible;      
+                img1Border.Visibility = System.Windows.Visibility.Visible;
+
+                /*MessageBox msgBox = new MessageBox("", topic.post.attachment.media.stream_media[0].photo.aid);
+                msgBox.Show();*/
+
             }
             if (topic.post.attachment.media.stream_media.Count >= 2)
             {
