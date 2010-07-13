@@ -18,16 +18,14 @@ namespace EIP.Views
     public partial class MessagesBox : Page
     {
         //public Dictionary<String, Friend> friends;
-        public List<thread> inbox;
-        public List<thread> outbox;
+        
         public String boxActive;
 
         public MessagesBox()
         {
             InitializeComponent();
-            /*inbox = new List<thread>();
-            outbox = new List<thread>();*/
-            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+            
+            /*foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
                 switch (account.Value.account.typeAccount)
                 {
@@ -41,7 +39,7 @@ namespace EIP.Views
                     default:
                         break;
                 }
-            }
+            }*/
         }
 
         // Executes when the user navigates to this page.
@@ -49,7 +47,48 @@ namespace EIP.Views
         {
             if (this.NavigationContext.QueryString.ContainsKey("box"))
                 this.boxActive = this.NavigationContext.QueryString["box"];
-            HeaderText.Text = boxActive;
+
+            
+
+            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+            {
+                switch (account.Value.account.typeAccount)
+                {
+                    case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                        switch (this.boxActive)
+                        {
+                            case "outbox":
+                                HeaderText.Text = "Boîte d'envoi";
+                                break;
+
+                            case "inbox":
+                            default:
+                                HeaderText.Text = "Boîte de réception";
+                                switch (this.boxActive)
+                                {
+                                    case "outbox":
+                                        HeaderText.Text = "Boîte d'envoi";
+                                        ((AccountFacebookLight)account.Value).LoadOutboxMessages();
+                                        break;
+
+                                    case "inbox":
+                                    default:
+                                        HeaderText.Text = "Boîte de réception";
+                                        ((AccountFacebookLight)account.Value).LoadInboxMessages();
+                                        // this.box = ((AccountFacebookLight)account.Value).inbox;
+                                        break;
+                                }
+                                
+                                break;
+                        }
+                        break;
+
+                    case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                    case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                    default:
+                        break;
+                }
+            }
 
 
         }
