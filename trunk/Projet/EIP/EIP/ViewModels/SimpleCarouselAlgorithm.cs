@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows;
-using SStuff.FlowControls;
+//using SStuff.FlowControls;
 
 namespace EIP.Showroom.ViewModels
 {
     /// <summary>
     /// Carousel algorithm demonstrating extensibility
     /// </summary>
-    public class SimpleCarouselAlgorithm : IFlowLayout3DAlgorithm
+    /*public class SimpleCarouselAlgorithm : IFlowLayout3DAlgorithm
     {
 
         #region IFlowLayout3DAlgorithm Members
@@ -46,5 +46,5 @@ namespace EIP.Showroom.ViewModels
         /// </summary>
         public event EventHandler LayoutChanged;
         #endregion
-    }
+    }*/
 }
