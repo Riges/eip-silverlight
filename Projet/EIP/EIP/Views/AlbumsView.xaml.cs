@@ -20,7 +20,7 @@ namespace EIP.Views
 
         public AlbumsView()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
 
         // Executes when the user navigates to this page.
@@ -38,7 +38,7 @@ namespace EIP.Views
                         switch (accountLight.Value.account.typeAccount)
                         {
                             case Account.TypeAccount.Facebook:
-                                ((AccountFacebookLight)accountLight.Value).GetAlbums();
+                                //((AccountFacebookLight)accountLight.Value).GetAlbums();
 
                                 break;
                             case Account.TypeAccount.Twitter:

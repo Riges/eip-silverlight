@@ -25,24 +25,24 @@
         </Style>
         <DataTemplate x:Key="itemTemplate">
 
-            <fl:InFlowContentControl  Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}" Width="150" Height="150" >
+            <!--<fl:InFlowContentControl  Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}" Width="150" Height="150" >
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Center">IMG</TextBlock>
                     <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
                 </StackPanel>
-            </fl:InFlowContentControl>
+            </fl:InFlowContentControl>-->
 
         </DataTemplate>
     </navigation:Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-
+<!--
         <fl:FlowItemsControl3D Name="FlowControl" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}" >
             <fl:FlowItemsControl3D.LayoutAlgorithm>
                 <vm:SimpleCarouselAlgorithm />
             </fl:FlowItemsControl3D.LayoutAlgorithm>
         </fl:FlowItemsControl3D>
-
+-->
 
     </Grid>
 </navigation:Page>
