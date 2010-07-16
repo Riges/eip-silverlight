@@ -23,6 +23,9 @@
 	    text-align:center;
     }
     </style>
+
+    
+
     <script type="text/javascript" src="Silverlight.js"></script>
     <script type="text/javascript">
         function onSilverlightError(sender, args) {
@@ -64,6 +67,20 @@
 <body>
     <form id="form1" runat="server" style="height:100%">
 
+    <%--<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({ appId: 'ye0c1f6b95b88d23bfc9727e0ea90602a', status: true, cookie: true,
+            xfbml: true
+        });
+    };
+    (function () {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+</script>--%>
      
     <div id="silverlightControlHost">
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%" id="_sl_facebookapp">

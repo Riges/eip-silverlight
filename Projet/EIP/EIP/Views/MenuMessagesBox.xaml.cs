@@ -52,7 +52,9 @@ namespace EIP.Views
                             break;
 
                         case Account.TypeAccount.Twitter:
+                            break;
                         case Account.TypeAccount.Myspace:
+                            break;
                         default:
                             continue;
                     }
@@ -84,7 +86,9 @@ namespace EIP.Views
                             break;
 
                         case Account.TypeAccount.Twitter:
+                            break;
                         case Account.TypeAccount.Myspace:
+                            break;
                         default:
                             break;
                     }
@@ -126,6 +130,7 @@ namespace EIP.Views
                         break;
 
                     case Account.TypeAccount.Twitter:
+                        break;
                     case Account.TypeAccount.Myspace:
                         break;
                     default:

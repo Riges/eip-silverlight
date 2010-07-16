@@ -48,44 +48,28 @@ namespace EIP.Views
             if (this.NavigationContext.QueryString.ContainsKey("box"))
                 this.boxActive = this.NavigationContext.QueryString["box"];
 
-            
-
             foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
                 switch (account.Value.account.typeAccount)
                 {
                     case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                        ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
                         switch (this.boxActive)
                         {
                             case "outbox":
                                 HeaderText.Text = "Boîte d'envoi";
+                                ((AccountFacebookLight)account.Value).LoadOutboxMessages();
                                 break;
-
                             case "inbox":
-                            default:
                                 HeaderText.Text = "Boîte de réception";
-                                switch (this.boxActive)
-                                {
-                                    case "outbox":
-                                        HeaderText.Text = "Boîte d'envoi";
-                                        ((AccountFacebookLight)account.Value).LoadOutboxMessages();
-                                        break;
-
-                                    case "inbox":
-                                    default:
-                                        HeaderText.Text = "Boîte de réception";
-                                        ((AccountFacebookLight)account.Value).LoadInboxMessages();
-                                        // this.box = ((AccountFacebookLight)account.Value).inbox;
-                                        break;
-                                }
-                                
-                                break;
+                                ((AccountFacebookLight)account.Value).LoadInboxMessages();
+                                //this.box = ((AccountFacebookLight)account.Value).inbox;
+                                break;   
                         }
                         break;
-
                     case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                        break;
                     case EIP.ServiceEIP.Account.TypeAccount.Myspace:
-                    default:
                         break;
                 }
             }
@@ -93,43 +77,18 @@ namespace EIP.Views
 
         }
 
-        /// <summary>
-        /// methode qui merge les listes de friends
-        /// pitetre un jour
-        /// </summary>
-       /* private void LoadList()
+        void Messages_GetMessagesCalled(List<thread> liste)
         {
-            foreach(KeyValuePair<long, AccountLight> account in Connexion.accounts)
-            {
-                switch (account.Value.account.typeAccount)
+            //this.box = liste;
+            Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        List<thread> friendsFB = ((AccountFacebookLight)account.Value).inbox;
-                        foreach (user toto in friendsFB)
-                        {
-                            if (friends.Keys.Contains(toto.proxied_email))
-                            {
-                                if (friends[toto.proxied_email].userFB == null)
-                                    friends[toto.proxied_email].userFB = toto;
-                            }
-                            else
-                            {
-                                Friend titi = new Friend();
-                                titi.userFB = toto;
-                                friends.Add(toto.proxied_email, titi);
-                            }
-                        }
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                    MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
+                    toto.Show();
+                });
 
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Myspace:
-                        break;
-                    default:
-                        break;
-                }
-            }
+            
+        }
 
-        }*/
+        
     }
 }
