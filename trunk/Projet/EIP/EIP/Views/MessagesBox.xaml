@@ -9,8 +9,12 @@
            d:DesignWidth="640" d:DesignHeight="480"
            Title="Inbox Page">
     <Grid x:Name="LayoutRoot">
-        <TextBlock x:Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
-                           Text="Prout" Margin="12,0,0,454" Width="616" />
-        <Controls:listeMessages HorizontalAlignment="Left" Margin="12,32,0,0" x:Name="listeMessages1" VerticalAlignment="Top" Height="436" Width="616" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
+                           Text="Prout" Grid.Row="0" />
+        <Controls:listeMessages HorizontalAlignment="Left"  x:Name="listeMessages1" VerticalAlignment="Top" Grid.Row="1" Height="436" Width="616" />
     </Grid>
 </navigation:Page>

@@ -121,25 +121,52 @@ namespace EIP
 
         public void LoadInboxMessages()
         {
-            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Inbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
+
+            //this.facebookAPI.Message.GetThreadsInFolderAsynch(0, (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
+
+            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
+
         }
         public void LoadOutboxMessages()
         {
             this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
         }
 
+
+        public void GetThreadsFQL_Completed(message_getThreadsInFolder_response msg, object obj, FacebookException ex)
+        {
+           Connexion.dispatcher.BeginInvoke(() =>
+            {
+                string tmp = (ex == null ? msg.thread.Count.ToString() : ex.Message);
+                MessageBox toto = new MessageBox("", "LoadMessagesCompleted " + tmp);
+                toto.Show();
+
+                
+            });
+            
+        }
+
         private void LoadMessagesCompleted(IList<thread> liste, Object state, FacebookException e)
         {
+            Connexion.dispatcher.BeginInvoke(() =>
+            {
+                string tmp = (e == null ? liste.Count.ToString() : e.Message);
+                    MessageBox toto = new MessageBox("", "LoadMessagesCompleted"+tmp);
+                    toto.Show();
+               
+            });
+
+            /*
             this.box = liste as List<thread>;
 
             if (e == null && liste.Count > 0)
             {
 
                 if (this.GetMessagesCalled != null) //OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
+                    this.GetMessagesCalled.Invoke(this.box); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
 
-                    this.GetMessagesCalled.Invoke(liste as List<thread>); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
-
-            } 
+            }
+             * */
         }
 
 

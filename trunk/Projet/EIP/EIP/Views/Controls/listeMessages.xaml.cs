@@ -28,13 +28,15 @@ namespace EIP.Views.Controls
         {
             ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
 
-            /*if (this.box.Count > this.box.comment_list.comment.Count())
+            /*
+            if (this.box.Count > this.box.comment_list.comment.Count())
             {
                 HyperlinkButton linkBtn = new HyperlinkButton();
                 linkBtn.Content = "Afficher les " + this.Commentaires.count + " commentaires";
                 linkBtn.Click += new RoutedEventHandler(linkBtn_Click);
                 displayAllComsPanel.Children.Add(linkBtn);
-            }*/
+            }
+             * */
 
             LoadMessages();
         }
