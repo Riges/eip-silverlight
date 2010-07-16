@@ -2,7 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIP", "EIP\EIP.csproj", "{12572F17-853E-41D1-BEDD-6C7F81F72046}"
-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIP.Web", "EIP.Web\EIP.Web.csproj", "{B6BB3F83-219A-445E-876B-46401B96E405}"
 EndProject

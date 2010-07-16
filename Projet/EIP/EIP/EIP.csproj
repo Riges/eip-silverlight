@@ -107,6 +107,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\Friend.cs" />
+    <Compile Include="Objects\Profil.cs" />
     <Compile Include="Objects\Topic.cs" />
     <Compile Include="Objects\TopicFB.cs" />
     <Compile Include="Objects\Utils.cs" />
@@ -206,6 +207,9 @@
     </Compile>
     <Compile Include="Views\MenuFeeds.xaml.cs">
       <DependentUpon>MenuFeeds.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfilPage.xaml.cs">
+      <DependentUpon>ProfilPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StreamFeeds.xaml.cs">
       <DependentUpon>StreamFeeds.xaml</DependentUpon>
@@ -337,6 +341,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuFeeds.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProfilPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
