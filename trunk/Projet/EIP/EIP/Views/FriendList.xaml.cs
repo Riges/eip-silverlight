@@ -45,7 +45,7 @@ namespace EIP.Views
                 switch (account.Value.account.typeAccount)
                 {
                     case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        List<user> friendsFB = ((AccountFacebookLight)account.Value).profile;
+                        List<user> friendsFB = ((AccountFacebookLight)account.Value).friends;
                         foreach (user toto in friendsFB)
                         {
                             if (friends.Keys.Contains(toto.proxied_email))
