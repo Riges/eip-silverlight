@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Rest;
 using Facebook.Schema;
-using TweetSharp.Model;
+using EIP.ServiceEIP;
 
 namespace EIP.Objects
 {

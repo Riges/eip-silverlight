@@ -10,19 +10,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Rest;
 using Facebook.Schema;
-//using TweetSharp.Model;
-//using TweetSharp.Twitter.Model;
+using EIP.ServiceEIP;
 
 namespace EIP.Objects
 {
     public class Friend
     {
         public user userFB { get; set; }
-        //public TwitterUser userTW {  get; set; }
-
-
-
-
-
+        public TwitterUser userTW {  get; set; }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using EIP.Objects;
 using Facebook.Schema;
+using EIP.ServiceEIP;
 
 namespace EIP.Views
 {
@@ -23,6 +24,7 @@ namespace EIP.Views
         {
             InitializeComponent();
             friends = new Dictionary<String, Friend>();
+            LoadList();
         }
 
         // Executes when the user navigates to this page.
@@ -43,7 +45,7 @@ namespace EIP.Views
                 switch (account.Value.account.typeAccount)
                 {
                     case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        List<user> friendsFB = ((AccountFacebookLight)account.Value).friends;
+                        List<user> friendsFB = ((AccountFacebookLight)account.Value).profile;
                         foreach (user toto in friendsFB)
                         {
                             if (friends.Keys.Contains(toto.proxied_email))
@@ -60,7 +62,21 @@ namespace EIP.Views
                         }
                         break;
                     case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-
+                        List<TwitterUser> friendsTW = ((AccountTwitterLight)account.Value).friends;
+                        foreach (TwitterUser toto in friendsTW)
+                        {
+                            if (friends.Keys.Contains(toto.Name))
+                            {
+                                if (friends[toto.Name].userTW == null)
+                                    friends[toto.Name].userTW = toto;
+                            }
+                            else
+                            {
+                                Friend titi = new Friend();
+                                titi.userTW = toto;
+                                friends.Add(toto.Name, titi);
+                            }
+                        }
                         break;
                     case EIP.ServiceEIP.Account.TypeAccount.Myspace:
                         break;
