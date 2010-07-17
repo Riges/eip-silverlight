@@ -110,8 +110,25 @@ namespace EIP
             }
         }
 
+        public delegate void OnGetUserInfoCompleted(user monUser);
+        public event OnGetUserInfoCompleted GetUserInfoCalled;
 
+        public void GetUserInfo(long uid)
+        {
+            this.facebookAPI.Users.GetInfoAsync(uid, new Users.GetInfoCallback(GetUserInfo_Completed), null);
+        }
 
+        private void GetUserInfo_Completed(IList<user> users, Object obj, FacebookException ex)
+        {
+            if (ex == null && users.Count > 0)
+            {
+                user toto = users[0];
+
+                if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
+                    this.GetUserInfoCalled.Invoke(toto);
+
+            }
+        }
 
 
          ///  Messages
@@ -431,6 +448,7 @@ namespace EIP
 
         public void GetComsFQL_Completed(comments_get_response coms, object obj, FacebookException ex)
         {
+          
             if (ex == null && coms.comment.Count > 0)
             {
                 List<long> userIds = new List<long>();
