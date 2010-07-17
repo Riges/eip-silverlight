@@ -8,6 +8,7 @@
     
     <Grid x:Name="LayoutRoot" Background="White">
         <StackPanel Name="messagesPanel">
+            
             <my:Message x:Name="message1" DataContext="{Binding}" />
         </StackPanel>
     </Grid>

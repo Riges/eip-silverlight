@@ -133,16 +133,26 @@ namespace EIP
         }
 
 
-        public void GetThreadsFQL_Completed(message_getThreadsInFolder_response msg, object obj, FacebookException ex)
+        public void GetThreadsFQL_Completed(message_getThreadsInFolder_response liste, object obj, FacebookException ex)
         {
            Connexion.dispatcher.BeginInvoke(() =>
             {
-                string tmp = (ex == null ? msg.thread.Count.ToString() : ex.Message);
+                string tmp = (ex == null ? liste.thread.Count.ToString() : ex.Message);
                 MessageBox toto = new MessageBox("", "LoadMessagesCompleted " + tmp);
                 toto.Show();
-
-                
             });
+
+            
+            //this.box = liste as List<thread>;
+
+            if (ex == null && liste.thread.Count > 0)
+            {
+
+                if (this.GetMessagesCalled != null) //OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
+                    this.GetMessagesCalled.Invoke(liste.thread as List<thread>); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
+
+            }
+             
             
         }
 
@@ -550,7 +560,7 @@ namespace EIP
                 this.RemoveLikeCalled.Invoke(result, o.ToString());
         }
 
-        public delegate void OnGetAlbumsCompleted(bool ok, long userId);
+        public delegate void OnGetAlbumsCompleted(List<album> albums);
         public event OnGetAlbumsCompleted GetAlbumsCalled;
 
         /// <summary>
@@ -570,7 +580,8 @@ namespace EIP
                 this.albums[(long)uid] = (List<album>)albums;
 
                 if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
-                    this.GetAlbumsCalled.Invoke(true, (long)uid);
+                    this.GetAlbumsCalled.Invoke(this.albums[(long)uid]);
+                //this.GetAlbumsCalled.Invoke(true, (long)uid);
             }
         }
 

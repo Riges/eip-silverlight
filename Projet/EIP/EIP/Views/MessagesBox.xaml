@@ -15,6 +15,6 @@
         </Grid.RowDefinitions>
         <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
                            Text="Prout" Grid.Row="0" />
-        <Controls:listeMessages HorizontalAlignment="Left"  x:Name="listeMessages1" VerticalAlignment="Top" Grid.Row="1" Height="436" Width="616" />
+        <Controls:listeMessages HorizontalAlignment="Left"  x:Name="listeMessagesBox" VerticalAlignment="Top" Grid.Row="1" Height="436" Width="616" />
     </Grid>
 </navigation:Page>

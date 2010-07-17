@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using EIP.ServiceEIP;
+using Facebook.Schema;
 
 namespace EIP.Views
 {
@@ -37,8 +38,10 @@ namespace EIP.Views
                     if (accountLight.Value.selected)
                         switch (accountLight.Value.account.typeAccount)
                         {
+                                
                             case Account.TypeAccount.Facebook:
-                                //((AccountFacebookLight)accountLight.Value).GetAlbums();
+                                ((AccountFacebookLight)accountLight.Value).GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
+                                ((AccountFacebookLight)accountLight.Value).GetAlbums(accountLight.Value.account.userID);
 
                                 break;
                             case Account.TypeAccount.Twitter:
@@ -48,6 +51,13 @@ namespace EIP.Views
                         }
                 }
             }
+
+        }
+
+        void AlbumsView_GetAlbumsCalled(List<album> albums)
+        {
+
+            FlowControl.DataContext = albums;
 
         }
 

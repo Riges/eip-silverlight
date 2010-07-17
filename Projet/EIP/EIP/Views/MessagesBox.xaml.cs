@@ -82,8 +82,10 @@ namespace EIP.Views
             //this.box = liste;
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
-                    toto.Show();
+
+                    listeMessagesBox.box = liste;
+                    //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
+                    //toto.Show();
                 });
 
             
