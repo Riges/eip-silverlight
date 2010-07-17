@@ -15,7 +15,7 @@ namespace EIP.Views.Controls
 {
     public partial class listeMessages : UserControl
     {
-        private List<thread> box;
+        public List<thread> box  { get; set; }
         public long accountID { get; set; }
 
         public listeMessages()
@@ -26,7 +26,7 @@ namespace EIP.Views.Controls
 
         private void LoadMessagesControl()
         {
-            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+            //((AccountFacebookLight)Connexion.accounts[this.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
 
             /*
             if (this.box.Count > this.box.comment_list.comment.Count())
