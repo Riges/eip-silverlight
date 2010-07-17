@@ -17,7 +17,7 @@ namespace EIP.Views
 {
     public partial class AlbumsView : Page
     {
-        //public string aid { get; set; }
+        public long uid { get; set; }
 
         public AlbumsView()
         {
@@ -27,9 +27,9 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            /*if(this.NavigationContext.QueryString.ContainsKey("aid"))
-                this.aid = this.NavigationContext.QueryString["aid"];
-             * */
+            if(this.NavigationContext.QueryString.ContainsKey("uid"))
+                this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
+             
 
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
