@@ -25,6 +25,17 @@ namespace EIP.Views
             InitializeComponent();
             friends = new Dictionary<String, Friend>();
             LoadList();
+            foreach (KeyValuePair<String, Friend> poto in friends)
+            {
+                if (poto.Value.userFB != null)
+                {
+
+                }
+                else if (poto.Value.userTW != null)
+                {
+
+                }
+            }
         }
 
         // Executes when the user navigates to this page.
