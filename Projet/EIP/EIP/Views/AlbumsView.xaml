@@ -42,7 +42,7 @@
                     <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
                 </StackPanel>-->
                
-                        <Controls:AlbumView x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumView>
+                        <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
                     </DataTemplate>
                 </fl:InFlowContentControl.ContentTemplate>
             </fl:InFlowContentControl>

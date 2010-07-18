@@ -14,13 +14,13 @@ using System.Windows.Media.Imaging;
 
 namespace EIP.Views.Controls
 {
-    public partial class AlbumView : UserControl
+    public partial class AlbumControl : UserControl
     {
         protected album album { get; set; }
         public long accountID { get; set; }
         bool loaded;
 
-        public AlbumView()
+        public AlbumControl()
         {
             this.Loaded += new RoutedEventHandler(AlbumView_Loaded);
             InitializeComponent();
