@@ -1,0 +1,70 @@
+#summary Double click
+
+
+http://blogs.msdn.com/b/vsastuces/archive/2009/04/21/astuce-silverlight-comment-impl-menter-le-double-click-s026.aspx
+
+DispatcherTimer _doubleClickTimer;
+
+Image _lastImage = null;
+
+ 
+
+public Page()
+
+{
+
+    InitializeComponent();
+
+   
+
+    _doubleClickTimer = new DispatcherTimer();
+
+    _doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
+
+    _doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
+
+ 
+
+    this.MouseLeftButtonDown += new MouseButtonEventHandler(Page_MouseLeftButtonDown);
+
+}
+
+ 
+
+// too much time has passed for it to be a double click.            
+
+void DoubleClick_Timer(object sender, EventArgs e)
+
+{
+
+    _doubleClickTimer.Stop();
+
+}
+
+void Page_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+
+
+{
+
+
+    if (_doubleClickTimer.IsEnabled)
+
+
+    {
+
+
+         /// blabla
+
+    }
+
+
+    else
+
+
+    {
+
+
+        _doubleClickTimer.Start();
+
+
+    }
