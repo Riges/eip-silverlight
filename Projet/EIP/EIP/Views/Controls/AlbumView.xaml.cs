@@ -10,12 +10,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
+using System.Windows.Media.Imaging;
 
 namespace EIP.Views.Controls
 {
     public partial class AlbumView : UserControl
     {
-        private album album { get; set; }
+        protected album album { get; set; }
+        public long accountID { get; set; }
+        bool loaded;
 
         public AlbumView()
         {
@@ -25,7 +28,28 @@ namespace EIP.Views.Controls
 
         void AlbumView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.album = this.DataContext as album;
+            if (!this.loaded)
+            {
+                this.album = this.DataContext as album;
+
+                foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
+                {
+                    if (accountLight.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook)
+                    {
+                        AccountFacebookLight accountFB = ((AccountFacebookLight)accountLight.Value);
+                        if (accountFB.photos.ContainsKey(this.album.aid))
+                        {
+                            if (accountFB.photos[this.album.aid][this.album.cover_pid] != null)
+                            {
+                                imgAlbum.Source = new BitmapImage(new Uri(accountFB.photos[this.album.aid][this.album.cover_pid].src_big, UriKind.Absolute)); ;
+                            }
+                        }
+                    }
+                }
+                this.loaded = true;
+            }
+            
+            
         }
     }
 }

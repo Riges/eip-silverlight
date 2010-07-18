@@ -99,6 +99,7 @@ namespace EIP.Views.Controls
                                 nameUser.Content = post.userSource.name;
                                 if (post.userTarget != null)
                                     nameUser.Content += " > " + post.userTarget.name;
+                                nameUser.NavigateUri = new Uri("/Albums/" + post.userSource.uid+"/Account/"+topic.accountID, UriKind.Relative);
                                 
                                 imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
                      

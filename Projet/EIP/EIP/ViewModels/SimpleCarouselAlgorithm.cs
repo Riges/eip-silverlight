@@ -20,7 +20,7 @@ namespace EIP.Showroom.ViewModels
 
         public int GetMaxDisplayedItems()
         {
-            return 15;
+            return 50;
         }
 
         public void ComputeLayout(double normalizedOffset, IFlowItem3D item, int consideredItemsCount)
