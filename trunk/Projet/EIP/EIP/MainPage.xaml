@@ -82,8 +82,10 @@
                             <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/EmptyPage.xaml"/>
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
                             <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/EmptyPage.xaml" />
-                            
-                            <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/Menu{pageName}.xaml"/>-->
+                            <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
+                            <uriMapper:UriMapping Uri="/Profil/{filter}" MappedUri="/Views/ProfilPage.xaml?uid={filter}" />
+
+                        <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/Menu{pageName}.xaml"/>-->
 
                         </uriMapper:UriMapper>
                     </navigation:Frame.UriMapper>
@@ -113,7 +115,7 @@
                             <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />
                             <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
                             <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
-                            <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/Profil.xaml" />
+                            <uriMapper:UriMapping Uri="/Profil/{filter}" MappedUri="/Views/ProfilPage.xaml?uid={filter}" />
 
                         <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>-->
 
