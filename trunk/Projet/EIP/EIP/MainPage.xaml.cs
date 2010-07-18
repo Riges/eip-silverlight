@@ -46,8 +46,8 @@ namespace EIP
             {
                 LinkHome.Visibility = System.Windows.Visibility.Visible;
                 DividerHome.Visibility = System.Windows.Visibility.Visible;
-                LinkFriends.Visibility = System.Windows.Visibility.Collapsed;
-                DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
+                LinkFriends.Visibility = System.Windows.Visibility.Visible;
+                DividerFriends.Visibility = System.Windows.Visibility.Visible;
                 LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
 
                 LinkSeConnecter.Visibility = System.Windows.Visibility.Collapsed;
