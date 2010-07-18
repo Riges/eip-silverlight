@@ -42,7 +42,7 @@ namespace EIP.Views
                     }
                     fv.imgUser.Source = btImgFB;
 
-                    fv.nomFriend.Content = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
+                    fv.nomFriend.Text = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
                     fv.voirProfil.NavigateUri = new Uri("/Profil/uid=" + poto.Value.userFB.uid);
 
                     this.Liste.Children.Add(fv);
@@ -60,7 +60,7 @@ namespace EIP.Views
                     }
                     fv.imgUser.Source = btImgFB;
 
-                    fv.nomFriend.Content = poto.Value.userTW.Name;
+                    fv.nomFriend.Text = poto.Value.userTW.Name;
                     // fv.voirProfil.NavigateUri = new Uri("/Profil/uid=" + poto.Value.userTW.);
 
                     this.Liste.Children.Add(fv);

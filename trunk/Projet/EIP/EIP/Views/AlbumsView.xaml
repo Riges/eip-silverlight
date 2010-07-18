@@ -24,23 +24,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <DataTemplate x:Key="itemTemplate">
-
-           <fl:InFlowContentControl  Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}" Width="150" Height="150" >
-                <!--<StackPanel>
+        <DataTemplate x:Key="itemTemplate" >
+<!--Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}"-->
+           <fl:InFlowContentControl   Width="250" Height="250" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
+                <fl:InFlowContentControl.HeadingTemplate>
+                    <DataTemplate>
+                        
+                        <!--<TextBlock Text="{Binding name}"></TextBlock>-->
+                        <HyperlinkButton Content="{Binding name}"></HyperlinkButton>
+                        
+                    </DataTemplate>
+                </fl:InFlowContentControl.HeadingTemplate>
+                    <fl:InFlowContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <!--<StackPanel>
                     <TextBlock HorizontalAlignment="Center">IMG</TextBlock>
                     <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
                 </StackPanel>-->
-                <Controls:AlbumView x:Name="albumItem"></Controls:AlbumView>
-
+               
+                        <Controls:AlbumView x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumView>
+                    </DataTemplate>
+                </fl:InFlowContentControl.ContentTemplate>
             </fl:InFlowContentControl>
 
         </DataTemplate>
     </navigation:Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-
-        <fl:FlowItemsControl3D Name="FlowControl" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+            <fl:FlowItemsControl3D Grid.Row="0" Name="flowControl" ItemsSource="{Binding}" ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}" >
             <fl:FlowItemsControl3D.LayoutAlgorithm>
                 <vm:SimpleCarouselAlgorithm />
             </fl:FlowItemsControl3D.LayoutAlgorithm>

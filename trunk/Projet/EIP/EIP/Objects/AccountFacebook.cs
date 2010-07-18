@@ -34,8 +34,8 @@ namespace EIP
         public List<stream_filter> filters { get; set; }
         public List<profile> profiles { get; set; }
         public List<thread> box { get; set; }
-        Dictionary<long, List<album>> albums  { get; set; }
-        Dictionary<string, List<photo>> photos { get; set; }
+        public Dictionary<long, List<album>> albums { get; set; }
+        public Dictionary<string, Dictionary<string, photo>> photos { get; set; }
 
         public enum MsgFolder
         {
@@ -56,6 +56,8 @@ namespace EIP
         {
             this.account = new AccountFacebook();
             this.feeds = new Dictionary<string, List<Topic>>();
+            this.albums = new Dictionary<long, List<album>>();
+            this.photos = new Dictionary<string, Dictionary<string, photo>>();
 
             Connexion.dispatcher.BeginInvoke(() =>
                 {
@@ -597,9 +599,45 @@ namespace EIP
             {
                 this.albums[(long)uid] = (List<album>)albums;
 
-                if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
-                    this.GetAlbumsCalled.Invoke(this.albums[(long)uid]);
+                List<string> covers = new List<string>();
+                foreach(album al in albums)
+                {
+                    covers.Add(al.cover_pid);
+                }
+
+                this.facebookAPI.Photos.GetAsync(null, null, covers, new Photos.GetCallback(GetAlbumsCover_Completed), uid); 
+
+
+               
                 //this.GetAlbumsCalled.Invoke(true, (long)uid);
+            }
+        }
+
+        private void GetAlbumsCover_Completed(IList<photo> photos, object uid, FacebookException ex)
+        {
+            if (ex == null)
+            {
+                if (photos.Count > 0)
+                {
+                    foreach (photo tof in photos)
+                    {
+                        if (this.photos.ContainsKey(tof.aid))
+                        {
+
+                        }
+                        else
+                        {
+                            Dictionary<string, photo> tofs = new Dictionary<string, photo>();
+                            tofs.Add(tof.pid, tof);
+                            this.photos.Add(tof.aid, tofs);
+                            //this.photos[tof.aid].Add(tof);
+                        }
+                    }
+
+                    if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
+                        this.GetAlbumsCalled.Invoke(this.albums[(long)uid]);
+                }
+
             }
         }
 
@@ -617,7 +655,7 @@ namespace EIP
         {
             if (ex == null)
             {
-                this.photos[aid.ToString()] = (List<photo>)photos;
+                //this.photos[aid.ToString()] = (List<photo>)photos;
             }
         }
 
