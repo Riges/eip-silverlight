@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using EIP.Objects;
 using Facebook.Schema;
 using EIP.ServiceEIP;
+using EIP.Views.Controls;
+using System.Windows.Media.Imaging;
 
 namespace EIP.Views
 {
@@ -29,11 +31,39 @@ namespace EIP.Views
             {
                 if (poto.Value.userFB != null)
                 {
+                    FriendView fv = new FriendView();
 
+                    BitmapImage btImgFB = null;
+
+                    if (poto.Value.userFB.pic_square != null)
+                    {
+                        Uri uriImg = new Uri(poto.Value.userFB.pic_square);
+                        btImgFB = new BitmapImage(uriImg);
+                    }
+                    fv.imgUser.Source = btImgFB;
+
+                    fv.nomFriend.Content = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
+                    fv.voirProfil.NavigateUri = new Uri("/Profil/uid=" + poto.Value.userFB.uid);
+
+                    this.Liste.Children.Add(fv);
                 }
                 else if (poto.Value.userTW != null)
                 {
+                    FriendView fv = new FriendView();
 
+                    BitmapImage btImgFB = null;
+
+                    if (poto.Value.userTW.ProfileImageUrl != null)
+                    {
+                        Uri uriImg = new Uri(poto.Value.userTW.ProfileImageUrl);
+                        btImgFB = new BitmapImage(uriImg);
+                    }
+                    fv.imgUser.Source = btImgFB;
+
+                    fv.nomFriend.Content = poto.Value.userTW.Name;
+                    // fv.voirProfil.NavigateUri = new Uri("/Profil/uid=" + poto.Value.userTW.);
+
+                    this.Liste.Children.Add(fv);
                 }
             }
         }

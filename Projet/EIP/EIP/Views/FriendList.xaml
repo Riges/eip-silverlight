@@ -10,5 +10,6 @@
            Title="FriendList Page">
     <Grid x:Name="LayoutRoot">
         <Controls:FriendInfo></Controls:FriendInfo>
+        <Grid x:Name="Liste"></Grid>
     </Grid>
 </navigation:Page>
