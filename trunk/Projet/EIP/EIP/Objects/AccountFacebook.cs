@@ -85,7 +85,7 @@ namespace EIP
             Connexion.accounts[this.account.accountID] = this;
         }
 
-        public void sendStatu(string statu)
+        public void sendStatus(string statu)
         {
             this.facebookAPI.Status.SetAsync(statu, SetStatusCompleted, null);
         }
