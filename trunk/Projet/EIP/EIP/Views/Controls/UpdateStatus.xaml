@@ -22,9 +22,7 @@
         <StackPanel Orientation="Horizontal" Height="20" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <TextBox Name="statuValue" Width="280" Margin="5 0"></TextBox>
         </StackPanel>
-        <StackPanel Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Name="TwitterStackPanel">           
-        </StackPanel>
-        <StackPanel Grid.Row="1"  Grid.Column="2" Grid.ColumnSpan="2" Name="FaceBookStackPanel">
+        <StackPanel Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="4" Name="NetworkStackPanel" Orientation="Horizontal">
         </StackPanel>
         <!--<TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold">Twitter</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold">Facebook</TextBlock>-->

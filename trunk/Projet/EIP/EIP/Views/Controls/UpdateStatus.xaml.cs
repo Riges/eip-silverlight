@@ -27,70 +27,66 @@ namespace EIP.Views.Controls
 
         private void LoadAccountButtons()
         {
+            SolidColorBrush brush  = new SolidColorBrush();
+            brush.Color = Colors.Gray;;
            if (Connexion.accounts != null)
             {
                 if (Connexion.accounts.Count > 0)
                 {
                     Dispatcher.BeginInvoke(() =>
                     {
-                        TwitterStackPanel.Children.Clear();
-                        FaceBookStackPanel.Children.Clear();
+                        NetworkStackPanel.Children.Clear();
                         foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                         {
-                            //Dispatcher.BeginInvoke(() =>
-                            //{
-                            StackPanel panel = new StackPanel();
-                            panel.Orientation = Orientation.Horizontal;
-
-                            CheckBox box = new CheckBox();
-
-                            //box.DataContext = oneAccount.Value.account;
-                            /*
-                            Binding binding = new Binding();
-                            binding.Source = oneAccount.Value.account;
-                            binding.Path = new PropertyPath("name");
-                            box.SetBinding(CheckBox.ContentProperty, binding);
-                            */
-
-                            box.Name = oneAccount.Value.account.accountID.ToString();
-                            box.CommandParameter = oneAccount.Value;
                             if (oneAccount.Value.selected)
-                                box.IsChecked = true;
-                            panel.Children.Add(box);
-
-                            Image img = new Image();
-                            img.Width = 16;
-                            switch (oneAccount.Value.account.typeAccount)
                             {
-                                case Account.TypeAccount.Facebook:
-                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
-                                    break;
-                                case Account.TypeAccount.Twitter:
-                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
-                                    break;
-                                case Account.TypeAccount.Myspace:
-                                    break;
-                                default:
-                                    break;
-                            }
-                            panel.Children.Add(img);
+                                //Dispatcher.BeginInvoke(() =>
+                                //{
+                                StackPanel panel = new StackPanel();
+                                panel.Orientation = Orientation.Horizontal;
+                                
 
-                            TextBlock text = new TextBlock();
-                            text.Text = oneAccount.Value.account.name;
-                            panel.Children.Add(text);
+                                //CheckBox box = new CheckBox();
 
-                            switch (oneAccount.Value.account.typeAccount)
-                            {
-                                case Account.TypeAccount.Facebook:
-                                    FaceBookStackPanel.Children.Add(panel);
-                                    break;
-                                case Account.TypeAccount.Twitter:
-                                    TwitterStackPanel.Children.Add(panel);
-                                    break;
-                                case Account.TypeAccount.Myspace:
-                                    break;
-                                default:
-                                    break;
+                                //box.DataContext = oneAccount.Value.account;
+                                /*
+                                Binding binding = new Binding();
+                                binding.Source = oneAccount.Value.account;
+                                binding.Path = new PropertyPath("name");
+                                box.SetBinding(CheckBox.ContentProperty, binding);
+                                */
+
+                                /*box.Name = oneAccount.Value.account.accountID.ToString();
+                                box.CommandParameter = oneAccount.Value;
+                                if (oneAccount.Value.selected)
+                                    box.IsChecked = true;
+                                panel.Children.Add(box);*/
+
+                                Image img = new Image();
+                                img.Width = 16;
+                                switch (oneAccount.Value.account.typeAccount)
+                                {
+                                    case Account.TypeAccount.Facebook:
+                                        img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
+                                        break;
+                                    case Account.TypeAccount.Twitter:
+                                        img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                                        break;
+                                    case Account.TypeAccount.Myspace:
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                panel.Children.Add(img);
+
+                                TextBlock text = new TextBlock();
+                                text.Text = oneAccount.Value.account.name + " ";
+                                text.FontStyle = FontStyles.Italic;
+                                text.FontSize = 9;
+                                text.Foreground = brush;
+                                panel.Children.Add(text);
+
+                                NetworkStackPanel.Children.Add(panel);
                             }
                         }
 
@@ -101,8 +97,7 @@ namespace EIP.Views.Controls
             {
                 Dispatcher.BeginInvoke(() =>
                 {
-                    TwitterStackPanel.Children.Clear();
-                    FaceBookStackPanel.Children.Clear();
+                    NetworkStackPanel.Children.Clear();
                 });
             }
         }
