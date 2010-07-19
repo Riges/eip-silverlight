@@ -63,7 +63,7 @@ namespace EIP.Views.Controls
                                 panel.Children.Add(box);*/
 
                                 Image img = new Image();
-                                img.Width = 16;
+                                img.Width = 12;
                                 switch (oneAccount.Value.account.typeAccount)
                                 {
                                     case Account.TypeAccount.Facebook:
@@ -82,8 +82,9 @@ namespace EIP.Views.Controls
                                 TextBlock text = new TextBlock();
                                 text.Text = oneAccount.Value.account.name + " ";
                                 text.FontStyle = FontStyles.Italic;
-                                text.FontSize = 9;
+                                text.FontSize = 10;
                                 text.Foreground = brush;
+                                text.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                                 panel.Children.Add(text);
 
                                 NetworkStackPanel.Children.Add(panel);
