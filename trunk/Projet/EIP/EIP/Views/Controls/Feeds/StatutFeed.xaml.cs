@@ -60,7 +60,7 @@ namespace EIP.Views.Controls.Feeds
                 else if (mot.StartsWith("#"))
                 {
                     HyperlinkButton link = new HyperlinkButton();
-                    link.NavigateUri = new Uri("http://twitter.com/search?q=" + mot, UriKind.Absolute);
+                    link.NavigateUri = new Uri("http://twitter.com/#search?q=" + mot, UriKind.Absolute);
                     link.Content = mot + " ";
                     link.TargetName = "_blank";
                     messagePanel.Children.Add(link);
