@@ -56,6 +56,7 @@ namespace EIP
         {
             this.account = new AccountFacebook();
             this.feeds = new Dictionary<string, List<Topic>>();
+            this.friends = new List<user>();
             this.albums = new Dictionary<long, List<album>>();
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
 
