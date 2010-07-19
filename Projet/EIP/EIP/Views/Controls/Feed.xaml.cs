@@ -90,7 +90,7 @@ namespace EIP.Views.Controls
 
                                 BitmapImage btImgFB = null;
 
-                                if (post.userSource.pic != null)
+                                if (post.userSource.pic != null) // verif si gif
                                 {
                                     Uri uriImg = new Uri(post.userSource.pic);
                                     btImgFB = new BitmapImage(uriImg);
