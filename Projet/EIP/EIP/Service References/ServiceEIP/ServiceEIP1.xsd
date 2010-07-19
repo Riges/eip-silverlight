@@ -181,7 +181,7 @@
   <xs:element name="SendTweetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="SendTweetResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="SendTweetResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

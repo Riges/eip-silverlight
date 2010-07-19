@@ -1031,7 +1031,7 @@ namespace EIP.ServiceEIP {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/SendTweet", ReplyAction="http://tempuri.org/IServiceEIP/SendTweetResponse")]
         System.IAsyncResult BeginSendTweet(string token, string tokenSecret, string tweet, System.AsyncCallback callback, object asyncState);
         
-        string EndSendTweet(System.IAsyncResult result);
+        bool EndSendTweet(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1277,10 +1277,10 @@ namespace EIP.ServiceEIP {
             this.results = results;
         }
         
-        public string Result {
+        public bool Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -2012,7 +2012,7 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string EIP.ServiceEIP.IServiceEIP.EndSendTweet(System.IAsyncResult result) {
+        bool EIP.ServiceEIP.IServiceEIP.EndSendTweet(System.IAsyncResult result) {
             return base.Channel.EndSendTweet(result);
         }
         
@@ -2024,7 +2024,7 @@ namespace EIP.ServiceEIP {
         }
         
         private object[] OnEndSendTweet(System.IAsyncResult result) {
-            string retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndSendTweet(result);
+            bool retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndSendTweet(result);
             return new object[] {
                     retVal};
         }
@@ -2299,9 +2299,9 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public string EndSendTweet(System.IAsyncResult result) {
+            public bool EndSendTweet(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("SendTweet", _args, result)));
+                bool _result = ((bool)(base.EndInvoke("SendTweet", _args, result)));
                 return _result;
             }
         }

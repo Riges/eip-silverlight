@@ -112,17 +112,18 @@ namespace EIPWCF
             return null;
         }
 
-        public string SendTweet(string token, string tokenSecret, string tweet)
+        public bool SendTweet(string token, string tokenSecret, string tweet)
         {
+            SetClientInfo();
             var query = FluentTwitter.CreateRequest()
                    .AuthenticateWith(token, tokenSecret)
                    .Statuses().Update(tweet);
 
             var response = query.Request();
             if (response.IsTwitterError)
-                return "Error : ";
+                return false;
             else
-                return "Send!";
+                return true;
         }
 
         public bool SaveAccount(Account accountToSave)
