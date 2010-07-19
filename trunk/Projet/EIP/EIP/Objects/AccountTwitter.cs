@@ -93,6 +93,11 @@ namespace EIP
             }
         }
 
+        /*void serviceEIP_SendStatusCompleted(object sender, LoadHomeStatusesCompletedEventArgs e)
+        {
+
+        }*/
+
           //********************************\\
          //*Methodes de récupération d'infos*\\
         //************************************\\
