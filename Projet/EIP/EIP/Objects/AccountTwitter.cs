@@ -87,6 +87,10 @@ namespace EIP
             
             twitter.RequestAsync();
              * */
+            if (status != "")
+            {
+                Connexion.serviceEIP.SendTweetAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, status);
+            }
         }
 
           //********************************\\

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/TweetSharp.Model" />
+  <xs:complexType name="ArrayOfTwitterStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TwitterStatus" nillable="true" type="tns:TwitterStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTwitterStatus" nillable="true" type="tns:ArrayOfTwitterStatus" />
+  <xs:complexType name="TwitterStatus">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/TweetSharp.Model" base="q1:PropertyChangedBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreatedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Id" type="xs:long" />
+          <xs:element minOccurs="0" name="InReplyToScreenName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InReplyToStatusId" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="InReplyToUserId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="IsFavorited" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsTruncated" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Location" nillable="true" type="tns:TwitterGeoLocation" />
+          <xs:element minOccurs="0" name="RawSource" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RetweetedStatus" nillable="true" type="tns:TwitterStatus" />
+          <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="User" nillable="true" type="tns:TwitterUser" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TwitterStatus" nillable="true" type="tns:TwitterStatus" />
+  <xs:complexType name="TwitterGeoLocation">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/TweetSharp.Model" base="q2:PropertyChangedBase">
+        <xs:sequence>
+          <xs:element name="_coordinates" nillable="true" type="tns:TwitterGeoLocation.GeoCoordinates" />
+          <xs:element name="_type" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TwitterGeoLocation" nillable="true" type="tns:TwitterGeoLocation" />
+  <xs:complexType name="TwitterGeoLocation.GeoCoordinates">
+    <xs:sequence>
+      <xs:element name="_x003C_Latitude_x003E_k__BackingField" type="xs:double" />
+      <xs:element name="_x003C_Longitude_x003E_k__BackingField" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TwitterGeoLocation.GeoCoordinates" nillable="true" type="tns:TwitterGeoLocation.GeoCoordinates" />
+  <xs:complexType name="TwitterUser">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/TweetSharp.Model" base="q3:PropertyChangedBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreatedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FavouritesCount" type="xs:int" />
+          <xs:element minOccurs="0" name="FollowersCount" type="xs:int" />
+          <xs:element minOccurs="0" name="FriendsCount" type="xs:int" />
+          <xs:element minOccurs="0" name="HasNotifications" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element minOccurs="0" name="IsFollowing" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsGeoEnabled" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsProfileBackgroundTiled" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsProtected" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsVerified" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Language" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileBackgroundColor" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileBackgroundImageUrl" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileImageUrl" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileLinkColor" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileSidebarBorderColor" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileSidebarFillColor" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileTextColor" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RawSource" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ScreenName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Status" nillable="true" type="tns:TwitterStatus" />
+          <xs:element minOccurs="0" name="StatusesCount" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeZone" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UtcOffset" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TwitterUser" nillable="true" type="tns:TwitterUser" />
+</xs:schema>
