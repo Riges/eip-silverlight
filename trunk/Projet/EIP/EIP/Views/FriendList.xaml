@@ -9,7 +9,10 @@
            d:DesignWidth="640" d:DesignHeight="480"
            Title="FriendList Page">
     <Grid x:Name="LayoutRoot">
-        <Controls:FriendInfo></Controls:FriendInfo>
-        <Grid x:Name="Liste"></Grid>
+        <!--<Controls:FriendInfo></Controls:FriendInfo>-->
+        
+        <StackPanel Name="Liste">
+            <TextBlock Text="toto"></TextBlock>
+        </StackPanel>
     </Grid>
 </navigation:Page>

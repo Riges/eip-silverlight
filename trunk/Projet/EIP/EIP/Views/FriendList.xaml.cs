@@ -25,7 +25,14 @@ namespace EIP.Views
         public FriendList()
         {
             InitializeComponent();
-            friends = new Dictionary<String, Friend>();
+           
+        }
+
+        // Executes when the user navigates to this page.
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            this.friends = new Dictionary<String, Friend>();
             LoadList();
             foreach (KeyValuePair<String, Friend> poto in friends)
             {
@@ -66,13 +73,6 @@ namespace EIP.Views
                     this.Liste.Children.Add(fv);
                 }
             }
-        }
-
-        // Executes when the user navigates to this page.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-
-
 
         }
 

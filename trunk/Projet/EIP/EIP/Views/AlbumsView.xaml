@@ -6,7 +6,7 @@
            mc:Ignorable="d"
            xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
            xmlns:vm="clr-namespace:EIP.Showroom.ViewModels"
-                 xmlns:Controls="clr-namespace:EIP.Views.Controls"
+           xmlns:Controls="clr-namespace:EIP.Views.Controls"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="AlbumsView Page">
