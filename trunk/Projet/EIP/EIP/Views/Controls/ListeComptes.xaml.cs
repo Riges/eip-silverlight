@@ -114,6 +114,13 @@ namespace EIP.Views.Controls
 
                     });
                 }
+                else
+                {
+                    Dispatcher.BeginInvoke(() =>
+                    {
+                        LayoutPanel.Children.Clear();
+                    });
+                }
             }
             else
             {
