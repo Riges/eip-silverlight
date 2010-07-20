@@ -153,7 +153,7 @@ namespace EIP
         }
         public void LoadOutboxMessages()
         {
-            this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
+            //this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(GetThreadsFQL_Completed), null);
         }
 
 
@@ -180,7 +180,7 @@ namespace EIP
             
         }
 
-        private void LoadMessagesCompleted(IList<thread> liste, Object state, FacebookException e)
+        /*private void LoadMessagesCompleted(IList<thread> liste, Object state, FacebookException e)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
@@ -200,8 +200,8 @@ namespace EIP
                     this.GetMessagesCalled.Invoke(this.box); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
 
             }
-             * */
-        }
+             * *
+        }*/
 
 
 

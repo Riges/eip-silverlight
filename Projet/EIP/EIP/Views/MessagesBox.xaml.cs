@@ -84,6 +84,7 @@ namespace EIP.Views
                 {
 
                     listeMessagesBox.box = liste;
+                    listeMessagesBox.LoadMessages();
                     //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
                     //toto.Show();
                 });
