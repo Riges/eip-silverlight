@@ -12,9 +12,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
+        <TextBlock Name="TitrePage" Style="{StaticResource HeaderTextStyle}"
+                           Text="Messagerie" Grid.Row="0" />
         <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
-                           Text="Prout" Grid.Row="0" />
-        <Controls:listeMessages HorizontalAlignment="Left"  x:Name="listeMessagesBox" VerticalAlignment="Top" Grid.Row="1" Height="436" Width="616" />
+                           Text="Messagerie" Grid.Row="1" />
+        <Controls:listeMessages HorizontalAlignment="Left"  x:Name="listeMessagesBox" VerticalAlignment="Top" Grid.Row="2" Height="Auto" Width="Auto" />
     </Grid>
 </navigation:Page>

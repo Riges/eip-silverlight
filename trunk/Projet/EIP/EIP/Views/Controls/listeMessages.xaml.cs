@@ -55,7 +55,7 @@ namespace EIP.Views.Controls
                     messagesPanel.Children.Clear();
                     foreach (thread thread in this.box)
                     {
-                        Message monMessage = new Message(thread.subject);
+                        Message monMessage = new Message(thread.subject, thread.snippet);
                         messagesPanel.Children.Add(monMessage);
 
                     }
