@@ -182,7 +182,7 @@ namespace EIP.Views.Controls
                                     switch (oneAccount.Value.account.typeAccount)
                                     {
                                         case Account.TypeAccount.Facebook:
-                                            ((AccountFacebookLight)oneAccount.Value).sendStatus(statuValue.Text);
+                                            ((AccountFacebookLight)oneAccount.Value).SendStatus(statuValue.Text);
                                             break;
                                         case Account.TypeAccount.Twitter:
                                             ((AccountTwitterLight)oneAccount.Value).SendStatus(statuValue.Text);
