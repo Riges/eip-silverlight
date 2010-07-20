@@ -7,9 +7,35 @@
     d:DesignHeight="300" d:DesignWidth="850" xmlns:my="clr-namespace:EIP.Views.Controls">
     
     <Grid x:Name="LayoutRoot" Background="White">
-        <StackPanel Name="messagesPanel">
-            
-            <my:Message x:Name="message1" DataContext="{Binding}" />
+        <StackPanel Orientation="Vertical" Name="messagesPanel" Visibility="Collapsed">
+
+            <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500">
+                <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border >
+                            <!--BorderBrush="Blue" BorderThickness="1"-->
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <my:Message x:Name="message" />
+                    </DataTemplate>
+
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
         </StackPanel>
     </Grid>
 </UserControl>

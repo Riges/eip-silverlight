@@ -38,14 +38,18 @@ namespace EIP.Views.Controls
             }
              * */
 
-            LoadMessages();
+            //LoadMessages();
         }
 
 
-        private void LoadMessages()
+        public void LoadMessages()
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
+                /*string tmp = this.box.Count.ToString();
+                MessageBox toto = new MessageBox("", "LoadMessages " + tmp);
+                toto.Show();*/
+                
                 if (this.box.Count > 0)
                 {
                     messagesPanel.Children.Clear();
@@ -53,27 +57,12 @@ namespace EIP.Views.Controls
                     {
                         Message monMessage = new Message(thread.subject);
                         messagesPanel.Children.Add(monMessage);
+
                     }
+                    //FeedsControl.DataContext = this.box;
 
                 }
             });
-        }
-
-        void Messages_GetMessagesCalled(List<thread> liste)
-        {
-            this.box = liste;
-            //MessageBox toto = new MessageBox("", "invoked");
-            //toto.Show();
-
-            /*if (postId == this.postId)
-            {
-                this.Commentaires = new stream_comments() { comment_list = new stream_commentsComment_list() { comment = coms } };
-                LoadComs();
-                Connexion.dispatcher.BeginInvoke(() =>
-                {
-                    displayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
-                });
-            }*/
         }
     }
 }
