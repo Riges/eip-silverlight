@@ -84,7 +84,7 @@ namespace EIP.Views.Controls
                 switch (topic.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
-                            if (topic.fb_post != null)
+                            if (topic.fb_post != null && post.userSource != null)
                             {
                                 post = topic.fb_post;
 

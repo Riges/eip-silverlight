@@ -85,9 +85,9 @@ namespace EIP
             Connexion.accounts[this.account.accountID] = this;
         }
 
-        public void sendStatus(string statu)
+        public void SendStatus(string status)
         {
-            this.facebookAPI.Status.SetAsync(statu, SetStatusCompleted, null);
+            this.facebookAPI.Status.SetAsync(status, SetStatusCompleted, null);
         }
 
         void SetStatusCompleted(bool result, Object state, FacebookException e)
@@ -98,9 +98,13 @@ namespace EIP
                 {
                     dispatcher.BeginInvoke(() =>
                     {
-                        MessageBox msg = new MessageBox("Erreur", "Ce compte existe déjà !");
+                        MessageBox msg = new MessageBox("Erreur", "Impossible de poster ce message");
                         msg.Show();
                     });
+                }
+                else
+                {
+                    Connexion.navigationService.Navigate(new Uri("/Home", UriKind.Relative)); // TODO : reload si deja sur home...
                 }
             }
             else
@@ -657,6 +661,11 @@ namespace EIP
             if (ex == null)
             {
                 //this.photos[aid.ToString()] = (List<photo>)photos;
+                foreach (photo tof in photos)
+                {
+                    this.photos[aid.ToString()][tof.pid] = tof;
+                }
+
             }
         }
 
