@@ -18,10 +18,18 @@ namespace EIP.Views.Controls
         {
             InitializeComponent();
         }
-        public Message(String text)
+        public Message(String mysubject)
         {
             InitializeComponent();
-            titre.Text = text;
+            subject.Text = mysubject;
+            summary.Text = "";
+        }
+        public Message(String mysubject, String mysummary)
+        {
+            // Pour FB
+            InitializeComponent();
+            subject.Text = mysubject;
+            summary.Text = mysummary.Replace('\n', ' ');
         }
     }
 }
