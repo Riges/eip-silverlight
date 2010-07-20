@@ -84,106 +84,110 @@ namespace EIP.Views.Controls
                 switch (topic.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
-                            if (topic.fb_post != null && topic.fb_post.userSource != null)
+                        if (topic.fb_post != null && topic.fb_post.userSource != null)
+                        {
+                            post = topic.fb_post;
+
+                            BitmapImage btImgFB = null;
+
+                            if (post.userSource.pic != null) // verif si gif
                             {
-                                post = topic.fb_post;
-
-                                BitmapImage btImgFB = null;
-
-                                if (post.userSource.pic != null) // verif si gif
-                                {
-                                    Uri uriImg = new Uri(post.userSource.pic);
-                                    btImgFB = new BitmapImage(uriImg);
-                                }
-                                picUser.Source = btImgFB;
-                                nameUser.Content = post.userSource.name;
-                                if (post.userTarget != null)
-                                    nameUser.Content += " > " + post.userTarget.name;
-                                nameUser.NavigateUri = new Uri("/Albums/" + post.userSource.uid+"/Account/"+topic.accountID, UriKind.Relative);
-                                
-                                imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
-                     
-
-                                //LoadMessage(post.post.message);
-                                //message.Text = post.post.message;
-
-                                DateTime dateTime = topic.date;// new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                               // dateTime = dateTime.AddSeconds(post.post.created_time);//.AddHours(1);
-                                dateTimeFeed.Text = Utils.Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
-
-                                if (post.post.attachment.icon != "" && post.post.attachment.icon != null)
-                                {
-                                    imgVia.Source = new BitmapImage(new Uri("http://localhost:4164/GifHandler.ashx?link=" + post.post.attachment.icon, UriKind.Absolute));
-                                    imgVia.Visibility = System.Windows.Visibility.Visible;
-                                }
-
-                                if (post.post.attribution != "" && post.post.attribution != null)
-                                {
-                                    if (!post.post.attribution.StartsWith("via"))
-                                    {
-                                        viaAppliText.Visibility = System.Windows.Visibility.Visible;
-                                        viaAppli.Content = post.post.attribution;
-                                        viaAppli.TargetName = "_blank";
-                                        viaAppli.NavigateUri = new Uri("http://www.facebook.com/apps/application.php?id=" + post.post.app_id, UriKind.Absolute);
-                                        viaAppli.Visibility = System.Windows.Visibility.Visible;
-                                    }
-                                }
-
-                                switch (post.post.type)
-                                {
-                                    case "46":
-                                        StatutFeed statut = new StatutFeed(post.post.message);
-                                        content.Children.Add(statut);
-                                        break;
-                                    case "80":
-                                        LienFeed lienFeed = new LienFeed(post);
-                                        content.Children.Add(lienFeed);
-                                        //this.Height = 220;
-                                        break;
-                                    case "128":
-                                        VideoFeed videoFeed = new VideoFeed();
-                                        content.Children.Add(videoFeed);
-                                        break;
-                                    case "247":
-                                        if (post.post.attachment.icon != "")
-                                        {
-                                            imgVia.Source = new BitmapImage(new Uri("http://localhost:4164/GifHandler.ashx?link=" + post.post.attachment.icon, UriKind.Absolute));
-                                            imgVia.Visibility = System.Windows.Visibility.Visible;
-                                        }
-                                        PhotosFeed photosFeed = new PhotosFeed(post);
-                                        content.Children.Add(photosFeed);
-                                        //this.Height = 220;
-                                        break;
-                                    default:
-                                        TextBlock block = new TextBlock();
-                                        block.Text = post.post.type + " - " + post.post.message;
-                                        content.Children.Add(block);
-                                        break;
-                                }
-
-                                jaimeButton.accountID = topic.accountID;
-                                jaimeButton.postId = post.post.post_id;
-                                jaimeButton.LoadJaimeButton(post.post.likes.user_likes);
-                                stream_likes test = post.post.likes;
-
-                                //commentaires
-                               // stream_comments stream_coms = topic.fb_post.post.comments;
-                                comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
-                                comsControl.postId = post.post.post_id;
-                                comsControl.accountID = topic.accountID;
-                                comsControl.Commentaires = topic.fb_post.post.comments;
-                                comsControl.Width = this.ActualWidth * 0.7;
-
-                                
-                                    
-                                /*
-                                List<profile> profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
-
-                                var theProfile = from profile prof in profiles
-                                                   where prof.id == Convert.ToInt64(coms[0].post_id)
-                                                   select prof;
-                                */
+                                Uri uriImg = new Uri(post.userSource.pic);
+                                btImgFB = new BitmapImage(uriImg);
                             }
+                            picUser.Source = btImgFB;
+                            nameUser.Content = post.userSource.name;
+                            if (post.userTarget != null)
+                                nameUser.Content += " > " + post.userTarget.name;
+                            nameUser.NavigateUri = new Uri("/Albums/" + post.userSource.uid + "/Account/" + topic.accountID, UriKind.Relative);
+
+                            imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
+
+
+                            //LoadMessage(post.post.message);
+                            //message.Text = post.post.message;
+
+                            DateTime dateTime = topic.date;// new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                            // dateTime = dateTime.AddSeconds(post.post.created_time);//.AddHours(1);
+                            dateTimeFeed.Text = Utils.Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
+
+                            if (post.post.attachment.icon != "" && post.post.attachment.icon != null)
+                            {
+                                imgVia.Source = new BitmapImage(new Uri("http://localhost:4164/GifHandler.ashx?link=" + post.post.attachment.icon, UriKind.Absolute));
+                                imgVia.Visibility = System.Windows.Visibility.Visible;
+                            }
+
+                            if (post.post.attribution != "" && post.post.attribution != null)
+                            {
+                                if (!post.post.attribution.StartsWith("via"))
+                                {
+                                    viaAppliText.Visibility = System.Windows.Visibility.Visible;
+                                    viaAppli.Content = post.post.attribution;
+                                    viaAppli.TargetName = "_blank";
+                                    viaAppli.NavigateUri = new Uri("http://www.facebook.com/apps/application.php?id=" + post.post.app_id, UriKind.Absolute);
+                                    viaAppli.Visibility = System.Windows.Visibility.Visible;
+                                }
+                            }
+
+                            switch (post.post.type)
+                            {
+                                case "46":
+                                    StatutFeed statut = new StatutFeed(post.post.message);
+                                    content.Children.Add(statut);
+                                    break;
+                                case "80":
+                                    LienFeed lienFeed = new LienFeed(post);
+                                    content.Children.Add(lienFeed);
+                                    //this.Height = 220;
+                                    break;
+                                case "128":
+                                    VideoFeed videoFeed = new VideoFeed();
+                                    content.Children.Add(videoFeed);
+                                    break;
+                                case "247":
+                                    if (post.post.attachment.icon != "")
+                                    {
+                                        imgVia.Source = new BitmapImage(new Uri("http://localhost:4164/GifHandler.ashx?link=" + post.post.attachment.icon, UriKind.Absolute));
+                                        imgVia.Visibility = System.Windows.Visibility.Visible;
+                                    }
+                                    PhotosFeed photosFeed = new PhotosFeed(post);
+                                    content.Children.Add(photosFeed);
+                                    //this.Height = 220;
+                                    break;
+                                default:
+                                    TextBlock block = new TextBlock();
+                                    block.Text = post.post.type + " - " + post.post.message;
+                                    content.Children.Add(block);
+                                    break;
+                            }
+
+                            jaimeButton.accountID = topic.accountID;
+                            jaimeButton.postId = post.post.post_id;
+                            jaimeButton.LoadJaimeButton(post.post.likes.user_likes);
+                            stream_likes test = post.post.likes;
+
+                            //commentaires
+                            // stream_comments stream_coms = topic.fb_post.post.comments;
+                            comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
+                            comsControl.postId = post.post.post_id;
+                            comsControl.accountID = topic.accountID;
+                            comsControl.Commentaires = topic.fb_post.post.comments;
+                            comsControl.Width = this.ActualWidth * 0.7;
+
+
+
+                            /*
+                            List<profile> profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
+
+                            var theProfile = from profile prof in profiles
+                                               where prof.id == Convert.ToInt64(coms[0].post_id)
+                                               select prof;
+                            */
+                        }
+                        else
+                        {
+                            this.Visibility = System.Windows.Visibility.Collapsed;
+                        }
                         break;
                     case Account.TypeAccount.Twitter:
                         BitmapImage btImg = null;
