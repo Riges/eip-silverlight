@@ -450,7 +450,7 @@ namespace EIP
         public void GetComs(string postId)
         {
             //this.facebookAPI.Comments.GetAsync(xid.Split('_')[1], new Comments.GetCallback(GetComs_Completed), type);
-            this.facebookAPI.Fql.QueryAsync<comments_get_response>("SELECT xid, fromid, time, text, id,username FROM comment WHERE object_id=" + postId.Split('_')[1], new Fql.QueryCallback<comments_get_response>(GetComsFQL_Completed), postId);
+            this.facebookAPI.Fql.QueryAsync<comments_get_response>("SELECT xid, fromid, post_id, time, text, id, username FROM comment WHERE object_id=" + postId.Split('_')[1], new Fql.QueryCallback<comments_get_response>(GetComsFQL_Completed), postId);
         }
 
         public void GetComsFQL_Completed(comments_get_response coms, object obj, FacebookException ex)
@@ -512,9 +512,14 @@ namespace EIP
            
         }*/
 
-        public void AddCom(comment com)
+        public void AddCom(string postId, string comment)
         {
-            //this.facebookAPI.Comments.AddAsync();
+            this.facebookAPI.Stream.AddCommentAsync(postId, comment, new Stream.AddCommentCallback(AddCom_Completed), null);
+        }
+
+        private void AddCom_Completed(string result, object obj, FacebookException ex)
+        {
+
         }
 
         public void DeleteCom(comment com)
