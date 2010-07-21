@@ -16,6 +16,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Name="jaimePanel" Orientation="Horizontal">
+            
         </StackPanel>
 
         <StackPanel Grid.Row="1" Name="displayAllComsPanel" Orientation="Horizontal"></StackPanel>
