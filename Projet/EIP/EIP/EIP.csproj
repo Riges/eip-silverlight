@@ -109,6 +109,7 @@
     <Compile Include="Objects\Friend.cs" />
     <Compile Include="Objects\ThreadMessage.cs" />
     <Compile Include="Objects\Profil.cs" />
+    <Compile Include="Objects\SendStatusCompletedEventArgs.cs" />
     <Compile Include="Objects\Topic.cs" />
     <Compile Include="Objects\TopicFB.cs" />
     <Compile Include="Objects\Utils.cs" />
