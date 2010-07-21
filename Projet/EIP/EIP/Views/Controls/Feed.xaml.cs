@@ -171,8 +171,10 @@ namespace EIP.Views.Controls
                             comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
                             comsControl.postId = post.post.post_id;
                             comsControl.accountID = topic.accountID;
-                            comsControl.Commentaires = topic.fb_post.post.comments;
+                            comsControl.likes = post.post.likes;
+                            comsControl.Commentaires = post.post.comments;
                             comsControl.Width = this.ActualWidth * 0.7;
+                            
 
 
 

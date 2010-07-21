@@ -704,7 +704,38 @@ namespace EIP
             }
         }
 
-        
+        public delegate void GetUsersLikesCompleted(bool ok, string postId);
+        public event GetUsersLikesCompleted GetUsersLikesCalled;
+
+        public void GetUsersLikes(stream_likes likes, string postId)
+        {
+            List<long> userIds = new List<long>();
+            userIds.AddRange(likes.sample.uid);
+            userIds.AddRange(likes.friends.uid);
+
+
+            this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUsersLikes_Completed), null);
+        }
+
+        private void GetUsersLikes_Completed(IList<user> users, object obj, FacebookException ex)
+        {
+            if (ex == null)
+            {
+                foreach (user user in users)
+                {
+                    profile prof = new profile();
+                    prof.id = (long)user.uid;
+                    prof.name = user.name;
+                    prof.pic_square = user.pic_square;
+                    prof.url = user.profile_url;
+                    this.profiles.Add(prof);
+                }
+
+
+                if (this.GetUsersLikesCalled != null)
+                    this.GetUsersLikesCalled.Invoke(true, obj.ToString());
+            }
+        }
 
         
 
