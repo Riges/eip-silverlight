@@ -9,10 +9,10 @@
     
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Name="jaimePanel" Orientation="Horizontal">
@@ -24,10 +24,10 @@
             
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Name="addComPanel" Orientation="Horizontal">
-            <Image></Image>
-            <TextBlock></TextBlock>
-            <Button Content="Commenter"></Button>
+        <StackPanel Grid.Row="3" Name="addComPanel" Orientation="Horizontal" Margin="0,0,0,10">
+            <Image Name="imgNewCom" Visibility="Collapsed" Width="40" Height="40" Margin="0,0,10,0"></Image>
+            <TextBox Name="textNewCom" GotFocus="textNewCom_GotFocus" LostFocus="textNewCom_LostFocus"  Width="400" Margin="0,0,10,0"></TextBox>
+            <Button Content="Commenter" Name="btnNewCom" Visibility="Collapsed" Click="btnNewCom_Click"></Button>
         </StackPanel>
 
     </Grid>

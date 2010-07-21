@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
+using System.Windows.Media.Imaging;
 
 namespace EIP.Views.Controls
 {
@@ -59,6 +60,10 @@ namespace EIP.Views.Controls
                 displayAllComsPanel.Children.Add(linkBtn);
             }
 
+            imgNewCom.Source = new BitmapImage(new Uri(((AccountFacebookLight)Connexion.accounts[this.accountID]).userInfos.pic_square, UriKind.Absolute));
+            //textNewCom.Text = "Rédigez un commentaire...";
+            textNewCom_LostFocus(null, null);
+
             LoadComs();
         }
 
@@ -102,12 +107,39 @@ namespace EIP.Views.Controls
 
             if (postId == this.postId)
             {
-                this.Commentaires = new stream_comments() { comment_list = new stream_commentsComment_list() { comment = coms } };
-                LoadComs();
+
                 Connexion.dispatcher.BeginInvoke(() =>
-                    {
-                        displayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
-                    });
+                {
+                    this.Commentaires = new stream_comments() { comment_list = new stream_commentsComment_list() { comment = coms } };
+                    LoadComs();
+                    displayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
+                });
+            }
+        }
+
+        private void textNewCom_GotFocus(object sender, RoutedEventArgs e)
+        {
+            imgNewCom.Visibility = System.Windows.Visibility.Visible;
+            btnNewCom.Visibility = System.Windows.Visibility.Visible;
+            textNewCom.Text = "";
+        }
+
+        private void textNewCom_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (textNewCom.Text == "")
+            {
+                imgNewCom.Visibility = System.Windows.Visibility.Collapsed;
+                btnNewCom.Visibility = System.Windows.Visibility.Collapsed;
+                textNewCom.Text = "Rédigez un commentaire...";
+            }
+        }
+
+        private void btnNewCom_Click(object sender, RoutedEventArgs e)
+        {
+            string text = textNewCom.Text.Trim();
+            if (text != string.Empty)
+            {
+                ((AccountFacebookLight)(Connexion.accounts[accountID])).AddCom(this.postId, text);
             }
         }
     }
