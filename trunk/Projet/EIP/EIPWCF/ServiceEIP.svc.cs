@@ -19,6 +19,9 @@ using TweetSharp.Twitter.Extensions;
 using System.Configuration;
 using TweetSharp;
 using TweetSharp.Fluent;
+using System.Net;
+using System.IO;
+using System.Text.RegularExpressions;
 
 
 namespace EIPWCF
@@ -112,8 +115,42 @@ namespace EIPWCF
             return null;
         }
 
+        private static string MakeTinyUrl(string Url)
+        {
+            try
+            {
+                if (Url.Length <= 30)
+                {
+                    return Url;
+                }
+                if (!Url.ToLower().StartsWith("http") && !Url.ToLower().StartsWith("ftp"))
+                {
+                    Url = "http://" + Url;
+                }
+                var request = WebRequest.Create("http://tinyurl.com/api-create.php?url=" + Url);
+                var res = request.GetResponse();
+                string text;
+                using (var reader = new StreamReader(res.GetResponseStream()))
+                {
+                    text = reader.ReadToEnd();
+                }
+                return text;
+            }
+            catch (Exception)
+            {
+                return Url;
+            }
+        }
+
         public bool SendTweet(string token, string tokenSecret, string tweet)
         {
+            Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
+            MatchCollection mactches = regx.Matches(tweet);
+            foreach (Match match in mactches)
+            {
+                tweet = tweet.Replace(match.Value, MakeTinyUrl(match.Value));
+            }
+
             SetClientInfo();
             var query = FluentTwitter.CreateRequest()
                    .AuthenticateWith(token, tokenSecret)

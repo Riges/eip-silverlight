@@ -1,24 +1,13 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Runtime.Serialization;
 //using EIP.ServiceEIP;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using EIP.Objects;
 //using TweetSharp.Fluent;
 //using TweetSharp.Model;
 //using TweetSharp.Extensions;
 using EIP.ServiceEIP;
-using EIP.Objects;
 using EIP.Views;
-using System.Collections.ObjectModel;
-
 
 namespace EIP
 {

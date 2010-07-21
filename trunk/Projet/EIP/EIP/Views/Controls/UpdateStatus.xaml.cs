@@ -130,55 +130,37 @@ namespace EIP.Views.Controls
             return false;
         }
 
-        public string getShorter(string url)
+        public string checkShorter(string url)
         {
-            string returnUrl = url;
-            var client = new RestClient
-            {
-                Authority = "http://tinyurl.com",
-                UserAgent = "Hammock",
-                SilverlightAuthorizationHeader = "X-Twitter-Auth",
-                SilverlightMethodHeader = "X-Twitter-Method",
-                SilverlightUserAgentHeader = "X-Twitter-Agent",
-                SilverlightAcceptEncodingHeader = "X-Twitter-Accept"
-            };
-
-            var request = new RestRequest
-            {
-                Path = "Home/SleepReport",
-                Method = WebMethod.Get
-            };
-            request.AddParameter("url", url);
-
-            // The shortened URL is contained in response.Content
-            //RestResponse response = client.Request(request);
-            IAsyncResult result = client.BeginRequest(request);
-            returnUrl = result.ToString();
-            return returnUrl + " TOTO ";
+            if (url.Length <= 30)
+                return url;
+            else
+                return "******************************";
         }
 
         private void sendStatu_Click(object sender, RoutedEventArgs e)
         {
+            string tweet = statuValue.Text;
             Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
+            MatchCollection mactches = regx.Matches(tweet);
+            foreach (Match match in mactches)
+            {
+                tweet = tweet.Replace(match.Value, "******************************");
+            }
+
             if (Connexion.accounts != null)
             {
                 if (Connexion.accounts.Count > 0)
                 {
-                    Dispatcher.BeginInvoke(() =>
+                    if ((cheackIfTwitterActiveAccount() && tweet.Length <= 140) || !cheackIfTwitterActiveAccount())
                     {
-                        foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
+                        Dispatcher.BeginInvoke(() =>
                         {
-                            if(oneAccount.Value.selected)
+                            foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                             {
-                               //statuValue.Text += " " + oneAccount.Value.account.name;
-                            
-                                if ((cheackIfTwitterActiveAccount() && statuValue.Text.Count() < 140) || !cheackIfTwitterActiveAccount())
+                                if (oneAccount.Value.selected)
                                 {
-                                    MatchCollection mactches = regx.Matches(statuValue.Text); 
-    
-                                    foreach (Match match in mactches) {
-                                        statuValue.Text = statuValue.Text.Replace(match.Value, getShorter(match.Value));
-                                    }
+
                                     switch (oneAccount.Value.account.typeAccount)
                                     {
                                         case Account.TypeAccount.Facebook:
@@ -192,9 +174,14 @@ namespace EIP.Views.Controls
                                     }
                                 }
                             }
-                        }
-                        statuValue.Text = "";
-                    });
+                            statuValue.Text = "";
+                        });
+                    }
+                    else
+                    {
+                        MessageBox error = new MessageBox("Message trop long", "Vous utilisez Twitter qui limite la taille du message à 140 charactère et le message que vous voulez envoyez fait plus de 140 charactère.");
+                        error.Show();
+                    }
                 }
             }
         }
