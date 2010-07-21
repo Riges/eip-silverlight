@@ -77,12 +77,11 @@ namespace EIP.Views
 
         }
 
-        void Messages_GetMessagesCalled(List<thread> liste)
+        void Messages_GetMessagesCalled(List<ThreadMessage> liste)
         {
             //this.box = liste;
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-
                     listeMessagesBox.box = liste;
                     listeMessagesBox.LoadMessages();
                     //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);

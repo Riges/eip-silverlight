@@ -10,12 +10,13 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
+using EIP.Objects;
 
 namespace EIP.Views.Controls
 {
     public partial class listeMessages : UserControl
     {
-        public List<thread> box  { get; set; }
+        public List<ThreadMessage> box { get; set; }
         public long accountID { get; set; }
 
         public listeMessages()
@@ -53,11 +54,10 @@ namespace EIP.Views.Controls
                 if (this.box.Count > 0)
                 {
                     messagesPanel.Children.Clear();
-                    foreach (thread thread in this.box)
+                    foreach (ThreadMessage thread in this.box)
                     {
-                        Message monMessage = new Message(thread.subject, thread.snippet);
+                        Message monMessage = new Message(thread.getSubject(), thread.getSummary());
                         messagesPanel.Children.Add(monMessage);
-
                     }
                     //FeedsControl.DataContext = this.box;
 
