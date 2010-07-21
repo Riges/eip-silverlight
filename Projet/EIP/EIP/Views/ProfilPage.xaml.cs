@@ -46,7 +46,7 @@ namespace EIP.Views
                             uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
 
                         ((AccountFacebookLight)account.Value).GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(ProfilPage_GetUserInfoCalled);
-                        ((AccountFacebookLight)account.Value).GetUserInfo(uid);
+                        ((AccountFacebookLight)account.Value).GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
                         //Profil toto = new Profil();
                         //toto.profilFB = ;
                         //profil.Add(toto, toto.profilFB.id);

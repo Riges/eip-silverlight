@@ -29,6 +29,7 @@ namespace EIP
         
         public Api facebookAPI { get; set; }
         private BrowserSession browserSession { get; set; }
+        public user userInfos { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }
         public List<user> friends { get; set; }
         public List<stream_filter> filters { get; set; }
@@ -83,6 +84,8 @@ namespace EIP
         {
             facebookAPI = new Api(browserSession);
             Connexion.accounts[this.account.accountID] = this;
+
+            this.GetUserInfo(this.facebookAPI.Session.UserId, GetUserInfoFrom.Login);
         }
 
         public void SendStatus(string status)
@@ -117,22 +120,43 @@ namespace EIP
             }
         }
 
+        public enum GetUserInfoFrom
+        {
+            Login, 
+            Profil
+        }
+
         public delegate void OnGetUserInfoCompleted(user monUser);
         public event OnGetUserInfoCompleted GetUserInfoCalled;
 
-        public void GetUserInfo(long uid)
+        public void GetUserInfo(long uid, GetUserInfoFrom from)
         {
-            this.facebookAPI.Users.GetInfoAsync(uid, new Users.GetInfoCallback(GetUserInfo_Completed), null);
+            this.facebookAPI.Users.GetInfoAsync(uid, new Users.GetInfoCallback(GetUserInfo_Completed), from);
         }
 
-        private void GetUserInfo_Completed(IList<user> users, Object obj, FacebookException ex)
+        private void GetUserInfo_Completed(IList<user> users, Object from, FacebookException ex)
         {
             if (ex == null && users.Count > 0)
             {
                 user toto = users[0];
 
-                if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
-                    this.GetUserInfoCalled.Invoke(toto);
+                switch ((GetUserInfoFrom)from)
+                {
+                    case GetUserInfoFrom.Login:
+                        if (this.facebookAPI.Session.UserId == toto.uid)
+                        {
+                            this.userInfos = toto;
+                        }
+                        break;
+                    case GetUserInfoFrom.Profil:
+                        if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
+                            this.GetUserInfoCalled.Invoke(toto);
+                        break;
+                    default:
+                        break;
+                }
+
+                
 
             }
         }
@@ -518,12 +542,14 @@ namespace EIP
 
         public void AddCom(string postId, string comment)
         {
-            this.facebookAPI.Stream.AddCommentAsync(postId, comment, new Stream.AddCommentCallback(AddCom_Completed), null);
+            this.facebookAPI.Stream.AddCommentAsync(postId, comment, new Stream.AddCommentCallback(AddCom_Completed), postId);
         }
 
-        private void AddCom_Completed(string result, object obj, FacebookException ex)
+        private void AddCom_Completed(string result, object postId, FacebookException ex)
         {
 
+
+            this.GetComs(postId.ToString());
         }
 
         public void DeleteCom(comment com)
