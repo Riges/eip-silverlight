@@ -10,9 +10,11 @@
            Title="FriendList Page">
     <Grid x:Name="LayoutRoot">
         <!--<Controls:FriendInfo></Controls:FriendInfo>-->
-        
-        <StackPanel Name="Liste">
-            <TextBlock Text="toto"></TextBlock>
+        <StackPanel Name="ImgLoad" Visibility="Visible">
+            <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
+        </StackPanel>
+        <StackPanel Name="Liste" Orientation="Vertical" Visibility="Collapsed">
+            <TextBlock Text="Friend List"></TextBlock>
         </StackPanel>
     </Grid>
 </navigation:Page>
