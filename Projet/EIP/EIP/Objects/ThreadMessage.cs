@@ -27,6 +27,7 @@ namespace EIP.Objects
         public ThreadMessage(thread th)
         {
             this.MessageFb = th;
+            
             this.typeAccount = Account.TypeAccount.Facebook;
             this.date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             this.date = this.date.AddSeconds(th.updated_time).AddHours(2); // TODO : GTM parametrable

@@ -166,22 +166,43 @@ namespace EIP
 
         public delegate void OnGetMessagesCompleted(List<ThreadMessage> liste);
         public event OnGetMessagesCompleted GetMessagesCalled;
+        public delegate void GetThreadsMultiFQL_Completed(IList<Object> liste, object obj, FacebookException ex);
 
         public void LoadInboxMessages()
         {
 
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(0, (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
+            List<FqlMultiQueryInfo> queries = new List<FqlMultiQueryInfo>();
+            FqlMultiQueryInfo tmp = new FqlMultiQueryInfo();
+            tmp.Key = "query1";
+            tmp.Query = "SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0";
+            queries.Add(tmp);
+            tmp = new FqlMultiQueryInfo();
+            tmp.Key = "query2";
+            tmp.Query = "SELECT message_id,author_id,body,created_time,attachement from message where thread_id IN (SELECT thread_id FROM #query1)";
+            queries.Add(tmp);
+            tmp = new FqlMultiQueryInfo();
+            tmp.Key = "query3";
+            tmp.Query = "SELECT uid,name,pic_square from user where uid IN (SELECT snippet_author FROM #query1)";
+            queries.Add(tmp);
+            tmp = new FqlMultiQueryInfo();
+            tmp.Key = "query4";
+            tmp.Query = "SELECT uid,name,pic_square from user where uid IN (SELECT author_id FROM #query2)";
+            queries.Add(tmp);
+            
 
-            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
-
+            //this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
+            //this.facebookAPI.Fql.MultiqueryAsync(queries.ToArray(), new Fql.MultiqueryParsedCallback(new GetThreadsMultiFQL_Completed(GGetThreadsMultiFQL_Completed)), null);
         }
+
         public void LoadOutboxMessages()
         {
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(GetThreadsFQL_Completed), null);
         }
+        public void GGetThreadsMultiFQL_Completed(IList<Object> liste, object obj, FacebookException ex) { }
 
 
-        public void GetThreadsFQL_Completed(message_getThreadsInFolder_response liste, object obj, FacebookException ex)
+        public void GetThreadsFQL_Completed(message_getThreadsInFolder_response liste, object obj, FacebookException[] ex)
         {
            /*Connexion.dispatcher.BeginInvoke(() =>
             {
@@ -207,6 +228,7 @@ namespace EIP
              
             
         }
+
 
         /*private void LoadMessagesCompleted(IList<thread> liste, Object state, FacebookException e)
         {
