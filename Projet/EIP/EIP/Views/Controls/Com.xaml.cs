@@ -20,6 +20,8 @@ namespace EIP.Views.Controls
         public comment com { get; set; }
         public profile profile { get; set; }
         public long accountID { get; set; }
+        public long postUserId { get; set; }
+        
 
 
         public Com()
@@ -27,13 +29,14 @@ namespace EIP.Views.Controls
             InitializeComponent();
         }
 
-        public Com(comment unCom, profile unProfile, long unAccountID)
+        public Com(comment unCom, profile unProfile, long unAccountID, long unPostUserId)
         {
             InitializeComponent();
 
             this.com = unCom;
             this.profile = unProfile;
             this.accountID = unAccountID;
+            this.postUserId = unPostUserId;
             
             if (profile.pic_square != null)
             {
@@ -57,7 +60,7 @@ namespace EIP.Views.Controls
                     content.Children.Add(element);
             }
 
-            if (Connexion.accounts[this.accountID].account.userID == com.fromid)
+            if (Connexion.accounts[this.accountID].account.userID == com.fromid || Connexion.accounts[this.accountID].account.userID == this.postUserId)
                 deleteCom.Visibility = System.Windows.Visibility.Visible;
             else
                 deleteCom.Visibility = System.Windows.Visibility.Collapsed;

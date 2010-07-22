@@ -709,12 +709,30 @@ namespace EIP
 
         public void GetUsersLikes(stream_likes likes, string postId)
         {
+            List<long> userIdsLike = new List<long>();
+            userIdsLike.AddRange(likes.sample.uid);
+            userIdsLike.AddRange(likes.friends.uid);
+
             List<long> userIds = new List<long>();
-            userIds.AddRange(likes.sample.uid);
-            userIds.AddRange(likes.friends.uid);
+            foreach (long uid in userIdsLike)
+            {
+                bool exist = false;
+                foreach (profile prof in this.profiles)
+                {
+                    if (uid == prof.id)
+                        exist = true;
+                }
+                if (!exist)
+                    userIds.Add(uid);
+            }
 
-
-            this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUsersLikes_Completed), null);
+            if (userIds.Count > 0)
+                this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUsersLikes_Completed), postId);
+            else
+            {
+                if (this.GetUsersLikesCalled != null)
+                    this.GetUsersLikesCalled.Invoke(true, postId);
+            }
         }
 
         private void GetUsersLikes_Completed(IList<user> users, object obj, FacebookException ex)
