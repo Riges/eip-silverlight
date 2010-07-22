@@ -36,6 +36,7 @@ namespace EIP.Views.Controls
                 summary.Text = mysummary;
                 messagesPanel.Children.Add(summary);
             }
+
         }
     }
 }
