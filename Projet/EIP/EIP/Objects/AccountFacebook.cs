@@ -179,7 +179,7 @@ namespace EIP
             queries.Add(tmp);
             tmp = new FqlMultiQueryInfo();
             tmp.Key = "query2";
-            tmp.Query = "SELECT message_id,author_id,body,created_time,attachement from message where thread_id IN (SELECT thread_id FROM #query1)";
+            tmp.Query = "SELECT message_id,author_id,body,created_time,attachment from message where thread_id IN (SELECT thread_id FROM #query1)";
             queries.Add(tmp);
             tmp = new FqlMultiQueryInfo();
             tmp.Key = "query3";
@@ -192,14 +192,19 @@ namespace EIP
             
 
             //this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
-            //this.facebookAPI.Fql.MultiqueryAsync(queries.ToArray(), new Fql.MultiqueryParsedCallback(new GetThreadsMultiFQL_Completed(GGetThreadsMultiFQL_Completed)), null);
+            this.facebookAPI.Fql.MultiqueryAsync(queries.ToArray(),  new Fql.MultiqueryParsedCallback(GGetThreadsMultiFQL_Completed), null);//new GetThreadsMultiFQL_Completed(GGetThreadsMultiFQL_Completed)
         }
 
         public void LoadOutboxMessages()
         {
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(GetThreadsFQL_Completed), null);
         }
-        public void GGetThreadsMultiFQL_Completed(IList<Object> liste, object obj, FacebookException ex) { }
+        public void GGetThreadsMultiFQL_Completed(IList<object> liste, object obj, FacebookException[] ex) 
+        { 
+        
+
+
+        }
 
 
         public void GetThreadsFQL_Completed(message_getThreadsInFolder_response liste, object obj, FacebookException[] ex)
@@ -569,31 +574,32 @@ namespace EIP
 
         private void AddCom_Completed(string result, object postId, FacebookException ex)
         {
-
-
-            this.GetComs(postId.ToString());
+            if (ex == null)
+            {
+                this.GetComs(postId.ToString());
+            }
         }
 
         public void DeleteCom(comment com)
         {
-            MessageBox msgBox = new MessageBox(com.id, com.post_id, MessageBoxButton.OK);
-            msgBox.Show();
-            string[] tmp = com.id.Split('_');
-            this.facebookAPI.Comments.RemoveAsync(com.xid, Convert.ToInt32(tmp[2]), true, new Comments.RemoveCallback(DeleteCom_Completed), com.post_id);
+            //MessageBox msgBox = new MessageBox(com.id, com.post_id, MessageBoxButton.OK);
+            //msgBox.Show();
+            //string[] tmp = com.id.Split('_');
+            this.facebookAPI.Stream.RemoveCommentAsync(com.id, new Stream.RemoveCommentCallback(DeleteCom_Completed), com.post_id);
         }
 
         private void DeleteCom_Completed(bool result, object obj, FacebookException ex)
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    MessageBox msgBoxs = new MessageBox(result.ToString(), ex.Message, MessageBoxButton.OK);
-                    msgBoxs.Show();
+                    //MessageBox msgBoxs = new MessageBox(result.ToString(), ex.Message, MessageBoxButton.OK);
+                    //msgBoxs.Show();
                     if (ex == null)
                     {
                         if (result)
                         {
-                            MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
-                            msgBox.Show();
+                            //MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
+                            //msgBox.Show();
                             this.GetComs(obj.ToString());
                         }
                         else
