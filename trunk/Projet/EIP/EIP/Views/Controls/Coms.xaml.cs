@@ -23,6 +23,7 @@ namespace EIP.Views.Controls
         public string postId { get; set; }
         public List<profile> profiles { get; set; }
         public stream_likes likes { get; set; }
+        public long postUserId { get; set; }
 
         public Coms()
         {
@@ -41,17 +42,20 @@ namespace EIP.Views.Controls
             {
                 this.commentaires = value;
                 
-                LoadComsControl();
+                //LoadComsControl();
 
             }
         }
 
 
-        private void LoadComsControl()
+        public void LoadComsControl()
         {
             //comsPanel.Children.Add(new TextBlock() { Text = "jaime" });
-            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComsCalled += new AccountFacebookLight.OnGetComsCompleted(Coms_GetComsCalled); 
-            
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComsCalled += new AccountFacebookLight.OnGetComsCompleted(Coms_GetComsCalled);
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetUsersLikesCalled += new AccountFacebookLight.GetUsersLikesCompleted(Coms_GetUsersLikesCalled);
+
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetUsersLikes(this.likes, this.postId);
+
             if (this.Commentaires.count > this.Commentaires.comment_list.comment.Count())
             {
                 HyperlinkButton linkBtn = new HyperlinkButton();
@@ -66,6 +70,8 @@ namespace EIP.Views.Controls
 
             LoadComs();
         }
+
+        
 
         
         private void LoadComs()
@@ -83,7 +89,7 @@ namespace EIP.Views.Controls
                                              where prof.id == Convert.ToInt64(com.fromid)
                                              select prof;
 
-                            Com comControl = new Com(com, (profile)theProfile.First(), this.accountID);
+                            Com comControl = new Com(com, (profile)theProfile.First(), this.accountID, postUserId);
 
 
                             comsPanel.Children.Add(comControl);
@@ -114,6 +120,47 @@ namespace EIP.Views.Controls
                     LoadComs();
                     displayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
                 });
+            }
+        }
+
+        void Coms_GetUsersLikesCalled(bool ok, string postId)
+        {
+            if(this.postId == postId)
+            {
+                List<long> uids = new List<long>();
+                uids.AddRange(this.likes.friends.uid);
+                uids.AddRange(this.likes.sample.uid);
+
+
+
+
+                if (this.likes.user_likes)
+                {
+                    TextBlock txtUserLike = new TextBlock() { Text = "Vous " };
+                    jaimePanel.Children.Add(txtUserLike);
+                }
+
+                foreach (long uid in uids)
+                {
+                    profile prof = ((AccountFacebookLight)(Connexion.accounts[accountID])).profiles.Where<profile>(delegate(profile profTmp) { if (profTmp.id == uid)return true; return false; }).First();
+                    if (prof != null)
+                    {
+                        HyperlinkButton link = new HyperlinkButton() { Content = prof.name };
+
+                        if (jaimePanel.Children.Count > 0)
+                            jaimePanel.Children.Add(new TextBlock() { Text = ", " });
+                        jaimePanel.Children.Add(link);
+                    }
+                }
+
+                if(this.likes.user_likes)
+                    jaimePanel.Children.Add(new TextBlock() { Text = " aimez ça." });
+                else if (!this.likes.user_likes && uids.Count == 1)
+                    jaimePanel.Children.Add(new TextBlock() { Text = " aime ça." });
+                else if (!this.likes.user_likes && uids.Count > 1)
+                    jaimePanel.Children.Add(new TextBlock() { Text = " aiment ça." });
+     
+
             }
         }
 
