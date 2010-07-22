@@ -50,7 +50,7 @@ namespace EIP.Views
                     fv.imgUser.Source = btImgFB;
 
                     fv.nomFriend.Text = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
-                    fv.voirProfil.NavigateUri = new Uri("/Profil/uid=" + poto.Value.userFB.uid);
+                    fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userFB.uid);
 
                     this.Liste.Children.Add(fv);
                 }
@@ -68,12 +68,13 @@ namespace EIP.Views
                     fv.imgUser.Source = btImgFB;
 
                     fv.nomFriend.Text = poto.Value.userTW.Name;
-                    // fv.voirProfil.NavigateUri = new Uri("/Profil/uid=" + poto.Value.userTW.);
+                    // fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userTW.);
 
                     this.Liste.Children.Add(fv);
                 }
             }
-
+            ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+            Liste.Visibility = System.Windows.Visibility.Visible;
         }
 
         /// <summary>
