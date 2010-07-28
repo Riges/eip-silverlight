@@ -8,8 +8,8 @@
     
     <Grid x:Name="LayoutRoot" Background="White" MouseEnter="LayoutRoot_MouseEnter" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -19,7 +19,7 @@
             <ColumnDefinition Width="25*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <StackPanel Orientation="Horizontal" Height="20" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <TextBox Name="statuValue" Width="280" Margin="5 0"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="4" Name="NetworkStackPanel" Orientation="Horizontal">

@@ -18,6 +18,7 @@ namespace EIP.Views.Controls
     public partial class Com : UserControl
     {
         public comment com { get; set; }
+        public string postId { get; set; }
         public profile profile { get; set; }
         public long accountID { get; set; }
         public long postUserId { get; set; }
@@ -29,7 +30,7 @@ namespace EIP.Views.Controls
             InitializeComponent();
         }
 
-        public Com(comment unCom, profile unProfile, long unAccountID, long unPostUserId)
+        public Com(comment unCom, profile unProfile, long unAccountID, long unPostUserId, string unPostId)
         {
             InitializeComponent();
 
@@ -37,6 +38,8 @@ namespace EIP.Views.Controls
             this.profile = unProfile;
             this.accountID = unAccountID;
             this.postUserId = unPostUserId;
+            this.postId = unPostId;
+            
             
             if (profile.pic_square != null)
             {
@@ -60,12 +63,13 @@ namespace EIP.Views.Controls
                     content.Children.Add(element);
             }
 
+            /*
             if (Connexion.accounts[this.accountID].account.userID == com.fromid || Connexion.accounts[this.accountID].account.userID == this.postUserId)
                 deleteCom.Visibility = System.Windows.Visibility.Visible;
             else
                 deleteCom.Visibility = System.Windows.Visibility.Collapsed;
 
-
+            */
             
 
 
@@ -73,7 +77,18 @@ namespace EIP.Views.Controls
 
         private void deleteCom_Click(object sender, RoutedEventArgs e)
         {
-            ((AccountFacebookLight)Connexion.accounts[this.accountID]).DeleteCom(this.com);
+            ((AccountFacebookLight)Connexion.accounts[this.accountID]).DeleteCom(this.com, postId);
+        }
+
+        private void LayoutRoot_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (Connexion.accounts[this.accountID].account.userID == com.fromid || Connexion.accounts[this.accountID].account.userID == this.postUserId)
+                deleteCom.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void LayoutRoot_MouseLeave(object sender, MouseEventArgs e)
+        {
+            deleteCom.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

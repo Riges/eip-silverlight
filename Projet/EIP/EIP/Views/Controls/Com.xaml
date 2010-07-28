@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Height="Auto">
     
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" Background="White" MouseMove="LayoutRoot_MouseMove" MouseLeave="LayoutRoot_MouseLeave">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -26,7 +26,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,10">
             <TextBlock Name="dateTimeFeed"></TextBlock>
-            <HyperlinkButton Name="deleteCom" Click="deleteCom_Click" Content="Supprimer"></HyperlinkButton>
+            <HyperlinkButton Name="deleteCom" Click="deleteCom_Click" Content="Supprimer" Visibility="Collapsed"></HyperlinkButton>
             <!--<Control:jaime Margin="3,0,0,0" x:Name="jaimeButton"></Control:jaime>-->
         </StackPanel>
 
