@@ -510,7 +510,7 @@ namespace EIP
 
         public void GetComsFQL_Completed(comments_get_response coms, object obj, FacebookException ex)
         {
-          
+
             if (ex == null && coms.comment.Count > 0)
             {
                 List<long> userIds = new List<long>();
@@ -540,6 +540,11 @@ namespace EIP
 
                     this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUserComs_Completed), list);
                 }
+            }
+            else if (ex == null && coms.comment.Count == 0)
+            {
+                if (this.GetComsCalled != null)//evite que ca plante si pas dabo
+                    this.GetComsCalled.Invoke(null, obj.ToString());
             }
         }
 
@@ -580,12 +585,13 @@ namespace EIP
             }
         }
 
-        public void DeleteCom(comment com)
+        public void DeleteCom(comment com, string postId)
         {
+            
             //MessageBox msgBox = new MessageBox(com.id, com.post_id, MessageBoxButton.OK);
             //msgBox.Show();
             //string[] tmp = com.id.Split('_');
-            this.facebookAPI.Stream.RemoveCommentAsync(com.id, new Stream.RemoveCommentCallback(DeleteCom_Completed), com.post_id);
+            this.facebookAPI.Stream.RemoveCommentAsync(com.id, new Stream.RemoveCommentCallback(DeleteCom_Completed), postId);
         }
 
         private void DeleteCom_Completed(bool result, object obj, FacebookException ex)
@@ -600,7 +606,8 @@ namespace EIP
                         {
                             //MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
                             //msgBox.Show();
-                            this.GetComs(obj.ToString());
+                            if (obj != null)
+                                this.GetComs(obj.ToString());
                         }
                         else
                         {

@@ -150,6 +150,9 @@
     <Compile Include="Views\Controls\Feed.xaml.cs">
       <DependentUpon>Feed.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\Feeds\AppliFeed.xaml.cs">
+      <DependentUpon>AppliFeed.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Feeds\LienFeed.xaml.cs">
       <DependentUpon>LienFeed.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\Feed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Feeds\AppliFeed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

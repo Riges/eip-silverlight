@@ -136,9 +136,13 @@ namespace EIP.Views.Controls
                                     content.Children.Add(statut);
                                     break;
                                 case "80":
-                                    LienFeed lienFeed = new LienFeed(post);
+                                    /*LienFeed lienFeed = new LienFeed(post);
                                     content.Children.Add(lienFeed);
-                                    //this.Height = 220;
+                                    
+                                    break;*/
+                                case "237":
+                                    LienFeed appliFeed = new LienFeed(post);
+                                    content.Children.Add(appliFeed);
                                     break;
                                 case "128":
                                     VideoFeed videoFeed = new VideoFeed();

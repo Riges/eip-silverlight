@@ -78,9 +78,9 @@ namespace EIP.Views.Controls
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    if (this.Commentaires.comment_list.comment.Count > 0)
+                    comsPanel.Children.Clear();
+                    if (this.Commentaires.comment_list.comment != null && this.Commentaires.comment_list.comment.Count > 0)
                     {
-                        comsPanel.Children.Clear();
                         foreach (comment com in Commentaires.comment_list.comment)
                         {
 
@@ -89,7 +89,7 @@ namespace EIP.Views.Controls
                                              where prof.id == Convert.ToInt64(com.fromid)
                                              select prof;
 
-                            Com comControl = new Com(com, (profile)theProfile.First(), this.accountID, postUserId);
+                            Com comControl = new Com(com, (profile)theProfile.First(), this.accountID, postUserId, postId);
 
 
                             comsPanel.Children.Add(comControl);
@@ -125,50 +125,54 @@ namespace EIP.Views.Controls
 
         void Coms_GetUsersLikesCalled(bool ok, string postId)
         {
-            if(this.postId == postId)
-            {
-                List<long> uids = new List<long>();
-                uids.AddRange(this.likes.friends.uid);
-                uids.AddRange(this.likes.sample.uid);
-
-
-
-
-                if (this.likes.user_likes)
+            Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    TextBlock txtUserLike = new TextBlock() { Text = "Vous " };
-                    jaimePanel.Children.Add(txtUserLike);
-                }
-
-                foreach (long uid in uids)
-                {
-                    profile prof = ((AccountFacebookLight)(Connexion.accounts[accountID])).profiles.Where<profile>(delegate(profile profTmp) { if (profTmp.id == uid)return true; return false; }).First();
-                    if (prof != null)
+                    if (this.postId == postId)
                     {
-                        HyperlinkButton link = new HyperlinkButton() { Content = prof.name };
+                        List<long> uids = new List<long>();
+                        uids.AddRange(this.likes.friends.uid);
+                        uids.AddRange(this.likes.sample.uid);
 
-                        if (jaimePanel.Children.Count > 0)
-                            jaimePanel.Children.Add(new TextBlock() { Text = ", " });
-                        jaimePanel.Children.Add(link);
+
+
+
+                        if (this.likes.user_likes)
+                        {
+                            TextBlock txtUserLike = new TextBlock() { Text = "Vous " };
+                            jaimePanel.Children.Add(txtUserLike);
+                        }
+
+                        foreach (long uid in uids)
+                        {
+                            profile prof = ((AccountFacebookLight)(Connexion.accounts[accountID])).profiles.Where<profile>(delegate(profile profTmp) { if (profTmp.id == uid)return true; return false; }).First();
+                            if (prof != null)
+                            {
+                                HyperlinkButton link = new HyperlinkButton() { Content = prof.name };
+
+                                if (jaimePanel.Children.Count > 0)
+                                    jaimePanel.Children.Add(new TextBlock() { Text = ", " });
+                                jaimePanel.Children.Add(link);
+                            }
+                        }
+
+                        if (this.likes.user_likes)
+                            jaimePanel.Children.Add(new TextBlock() { Text = " aimez ça." });
+                        else if (!this.likes.user_likes && uids.Count == 1)
+                            jaimePanel.Children.Add(new TextBlock() { Text = " aime ça." });
+                        else if (!this.likes.user_likes && uids.Count > 1)
+                            jaimePanel.Children.Add(new TextBlock() { Text = " aiment ça." });
+
+
                     }
-                }
-
-                if(this.likes.user_likes)
-                    jaimePanel.Children.Add(new TextBlock() { Text = " aimez ça." });
-                else if (!this.likes.user_likes && uids.Count == 1)
-                    jaimePanel.Children.Add(new TextBlock() { Text = " aime ça." });
-                else if (!this.likes.user_likes && uids.Count > 1)
-                    jaimePanel.Children.Add(new TextBlock() { Text = " aiment ça." });
-     
-
-            }
+                });
         }
 
         private void textNewCom_GotFocus(object sender, RoutedEventArgs e)
         {
             imgNewCom.Visibility = System.Windows.Visibility.Visible;
             btnNewCom.Visibility = System.Windows.Visibility.Visible;
-            textNewCom.Text = "";
+            if(textNewCom.Text == "Rédigez un commentaire...")
+                textNewCom.Text = "";
         }
 
         private void textNewCom_LostFocus(object sender, RoutedEventArgs e)
@@ -187,6 +191,7 @@ namespace EIP.Views.Controls
             if (text != string.Empty)
             {
                 ((AccountFacebookLight)(Connexion.accounts[accountID])).AddCom(this.postId, text);
+                textNewCom.Text = string.Empty;
             }
         }
     }

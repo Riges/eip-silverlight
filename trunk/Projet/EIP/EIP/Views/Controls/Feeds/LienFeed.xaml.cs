@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using EIP.Objects;
 using System.Windows.Media.Imaging;
+using Facebook.Schema;
 
 namespace EIP.Views.Controls.Feeds
 {
@@ -76,6 +77,21 @@ namespace EIP.Views.Controls.Feeds
                 foreach (UIElement element in Utils.LoadMessage(topic.post.attachment.description))
                     description.Children.Add(element);
                 description.Visibility = System.Windows.Visibility.Visible;
+                
+            }
+
+
+            if (topic.post.attachment.properties.stream_property != null && topic.post.attachment.properties.stream_property.Count > 0)
+            {
+                foreach (stream_property property in topic.post.attachment.properties.stream_property)
+                {
+                    StackPanel propertyPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+                    propertyPanel.Children.Add(new TextBlock() { Text = property.name + " : " });
+                    propertyPanel.Children.Add(new HyperlinkButton() { Content = property.text, NavigateUri = new Uri(property.href, UriKind.Absolute), TargetName = "_blank" });
+                    properties.Children.Add(propertyPanel);
+                }
+                
+
             }
         }
     }
