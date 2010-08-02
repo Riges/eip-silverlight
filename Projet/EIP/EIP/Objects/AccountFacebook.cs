@@ -166,98 +166,83 @@ namespace EIP
 
         public delegate void OnGetMessagesCompleted(List<ThreadMessage> liste);
         public event OnGetMessagesCompleted GetMessagesCalled;
-        public delegate void GetThreadsMultiFQL_Completed(IList<Object> liste, object obj, FacebookException ex);
 
         public void LoadInboxMessages()
         {
 
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(0, (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
-            List<FqlMultiQueryInfo> queries = new List<FqlMultiQueryInfo>();
-            FqlMultiQueryInfo tmp = new FqlMultiQueryInfo();
-            tmp.Key = "query1";
-            tmp.Query = "SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0";
-            queries.Add(tmp);
-            tmp = new FqlMultiQueryInfo();
-            tmp.Key = "query2";
-            tmp.Query = "SELECT message_id,author_id,body,created_time,attachment from message where thread_id IN (SELECT thread_id FROM #query1)";
-            queries.Add(tmp);
-            tmp = new FqlMultiQueryInfo();
-            tmp.Key = "query3";
-            tmp.Query = "SELECT uid,name,pic_square from user where uid IN (SELECT snippet_author FROM #query1)";
-            queries.Add(tmp);
-            tmp = new FqlMultiQueryInfo();
-            tmp.Key = "query4";
-            tmp.Query = "SELECT uid,name,pic_square from user where uid IN (SELECT author_id FROM #query2)";
-            queries.Add(tmp);
-            
 
-            //this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
-            this.facebookAPI.Fql.MultiqueryAsync(queries.ToArray(),  new Fql.MultiqueryParsedCallback(GGetThreadsMultiFQL_Completed), null);//new GetThreadsMultiFQL_Completed(GGetThreadsMultiFQL_Completed)
+            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
+
         }
-
         public void LoadOutboxMessages()
         {
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(GetThreadsFQL_Completed), null);
         }
-        public void GGetThreadsMultiFQL_Completed(IList<object> liste, object obj, FacebookException[] ex) 
-        { 
-        
 
 
-        }
-
-
-        public void GetThreadsFQL_Completed(message_getThreadsInFolder_response liste, object obj, FacebookException[] ex)
+        public void GetThreadsFQL_Completed(message_getThreadsInFolder_response liste, object obj, FacebookException ex)
         {
-           /*Connexion.dispatcher.BeginInvoke(() =>
-            {
-                string tmp = (ex == null ? liste.thread.Count.ToString() : ex.Message);
-                MessageBox toto = new MessageBox("", "LoadMessagesCompleted " + tmp);
-                toto.Show();
-            });*/
+            /*Connexion.dispatcher.BeginInvoke(() =>
+             {
+                 string tmp = (ex == null ? liste.thread.Count.ToString() : ex.Message);
+                 MessageBox toto = new MessageBox("", "LoadMessagesCompleted " + tmp);
+                 toto.Show();
+             });*/
 
-            
+
             //this.box = liste as List<thread>;
 
             if (ex == null && liste.thread.Count > 0)
             {
-
+                
                 if (this.GetMessagesCalled != null)//OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
                 {
                     List<ThreadMessage> liste2 = new List<ThreadMessage>();
+                    List<long> userIds = new List<long>();
                     foreach (thread th in liste.thread)
+                    {
                         liste2.Add(new ThreadMessage(th));
-                    this.GetMessagesCalled.Invoke(liste2); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
+                        userIds.Add(th.snippet_author);
+
+                    }
+                    this.facebookAPI.Fql.QueryAsync<IList<profile_getInfo_response>>("SELECT id, name, url, pic, pic_square, pic_small, pic_big, type, username from profile where id IN (" + String.Join(",", userIds) + ")", new Fql.QueryCallback<IList<profile_getInfo_response>>(GetAuthor_Completed), null);
+                    //this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetAuthor_Completed), liste2);
+                    //this.GetMessagesCalled.Invoke(liste2); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
                 }
             }
-             
-            
+
+
         }
 
-
-        /*private void LoadMessagesCompleted(IList<thread> liste, Object state, FacebookException e)
+        public void GetAuthor_Completed(IList<profile_getInfo_response> users, object data, FacebookException ex)
         {
-            Connexion.dispatcher.BeginInvoke(() =>
-            {
-                string tmp = (e == null ? liste.Count.ToString() : e.Message);
-                    MessageBox toto = new MessageBox("", "LoadMessagesCompleted"+tmp);
-                    toto.Show();
-               
-            });
+            List<thread> posts = data as List<thread>;
+            List<ThreadMessage> liste2 = new List<ThreadMessage>();
+            if (users != null)
+                if (users.Count > 0)
+                {
+                    foreach (thread post in posts)
+                    {
+                        ThreadMessage mypost = new ThreadMessage(post);
+                        foreach (user_info unUser in users)
+                        {
+                            /*if (post.snippet_author > 0)
+                            {
+                                if (post.snippet_author == unUser.)
+                                {
+                                    mypost.setAuthor(unUser);
+                                    break;
+                                }
+                            }*/
+                        }
+                        liste2.Add(mypost);
+                    }
+                }
 
-            /*
-            this.box = liste as List<thread>;
-
-            if (e == null && liste.Count > 0)
-            {
-
-                if (this.GetMessagesCalled != null) //OBLIGATOIRE pr etre sur qu'il y a bien des abonnements sur l'event et éviter un plantage
-                    this.GetMessagesCalled.Invoke(this.box); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
-
-            }
-             * *
-        }*/
-
+            this.GetMessagesCalled.Invoke(liste2);
+            
+        }
 
 
 
