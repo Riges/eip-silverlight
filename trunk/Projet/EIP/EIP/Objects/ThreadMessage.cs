@@ -20,6 +20,7 @@ namespace EIP.Objects
 
         // Facebook
         private thread MessageFb { get; set; }
+        private profile authorFb { get; set; }
 
         public ThreadMessage() { }
 
@@ -61,6 +62,29 @@ namespace EIP.Objects
                     return this.MessageFb.snippet_author;
             }
             return 0;
+        }
+
+        public void setAuthor(object author)
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    this.authorFb = (profile)author;
+                    break;
+            }
+        }
+
+        public String getAuthorName()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    if (this.authorFb != null)
+                        return this.authorFb.name;
+                    else
+                        return "Autre"; // FIXME
+            }
+            return null;
         }
 
 

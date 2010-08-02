@@ -24,9 +24,12 @@ namespace EIP.Views.Controls
             //subject.Text = mysubject;
             //summary.Text = "";
         }*/
-        public Message(String mysubject, String mysummary)
+        public Message(String mysubject, String mysummary, String myauthorName)
         {
             InitializeComponent();
+            TextBlock authorName = new TextBlock();
+            authorName.Text = myauthorName;
+            messagesPanel.Children.Add(authorName);
             TextBlock subject = new TextBlock();
             subject.Text = mysubject;
             messagesPanel.Children.Add(subject);
