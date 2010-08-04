@@ -109,7 +109,6 @@
     <Compile Include="Objects\Friend.cs" />
     <Compile Include="Objects\ThreadMessage.cs" />
     <Compile Include="Objects\Profil.cs" />
-    <Compile Include="Objects\SendStatusCompletedEventArgs.cs" />
     <Compile Include="Objects\Topic.cs" />
     <Compile Include="Objects\TopicFB.cs" />
     <Compile Include="Objects\Utils.cs" />
@@ -174,6 +173,9 @@
     <Compile Include="Views\Controls\FriendView.xaml.cs">
       <DependentUpon>FriendView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\HeaderLinkAlbum.xaml.cs">
+      <DependentUpon>HeaderLinkAlbum.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\jaime.xaml.cs">
       <DependentUpon>jaime.xaml</DependentUpon>
     </Compile>
@@ -228,6 +230,7 @@
     <Compile Include="Views\StreamFeeds.xaml.cs">
       <DependentUpon>StreamFeeds.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UIPropertyMetadata.cs" />
     <Compile Include="Views\WaitLoad.xaml.cs">
       <DependentUpon>WaitLoad.xaml</DependentUpon>
     </Compile>
@@ -311,6 +314,10 @@
     <Page Include="Views\Controls\FriendView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\HeaderLinkAlbum.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\jaime.xaml">
       <SubType>Designer</SubType>

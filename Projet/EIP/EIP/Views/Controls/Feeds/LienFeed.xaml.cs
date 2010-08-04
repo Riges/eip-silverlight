@@ -87,7 +87,10 @@ namespace EIP.Views.Controls.Feeds
                 {
                     StackPanel propertyPanel = new StackPanel() { Orientation = Orientation.Horizontal };
                     propertyPanel.Children.Add(new TextBlock() { Text = property.name + " : " });
-                    propertyPanel.Children.Add(new HyperlinkButton() { Content = property.text, NavigateUri = new Uri(property.href, UriKind.Absolute), TargetName = "_blank" });
+                    if(property.href == null)
+                        propertyPanel.Children.Add(new TextBlock() { Text = property.text });
+                    else
+                        propertyPanel.Children.Add(new HyperlinkButton() { Content = property.text, NavigateUri = new Uri(property.href, UriKind.Absolute), TargetName = "_blank" });
                     properties.Children.Add(propertyPanel);
                 }
                 

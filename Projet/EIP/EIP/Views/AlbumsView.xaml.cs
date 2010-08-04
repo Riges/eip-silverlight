@@ -21,6 +21,15 @@ namespace EIP.Views
         public long accountID { get; set; }
        // protected List<album> albums;
 
+        public static readonly DependencyProperty MyAccountIDProperty = DependencyProperty.Register("MyAccountID", typeof(string), typeof(AlbumsView), new PropertyMetadata(string.Empty));
+
+        public string MyAccountID
+        {
+            get { return (string)GetValue(MyAccountIDProperty); }
+            set { SetValue(MyAccountIDProperty, value); }
+        }
+
+
         public AlbumsView()
         {
             InitializeComponent();
@@ -34,40 +43,28 @@ namespace EIP.Views
 
             if (this.NavigationContext.QueryString.ContainsKey("accid"))
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
-             
+
+            this.MyAccountID. = this.accountID.ToString();
+
+            //App.Current.Resources.Add("accountID", this.accountID);
 
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
-                //foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
-                //{
                 AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[this.accountID];
                 if (account.selected)
-                    //switch (account.account.typeAccount)
-                        {
-                                
-                           // case Account.TypeAccount.Facebook:
-                            account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
-                            account.GetAlbums(this.uid);
-                                //break;
-                           // case Account.TypeAccount.Twitter:
-                              //  break;
-                           // default:
-                            //    break;
-                        }
-                //}
-            }
+                account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
+                account.GetAlbums(this.uid);
 
+            }
         }
 
-        void AlbumsView_GetAlbumsCalled(List<album> albums)
+        private void AlbumsView_GetAlbumsCalled(List<album> albums)
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
                     flowControl.DataContext = albums;
-                    
+                    flowControl.Tag = this.accountID;
                 });
-           
-
         }
 
     }
