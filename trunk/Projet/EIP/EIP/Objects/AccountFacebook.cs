@@ -701,6 +701,9 @@ namespace EIP
             }
         }
 
+        public delegate void OnGetPhotosCompleted(bool ok);
+        public event OnGetPhotosCompleted GetPhotosCalled;
+
         /// <summary>
         /// Récupérer les photos d'un album
         /// </summary>
@@ -721,6 +724,14 @@ namespace EIP
                     this.photos[aid.ToString()][tof.pid] = tof;
                 }
 
+                if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
+                    this.GetPhotosCalled.Invoke(true);
+
+            }
+            else
+            {
+                if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
+                    this.GetPhotosCalled.Invoke(false);
             }
         }
 

@@ -84,7 +84,9 @@
                             <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/EmptyPage.xaml" />
                             <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/EmptyPage.xaml" />
                             <uriMapper:UriMapping Uri="/Profil/{filter}" MappedUri="/Views/ProfilPage.xaml?uid={filter}" />
-                            <uriMapper:UriMapping Uri="/Albums/{userid}/Account/{accid}" MappedUri="/Views/EmptyPage.xaml" />
+                        <uriMapper:UriMapping Uri="/Albums/{userid}/Account/{accid}" MappedUri="/Views/EmptyPage.xaml" />
+                        <uriMapper:UriMapping Uri="/Album/{aid}/Account/{accid}" MappedUri="/Views/EmptyPage.xaml" />
+                            
 
                         <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/Menu{pageName}.xaml"/>-->
 
@@ -118,6 +120,8 @@
                             <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
                             <uriMapper:UriMapping Uri="/Profil/{userid}" MappedUri="/Views/ProfilPage.xaml?uid={userid}" />
                             <uriMapper:UriMapping Uri="/Albums/{userid}/Account/{accid}" MappedUri="/Views/AlbumsView.xaml?uid={userid}&amp;accid={accid}" />
+                        <uriMapper:UriMapping Uri="/Album/{aid}/Account/{accid}" MappedUri="/Views/AlbumView.xaml?aid={usaiderid}&amp;accid={accid}" />
+
 
                         <!--<uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>-->
 

@@ -4,10 +4,54 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            mc:Ignorable="d"
+           xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="AlbumView Page">
+
+
+    <navigation:Page.Resources>
+        <Style TargetType="fl:FlowItem3D" x:Key="empty3D">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="fl:FlowItem3D">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="itemTemplate" >
+            <!--Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}"-->
+            <fl:InFlowContentControl   Width="250" Height="250" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
+                <fl:InFlowContentControl.HeadingTemplate>
+                    <DataTemplate>
+
+                        <!--<HyperlinkButton Content="{Binding name}"></HyperlinkButton>-->
+
+                    </DataTemplate>
+                </fl:InFlowContentControl.HeadingTemplate>
+                <fl:InFlowContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <!--<StackPanel>
+                    <TextBlock HorizontalAlignment="Center">IMG</TextBlock>
+                    <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
+                </StackPanel>-->
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding big_src}">IMG</TextBlock>
+                            
+
+                        <!--<Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>-->
+                    </DataTemplate>
+                </fl:InFlowContentControl.ContentTemplate>
+            </fl:InFlowContentControl>
+
+        </DataTemplate>
+    </navigation:Page.Resources>
+
+
+
     <Grid x:Name="LayoutRoot">
 
+        <fl:FlowItemsControl3D Name="flowControl" ItemsSource="{Binding}" ItemTemplate="{StaticResource itemTemplate}" ></fl:FlowItemsControl3D>
+        
     </Grid>
 </navigation:Page>

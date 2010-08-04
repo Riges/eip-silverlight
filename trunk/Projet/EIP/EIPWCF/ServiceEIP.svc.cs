@@ -161,6 +161,7 @@ namespace EIPWCF
                 return false;
             else
                 return true;
+
         }
 
         public bool SaveAccount(Account accountToSave)
@@ -174,6 +175,22 @@ namespace EIPWCF
         }
 
 
+        public TwitterUser GetUserByMail(string token, string tokenSecret)
+        {
+
+            SetClientInfo();
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .Users().ShowProfileFor(new System.Net.Mail.MailAddress("pocketino@orange.fr"));
+            var response = query.Request();
+            if (!response.IsTwitterError)
+            {
+                var user = response.AsUser();
+                return user;
+            }
+
+            return null;
+        }
 
 
 

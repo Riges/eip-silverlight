@@ -31,7 +31,8 @@
                     <DataTemplate>
                         
                         <!--<TextBlock Text="{Binding name}"></TextBlock>-->
-                        <HyperlinkButton Content="{Binding name}"></HyperlinkButton>
+                        <!--<HyperlinkButton Content="{Binding name}"  NavigateUri="{StaticResource uri}"></HyperlinkButton>-->
+                        <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>
                         
                     </DataTemplate>
                 </fl:InFlowContentControl.HeadingTemplate>
