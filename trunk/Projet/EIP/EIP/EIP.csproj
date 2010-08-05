@@ -233,7 +233,6 @@
     <Compile Include="Views\StreamFeeds.xaml.cs">
       <DependentUpon>StreamFeeds.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UIPropertyMetadata.cs" />
     <Compile Include="Views\WaitLoad.xaml.cs">
       <DependentUpon>WaitLoad.xaml</DependentUpon>
     </Compile>
