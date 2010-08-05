@@ -21,20 +21,6 @@ namespace EIP
 {
     public partial class App : System.Windows.Application
     {
-        internal Api _facebookAPI { get; set; }
-        internal BrowserSession _browserSession { get; set; }
-
-        public const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
-        public bool currentSessionExpires { get; set; }
-        public string currentSessionKey { get; set; }
-        public string currentSessionSecret { get; set; }
-        public long currentUserID { get; set; }
-       // public List<Account> currentAccounts { get; set; }
-        //public List<Account> storageAccounts { get; set; }
-        //public Account currentAccount { get; set; }
-
-        private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
-
         public App()
         {
             this.Startup += this.Application_Startup;
