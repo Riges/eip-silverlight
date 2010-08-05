@@ -436,7 +436,6 @@
     <None Include="Service References\ServiceEIP\ServiceEIP31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Resource Include="Assets\Images\facebook-icon.jpg" />
     <Resource Include="Assets\Images\twitter-icon.png" />
     <None Include="Properties\OutOfBrowserSettings.xml" />
     <Resource Include="Assets\Images\FiltresFB\friend_guy.png" />
@@ -453,6 +452,8 @@
     <Resource Include="Assets\Images\comment_add.png" />
     <Resource Include="Assets\Images\comment_delete.png" />
     <Resource Include="Assets\Images\Background.jpg" />
+    <Resource Include="Assets\Images\MyNetworkBulle_site.png" />
+    <Resource Include="Assets\Images\facebook-icon.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">

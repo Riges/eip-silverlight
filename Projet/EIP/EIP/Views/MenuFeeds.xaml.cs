@@ -48,7 +48,7 @@ namespace EIP.Views
                     switch (account.Value.account.typeAccount)
                     {
                         case Account.TypeAccount.Facebook:
-                            img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
+                            img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
                             break;
                         case Account.TypeAccount.Twitter:
                             img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));

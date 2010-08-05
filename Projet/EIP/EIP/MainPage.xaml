@@ -9,20 +9,24 @@
     xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
              
     mc:Ignorable="d" 
-    d:DesignHeight="400" d:DesignWidth="800" Background="{StaticResource BgColor}" >
+    d:DesignHeight="400" d:DesignWidth="1300" Background="{StaticResource BgColor}" >
+
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
         <my:DockPanel Background="{StaticResource BgColor}" LastChildFill="False">
 
-            <StackPanel my:DockPanel.Dock="Top" Height="50">
+            <StackPanel my:DockPanel.Dock="Top" Height="50" >
+               
                 <Grid x:Name="NavigationGrid" Style="{StaticResource NavigationGridStyle}">
-            
+                    <Image Source="Assets/Images/MyNetworkBulle_site.png" Height="45" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center"></Image>
                     <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}">
                         <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
+                            
+                           
 
                             <Controls:UpdateStatus></Controls:UpdateStatus>
 
-                                <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
+                            <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
                                      NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>
 
                             <Rectangle x:Name="DividerHome" Style="{StaticResource DividerStyle}"/>
@@ -69,7 +73,7 @@
 
             <!--<StackPanel my:DockPanel.Dock="Left" Width="120" >-->
 
-                <navigation:Frame x:Name="LeftFrame" my:DockPanel.Dock="Left" Width="150" 
+            <navigation:Frame x:Name="LeftFrame" my:DockPanel.Dock="Left" Width="150" Margin="0,15,0,0" 
                                NavigationFailed="ContentFrame_NavigationFailed" ><!--Source="/MenuFeeds"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>
@@ -100,7 +104,7 @@
             <!--</StackPanel>-->
            
             <StackPanel my:DockPanel.Dock="Right"  Width="200">
-                    <Controls:ListeComptes x:Name="liste"></Controls:ListeComptes>
+                    <Controls:ListeComptes x:Name="liste" Margin="0,15,0,0"></Controls:ListeComptes>
             </StackPanel>
 
             <!--<StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">-->
