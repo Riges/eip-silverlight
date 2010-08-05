@@ -17,39 +17,39 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>-->
       
-      <!--<Controls:Feed x:Name="Feed" Width="600" Height="120" />-->
-            <StackPanel Name="ImgLoad" Visibility="Visible">
+        <StackPanel Name="ImgLoad" Visibility="Visible">
             <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
         </StackPanel>
-            <StackPanel Orientation="Vertical" Name="ContentPanel" Visibility="Collapsed">
+      
+        <StackPanel Orientation="Vertical" Name="ContentPanel" Visibility="Collapsed">
                         
-                <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500">
-                <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
-                    <ItemsControl.Template>
-                    <ControlTemplate TargetType="ItemsControl">
-                        <Border > <!--BorderBrush="Blue" BorderThickness="1"-->
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <ItemsPresenter />
-                            </ScrollViewer>
-                        </Border>
-                    </ControlTemplate>
-                </ItemsControl.Template>
+            <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500">
+            <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
+                <ItemsControl.Template>
+                <ControlTemplate TargetType="ItemsControl">
+                    <Border > <!--BorderBrush="Blue" BorderThickness="1"-->
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ItemsControl.Template>
 
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                            <Controls:Feed x:Name="Feed" />
-                    </DataTemplate>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                        <Controls:Feed x:Name="Feed" />
+                </DataTemplate>
                    
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
-        </StackPanel>
+    </StackPanel>
 
-    </Grid>
+</Grid>
 </navigation:Page>

@@ -6,7 +6,7 @@
     xmlns:Control="clr-namespace:EIP.Views.Controls"
     xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Height="Auto" > <!--Width="700"-->
+    d:DesignHeight="300" d:DesignWidth="400" Height="Auto" Background="{StaticResource BgColor}"> <!--Width="700"-->
     <UserControl.Resources>
         <Storyboard x:Name="OnImg">
             <DoubleAnimation Storyboard.TargetName="picUser" 
@@ -27,7 +27,7 @@
     </UserControl.Resources>
     
     <!--<Border BorderBrush="Red" BorderThickness="3">-->
-    <Grid x:Name="LayoutRoot" Background="White"  >
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>

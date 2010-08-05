@@ -4,6 +4,7 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            mc:Ignorable="d"
+            xmlns:Controls="clr-namespace:EIP.Views.Controls"
            xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
@@ -22,7 +23,7 @@
         </Style>
         <DataTemplate x:Key="itemTemplate" >
             <!--Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}"-->
-            <fl:InFlowContentControl   Width="250" Height="250" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
+            <fl:InFlowContentControl   Width="500" Height="500" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
                 <fl:InFlowContentControl.HeadingTemplate>
                     <DataTemplate>
 
@@ -36,10 +37,7 @@
                     <TextBlock HorizontalAlignment="Center">IMG</TextBlock>
                     <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
                 </StackPanel>-->
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding big_src}">IMG</TextBlock>
-                            
-
-                        <!--<Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>-->
+                        <Controls:PhotoControl x:Name="photoItem"  VerticalAlignment="Top"></Controls:PhotoControl>
                     </DataTemplate>
                 </fl:InFlowContentControl.ContentTemplate>
             </fl:InFlowContentControl>
@@ -51,7 +49,7 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <fl:FlowItemsControl3D Name="flowControl" ItemsSource="{Binding}" ItemTemplate="{StaticResource itemTemplate}" ></fl:FlowItemsControl3D>
+        <fl:FlowItemsControl3D Name="flowControl" ItemsSource="{Binding}" ItemTemplate="{StaticResource itemTemplate}"  ItemContainerStyle="{StaticResource empty3D}"></fl:FlowItemsControl3D>
         
     </Grid>
 </navigation:Page>

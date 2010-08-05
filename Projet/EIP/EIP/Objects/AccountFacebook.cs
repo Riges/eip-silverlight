@@ -710,7 +710,7 @@ namespace EIP
         /// <param name="aid">album id</param>
         public void GetPhotos(string aid)
         {
-            if (!this.photos.ContainsKey(aid))
+            //if (!this.photos.ContainsKey(aid))
                 this.facebookAPI.Photos.GetAsync(null, aid, null, new Photos.GetCallback(GetPhotos_Completed), aid);
         }
 
