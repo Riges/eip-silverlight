@@ -28,7 +28,7 @@ namespace EIP.Views.Controls
         {
             this.album = this.DataContext as album;
 
-            this.uri.NavigateUri = new Uri("/Album/" + this.album.aid + "/Account/" + this.Tag, UriKind.Relative);
+            this.uri.NavigateUri = new Uri("/Album/" + this.album.aid, UriKind.Relative);
         }
     }
 }

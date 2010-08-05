@@ -28,17 +28,25 @@ namespace EIP.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (this.NavigationContext.QueryString.ContainsKey("aid"))
-                this.aid = this.NavigationContext.QueryString["uid"];
-
+                this.aid = this.NavigationContext.QueryString["aid"];
+            /*
             if (this.NavigationContext.QueryString.ContainsKey("accid"))
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
-
+            */
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
-                AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[this.accountID];
-                if (account.selected)
-                    account.GetPhotosCalled += new AccountFacebookLight.OnGetPhotosCompleted(account_GetPhotosCalled);
-                account.GetPhotos(this.aid);
+                foreach (KeyValuePair<long, AccountLight> acc in Connexion.accounts)
+                {
+                    if (acc.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook && acc.Value.selected)
+                        this.accountID = acc.Value.account.accountID;
+                }
+                if (this.accountID != null && this.accountID > 0)
+                {
+                    AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[this.accountID];
+                    if (account.selected)
+                        account.GetPhotosCalled += new AccountFacebookLight.OnGetPhotosCompleted(account_GetPhotosCalled);
+                    account.GetPhotos(this.aid);
+                }
 
             }
         }
@@ -46,13 +54,13 @@ namespace EIP.Views
         void account_GetPhotosCalled(bool ok)
         {
             if(ok)
-                Connexion.dispatcher.BeginInvoke(() =>
+                this.Dispatcher.BeginInvoke(() =>
                 {
-                    flowControl.DataContext = ((AccountFacebookLight)Connexion.accounts[this.accountID]).photos[this.aid];
+                    flowControl.DataContext = ((AccountFacebookLight)Connexion.accounts[this.accountID]).photos[this.aid].Values;
                 });
 
             //photo tof = new photo();
-            
+           
         }
 
         

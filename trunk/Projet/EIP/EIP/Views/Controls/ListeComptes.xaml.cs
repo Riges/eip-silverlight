@@ -22,6 +22,56 @@ namespace EIP.Views.Controls
     {
 
         public Frame contentFrame { get; set; }
+        private ListeCptMode mode;
+
+        public enum ListeCptMode
+        {
+            Normal,
+            ReadOnly,
+            Unvisible
+        }
+
+        public ListeCptMode ListeCompteMode
+        {
+            get { return mode; }
+            set
+            {
+                mode = value;
+                
+            }
+        }
+
+        private void SetMode()
+        {
+            if (this.mode == ListeCptMode.Unvisible)
+            {
+                LayoutRoot.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                LayoutRoot.Visibility = System.Windows.Visibility.Visible;
+
+                foreach (UIElement element in LayoutPanel.Children)
+                {
+                    if (element.GetType() == typeof(CheckBox))
+                    {
+                        switch (this.mode)
+                        {
+                            case ListeCptMode.Normal:
+                                ((CheckBox)element).IsEnabled = true;
+                                break;
+                            case ListeCptMode.ReadOnly:
+                                ((CheckBox)element).IsEnabled = false;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+  
 
         public ListeComptes()
         {
@@ -60,6 +110,7 @@ namespace EIP.Views.Controls
                             box.Checked += new RoutedEventHandler(box_Checked);
                             box.Unchecked += new RoutedEventHandler(box_Unchecked);
                             box.CommandParameter = oneAccount.Value;
+                            box.DataContext = oneAccount.Value;
                             if (oneAccount.Value.selected)
                                 box.IsChecked = true;
                             panel.Children.Add(box);
@@ -172,14 +223,16 @@ namespace EIP.Views.Controls
         {
             Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.accountID].selected = false;
             //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
-            ReloadPage();
+            if(this.mode == ListeCptMode.Normal)
+                ReloadPage();
         }
 
         void box_Checked(object sender, RoutedEventArgs e)
         {
             Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.accountID].selected = true;
             //Connexion.SaveAccount(((AccountLight)((CheckBox)sender).CommandParameter));
-            ReloadPage();
+            if (this.mode == ListeCptMode.Normal)
+                ReloadPage();
         }
 
         private void ReloadPage()

@@ -7,13 +7,13 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Title="LeftMenu Page">
-  <Grid x:Name="LayoutRoot">
+           Title="LeftMenu Page" Background="{StaticResource BgColor}">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
         <!--<StackPanel Orientation="Vertical" Name="LayoutPanel" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Button Content="Actualités"></Button>
             <Button Content="Status"></Button>
         </StackPanel> -->
-        <toolkit:Accordion Name="menufiltre">
+        <toolkit:Accordion Name="menufiltre" Background="{StaticResource BgColor}" Width="150">
         </toolkit:Accordion>
 
 

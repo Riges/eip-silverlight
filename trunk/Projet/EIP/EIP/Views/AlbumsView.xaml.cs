@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using EIP.ServiceEIP;
 using Facebook.Schema;
+using EIP.Views.Controls;
 
 namespace EIP.Views
 {
@@ -32,7 +33,9 @@ namespace EIP.Views
 
         public AlbumsView()
         {
+            
             InitializeComponent();
+            
         }
 
         // Executes when the user navigates to this page.
@@ -44,12 +47,24 @@ namespace EIP.Views
             if (this.NavigationContext.QueryString.ContainsKey("accid"))
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
 
-            this.MyAccountID. = this.accountID.ToString();
+            this.MyAccountID = this.accountID.ToString();
 
             //App.Current.Resources.Add("accountID", this.accountID);
 
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
+                foreach (KeyValuePair<long, AccountLight> acc in Connexion.accounts)
+                {
+                    if (acc.Key == this.accountID)
+                        acc.Value.selected = true;
+                    else
+                        acc.Value.selected = false;
+                }
+                Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.ReadOnly;
+                Connexion.listeComptes.Reload();
+                
+
+
                 AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[this.accountID];
                 if (account.selected)
                 account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
@@ -58,14 +73,19 @@ namespace EIP.Views
             }
         }
 
+
         private void AlbumsView_GetAlbumsCalled(List<album> albums)
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
                     flowControl.DataContext = albums;
-                    flowControl.Tag = this.accountID;
                 });
         }
+
+        /*protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
+        }*/
 
     }
 }

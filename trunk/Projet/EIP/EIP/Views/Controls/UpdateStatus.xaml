@@ -4,9 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
-    
-    <Grid x:Name="LayoutRoot" Background="White" MouseEnter="LayoutRoot_MouseEnter" >
+    d:DesignHeight="300" d:DesignWidth="400" Height="50">
+
+    <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationBackgroundColorBrush}" MouseEnter="LayoutRoot_MouseEnter" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>

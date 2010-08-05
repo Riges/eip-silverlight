@@ -6,8 +6,8 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Title="EmptyPage Page">
-  <Grid x:Name="LayoutRoot">
+           Title="EmptyPage Page" Background="{StaticResource BgColor}">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
 
   </Grid>
 </navigation:Page>

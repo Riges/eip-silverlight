@@ -28,7 +28,7 @@ namespace EIP.Views.Controls
         private void LoadAccountButtons()
         {
             SolidColorBrush brush  = new SolidColorBrush();
-            brush.Color = Colors.Gray;;
+            brush.Color = Colors.White;//gray
            if (Connexion.accounts != null)
             {
                 if (Connexion.accounts.Count > 0)
@@ -40,27 +40,10 @@ namespace EIP.Views.Controls
                         {
                             if (oneAccount.Value.selected)
                             {
-                                //Dispatcher.BeginInvoke(() =>
-                                //{
+                                
                                 StackPanel panel = new StackPanel();
                                 panel.Orientation = Orientation.Horizontal;
                                 
-
-                                //CheckBox box = new CheckBox();
-
-                                //box.DataContext = oneAccount.Value.account;
-                                /*
-                                Binding binding = new Binding();
-                                binding.Source = oneAccount.Value.account;
-                                binding.Path = new PropertyPath("name");
-                                box.SetBinding(CheckBox.ContentProperty, binding);
-                                */
-
-                                /*box.Name = oneAccount.Value.account.accountID.ToString();
-                                box.CommandParameter = oneAccount.Value;
-                                if (oneAccount.Value.selected)
-                                    box.IsChecked = true;
-                                panel.Children.Add(box);*/
 
                                 Image img = new Image();
                                 img.Width = 12;
