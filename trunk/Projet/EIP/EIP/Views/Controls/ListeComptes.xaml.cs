@@ -120,7 +120,7 @@ namespace EIP.Views.Controls
                             switch (oneAccount.Value.account.typeAccount)
                             {
                                 case Account.TypeAccount.Facebook:
-                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.jpg", UriKind.Relative));
+                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
                                     break;
                                 case Account.TypeAccount.Twitter:
                                     img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
@@ -157,6 +157,8 @@ namespace EIP.Views.Controls
                             panel.MouseMove += new MouseEventHandler(img_MouseMove);
                             panel.MouseLeave += new MouseEventHandler(img_MouseLeave);
                             panel.DataContext = oneAccount.Value.account.accountID;
+
+                            panel.Margin = new Thickness(0, 0, 0, 5);
                             
 
                             LayoutPanel.Children.Add(panel);

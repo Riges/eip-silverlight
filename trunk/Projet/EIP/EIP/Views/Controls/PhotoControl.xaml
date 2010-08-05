@@ -12,7 +12,7 @@
            
         </Grid.RowDefinitions>
 
-        <Image Name="imgPhoto" Grid.Row="0" Width="460" Stretch="UniformToFill" VerticalAlignment="Top"></Image>
+        <Image Name="imgPhoto" Grid.Row="0" Width="450" Stretch="UniformToFill" VerticalAlignment="Top"></Image>
         
     </Grid>
 </UserControl>

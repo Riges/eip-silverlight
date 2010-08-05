@@ -8,6 +8,7 @@
            d:DesignWidth="640" d:DesignHeight="480"
            Title="IntroPage Page" Background="{StaticResource BgColor}">
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
-        <TextBlock>Welcome !!!</TextBlock>
+        <!--<TextBlock>Welcome !!!</TextBlock>-->
+        <Image Source="../Assets/Images/MyNetworkBulle_site.png"  HorizontalAlignment="Center" Margin="25,0,0,0" VerticalAlignment="Center"></Image>
     </Grid>
 </navigation:Page>
