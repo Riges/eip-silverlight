@@ -22,7 +22,7 @@ namespace EIP
         //public string token { get; set; }
         //public string tokenSecret { get; set; }
         public string pin { get; set; }
-        public TwitterUser user { get; set; }
+        public TwitterUser userInfos { get; set; }
         public List<Topic> homeStatuses { get; set; }
         public List<TwitterFilter> filters { get; set; }
         public List<TwitterUser> friends { get; set; }
@@ -57,7 +57,11 @@ namespace EIP
             filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
 
             Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
+
+
         }
+
+
 
 
         /// <summary>
@@ -81,6 +85,8 @@ namespace EIP
                 Connexion.serviceEIP.SendTweetAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, status);
             }
         }
+
+
 
         /*void serviceEIP_SendStatusCompleted(object sender, LoadHomeStatusesCompletedEventArgs e)
         {

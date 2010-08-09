@@ -22,15 +22,6 @@ namespace EIP.Views
         public long accountID { get; set; }
        // protected List<album> albums;
 
-        public static readonly DependencyProperty MyAccountIDProperty = DependencyProperty.Register("MyAccountID", typeof(string), typeof(AlbumsView), new PropertyMetadata(string.Empty));
-
-        public string MyAccountID
-        {
-            get { return (string)GetValue(MyAccountIDProperty); }
-            set { SetValue(MyAccountIDProperty, value); }
-        }
-
-
         public AlbumsView()
         {
             
@@ -46,8 +37,6 @@ namespace EIP.Views
 
             if (this.NavigationContext.QueryString.ContainsKey("accid"))
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
-
-            this.MyAccountID = this.accountID.ToString();
 
             //App.Current.Resources.Add("accountID", this.accountID);
 
@@ -69,7 +58,6 @@ namespace EIP.Views
                 if (account.selected)
                 account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
                 account.GetAlbums(this.uid);
-
             }
         }
 

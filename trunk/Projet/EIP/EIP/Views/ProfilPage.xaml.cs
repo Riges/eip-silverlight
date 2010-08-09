@@ -17,6 +17,9 @@ namespace EIP.Views
 {
     public partial class ProfilPage : Page
     {
+
+        public long uid { get; set; }
+        public long accountID { get; set; }
         public Dictionary<String, Profil> profil;
 
         public ProfilPage()
@@ -26,9 +29,51 @@ namespace EIP.Views
             LoadProfil();
         }
 
+
+        public enum Tab
+        {
+            Mur,
+            Infos,
+            Photos,
+            Videos
+        }
+
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (this.NavigationContext.QueryString.ContainsKey("uid"))
+                this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
+
+            if (this.NavigationContext.QueryString.ContainsKey("accid"))
+                this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
+
+            Tab tab = Tab.Mur;
+            if (this.NavigationContext.QueryString.ContainsKey("tab"))
+                Enum.TryParse<Tab>(this.NavigationContext.QueryString["tab"].ToString(), out tab);
+
+            switch (tab)
+            {
+                case Tab.Mur:
+                    break;
+                case Tab.Infos:
+                    break;
+                case Tab.Photos:
+
+                    break;
+                case Tab.Videos:
+                    break;
+                default:
+                    break;
+            }
+
+
+
+
+
+
+
+
+
         }
 
         /// <summary>
@@ -41,9 +86,9 @@ namespace EIP.Views
                 switch (account.Value.account.typeAccount)
                 {
                     case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        long uid = 0;
-                        if (this.NavigationContext.QueryString.ContainsKey("uid"))
-                            uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
+                        //long uid = 0;
+                        //if (this.NavigationContext.QueryString.ContainsKey("uid"))
+                        //    uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
 
                         ((AccountFacebookLight)account.Value).GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(ProfilPage_GetUserInfoCalled);
                         ((AccountFacebookLight)account.Value).GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);

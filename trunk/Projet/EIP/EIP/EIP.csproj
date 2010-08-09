@@ -140,6 +140,9 @@
     <Compile Include="Views\Controls\AlbumControl.xaml.cs">
       <DependentUpon>AlbumControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\AlbumsControl.xaml.cs">
+      <DependentUpon>AlbumsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Com.xaml.cs">
       <DependentUpon>Com.xaml</DependentUpon>
     </Compile>
@@ -272,6 +275,10 @@
     <Page Include="Views\Controls\AlbumControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Controls\AlbumsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\Com.xaml">
       <SubType>Designer</SubType>
@@ -420,6 +427,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceEIP\ServiceEIP.disco" />

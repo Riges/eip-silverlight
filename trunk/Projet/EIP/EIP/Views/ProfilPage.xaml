@@ -1,4 +1,4 @@
-﻿<navigation:Page x:Class="EIP.Views.ProfilPage" 
+﻿<navigation:Page xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"  x:Class="EIP.Views.ProfilPage" 
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,6 +9,25 @@
            d:DesignWidth="640" d:DesignHeight="480"
            Title="Profil Page">
     <Grid x:Name="LayoutRoot">
+
+
+        <sdk:TabControl Margin="3,-4,-3,4">
+            <sdk:TabItem Header="Mur" Name="murTab">
+                Mes feeds !
+            </sdk:TabItem>
+            <sdk:TabItem Header="Infos" Name="infosTab">
+                Mes infos !
+            </sdk:TabItem>
+            <sdk:TabItem Header="Photos" Name="photosTab">
+                Mes photos !
+            </sdk:TabItem>
+            <sdk:TabItem Header="Vidéos" Name="videosTab">
+                Mes Vidéos !
+            </sdk:TabItem>
+        </sdk:TabControl>
+
+
+
 
     </Grid>
 </navigation:Page>
