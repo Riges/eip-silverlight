@@ -98,14 +98,29 @@ namespace EIP.Views.Controls
 
                         foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                         {
-                            //Dispatcher.BeginInvoke(() =>
-                                //{
+                           
                             StackPanel panel = new StackPanel();
                             panel.Orientation = Orientation.Horizontal;
                             
+                            Image imgReseau = new Image();
+                            imgReseau.Width = 16;
+                            switch (oneAccount.Value.account.typeAccount)
+                            {
+                                case Account.TypeAccount.Facebook:
+                                    imgReseau.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
+                                    break;
+                                case Account.TypeAccount.Twitter:
+                                    imgReseau.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                                    //((AccountTwitterLight)oneAccount.Value).LoadFriends();
+                                    break;
+                                case Account.TypeAccount.Myspace:
+                                    break;
+                                default:
+                                    break;
+                            }
+                            panel.Children.Add(imgReseau);
+
                             CheckBox box = new CheckBox();
-
-
                             box.Name = oneAccount.Value.account.accountID.ToString();
                             box.Checked += new RoutedEventHandler(box_Checked);
                             box.Unchecked += new RoutedEventHandler(box_Unchecked);
@@ -115,41 +130,37 @@ namespace EIP.Views.Controls
                                 box.IsChecked = true;
                             panel.Children.Add(box);
 
-                            Image img = new Image();
-                            img.Width = 16;
+                            Image imgAccount = new Image();
+                            imgAccount.Width = 16;
                             switch (oneAccount.Value.account.typeAccount)
                             {
                                 case Account.TypeAccount.Facebook:
-                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
+                                    if(((AccountFacebookLight)(oneAccount.Value)).userInfos != null)
+                                        imgAccount.Source = new BitmapImage(new Uri(((AccountFacebookLight)(oneAccount.Value)).userInfos.pic_square, UriKind.Absolute));
                                     break;
                                 case Account.TypeAccount.Twitter:
-                                    img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                                    if (((AccountTwitterLight)(oneAccount.Value)).userInfos != null)
+                                        imgAccount.Source = new BitmapImage(new Uri(((AccountTwitterLight)(oneAccount.Value)).userInfos.ProfileImageUrl, UriKind.Absolute));
                                     //((AccountTwitterLight)oneAccount.Value).LoadFriends();
-                                    break;
-                                case Account.TypeAccount.Myspace:
                                     break;
                                 default:
                                     break;
                             }
-                            panel.Children.Add(img);
+                            panel.Children.Add(imgAccount);
 
                             TextBlock text = new TextBlock();
                             text.Text = oneAccount.Value.account.name;
-                            //text.Margin = new Thickness(5, 0, 0, 0);
                             text.Padding = new Thickness(5, 0, 5, 0);
-                            //text.MouseMove += new MouseEventHandler(img_MouseMove);
-                            //text.MouseLeave += new MouseEventHandler(img_MouseLeave);
-                            //text.DataContext = oneAccount.Value.account.accountID;
+
                             panel.Children.Add(text);
 
                             Image imgDel = new Image();
                             imgDel.Source = new BitmapImage(new Uri("../../Assets/Images/bullet_delete.png", UriKind.Relative));
                             imgDel.Width = 16;
                             imgDel.Name = "imgDel" + oneAccount.Value.account.accountID;
-                            //imgDel.Margin = new Thickness(5, 0, 0, 0);
+
                             imgDel.Visibility = System.Windows.Visibility.Collapsed;
-                            //imgDel.MouseMove += new MouseEventHandler(img_MouseMove);
-                            //imgDel.MouseLeave += new MouseEventHandler(img_MouseLeave);
+
                             imgDel.MouseLeftButtonUp += new MouseButtonEventHandler(imgDel_Click);
                             imgDel.DataContext = oneAccount.Value.account.accountID;
                             panel.Children.Add(imgDel);
@@ -162,7 +173,7 @@ namespace EIP.Views.Controls
                             
 
                             LayoutPanel.Children.Add(panel);
-                                //});
+                              
                         }
 
                     });
