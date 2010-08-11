@@ -39,7 +39,7 @@ namespace EIP.Objects
             switch (this.typeAccount)
             {
                 case Account.TypeAccount.Facebook:
-                    return this.MessageFb.subject;
+                    return this.MessageFb.subject != "" ? this.MessageFb.subject : "(Sans objet)";
             }
             return null;
         }
@@ -82,11 +82,23 @@ namespace EIP.Objects
                     if (this.authorFb != null)
                         return this.authorFb.name;
                     else
-                        return "Undefined"; // FIXME
+                        return "Undefined"; 
             }
             return null;
         }
 
 
+
+        public String getPic()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    if (this.authorFb != null && this.authorFb.pic_square != null && this.authorFb.pic_square != "")
+                        return this.authorFb.pic_square;
+                    break;
+            }
+            return null;
+        }
     }
 }

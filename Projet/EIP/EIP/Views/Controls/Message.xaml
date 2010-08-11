@@ -6,14 +6,14 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
 
-    <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
+    <Grid x:Name="LayoutRoot" Background="White" Width="600">
+        <!--Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <!--Grid.RowDefinitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
@@ -29,10 +29,26 @@
         </Image>
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Name="subject" Text="Subject" />
         <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" /-->
-        <StackPanel Orientation="Vertical" Name="messagesPanel">
+        
+        <!--StackPanel Orientation="Vertical" Name="messagesPanel">
             
             
-        </StackPanel>
+        </StackPanel-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="15"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Image Grid.RowSpan="2" Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" >
+        </Image>
+        <!--TextBlock Grid.Column="1" HorizontalAlignment="Left" Name="subject" Text="Subject" /-->
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Name="subject" Text="Subject" />
+        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="NoWrap" />
+
     </Grid>
     
 </UserControl>

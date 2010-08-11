@@ -56,7 +56,7 @@ namespace EIP.Views.Controls
                     messagesPanel.Children.Clear();
                     foreach (ThreadMessage thread in this.box)
                     {
-                        Message monMessage = new Message(thread.getSubject(), thread.getSummary(), thread.getAuthorName());
+                        Message monMessage = new Message(thread);
                         messagesPanel.Children.Add(monMessage);
                     }
                     //FeedsControl.DataContext = this.box;
