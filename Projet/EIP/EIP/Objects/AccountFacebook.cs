@@ -18,6 +18,7 @@ using Facebook.Utility;
 using EIP.Views;
 using EIP.Objects;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace EIP
 {
@@ -203,43 +204,72 @@ namespace EIP
                     foreach (thread th in liste.thread)
                     {
                         liste2.Add(new ThreadMessage(th));
-                        userIds.Add(th.snippet_author);
+                        if (!userIds.Contains(th.snippet_author))
+                            userIds.Add(th.snippet_author);
 
                     }
-                    this.facebookAPI.Fql.QueryAsync<IList<profile_getInfo_response>>("SELECT id, name, url, pic, pic_square, pic_small, pic_big, type, username from profile where id IN (" + String.Join(",", userIds) + ")", new Fql.QueryCallback<IList<profile_getInfo_response>>(GetAuthor_Completed), null);
-                    //this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetAuthor_Completed), liste2);
-                    //this.GetMessagesCalled.Invoke(liste2); // on déclenche l'event avec les bon parametre, en l'occurrence avec les données que l'on vient de recevoir. 
+                    this.facebookAPI.Fql.QueryAsync("SELECT id, name, url, pic_square, type from profile where id IN (" + String.Join(",", userIds) + ")", new Fql.QueryCallback(GetAuthor_Completed), liste2);
                 }
             }
 
 
         }
 
-        public void GetAuthor_Completed(IList<profile_getInfo_response> users, object data, FacebookException ex)
+        public void GetAuthor_Completed(String usersXml, object data, FacebookException ex)
         {
-            List<thread> posts = data as List<thread>;
+            List<ThreadMessage> posts = data as List<ThreadMessage>;
             List<ThreadMessage> liste2 = new List<ThreadMessage>();
+            List<profile> users = new List<profile>();
+            // A la mano parce que pas de type de retour de l'api pour les profile
+            using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(usersXml)))
+            {
+                do {
+                    try
+                    {
+                        profile myUser = new profile();
+
+                        reader.ReadToFollowing("id");
+                        myUser.id = reader.ReadElementContentAsLong();
+                        reader.ReadToFollowing("name");
+                        myUser.name = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("url");
+                        myUser.url = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("pic_square");
+                        myUser.pic_square = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("type");
+                        myUser.type = reader.ReadElementContentAsString();
+
+                        users.Add(myUser);
+                    }
+                    catch (Exception e)
+                    {
+                        break;
+                    }
+                } while (!reader.EOF);
+
+            }
+
+
             if (users != null)
                 if (users.Count > 0)
                 {
-                    foreach (thread post in posts)
+                    foreach (ThreadMessage post in posts)
                     {
-                        ThreadMessage mypost = new ThreadMessage(post);
-                        foreach (user_info unUser in users)
+                        ThreadMessage mypost = post;
+                        foreach (profile unUser in users)
                         {
-                            /*if (post.snippet_author > 0)
+                            if (post.getAuthorAccountID() > 0)
                             {
-                                if (post.snippet_author == unUser.)
+                                if (post.getAuthorAccountID() == unUser.id)
                                 {
                                     mypost.setAuthor(unUser);
-                                    break;
                                 }
-                            }*/
+                            }
                         }
                         liste2.Add(mypost);
                     }
                 }
-
+            
             this.GetMessagesCalled.Invoke(liste2);
             
         }

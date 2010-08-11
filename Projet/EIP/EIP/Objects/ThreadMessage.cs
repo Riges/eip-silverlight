@@ -82,7 +82,7 @@ namespace EIP.Objects
                     if (this.authorFb != null)
                         return this.authorFb.name;
                     else
-                        return "Autre"; // FIXME
+                        return "Undefined"; // FIXME
             }
             return null;
         }
