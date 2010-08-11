@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using EIP.Objects;
+using System.Windows.Media.Imaging;
 
 namespace EIP.Views.Controls
 {
@@ -24,22 +26,44 @@ namespace EIP.Views.Controls
             //subject.Text = mysubject;
             //summary.Text = "";
         }*/
-        public Message(String mysubject, String mysummary, String myauthorName)
+        public Message(ThreadMessage th)
         {
             InitializeComponent();
+
+            /*Image avatar = new Image();
+            avatar.Width = 50;
+            avatar.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            if (th.getPic() != null) // verif si gif
+            {
+                Uri uriImg = new Uri(th.getPic());
+                avatar.Source = new BitmapImage(uriImg);
+            }
+            messagesPanel.Children.Add(avatar);
             TextBlock authorName = new TextBlock();
-            authorName.Text = myauthorName;
+            authorName.Text = th.getAuthorName();
             messagesPanel.Children.Add(authorName);
             TextBlock subject = new TextBlock();
-            subject.Text = mysubject;
+            subject.Text = th.getSubject();
             messagesPanel.Children.Add(subject);
-            if (mysummary != "")
+            if (th.getSummary() != "")
             {
                 TextBlock summary = new TextBlock();
-                summary.Text = mysummary;
+                summary.Text = th.getSummary();
                 messagesPanel.Children.Add(summary);
-            }
+            }*/
 
+            if (th.getPic() != null) // verif si gif
+            {
+                Uri uriImg = new Uri(th.getPic());
+                picUser.Source = new BitmapImage(uriImg);
+            }
+            subject.Text = th.getSubject();
+            if (th.getSummary() != "")
+                summary.Text = th.getSummary().Replace("\n", " ");
+            else
+                summary.Visibility = System.Windows.Visibility.Collapsed;
+            //authorName.Text = th.getAuthorName();
         }
+
     }
 }
