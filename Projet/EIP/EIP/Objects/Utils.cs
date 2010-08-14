@@ -130,6 +130,7 @@ namespace EIP.Objects
                     string theMot = mot;
                     if (mot.StartsWith("www."))
                         theMot = "http://" + mot;
+                    theMot = theMot.Replace(".co..", ".com").Replace(".c..", ".com");
                     HyperlinkButton link = new HyperlinkButton();
                     link.NavigateUri = new Uri(theMot, UriKind.Absolute);
                     link.Content = theMot + " ";

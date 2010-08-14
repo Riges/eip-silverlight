@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using EIP.Objects;
 using Facebook.Schema;
+using EIP.Views.Controls;
 
 namespace EIP.Views
 {
@@ -51,29 +52,48 @@ namespace EIP.Views
             if (this.NavigationContext.QueryString.ContainsKey("tab"))
                 Enum.TryParse<Tab>(this.NavigationContext.QueryString["tab"].ToString(), out tab);
 
+           
+            LoadProfilPage(tab);
+
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabControl != null)
+            {
+                LoadProfilPage((Tab)Enum.Parse(typeof(Tab), ((TabItem)tabControl.SelectedItem).DataContext.ToString(), true));
+            }
+        }
+
+        private void LoadProfilPage(Tab tab)
+        {
             switch (tab)
             {
                 case Tab.Mur:
+                    murTab.IsSelected = true;
                     break;
                 case Tab.Infos:
+                    infosTab.IsSelected = true;
                     break;
                 case Tab.Photos:
-
+                    string aid = string.Empty;
+                    if (this.NavigationContext.QueryString.ContainsKey("aid"))
+                    {
+                        aid = this.NavigationContext.QueryString["aid"].ToString();
+                    }
+                    else
+                    {
+                        AlbumsControl albumsControl = new AlbumsControl(this.accountID, this.uid);
+                        photosTab.Content = albumsControl;
+                        photosTab.IsSelected = true;
+                    }
                     break;
                 case Tab.Videos:
+                    videosTab.IsSelected = true;
                     break;
                 default:
                     break;
             }
-
-
-
-
-
-
-
-
-
         }
 
         /// <summary>
@@ -113,6 +133,8 @@ namespace EIP.Views
         {
             
         }
+
+
 
     }
 }
