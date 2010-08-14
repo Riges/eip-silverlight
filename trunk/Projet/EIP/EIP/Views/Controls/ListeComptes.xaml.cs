@@ -77,6 +77,7 @@ namespace EIP.Views.Controls
         {
             InitializeComponent();
 
+
             LoadAccountButtons();             
         }
 
@@ -103,7 +104,9 @@ namespace EIP.Views.Controls
                             panel.Orientation = Orientation.Horizontal;
                             
                             Image imgReseau = new Image();
-                            imgReseau.Width = 16;
+                            imgReseau.Width = 20;
+                            imgReseau.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                            imgReseau.Margin = new Thickness(0, 0, 5, 0);
                             switch (oneAccount.Value.account.typeAccount)
                             {
                                 case Account.TypeAccount.Facebook:
@@ -121,6 +124,8 @@ namespace EIP.Views.Controls
                             panel.Children.Add(imgReseau);
 
                             CheckBox box = new CheckBox();
+                            box.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                            
                             box.Name = oneAccount.Value.account.accountID.ToString();
                             box.Checked += new RoutedEventHandler(box_Checked);
                             box.Unchecked += new RoutedEventHandler(box_Unchecked);
@@ -131,12 +136,16 @@ namespace EIP.Views.Controls
                             panel.Children.Add(box);
 
                             Image imgAccount = new Image();
-                            imgAccount.Width = 16;
+                            imgAccount.Width = 20;
+                            imgAccount.Name = "img"+oneAccount.Value.account.userID;
+                            imgAccount.VerticalAlignment = System.Windows.VerticalAlignment.Center;
                             switch (oneAccount.Value.account.typeAccount)
                             {
                                 case Account.TypeAccount.Facebook:
                                     if(((AccountFacebookLight)(oneAccount.Value)).userInfos != null)
                                         imgAccount.Source = new BitmapImage(new Uri(((AccountFacebookLight)(oneAccount.Value)).userInfos.pic_square, UriKind.Absolute));
+                                    else
+                                        ((AccountFacebookLight)oneAccount.Value).GetFirstUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(ListeComptes_GetFirstUserInfoCalled);
                                     break;
                                 case Account.TypeAccount.Twitter:
                                     if (((AccountTwitterLight)(oneAccount.Value)).userInfos != null)
@@ -151,12 +160,13 @@ namespace EIP.Views.Controls
                             TextBlock text = new TextBlock();
                             text.Text = oneAccount.Value.account.name;
                             text.Padding = new Thickness(5, 0, 5, 0);
+                            text.FontSize = 18;
 
                             panel.Children.Add(text);
 
                             Image imgDel = new Image();
                             imgDel.Source = new BitmapImage(new Uri("../../Assets/Images/bullet_delete.png", UriKind.Relative));
-                            imgDel.Width = 16;
+                            imgDel.Width = 20;
                             imgDel.Name = "imgDel" + oneAccount.Value.account.accountID;
 
                             imgDel.Visibility = System.Windows.Visibility.Collapsed;
@@ -193,6 +203,14 @@ namespace EIP.Views.Controls
                         LayoutPanel.Children.Clear();
                     });
             }
+        }
+
+        void ListeComptes_GetFirstUserInfoCalled(Facebook.Schema.user monUser)
+        {
+            this.Dispatcher.BeginInvoke(() =>
+                {
+                    ((Image)LayoutPanel.FindName("img" + monUser.uid)).Source = new BitmapImage(new Uri(monUser.pic_square, UriKind.Absolute));
+                });
         }
 
         void imgDel_Click(object sender, MouseButtonEventArgs e)

@@ -130,6 +130,8 @@ namespace EIP
         public delegate void OnGetUserInfoCompleted(user monUser);
         public event OnGetUserInfoCompleted GetUserInfoCalled;
 
+        public event OnGetUserInfoCompleted GetFirstUserInfoCalled;
+
         public void GetUserInfo(long uid, GetUserInfoFrom from)
         {
             this.facebookAPI.Users.GetInfoAsync(uid, new Users.GetInfoCallback(GetUserInfo_Completed), from);
@@ -147,6 +149,8 @@ namespace EIP
                         if (this.facebookAPI.Session.UserId == toto.uid)
                         {
                             this.userInfos = toto;
+                            if (this.GetFirstUserInfoCalled != null)//evite que ca plante si pas dabo
+                                this.GetFirstUserInfoCalled.Invoke(this.userInfos);
                         }
                         break;
                     case GetUserInfoFrom.Profil:
@@ -681,27 +685,53 @@ namespace EIP
         {
             if(!this.albums.ContainsKey(uid))
                 this.facebookAPI.Photos.GetAlbumsAsync(uid, new Photos.GetAlbumsCallback(GetAlbums_Completed), uid);
+            else
+                if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
+                    this.GetAlbumsCalled.Invoke(this.albums[(long)uid]);
         }
 
         private void GetAlbums_Completed(IList<album> albums, object uid, FacebookException ex)
         {
-            if (ex == null)
+            if (ex == null && albums.Count > 0)
             {
                 this.albums[(long)uid] = (List<album>)albums;
 
                 List<string> covers = new List<string>();
-                foreach(album al in albums)
+                foreach (album al in albums)
                 {
                     covers.Add(al.cover_pid);
                 }
 
-                this.facebookAPI.Photos.GetAsync(null, null, covers, new Photos.GetCallback(GetAlbumsCover_Completed), uid); 
+                this.facebookAPI.Photos.GetAsync(null, null, covers, new Photos.GetCallback(GetAlbumsCover_Completed), uid);
 
 
-               
                 //this.GetAlbumsCalled.Invoke(true, (long)uid);
             }
+            /*else if (ex == null)
+            {
+                this.facebookAPI.Fql.QueryAsync<photos_getAlbums_response>("SELECT aid, owner, cover_pid, name, created, modified, description, location, size, link, visible, modified_major, edit_link, type, object_id, can_upload FROM album WHERE owner=" + uid, new Fql.QueryCallback<photos_getAlbums_response>(GetAlbumsFQL_Completed), uid);
+            }*/
         }
+
+        /*private void GetAlbumsFQL_Completed(photos_getAlbums_response albums, object uid, FacebookException ex)
+        {
+            if (ex == null && albums.album.Count > 0)
+            {
+                this.albums[(long)uid] = (List<album>)albums.album;
+
+                List<string> covers = new List<string>();
+                foreach (album al in albums.album)
+                {
+                    covers.Add(al.cover_pid);
+                }
+
+                this.facebookAPI.Photos.GetAsync(null, null, covers, new Photos.GetCallback(GetAlbumsCover_Completed), uid);
+
+
+
+                //this.GetAlbumsCalled.Invoke(true, (long)uid);
+            }
+        }*/
 
         private void GetAlbumsCover_Completed(IList<photo> photos, object uid, FacebookException ex)
         {

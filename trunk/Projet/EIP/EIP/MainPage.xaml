@@ -86,7 +86,7 @@
                         <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
                         <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/EmptyPage.xaml" />
                         <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/EmptyPage.xaml" />
-                        <uriMapper:UriMapping Uri="/Profil/{filter}" MappedUri="/Views/ProfilPage.xaml?uid={filter}" />
+                        <uriMapper:UriMapping Uri="/Profil/{filter}" MappedUri="/Views/EmptyPage.xaml" />
                         <uriMapper:UriMapping Uri="/Album/{aid}" MappedUri="/Views/EmptyPage.xaml" />
                         <uriMapper:UriMapping Uri="/Albums/{userid}/Account/{accid}" MappedUri="/Views/EmptyPage.xaml" />
                             
@@ -123,9 +123,12 @@
                         <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />
                         <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
                         <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
-                        <uriMapper:UriMapping Uri="/Profil/{userid}" MappedUri="/Views/ProfilPage.xaml?uid={userid}" />
+                            
+                        <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}/tab/{tab}" MappedUri="/Views/ProfilPage.xaml?uid={userid}&amp;accid={accid}&amp;tab={tab}" />
+                        <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}" MappedUri="/Views/ProfilPage.xaml?uid={userid}&amp;accid={accid}" />
+                       <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/ProfilPage.xaml" />
                         <uriMapper:UriMapping Uri="/Album/{aid}" MappedUri="/Views/AlbumView.xaml?aid={aid}" />
-                        <uriMapper:UriMapping Uri="/Albums/{userid}/Account/{accid}" MappedUri="/Views/AlbumsView.xaml?uid={userid}&amp;accid={accid}" />
+                        <!--<uriMapper:UriMapping Uri="/Albums/{userid}/Account/{accid}" MappedUri="/Views/AlbumsView.xaml?uid={userid}&amp;accid={accid}" />-->
                        
 
 

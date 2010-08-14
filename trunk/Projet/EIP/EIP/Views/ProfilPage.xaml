@@ -11,17 +11,17 @@
     <Grid x:Name="LayoutRoot">
 
 
-        <sdk:TabControl Margin="3,-4,-3,4">
-            <sdk:TabItem Header="Mur" Name="murTab">
+        <sdk:TabControl Margin="3,-4,-3,4" Name="tabControl" SelectionChanged="TabControl_SelectionChanged">
+            <sdk:TabItem Header="Mur" Name="murTab" DataContext="Mur">
                 Mes feeds !
             </sdk:TabItem>
-            <sdk:TabItem Header="Infos" Name="infosTab">
+            <sdk:TabItem Header="Infos" Name="infosTab" DataContext="Infos">
                 Mes infos !
             </sdk:TabItem>
-            <sdk:TabItem Header="Photos" Name="photosTab">
+            <sdk:TabItem Header="Photos" Name="photosTab" DataContext="Photos">
                 Mes photos !
             </sdk:TabItem>
-            <sdk:TabItem Header="Vidéos" Name="videosTab">
+            <sdk:TabItem Header="Vidéos" Name="videosTab" DataContext="Videos">
                 Mes Vidéos !
             </sdk:TabItem>
         </sdk:TabControl>
