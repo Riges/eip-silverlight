@@ -57,12 +57,16 @@ namespace EIP.Views.Controls
                 Uri uriImg = new Uri(th.getPic());
                 picUser.Source = new BitmapImage(uriImg);
             }
-            subject.Text = th.getSubject();
+            //subject.Text = th.getSubject();
+            subjectText.Text = th.getSubject();
+            subject.NavigateUri = new Uri("/Messages/", UriKind.Relative); //TODO
             if (th.getSummary() != "")
                 summary.Text = th.getSummary().Replace("\n", " ");
             else
                 summary.Visibility = System.Windows.Visibility.Collapsed;
-            //authorName.Text = th.getAuthorName();
+            personText.Text = th.getAuthorName();
+            person.NavigateUri = new Uri("/Profil/" + th.getAuthorAccountID() + "/Account/" + th.accountID + "/tab/Photos", UriKind.Relative); // TODO : url profil
+            date.Text = th.date.ToString();
         }
 
     }

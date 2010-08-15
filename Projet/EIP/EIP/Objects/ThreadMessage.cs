@@ -17,6 +17,7 @@ namespace EIP.Objects
     {
         public DateTime date { get; set; }
         public Account.TypeAccount typeAccount { get; set; }
+        public long accountID { get; set; }
 
         // Facebook
         private thread MessageFb { get; set; }
@@ -25,9 +26,10 @@ namespace EIP.Objects
         public ThreadMessage() { }
 
         // Facebook
-        public ThreadMessage(thread th)
+        public ThreadMessage(thread th, long accountID)
         {
             this.MessageFb = th;
+            this.accountID = accountID;
             
             this.typeAccount = Account.TypeAccount.Facebook;
             this.date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
@@ -64,6 +66,7 @@ namespace EIP.Objects
             return 0;
         }
 
+        // TODO : si user courant, prendre un des destinataires
         public void setAuthor(object author)
         {
             switch (this.typeAccount)
@@ -100,5 +103,6 @@ namespace EIP.Objects
             }
             return null;
         }
+
     }
 }
