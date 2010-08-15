@@ -37,18 +37,38 @@
 
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="15"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="410"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Image Grid.RowSpan="2" Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" >
+        
+        <Image Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" >
         </Image>
-        <!--TextBlock Grid.Column="1" HorizontalAlignment="Left" Name="subject" Text="Subject" /-->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Name="subject" Text="Subject" />
-        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="NoWrap" />
+        <!--TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="person" Text="Person" /-->
 
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120">
+            <HyperlinkButton Height="Auto" Name="person" FontWeight="Bold">
+                <HyperlinkButton.Content>
+                    <TextBlock TextWrapping="Wrap" Name="personText" Text="Title"/>
+                </HyperlinkButton.Content>
+            </HyperlinkButton>
+            <TextBlock HorizontalAlignment="Left" Name="date" Text="Date" FontStyle="Italic" FontSize="9" Foreground="#FFCCCCCC" />
+
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <HyperlinkButton Height="Auto" Name="subject" FontWeight="Bold">
+                <HyperlinkButton.Content>
+                    <TextBlock TextWrapping="Wrap" Name="subjectText" Text="Title"/>
+                </HyperlinkButton.Content>
+            </HyperlinkButton>
+        
+            <!-- only for FB -->
+            <TextBlock HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" FontStyle="Italic" FontSize="9" Foreground="#FFCCCCCC" />
+
+        </StackPanel>
     </Grid>
     
 </UserControl>

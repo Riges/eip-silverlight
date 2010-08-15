@@ -207,7 +207,8 @@ namespace EIP
                     List<long> userIds = new List<long>();
                     foreach (thread th in liste.thread)
                     {
-                        liste2.Add(new ThreadMessage(th));
+                        liste2.Add(new ThreadMessage(th, this.account.accountID));
+                        // TODO : si user courant, prendre un des destinataires
                         if (!userIds.Contains(th.snippet_author))
                             userIds.Add(th.snippet_author);
 
