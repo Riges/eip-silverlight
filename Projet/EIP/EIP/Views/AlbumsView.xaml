@@ -15,7 +15,7 @@
         <vm:InCoverFlowContentControlSampleData />
     </navigation:Page.DataContext>
     <navigation:Page.Resources>
-        <Style TargetType="fl:FlowItem3D" x:Key="empty3D">
+        <!--<Style TargetType="fl:FlowItem3D" x:Key="empty3D">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="fl:FlowItem3D">
@@ -23,40 +23,41 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-        <DataTemplate x:Key="itemTemplate" >
-<!--Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}"-->
+        </Style>-->
+        <!--<DataTemplate x:Key="itemTemplate" >
+
            <fl:InFlowContentControl   Width="250" Height="250" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
                 <fl:InFlowContentControl.HeadingTemplate>
                     <DataTemplate>
-                        
-                        <!--<TextBlock Text="{Binding name}"></TextBlock>-->
-                        <!--<HyperlinkButton Content="{Binding name}"  NavigateUri="{StaticResource uri}"></HyperlinkButton>-->
                         <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>
-                        
                     </DataTemplate>
                 </fl:InFlowContentControl.HeadingTemplate>
                     <fl:InFlowContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <!--<StackPanel>
-                    <TextBlock HorizontalAlignment="Center">IMG</TextBlock>
-                    <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
-                </StackPanel>-->
-               
+                    <DataTemplate>               
                         <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
                     </DataTemplate>
                 </fl:InFlowContentControl.ContentTemplate>
             </fl:InFlowContentControl>
 
-        </DataTemplate>
+        </DataTemplate>-->
     </navigation:Page.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        
-            <fl:FlowItemsControl3D Grid.Row="0" Name="flowControl" ItemsSource="{Binding}" ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}" >
+
+        <fl:FlowItemsControl3D Grid.Row="0" Name="flowControl" ItemsSource="{Binding}"  >
+            <!--ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
+            <fl:FlowItemsControl3D.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
+                        <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>
+                    </StackPanel>
+                </DataTemplate>
+            </fl:FlowItemsControl3D.ItemTemplate>
+                
             <fl:FlowItemsControl3D.LayoutAlgorithm>
                 <vm:SimpleCarouselAlgorithm />
             </fl:FlowItemsControl3D.LayoutAlgorithm>

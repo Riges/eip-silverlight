@@ -115,7 +115,7 @@ namespace EIP.Objects
             return mois;
         }
 
-        public static List<UIElement> LoadMessage(string msg)
+        public static List<UIElement> LoadMessage(string msg, ResourceDictionary Resources)
         {
             List<UIElement> list = new List<UIElement>();
             msg = msg.Replace("\n", " ");
@@ -132,6 +132,7 @@ namespace EIP.Objects
                         theMot = "http://" + mot;
                     theMot = theMot.Replace(".co..", ".com").Replace(".c..", ".com");
                     HyperlinkButton link = new HyperlinkButton();
+                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
                     link.NavigateUri = new Uri(theMot, UriKind.Absolute);
                     link.Content = theMot + " ";
                     link.TargetName = "_blank";
@@ -140,6 +141,7 @@ namespace EIP.Objects
                 else if (mot.StartsWith("@"))
                 {
                     HyperlinkButton link = new HyperlinkButton();
+                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
                     if (mot.EndsWith("!"))
                         link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
                     else
@@ -151,6 +153,7 @@ namespace EIP.Objects
                 else if (mot.StartsWith("#"))
                 {
                     HyperlinkButton link = new HyperlinkButton();
+                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
                     link.NavigateUri = new Uri("http://twitter.com/#search?q=" + mot, UriKind.Absolute);
                     link.Content = mot + " ";
                     link.TargetName = "_blank";

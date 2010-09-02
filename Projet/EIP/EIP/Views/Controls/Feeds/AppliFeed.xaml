@@ -19,14 +19,14 @@
 
         
 
-        <HyperlinkButton Name="linkImg" Grid.Row="0" Grid.Column="0" TargetName="_blank"  Visibility="Collapsed">
+        <HyperlinkButton Style="{StaticResource HyperlinkButtonStyle}" Name="linkImg" Grid.Row="0" Grid.Column="0" TargetName="_blank"  Visibility="Collapsed">
             <Border Name="imgBorder" BorderThickness="1" BorderBrush="Gray" Padding="5,5,5,5" VerticalAlignment="Top" Margin="0,5,5,0" Visibility="Collapsed">
                 <Image Name="img" Stretch="None"></Image>
             </Border>
         </HyperlinkButton>
 
         <StackPanel Name="contentPanel" Grid.Row="0" Grid.Column="1">
-            <HyperlinkButton Name="titre" TargetName="_blank" Margin="0,2,0,0"></HyperlinkButton>
+            <HyperlinkButton Style="{StaticResource HyperlinkButtonStyle}" Name="titre" TargetName="_blank" Margin="0,2,0,0"></HyperlinkButton>
 
             <TextBlock Name="caption" Visibility="Collapsed" ></TextBlock>
 
@@ -34,7 +34,7 @@
 
             <StackPanel Name="parPanel" Orientation="Horizontal" Margin="0,5,0,0" Visibility="Collapsed">
                 <TextBlock Name="parTxt">Par :</TextBlock>
-                <HyperlinkButton Name="linkPar" Margin="3,0,0,0"></HyperlinkButton>
+                <HyperlinkButton Style="{StaticResource HyperlinkButtonStyle}" Name="linkPar" Margin="3,0,0,0"></HyperlinkButton>
             </StackPanel>
         </StackPanel>
     </Grid>

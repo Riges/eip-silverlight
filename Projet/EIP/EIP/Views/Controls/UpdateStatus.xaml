@@ -26,6 +26,6 @@
         </StackPanel>
         <!--<TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold">Twitter</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold">Facebook</TextBlock>-->
-        <Button Content="Envoyer" Grid.Column="3" Height="20" HorizontalAlignment="Left" Name="sendStatu" VerticalAlignment="Top" Width="100" Click="sendStatu_Click" />
+        <Button Content="Envoyer" Grid.Column="3" Height="20" HorizontalAlignment="Left" Name="sendStatu" VerticalAlignment="Stretch" Width="100" Click="sendStatu_Click" />
     </Grid>
 </UserControl>

@@ -24,7 +24,7 @@
                             
                            
 
-                            <Controls:UpdateStatus></Controls:UpdateStatus>
+                            <Controls:UpdateStatus x:Name="updateStatusControl"></Controls:UpdateStatus>
 
                             <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
                                      NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>

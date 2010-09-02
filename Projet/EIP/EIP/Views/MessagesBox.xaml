@@ -14,10 +14,10 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Name="TitrePage" Style="{StaticResource HeaderTextStyle}"
-                           Text="Messagerie" Grid.Row="0" />
+        <!--<TextBlock Name="TitrePage" Style="{StaticResource HeaderTextStyle}"
+                           Text="Messagerie" Grid.Row="0" />-->
         <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
                            Text="Messagerie" Grid.Row="1" />
-        <Controls:listeMessages HorizontalAlignment="Left"  x:Name="listeMessagesBox" VerticalAlignment="Top" Grid.Row="2" Height="Auto" Width="Auto" />
+        <Controls:listeMessages x:Name="listeMessagesBox" VerticalAlignment="Top" Grid.Row="2" Height="Auto" Width="Auto" HorizontalAlignment="Center" />
     </Grid>
 </navigation:Page>

@@ -29,7 +29,7 @@ namespace EIP.Views.Controls
         {
             SolidColorBrush brush  = new SolidColorBrush();
             brush.Color = Colors.White;//gray
-           if (Connexion.accounts != null)
+            if (Connexion.accounts != null)
             {
                 if (Connexion.accounts.Count > 0)
                 {
@@ -40,10 +40,10 @@ namespace EIP.Views.Controls
                         {
                             if (oneAccount.Value.selected)
                             {
-                                
+
                                 StackPanel panel = new StackPanel();
                                 panel.Orientation = Orientation.Horizontal;
-                                
+
 
                                 Image img = new Image();
                                 img.Width = 12;
@@ -74,14 +74,45 @@ namespace EIP.Views.Controls
                             }
                         }
 
+                        //if (NetworkStackPanel.Children == null || NetworkStackPanel.Children.Count == 0)
+                        //{
+                        //    NetworkStackPanel.Children.Clear();
+                        //    TextBlock text = new TextBlock();
+                        //    text.Text = "Accounts selected";
+                        //    text.FontStyle = FontStyles.Italic;
+                        //    text.FontSize = 10;
+                        //    text.Foreground = brush;
+                        //    text.VerticalAlignment = System.Windows.VerticalAlignment.Center; ;
+                        //    NetworkStackPanel.Children.Add(text);
+                        //}
+
                     });
                 }
+                //else
+                //{
+                //    NetworkStackPanel.Children.Clear();
+                //    TextBlock text = new TextBlock();
+                //    text.Text = "Accounts selected";
+                //    text.FontStyle = FontStyles.Italic;
+                //    text.FontSize = 10;
+                //    text.Foreground = brush;
+                //    text.VerticalAlignment = System.Windows.VerticalAlignment.Center; ;
+                //    NetworkStackPanel.Children.Add(text);
+                //}
             }
             else
             {
                 Dispatcher.BeginInvoke(() =>
                 {
                     NetworkStackPanel.Children.Clear();
+
+                    //TextBlock text = new TextBlock();
+                    //text.Text = "Accounts selected";
+                    //text.FontStyle = FontStyles.Italic;
+                    //text.FontSize = 10;
+                    //text.Foreground = brush;
+                    //text.VerticalAlignment = System.Windows.VerticalAlignment.Center;;
+                    //NetworkStackPanel.Children.Add(text);
                 });
             }
         }
@@ -101,7 +132,7 @@ namespace EIP.Views.Controls
         }
 
 
-        private bool cheackIfTwitterActiveAccount()
+        private bool checkIfTwitterActiveAccount()
         {
             foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
             {
@@ -135,7 +166,7 @@ namespace EIP.Views.Controls
             {
                 if (Connexion.accounts.Count > 0)
                 {
-                    if ((cheackIfTwitterActiveAccount() && tweet.Length <= 140) || !cheackIfTwitterActiveAccount())
+                    if ((checkIfTwitterActiveAccount() && tweet.Length <= 140) || !checkIfTwitterActiveAccount())
                     {
                         Dispatcher.BeginInvoke(() =>
                         {
