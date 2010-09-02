@@ -40,7 +40,7 @@ namespace EIP.Views
                     if (acc.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook && acc.Value.selected)
                         this.accountID = acc.Value.account.accountID;
                 }
-                if (this.accountID != null && this.accountID > 0)
+                if (this.accountID != 0 && this.accountID > 0)
                 {
                     AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[this.accountID];
                     if (account.selected)

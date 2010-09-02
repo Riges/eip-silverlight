@@ -54,12 +54,14 @@ namespace EIP.Views.Controls
             dateTimeFeed.Text = Utils.Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
 
             HyperlinkButton userName = new HyperlinkButton();
+            userName.Style = App.Current.Resources["HyperlinkButtonStyle"] as Style;
             userName.Content = profile.name;
+            userName.Margin = new Thickness(0, 0, 5, 0);
             content.Children.Add(userName);
 
             if (com.text != "")
             {
-                foreach (UIElement element in Utils.LoadMessage(com.text))
+                foreach (UIElement element in Utils.LoadMessage(com.text, Resources))
                     content.Children.Add(element);
             }
 

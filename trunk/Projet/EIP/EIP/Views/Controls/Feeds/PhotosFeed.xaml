@@ -27,7 +27,7 @@
         </Border>
 
         <StackPanel  Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,5,0,0">
-            <HyperlinkButton Name="albumName" Visibility="Collapsed"></HyperlinkButton>
+            <HyperlinkButton Style="{StaticResource HyperlinkButtonStyle}" Name="albumName" Visibility="Collapsed"></HyperlinkButton>
             <TextBlock Margin="3,0,0,0" Name="albumDescription" Visibility="Collapsed"></TextBlock>
         </StackPanel>
 

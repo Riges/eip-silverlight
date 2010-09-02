@@ -12,7 +12,9 @@
     <SolidColorBrush x:Key="HoverHyperlinkForegroundColorBrush" Color="#FFEBF7FF"/>
     <SolidColorBrush x:Key="HoverHyperLinkBackgroundColorBrush" Color="#FF747474"/>
     <SolidColorBrush x:Key="BodyTextColorBrush" Color="#FF313131"/>
-
+    
+    
+    <SolidColorBrush x:Key="LinkColorBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="BgColor" Color="#FFB5B5B5"/>
 
 
@@ -327,6 +329,11 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
-  
+    <Style x:Key="HyperlinkButtonStyle" TargetType="HyperlinkButton">
+        <Setter Property="Foreground" Value="{StaticResource LinkColorBrush}"/>
+    </Style>
+    
+
+
 
 </ResourceDictionary>

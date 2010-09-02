@@ -286,8 +286,13 @@ namespace EIP
 
         public void LoadFriends()
         {
-            
-            this.facebookAPI.Friends.GetAsync(new Friends.GetFriendsCallback(GetFriendsIDs_Completed), null);
+            if (this.friends == null || this.friends.Count == 0)
+                this.facebookAPI.Friends.GetAsync(new Friends.GetFriendsCallback(GetFriendsIDs_Completed), null);
+            else
+            {
+                if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
+                         this.GetFriendsCalled.Invoke(this.friends);
+            }
         }
 
         private void GetFriendsIDs_Completed(IList<long> usersIDs, Object obj, FacebookException ex)
@@ -299,12 +304,18 @@ namespace EIP
                  }
         }
 
+        public delegate void OnGetFriendsCompleted(List<user> friendsFB);
+        public event OnGetFriendsCompleted GetFriendsCalled;
+
         private void GetFriends_Completed(IList<user> users, Object obj, FacebookException ex)
         {
             if (users != null)
                 if (users.Count > 0)
                  {
                      this.friends = users as List<user>;
+
+                     if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
+                         this.GetFriendsCalled.Invoke(this.friends);
                  }
         }
 

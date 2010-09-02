@@ -48,6 +48,11 @@ namespace EIP
                 DividerHome.Visibility = System.Windows.Visibility.Visible;
                 LinkFriends.Visibility = System.Windows.Visibility.Visible;
                 DividerFriends.Visibility = System.Windows.Visibility.Visible;
+                LinkMessages.Visibility = System.Windows.Visibility.Visible;
+                DividerMessages.Visibility = System.Windows.Visibility.Visible;
+                LinkProfil.Visibility = System.Windows.Visibility.Visible;
+                DividerProfil.Visibility = System.Windows.Visibility.Visible;
+                updateStatusControl.Visibility = System.Windows.Visibility.Visible;
                 LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
 
                 LinkSeConnecter.Visibility = System.Windows.Visibility.Collapsed;
@@ -60,6 +65,11 @@ namespace EIP
                 DividerHome.Visibility = System.Windows.Visibility.Collapsed;
                 LinkFriends.Visibility = System.Windows.Visibility.Collapsed;
                 DividerFriends.Visibility = System.Windows.Visibility.Collapsed;
+                LinkMessages.Visibility = System.Windows.Visibility.Collapsed;
+                DividerMessages.Visibility = System.Windows.Visibility.Collapsed;
+                LinkProfil.Visibility = System.Windows.Visibility.Collapsed;
+                DividerProfil.Visibility = System.Windows.Visibility.Collapsed;
+                updateStatusControl.Visibility = System.Windows.Visibility.Collapsed;
                 LinkSeDeco.Visibility = System.Windows.Visibility.Collapsed;
 
                 LinkSeConnecter.Visibility = System.Windows.Visibility.Visible;

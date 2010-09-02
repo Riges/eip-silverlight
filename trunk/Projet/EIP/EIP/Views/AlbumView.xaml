@@ -12,7 +12,7 @@
 
 
     <navigation:Page.Resources>
-        <Style TargetType="fl:FlowItem3D" x:Key="empty3D">
+        <!--<Style TargetType="fl:FlowItem3D" x:Key="empty3D">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="fl:FlowItem3D">
@@ -20,7 +20,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>-->
         <DataTemplate x:Key="itemTemplate" >
             <!--Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}"-->
             <fl:InFlowContentControl   Width="500" Height="500" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
@@ -49,7 +49,16 @@
 
     <Grid x:Name="LayoutRoot">
 
-        <fl:FlowItemsControl3D Name="flowControl" ItemsSource="{Binding}" ItemTemplate="{StaticResource itemTemplate}"  ItemContainerStyle="{StaticResource empty3D}"></fl:FlowItemsControl3D>
-        
+        <fl:FlowItemsControl3D Name="flowControl" ItemsSource="{Binding}"  >
+            <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
+            <fl:FlowItemsControl3D.ItemTemplate>
+                <DataTemplate>
+                    <Controls:PhotoControl x:Name="photoItem"  VerticalAlignment="Top" Cursor="Hand"></Controls:PhotoControl>
+               </DataTemplate>
+            </fl:FlowItemsControl3D.ItemTemplate>
+
+
+        </fl:FlowItemsControl3D>
+
     </Grid>
 </navigation:Page>

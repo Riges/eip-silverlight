@@ -32,7 +32,8 @@ namespace EIP.Views.Controls
             {
                 this.photo = this.DataContext as photo;
 
-                imgPhoto.Source = new BitmapImage(new Uri(this.photo.src_big, UriKind.Absolute)); ;
+                imgPhoto.Source = new BitmapImage(new Uri(this.photo.src_big, UriKind.Absolute));
+                
                 
                 this.loaded = true;
             }

@@ -34,6 +34,82 @@ namespace EIP.Views
 
             this.friends = new Dictionary<String, Friend>();
             LoadList();
+
+            //LoadDisplay();
+           
+        }
+
+        /// <summary>
+        /// methode qui merge les listes de friends
+        /// </summary>
+        private void LoadList()
+        {
+            foreach(KeyValuePair<long, AccountLight> account in Connexion.accounts)
+            {
+                if(account.Value.selected)
+                    switch (account.Value.account.typeAccount)
+                    {
+                        case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                            ((AccountFacebookLight)account.Value).GetFriendsCalled += new AccountFacebookLight.OnGetFriendsCompleted(FriendList_GetFriendsCalled);
+                            ((AccountFacebookLight)account.Value).LoadFriends();
+
+                            break;
+                        case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                            List<TwitterUser> friendsTW = ((AccountTwitterLight)account.Value).friends;
+                            foreach (TwitterUser toto in friendsTW)
+                            {
+                                if (friends.Keys.Contains(toto.Name))
+                                {
+                                    if (friends[toto.Name].userTW == null)
+                                        friends[toto.Name].userTW = toto;
+                                }
+                                else
+                                {
+                                    Friend titi = new Friend();
+                                    titi.userTW = toto;
+                                    friends.Add(toto.Name, titi);
+                                }
+                            }
+                            break;
+                        case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                            break;
+                        default:
+                            break;
+                    }
+            }
+            
+        }
+
+        private void FriendList_GetFriendsCalled(List<user> friendsFB)
+        {
+            foreach (user toto in friendsFB)
+            {
+                string key = (toto.proxied_email != null) ? toto.proxied_email : toto.name;
+
+                if (friends.Keys.Contains(key))
+                {
+                    if (friends[key].userFB == null)
+                        friends[key].userFB = toto;
+                }
+                else
+                {
+                    Friend titi = new Friend();
+                    titi.userFB = toto;
+                    friends.Add(key, titi);
+                }
+            }
+
+            friends = friends.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            Dispatcher.BeginInvoke(() =>
+                {
+                    LoadDisplay();
+                });
+        }
+
+        private void LoadDisplay()
+        {
+
             foreach (KeyValuePair<String, Friend> poto in friends)
             {
                 if (poto.Value.userFB != null)
@@ -50,7 +126,7 @@ namespace EIP.Views
                     fv.imgUser.Source = btImgFB;
 
                     fv.nomFriend.Text = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
-                    fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userFB.uid);
+                    fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userFB.uid, UriKind.Relative);
 
                     this.Liste.Children.Add(fv);
                 }
@@ -75,58 +151,7 @@ namespace EIP.Views
             }
             ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
             Liste.Visibility = System.Windows.Visibility.Visible;
-        }
 
-        /// <summary>
-        /// methode qui merge les listes de friends
-        /// </summary>
-        private void LoadList()
-        {
-            foreach(KeyValuePair<long, AccountLight> account in Connexion.accounts)
-            {
-                switch (account.Value.account.typeAccount)
-                {
-                    case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        List<user> friendsFB = ((AccountFacebookLight)account.Value).friends;
-                        foreach (user toto in friendsFB)
-                        {
-                            if (friends.Keys.Contains(toto.proxied_email))
-                            {
-                                if (friends[toto.proxied_email].userFB == null)
-                                    friends[toto.proxied_email].userFB = toto;
-                            }
-                            else
-                            {
-                                Friend titi = new Friend();
-                                titi.userFB = toto;
-                                friends.Add(toto.proxied_email, titi);
-                            }
-                        }
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                        List<TwitterUser> friendsTW = ((AccountTwitterLight)account.Value).friends;
-                        foreach (TwitterUser toto in friendsTW)
-                        {
-                            if (friends.Keys.Contains(toto.Name))
-                            {
-                                if (friends[toto.Name].userTW == null)
-                                    friends[toto.Name].userTW = toto;
-                            }
-                            else
-                            {
-                                Friend titi = new Friend();
-                                titi.userTW = toto;
-                                friends.Add(toto.Name, titi);
-                            }
-                        }
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Myspace:
-                        break;
-                    default:
-                        break;
-                }
-            }
-            
         }
     }
 }

@@ -8,7 +8,7 @@
     
     <Grid x:Name="LayoutRoot" Background="White">
 
-        <HyperlinkButton Content="{Binding name}" Name="uri"></HyperlinkButton>
+        <HyperlinkButton Foreground="Black" Content="{Binding name}" Name="uri" VerticalAlignment="Center" HorizontalAlignment="Center"></HyperlinkButton>
 
     </Grid>
 </UserControl>

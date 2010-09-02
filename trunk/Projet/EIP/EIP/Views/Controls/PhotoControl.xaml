@@ -8,11 +8,12 @@
     
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="80*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
            
         </Grid.RowDefinitions>
 
-        <Image Name="imgPhoto" Grid.Row="0" Width="450" Stretch="UniformToFill" VerticalAlignment="Top"></Image>
-        
+        <Image Name="imgPhoto" Grid.Row="0" MaxWidth="500" Stretch="Uniform" VerticalAlignment="Top"></Image> <!--Width="450"-->
+        <!--<TextBlock Name="titlePhoto" Text="" Grid.Row="1" VerticalAlignment="Center" Margin="0,15,0,15" HorizontalAlignment="Center"></TextBlock>-->
     </Grid>
 </UserControl>
