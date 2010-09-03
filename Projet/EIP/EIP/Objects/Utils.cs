@@ -170,6 +170,24 @@ namespace EIP.Objects
 
         }
 
+        /// <summary>
+        /// Put the first letter of the word upper
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string FirstLetterUp(string text)
+        {
+            if(text != null)
+                if (text.Length > 0)
+                {
+                    char[] letters = text.ToCharArray();
+                    letters[0] = char.ToUpper(letters[0]);
+
+                    return new string(letters);                
+                }
+            return text;
+        }
+
     }
 
 

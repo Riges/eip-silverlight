@@ -27,7 +27,7 @@ namespace EIP.Views
         {
             InitializeComponent();
             profil = new Dictionary<String, Profil>();
-            LoadProfil();
+            //LoadProfil();
         }
 
 
@@ -74,6 +74,9 @@ namespace EIP.Views
                     break;
                 case Tab.Infos:
                     infosTab.IsSelected = true;
+                    UserInfos infosControl = new UserInfos(this.accountID, this.uid);
+                    infosTab.Content = infosControl;
+
                     break;
                 case Tab.Photos:
                     string aid = string.Empty;
@@ -95,46 +98,6 @@ namespace EIP.Views
                     break;
             }
         }
-
-        /// <summary>
-        /// methode qui merge les profils de l'user ou du friend
-        /// </summary>
-        private void LoadProfil()
-        {
-            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
-            {
-                switch (account.Value.account.typeAccount)
-                {
-                    case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        //long uid = 0;
-                        //if (this.NavigationContext.QueryString.ContainsKey("uid"))
-                        //    uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
-
-                        ((AccountFacebookLight)account.Value).GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(ProfilPage_GetUserInfoCalled);
-                        ((AccountFacebookLight)account.Value).GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
-                        //Profil toto = new Profil();
-                        //toto.profilFB = ;
-                        //profil.Add(toto, toto.profilFB.id);
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                        //Profil toto = new Profil();
-                        //toto.profilTW = ;
-                        //profil.Add(toto, );
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Myspace:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        void ProfilPage_GetUserInfoCalled(user monUser)
-        {
-            
-        }
-
-
 
     }
 }

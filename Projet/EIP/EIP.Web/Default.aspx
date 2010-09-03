@@ -96,6 +96,6 @@
 	    </object><iframe id="_sl_historyFrame" style="visibility:hidden;height:0px;width:0px;border:0px"></iframe></div>
        
     </form>
-    <iframe id="ifHtmlContent" style="position:absolute"/>
+   <%-- <iframe id="ifHtmlContent" style="position:absolute"/>--%>
 </body>
 </html>
