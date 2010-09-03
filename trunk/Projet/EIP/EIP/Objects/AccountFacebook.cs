@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -134,7 +135,40 @@ namespace EIP
 
         public void GetUserInfo(long uid, GetUserInfoFrom from)
         {
-            this.facebookAPI.Users.GetInfoAsync(uid, new Users.GetInfoCallback(GetUserInfo_Completed), from);
+            switch (from)
+            {
+                case GetUserInfoFrom.Login:
+                    this.facebookAPI.Users.GetInfoAsync(uid, new Users.GetInfoCallback(GetUserInfo_Completed), from);
+                    break;
+                case GetUserInfoFrom.Profil:
+
+                    var result =  from user unUser in friends
+                                  where unUser.uid == uid
+                                  select unUser;
+                    user toto = result as user;
+
+                    if (this.userInfos != null && this.userInfos.uid == uid)
+                    {
+                        if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
+                            this.GetUserInfoCalled.Invoke(this.userInfos);
+                    }
+                    else if (toto != null)
+                    {
+                        if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
+                            this.GetUserInfoCalled.Invoke((user)result);
+                        
+                    }
+                    else
+                    {
+                        this.facebookAPI.Users.GetInfoAsync(uid, new Users.GetInfoCallback(GetUserInfo_Completed), from);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+
+           
         }
 
         private void GetUserInfo_Completed(IList<user> users, Object from, FacebookException ex)
@@ -183,6 +217,9 @@ namespace EIP
         public void LoadOutboxMessages()
         {
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(GetThreadsFQL_Completed), null);
+
+            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=1", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
+
         }
 
 
@@ -274,8 +311,8 @@ namespace EIP
                         liste2.Add(mypost);
                     }
                 }
-            
-            this.GetMessagesCalled.Invoke(liste2);
+            if(this.GetMessagesCalled != null)
+                this.GetMessagesCalled.Invoke(liste2);
             
         }
 
@@ -318,6 +355,8 @@ namespace EIP
                          this.GetFriendsCalled.Invoke(this.friends);
                  }
         }
+
+
 
 
         /// <summary>
@@ -706,6 +745,7 @@ namespace EIP
         {
             if (ex == null && albums.Count > 0)
             {
+                //this.albums[(long)uid] = new List<album>();
                 this.albums[(long)uid] = (List<album>)albums;
 
                 List<string> covers = new List<string>();
@@ -761,7 +801,9 @@ namespace EIP
                         {
                             Dictionary<string, photo> tofs = new Dictionary<string, photo>();
                             tofs.Add(tof.pid, tof);
-                            this.photos.Add(tof.aid, tofs);
+                            //this.photos.Add(tof.aid, tofs);
+                            //this.photos[tof.aid] = new Dictionary<string, photo>();
+                            this.photos[tof.aid] = tofs;
                             //this.photos[tof.aid].Add(tof);
                         }
                     }

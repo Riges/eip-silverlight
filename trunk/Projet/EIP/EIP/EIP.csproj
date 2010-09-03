@@ -200,6 +200,9 @@
     <Compile Include="Views\Controls\UpdateStatus.xaml.cs">
       <DependentUpon>UpdateStatus.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\UserInfos.xaml.cs">
+      <DependentUpon>UserInfos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuMessagesBox.xaml.cs">
       <DependentUpon>MenuMessagesBox.xaml</DependentUpon>
     </Compile>
@@ -353,6 +356,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\UpdateStatus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\UserInfos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
