@@ -206,6 +206,9 @@
     <Compile Include="Views\MenuMessagesBox.xaml.cs">
       <DependentUpon>MenuMessagesBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MenuProfil.xaml.cs">
+      <DependentUpon>MenuProfil.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MessagesBox.xaml.cs">
       <DependentUpon>MessagesBox.xaml</DependentUpon>
     </Compile>
@@ -233,11 +236,17 @@
     <Compile Include="Views\MenuFeeds.xaml.cs">
       <DependentUpon>MenuFeeds.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProfilInfos.xaml.cs">
+      <DependentUpon>ProfilInfos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProfilPage.xaml.cs">
       <DependentUpon>ProfilPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StreamFeeds.xaml.cs">
       <DependentUpon>StreamFeeds.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\videosView.xaml.cs">
+      <DependentUpon>videosView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WaitLoad.xaml.cs">
       <DependentUpon>WaitLoad.xaml</DependentUpon>
@@ -367,6 +376,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\MenuProfil.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MessagesBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -401,6 +414,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ProfilInfos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProfilPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -408,6 +425,10 @@
     <Page Include="Views\StreamFeeds.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\videosView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WaitLoad.xaml">
       <Generator>MSBuild:Compile</Generator>

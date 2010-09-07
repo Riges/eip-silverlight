@@ -10,8 +10,15 @@
            Title="Profil Page">
     <Grid x:Name="LayoutRoot">
 
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <sdk:TabControl Margin="3,-4,-3,4" Name="tabControl" SelectionChanged="TabControl_SelectionChanged">
+        <TextBlock Name="PseudoUser" Grid.Row="0">User</TextBlock>
+
+        <sdk:TabControl Name="tabControl" SelectionChanged="TabControl_SelectionChanged" Grid.Row="1">
             <sdk:TabItem Header="Mur" Name="murTab" DataContext="Mur">
                 Mes feeds !
             </sdk:TabItem>

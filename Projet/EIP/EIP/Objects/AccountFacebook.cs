@@ -37,8 +37,14 @@ namespace EIP
         public List<stream_filter> filters { get; set; }
         public List<profile> profiles { get; set; }
         public List<thread> box { get; set; }
+
         public Dictionary<long, List<album>> albums { get; set; }
         public Dictionary<string, Dictionary<string, photo>> photos { get; set; }
+
+        public Dictionary<long, List<video>> videos { get; set; }
+        public Dictionary<long, string> thumbVideos { get; set; }
+
+      
 
         public enum MsgFolder
         {
@@ -900,6 +906,68 @@ namespace EIP
             }
         }
 
+        //////////////////////////////////////////////////////
+        /////////               Vidéos              //////////
+        //////////////////////////////////////////////////////
+
+        public delegate void GetVideosCompleted(List<video> videos, long uid);
+        public event GetVideosCompleted GetVideosCalled;
+
+
+        private void GetVideos(long uid)
+        {
+            if (this.videos.ContainsKey(uid))
+            {
+                if (this.GetVideosCalled != null)
+                    this.GetVideosCalled.Invoke(this.videos[uid], uid);
+            }
+            else
+                this.facebookAPI.Fql.QueryAsync("SELECT vid, owner, title, description, thumbnail_link, embed_html, updated_time, created_time FROM video WHERE owner=" + uid, new Fql.QueryCallback(GetVideos_completed), uid);
+        }
+
+        private void GetVideos_completed(string result, object uid, FacebookException ex)
+        {
+            List<video> vids = new List<video>();
+
+            using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(result)))
+            {
+                do
+                {
+                    try
+                    {
+                        video vid = new video();
+                        
+                        reader.ReadToFollowing("vid");
+                        vid.vid = reader.ReadElementContentAsLong();
+                        reader.ReadToFollowing("title");
+                        vid.title = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("description");
+                        vid.description = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("src");
+                        vid.link = reader.ReadElementContentAsString();
+
+                        vids.Add(vid);
+                        
+                        reader.ReadToFollowing("thumbnail_link");
+                        thumbVideos[vid.vid] = reader.ReadElementContentAsString();
+                    }
+                    catch (Exception e)
+                    {
+                        break;
+                    }
+                } while (!reader.EOF);
+            }
+
+
+            if (vids.Count > 0)
+            {
+                this.videos[(long)uid] = vids;
+
+                if (this.GetVideosCalled != null)
+                    this.GetVideosCalled.Invoke(vids, (long)uid);
+            }
+
+        }
         
 
         

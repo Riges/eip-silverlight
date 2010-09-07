@@ -65,7 +65,7 @@ namespace EIP.Views.Controls
             else
                 summary.Visibility = System.Windows.Visibility.Collapsed;
             personText.Text = th.getAuthorName();
-            person.NavigateUri = new Uri("/Profil/" + th.getAuthorAccountID() + "/Account/" + th.accountID + "/tab/Photos", UriKind.Relative); // TODO : url profil
+            person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
             date.Text = th.date.ToString();
         }
 

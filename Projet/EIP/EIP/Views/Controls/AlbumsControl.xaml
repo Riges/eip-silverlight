@@ -10,11 +10,11 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
 
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <vm:InCoverFlowContentControlSampleData />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     <UserControl.Resources>
-        <Style TargetType="fl:FlowItem3D" x:Key="empty3D">
+        <!--<Style TargetType="fl:FlowItem3D" x:Key="empty3D">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="fl:FlowItem3D">
@@ -22,47 +22,47 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-        <DataTemplate x:Key="itemTemplate" >
-            <!--Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}"-->
+        </Style>-->
+        <!--<DataTemplate x:Key="itemTemplate" >
+            
             <fl:InFlowContentControl   Width="250" Height="250" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
                 <fl:InFlowContentControl.HeadingTemplate>
                     <DataTemplate>
 
-                        <!--<TextBlock Text="{Binding name}"></TextBlock>-->
-                        <!--<HyperlinkButton Content="{Binding name}"  NavigateUri="{StaticResource uri}"></HyperlinkButton>-->
+
                         <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>
 
                     </DataTemplate>
                 </fl:InFlowContentControl.HeadingTemplate>
                 <fl:InFlowContentControl.ContentTemplate>
                     <DataTemplate>
-                        <!--<StackPanel>
-                    <TextBlock HorizontalAlignment="Center">IMG</TextBlock>
-                    <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
-                </StackPanel>-->
+
 
                         <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
                     </DataTemplate>
                 </fl:InFlowContentControl.ContentTemplate>
             </fl:InFlowContentControl>
 
-        </DataTemplate>
+        </DataTemplate>-->
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
     <Grid.RowDefinitions>
-        <RowDefinition Height="*"></RowDefinition>
-    </Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
 
-    <fl:FlowItemsControl3D Grid.Row="0" Name="flowControl" ItemsSource="{Binding}"  >
+            <RowDefinition Height="Auto"></RowDefinition>
+    </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0">kikoo</TextBlock>
+        <fl:FlowItemsControl3D Grid.Row="1" Name="flowControl" ItemsSource="{Binding}"  >
             <!--ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
-                        <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>
-                    </StackPanel>
+                    <TextBlock>toto</TextBlock>
+                    <!--<StackPanel>
+                        <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top" ></Controls:AlbumControl>
+                        <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" ></Controls:HeaderLinkAlbum>
+                    </StackPanel>-->
+                    
                 </DataTemplate>
             </fl:FlowItemsControl3D.ItemTemplate>
 
