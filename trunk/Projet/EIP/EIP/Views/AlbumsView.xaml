@@ -44,16 +44,19 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <fl:FlowItemsControl3D Grid.Row="0" Name="flowControl" ItemsSource="{Binding}"  >
+        <TextBlock Name="PseudoUser" Grid.Row="0" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
+
+        <fl:FlowItemsControl3D Grid.Row="1" Name="flowControl" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center"  >
             <!--ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
-                        <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>
+                        <!--<Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>-->
                     </StackPanel>
                 </DataTemplate>
             </fl:FlowItemsControl3D.ItemTemplate>

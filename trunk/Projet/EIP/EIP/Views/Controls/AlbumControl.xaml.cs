@@ -41,8 +41,10 @@ namespace EIP.Views.Controls
                         {
                             if (accountFB.photos[this.album.aid][this.album.cover_pid] != null)
                             {
-                                imgAlbum.Source = new BitmapImage(new Uri(accountFB.photos[this.album.aid][this.album.cover_pid].src_big, UriKind.Absolute)); ;
+                                imgAlbum.Source = new BitmapImage(new Uri(accountFB.photos[this.album.aid][this.album.cover_pid].src_big, UriKind.Absolute));
                             }
+                            this.uri.Content = this.album.name;
+                            this.uri.NavigateUri = new Uri("/Album/" + this.album.aid + "/uid/" + this.album.owner + "/Account/" + accountFB.account.accountID, UriKind.Relative);
                         }
                     }
                 }

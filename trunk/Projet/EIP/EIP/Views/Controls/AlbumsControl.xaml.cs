@@ -45,17 +45,21 @@ namespace EIP.Views.Controls
 
                 AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[accountID];
                 if (account.selected)
-                account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
-                account.GetAlbums(uid);
+                {
+                    account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
+                    account.GetAlbums(uid);
+                }
             }
 
         }
 
-          private void AlbumsView_GetAlbumsCalled(List<album> albums)
+        private void AlbumsView_GetAlbumsCalled(List<album> albums)
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
                     flowControl.DataContext = albums;
+                    //flowControl.ItemsSource = albums;
+                    
                 });
         }
 

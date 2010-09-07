@@ -11,45 +11,18 @@
            Title="AlbumView Page">
 
 
-    <navigation:Page.Resources>
-        <!--<Style TargetType="fl:FlowItem3D" x:Key="empty3D">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="fl:FlowItem3D">
-                        <ContentPresenter />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-        <DataTemplate x:Key="itemTemplate" >
-            <!--Background="{Binding Brush}" HeadingBackground="{Binding HeaderBrush}"-->
-            <fl:InFlowContentControl   Width="500" Height="500" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
-                <fl:InFlowContentControl.HeadingTemplate>
-                    <DataTemplate>
-
-                        <!--<HyperlinkButton Content="{Binding name}"></HyperlinkButton>-->
-
-                    </DataTemplate>
-                </fl:InFlowContentControl.HeadingTemplate>
-                <fl:InFlowContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <!--<StackPanel>
-                    <TextBlock HorizontalAlignment="Center">IMG</TextBlock>
-                    <TextBlock HorizontalAlignment="Center">NOM ALBUM</TextBlock>
-                </StackPanel>-->
-                        <Controls:PhotoControl x:Name="photoItem"  VerticalAlignment="Top"></Controls:PhotoControl>
-                    </DataTemplate>
-                </fl:InFlowContentControl.ContentTemplate>
-            </fl:InFlowContentControl>
-
-        </DataTemplate>
-    </navigation:Page.Resources>
-
 
 
     <Grid x:Name="LayoutRoot">
 
-        <fl:FlowItemsControl3D Name="flowControl" ItemsSource="{Binding}"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="PseudoUser" Grid.Row="0"  FontSize="22" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
+
+        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="1" ItemsSource="{Binding}"  >
             <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>

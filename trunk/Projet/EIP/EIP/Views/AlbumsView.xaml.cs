@@ -56,9 +56,26 @@ namespace EIP.Views
 
                 AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[this.accountID];
                 if (account.selected)
-                account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
-                account.GetAlbums(this.uid);
+                {
+                    account.GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumsView_GetAlbumsCalled);
+                    account.GetAlbums(this.uid);
+
+                    account.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
+                    account.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
+
+                } 
             }
+        }
+
+        void acc_GetUserInfoCalled(user monUser)
+        {
+            Dispatcher.BeginInvoke(() =>
+                {
+                    if (monUser != null)
+                    {
+                        PseudoUser.Text = monUser.name;
+                    }
+                });
         }
 
 
