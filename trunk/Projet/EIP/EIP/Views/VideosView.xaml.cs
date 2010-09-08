@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using EIP.Views.Controls;
 using Facebook.Schema;
+using EIP.Objects;
 
 namespace EIP.Views
 {
@@ -63,7 +64,7 @@ namespace EIP.Views
             }
         }
 
-        void account_GetVideosCalled(List<Facebook.Schema.video> videos, long uid)
+        void account_GetVideosCalled(List<VideoLight> videos, long uid)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {

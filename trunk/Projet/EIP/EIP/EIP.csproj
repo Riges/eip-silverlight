@@ -112,6 +112,7 @@
     <Compile Include="Objects\Topic.cs" />
     <Compile Include="Objects\TopicFB.cs" />
     <Compile Include="Objects\Utils.cs" />
+    <Compile Include="Objects\VideoLight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ServiceEIP\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -203,6 +204,9 @@
     <Compile Include="Views\Controls\UserInfos.xaml.cs">
       <DependentUpon>UserInfos.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\VideoControl.xaml.cs">
+      <DependentUpon>VideoControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuMessagesBox.xaml.cs">
       <DependentUpon>MenuMessagesBox.xaml</DependentUpon>
     </Compile>
@@ -245,8 +249,8 @@
     <Compile Include="Views\StreamFeeds.xaml.cs">
       <DependentUpon>StreamFeeds.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\videosView.xaml.cs">
-      <DependentUpon>videosView.xaml</DependentUpon>
+    <Compile Include="Views\VideosView.xaml.cs">
+      <DependentUpon>VideosView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WaitLoad.xaml.cs">
       <DependentUpon>WaitLoad.xaml</DependentUpon>
@@ -372,6 +376,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\VideoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MenuMessagesBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -426,7 +434,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\videosView.xaml">
+    <Page Include="Views\VideosView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
