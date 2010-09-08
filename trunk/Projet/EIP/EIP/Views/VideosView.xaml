@@ -1,0 +1,39 @@
+﻿<navigation:Page x:Class="EIP.Views.VideosView" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
+           xmlns:vm="clr-namespace:EIP.Showroom.ViewModels"                 
+           xmlns:Controls="clr-namespace:EIP.Views.Controls"
+           mc:Ignorable="d"
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           d:DesignWidth="640" d:DesignHeight="480"
+           Title="videosView Page">
+    <Grid x:Name="LayoutRoot">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="PseudoUser" Grid.Row="0" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
+
+        <fl:FlowItemsControl3D Grid.Row="1" Name="flowControl" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center"  >
+            <!--ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
+            <fl:FlowItemsControl3D.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
+                        <!--<Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>-->
+                    </StackPanel>
+                </DataTemplate>
+            </fl:FlowItemsControl3D.ItemTemplate>
+
+            <fl:FlowItemsControl3D.LayoutAlgorithm>
+                <vm:SimpleCarouselAlgorithm />
+            </fl:FlowItemsControl3D.LayoutAlgorithm>
+        </fl:FlowItemsControl3D>
+        
+    </Grid>
+</navigation:Page>

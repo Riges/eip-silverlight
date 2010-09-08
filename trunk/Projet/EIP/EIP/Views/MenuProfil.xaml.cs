@@ -85,14 +85,17 @@ namespace EIP.Views
 
         private void infosBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/ProfilInfos/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));
-           
+            this.NavigationService.Navigate(new Uri("/ProfilInfos/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));          
         }
 
         private void photosBtn_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/ProfilPhotos/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));
+        }
 
+        private void videosBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/ProfilVideos/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));
         }
 
 
