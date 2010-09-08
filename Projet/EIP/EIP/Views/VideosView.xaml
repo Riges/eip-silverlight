@@ -24,7 +24,7 @@
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
+                        <Controls:VideoControl x:Name="videoItem"  VerticalAlignment="Top"></Controls:VideoControl>
                         <!--<Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>-->
                     </StackPanel>
                 </DataTemplate>

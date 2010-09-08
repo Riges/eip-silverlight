@@ -11,12 +11,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 using Facebook.Schema;
+using EIP.Objects;
 
 namespace EIP.Views.Controls
 {
     public partial class VideoControl : UserControl
     {
-        protected video video { get; set; }
+        protected VideoLight video { get; set; }
         public long accountID { get; set; }
         bool loaded;
 
@@ -30,19 +31,16 @@ namespace EIP.Views.Controls
         {
             if (!this.loaded)
             {
-                this.video = this.DataContext as video;
+                this.video = this.DataContext as VideoLight;
 
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
                     if (accountLight.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook)
                     {
                         AccountFacebookLight accountFB = ((AccountFacebookLight)accountLight.Value);
-                        if (accountFB.videos.ContainsKey(this.video.vid))
+                        if (accountFB.videos.ContainsKey(this.video.uid))
                         {
-                            if (accountFB.thumbVideos[this.video.vid] != null)
-                            {
-                                imgVideo.Source = new BitmapImage(new Uri(accountFB.thumbVideos[this.video.vid], UriKind.Absolute));
-                            }
+                            this.imgVideo.Source = new BitmapImage(new Uri(accountFB.videos[this.video.uid][this.video.uid].thumbnail_link, UriKind.Absolute));
                             this.uri.Content = this.video.title;
                             this.uri.NavigateUri = new Uri("/Video/" + this.video.vid + "/Account/" + accountFB.account.accountID, UriKind.Relative);
                         }

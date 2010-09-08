@@ -41,8 +41,8 @@ namespace EIP
         public Dictionary<long, List<album>> albums { get; set; }
         public Dictionary<string, Dictionary<string, photo>> photos { get; set; }
 
-        public Dictionary<long, List<video>> videos { get; set; }
-        public Dictionary<long, string> thumbVideos { get; set; }
+        public Dictionary<long, List<VideoLight>> videos { get; set; }
+        //public Dictionary<long, string> thumbVideos { get; set; }
 
       
 
@@ -68,6 +68,8 @@ namespace EIP
             this.friends = new List<user>();
             this.albums = new Dictionary<long, List<album>>();
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
+            this.videos = new Dictionary<long, List<VideoLight>>();
+            //this.thumbVideos = new Dictionary<long, string>();
 
             Connexion.dispatcher.BeginInvoke(() =>
                 {
@@ -910,11 +912,11 @@ namespace EIP
         /////////               Vidéos              //////////
         //////////////////////////////////////////////////////
 
-        public delegate void GetVideosCompleted(List<video> videos, long uid);
+        public delegate void GetVideosCompleted(List<VideoLight> videos, long uid);
         public event GetVideosCompleted GetVideosCalled;
 
 
-        private void GetVideos(long uid)
+        public void GetVideos(long uid)
         {
             if (this.videos.ContainsKey(uid))
             {
@@ -922,12 +924,12 @@ namespace EIP
                     this.GetVideosCalled.Invoke(this.videos[uid], uid);
             }
             else
-                this.facebookAPI.Fql.QueryAsync("SELECT vid, owner, title, description, thumbnail_link, embed_html, updated_time, created_time FROM video WHERE owner=" + uid, new Fql.QueryCallback(GetVideos_completed), uid);
+                this.facebookAPI.Fql.QueryAsync("SELECT vid, owner, title, description, thumbnail_link, updated_time, created_time, src, src_hq FROM video WHERE owner=" + uid, new Fql.QueryCallback(GetVideos_completed), uid);
         }
 
         private void GetVideos_completed(string result, object uid, FacebookException ex)
         {
-            List<video> vids = new List<video>();
+            List<VideoLight> vids = new List<VideoLight>();
 
             using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(result)))
             {
@@ -935,21 +937,35 @@ namespace EIP
                 {
                     try
                     {
-                        video vid = new video();
+                        VideoLight vid = new VideoLight();
                         
                         reader.ReadToFollowing("vid");
                         vid.vid = reader.ReadElementContentAsLong();
+
                         reader.ReadToFollowing("title");
                         vid.title = reader.ReadElementContentAsString();
+
                         reader.ReadToFollowing("description");
                         vid.description = reader.ReadElementContentAsString();
+
+                        reader.ReadToFollowing("thumbnail_link");
+                        vid.thumbnail_link = reader.ReadElementContentAsString();
+
+                        reader.ReadToFollowing("updated_time");
+                        vid.updated_time = reader.ReadElementContentAsString();
+
+                        reader.ReadToFollowing("created_time");
+                        vid.created_time = reader.ReadElementContentAsString();
+
                         reader.ReadToFollowing("src");
-                        vid.link = reader.ReadElementContentAsString();
+                        vid.src = reader.ReadElementContentAsString();
+
+                        reader.ReadToFollowing("src_hq");
+                        vid.src_hq = reader.ReadElementContentAsString();
+
+                        
 
                         vids.Add(vid);
-                        
-                        reader.ReadToFollowing("thumbnail_link");
-                        thumbVideos[vid.vid] = reader.ReadElementContentAsString();
                     }
                     catch (Exception e)
                     {

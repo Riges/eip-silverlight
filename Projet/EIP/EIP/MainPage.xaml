@@ -86,14 +86,16 @@
                         <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
                         <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/EmptyPage.xaml" />
                         <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/EmptyPage.xaml" />
-                        <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}/tab/{tab}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}&amp;tab={tab}" />
+                        <!--<uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}/tab/{tab}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}&amp;tab={tab}" />-->
                         <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
 
                         <uriMapper:UriMapping Uri="/ProfilInfos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilPhotos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
+                        <uriMapper:UriMapping Uri="/ProfilVideos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
 
 
-                        <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/ProfEmptyPageilPage.xaml" />
+
+                        <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/EmptyPage.xaml" />
                         <uriMapper:UriMapping Uri="/Album/{aid}/uid/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/Albums/{userid}/Account/{accid}" MappedUri="/Views/EmptyPage.xaml" />
                             
@@ -131,11 +133,11 @@
                         <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
                         <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
                             
-                        <uriMapper:UriMapping Uri="/ProfilPhotos/{userid}/Account/{accid}/" MappedUri="/Views/AlbumsView.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}" MappedUri="/Views/ProfilPage.xaml?uid={userid}&amp;accid={accid}" />
-
+                            
                         <uriMapper:UriMapping Uri="/ProfilInfos/{userid}/Account/{accid}" MappedUri="/Views/ProfilInfos.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilPhotos/{userid}/Account/{accid}" MappedUri="/Views/AlbumsView.xaml?uid={userid}&amp;accid={accid}" />
+                        <uriMapper:UriMapping Uri="/ProfilVideos/{userid}/Account/{accid}" MappedUri="/Views/VideosView.xaml?uid={userid}&amp;accid={accid}" />
 
                         <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/ProfilPage.xaml" />
                         <uriMapper:UriMapping Uri="/Album/{aid}/uid/{userid}/Account/{accid}" MappedUri="/Views/AlbumView.xaml?aid={aid}&amp;uid={userid}&amp;accid={accid}" />
