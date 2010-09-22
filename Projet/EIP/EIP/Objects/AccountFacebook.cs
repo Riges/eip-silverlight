@@ -41,7 +41,7 @@ namespace EIP
         public Dictionary<long, List<album>> albums { get; set; }
         public Dictionary<string, Dictionary<string, photo>> photos { get; set; }
 
-        public Dictionary<long, List<VideoLight>> videos { get; set; }
+        public Dictionary<long, Dictionary<long, VideoLight>> videos { get; set; }
         //public Dictionary<long, string> thumbVideos { get; set; }
 
       
@@ -68,7 +68,7 @@ namespace EIP
             this.friends = new List<user>();
             this.albums = new Dictionary<long, List<album>>();
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
-            this.videos = new Dictionary<long, List<VideoLight>>();
+            this.videos = new Dictionary<long, Dictionary<long, VideoLight>>();
             //this.thumbVideos = new Dictionary<long, string>();
 
             Connexion.dispatcher.BeginInvoke(() =>
@@ -912,7 +912,7 @@ namespace EIP
         /////////               Vidéos              //////////
         //////////////////////////////////////////////////////
 
-        public delegate void GetVideosCompleted(List<VideoLight> videos, long uid);
+        public delegate void GetVideosCompleted(Dictionary<long, VideoLight> videos, long uid);
         public event GetVideosCompleted GetVideosCalled;
 
 
@@ -941,6 +941,8 @@ namespace EIP
                         
                         reader.ReadToFollowing("vid");
                         vid.vid = reader.ReadElementContentAsLong();
+
+                        vid.uid = Convert.ToInt32(uid);
 
                         reader.ReadToFollowing("title");
                         vid.title = reader.ReadElementContentAsString();
@@ -977,10 +979,14 @@ namespace EIP
 
             if (vids.Count > 0)
             {
-                this.videos[(long)uid] = vids;
+                foreach (VideoLight vid in vids)
+                {
+                    this.videos[(long)uid] = new Dictionary<long, VideoLight>();
+                    this.videos[(long)uid][vid.vid] = vid;
+                }
 
                 if (this.GetVideosCalled != null)
-                    this.GetVideosCalled.Invoke(vids, (long)uid);
+                    this.GetVideosCalled.Invoke(this.videos[(long)uid], (long)uid);
             }
 
         }
