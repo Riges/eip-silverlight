@@ -64,11 +64,12 @@ namespace EIP.Views
             }
         }
 
-        void account_GetVideosCalled(List<VideoLight> videos, long uid)
+        void account_GetVideosCalled(Dictionary<long, VideoLight> videos, long uid)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                flowControl.DataContext = videos;
+
+                flowControl.DataContext = videos.Values.ToList();
             });
         }
 

@@ -40,9 +40,9 @@ namespace EIP.Views.Controls
                         AccountFacebookLight accountFB = ((AccountFacebookLight)accountLight.Value);
                         if (accountFB.videos.ContainsKey(this.video.uid))
                         {
-                            this.imgVideo.Source = new BitmapImage(new Uri(accountFB.videos[this.video.uid][this.video.uid].thumbnail_link, UriKind.Absolute));
+                            this.imgVideo.Source = new BitmapImage(new Uri(this.video.thumbnail_link, UriKind.Absolute));
                             this.uri.Content = this.video.title;
-                            this.uri.NavigateUri = new Uri("/Video/" + this.video.vid + "/Account/" + accountFB.account.accountID, UriKind.Relative);
+                            this.uri.NavigateUri = new Uri("/Video/" + this.video.vid + "/uid/" + this.video.uid + "/Account/" + accountFB.account.accountID, UriKind.Relative);
                         }
                     }
                 }
