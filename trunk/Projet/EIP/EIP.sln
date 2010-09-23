@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIPWCF", "EIPWCF\EIPWCF.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIPLibrary", "EIPLibrary\EIPLibrary.csproj", "{10F3BBD2-119F-4F56-803F-05966756C028}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlayer", "MediaControl\MediaPlayer.csproj", "{048A7D4F-483C-41E5-9705-6F4B31A17DA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{10F3BBD2-119F-4F56-803F-05966756C028}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10F3BBD2-119F-4F56-803F-05966756C028}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10F3BBD2-119F-4F56-803F-05966756C028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{048A7D4F-483C-41E5-9705-6F4B31A17DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{048A7D4F-483C-41E5-9705-6F4B31A17DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{048A7D4F-483C-41E5-9705-6F4B31A17DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{048A7D4F-483C-41E5-9705-6F4B31A17DA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
