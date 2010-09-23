@@ -93,6 +93,8 @@
                         <uriMapper:UriMapping Uri="/ProfilPhotos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilVideos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
 
+                        <uriMapper:UriMapping Uri="/Video/{vid}/uid/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
+
 
 
                         <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/EmptyPage.xaml" />
@@ -138,6 +140,8 @@
                         <uriMapper:UriMapping Uri="/ProfilInfos/{userid}/Account/{accid}" MappedUri="/Views/ProfilInfos.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilPhotos/{userid}/Account/{accid}" MappedUri="/Views/AlbumsView.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilVideos/{userid}/Account/{accid}" MappedUri="/Views/VideosView.xaml?uid={userid}&amp;accid={accid}" />
+
+                        <uriMapper:UriMapping Uri="/Video/{vid}/uid/{uid}/Account/{accid}" MappedUri="/Views/VideoView.xaml?vid={vid}&amp;uid={uid}&amp;accid={accid}" />
 
                         <uriMapper:UriMapping Uri="/Profil" MappedUri="/Views/ProfilPage.xaml" />
                         <uriMapper:UriMapping Uri="/Album/{aid}/uid/{userid}/Account/{accid}" MappedUri="/Views/AlbumView.xaml?aid={aid}&amp;uid={userid}&amp;accid={accid}" />

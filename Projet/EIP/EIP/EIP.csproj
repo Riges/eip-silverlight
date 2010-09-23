@@ -144,6 +144,9 @@
     <Compile Include="Views\Controls\AlbumsControl.xaml.cs">
       <DependentUpon>AlbumsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ClosedCaptionOk.xaml.cs">
+      <DependentUpon>ClosedCaptionOk.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\Com.xaml.cs">
       <DependentUpon>Com.xaml</DependentUpon>
     </Compile>
@@ -252,6 +255,9 @@
     <Compile Include="Views\VideosView.xaml.cs">
       <DependentUpon>VideosView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VideoView.xaml.cs">
+      <DependentUpon>VideoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WaitLoad.xaml.cs">
       <DependentUpon>WaitLoad.xaml</DependentUpon>
     </Compile>
@@ -293,6 +299,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Controls\AlbumsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ClosedCaptionOk.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -438,6 +448,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\VideoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WaitLoad.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -519,6 +533,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceEIP\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MediaControl\MediaPlayer.csproj">
+      <Project>{048A7D4F-483C-41E5-9705-6F4B31A17DA2}</Project>
+      <Name>MediaPlayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
