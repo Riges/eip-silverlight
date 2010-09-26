@@ -179,7 +179,6 @@ namespace EIP.Views
                 else
                     _cc.Visibility = Visibility.Collapsed;
             }
-
         }
         void mediaControls_MediaCompleted(object sender, EventArgs e)
         {
