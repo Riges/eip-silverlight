@@ -64,6 +64,9 @@ namespace EIPWCF
 
         [OperationContract]
         bool SendTweet(string token, string tokenSecret, string tweet);
+
+        [OperationContract]
+        TwitterUser GetUserInfos(string token, string tokenSecret, int userId);
      
 
         /*[OperationContract]

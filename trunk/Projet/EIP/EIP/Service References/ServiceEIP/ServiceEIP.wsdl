@@ -87,11 +87,11 @@
   <wsdl:message name="IServiceEIP_SendTweet_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendTweetResponse" />
   </wsdl:message>
-  <wsdl:message name="IServiceEIP_GetUserByMail_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetUserByMail" />
+  <wsdl:message name="IServiceEIP_GetUserInfos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfos" />
   </wsdl:message>
-  <wsdl:message name="IServiceEIP_GetUserByMail_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetUserByMailResponse" />
+  <wsdl:message name="IServiceEIP_GetUserInfos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserInfosResponse" />
   </wsdl:message>
   <wsdl:portType name="IServiceEIP">
     <wsdl:operation name="IsUp">
@@ -146,9 +146,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/SendTweet" message="tns:IServiceEIP_SendTweet_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/SendTweetResponse" message="tns:IServiceEIP_SendTweet_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetUserByMail">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetUserByMail" message="tns:IServiceEIP_GetUserByMail_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetUserByMailResponse" message="tns:IServiceEIP_GetUserByMail_OutputMessage" />
+    <wsdl:operation name="GetUserInfos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetUserInfos" message="tns:IServiceEIP_GetUserInfos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetUserInfosResponse" message="tns:IServiceEIP_GetUserInfos_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceEIP" type="tns:IServiceEIP">
@@ -270,8 +270,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUserByMail">
-      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetUserByMail" style="document" />
+    <wsdl:operation name="GetUserInfos">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetUserInfos" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -201,6 +201,9 @@
     <Compile Include="Views\Controls\PhotoControl.xaml.cs">
       <DependentUpon>PhotoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\UnCompte.xaml.cs">
+      <DependentUpon>UnCompte.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\UpdateStatus.xaml.cs">
       <DependentUpon>UpdateStatus.xaml</DependentUpon>
     </Compile>
@@ -375,6 +378,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\PhotoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\UnCompte.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

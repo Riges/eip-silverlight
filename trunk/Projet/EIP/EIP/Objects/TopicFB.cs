@@ -18,15 +18,15 @@ namespace EIP.Objects
     public class TopicFB
     {
         public stream_post post { get; set; }
-        public user userSource { get; set; }
-        public user userTarget { get; set; }
+        public profile userSource { get; set; }
+        public profile userTarget { get; set; }
 
         public TopicFB()
         {
 
         }
 
-        public TopicFB(stream_post aPost, user aUserSource, user aUserTarget)
+        public TopicFB(stream_post aPost, profile aUserSource, profile aUserTarget)
         {
             this.post = aPost;
             this.userSource = aUserSource;

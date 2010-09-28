@@ -69,6 +69,7 @@ namespace EIP
             this.albums = new Dictionary<long, List<album>>();
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
             this.videos = new Dictionary<long, Dictionary<long, VideoLight>>();
+            this.profiles = new List<profile>();
             //this.thumbVideos = new Dictionary<long, string>();
 
             Connexion.dispatcher.BeginInvoke(() =>
@@ -365,7 +366,8 @@ namespace EIP
         }
 
 
-
+        public delegate void OnLoadFeedsCompleted();
+        public event OnLoadFeedsCompleted LoadFeedsCalled;
 
         /// <summary>
         /// Méthode pour charger la liste des feeds correspondant au filtre passé en paramètre.
@@ -382,9 +384,6 @@ namespace EIP
             }
             if(!busy)
                 this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
-
-            
-            //this.facebookAPI.Application.GetPublicInfoAsync(6628568379, "3e7c78e35a76a9299309885393b02d97", null, new Facebook.Rest.Application.GetPublicInfoCallback(test), null);
         }
 
         /*
@@ -403,50 +402,78 @@ namespace EIP
         {
             this.busy = true;
             bool needUpdate = true;
-
            
             if(this.feeds.ContainsKey(filtre.ToString()))
             {
                 if(this.feeds[filtre.ToString()].Count > 0)
                     if (data.posts.stream_post[0].post_id == this.feeds[filtre.ToString()][0].fb_post.post.post_id)
                         needUpdate = false;
-                //fb_topics.Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, post));
             }
-
-
 
             if(needUpdate)
             {
                 this.feeds[filtre.ToString()] = new List<Topic>();
 
 
-                List<long> userIds = new List<long>();
+                //List<long> userIds = new List<long>();
 
-                profiles = data.profiles.profile;
+                profiles.AddRange(data.profiles.profile);
+
 
                 foreach (stream_post post in data.posts.stream_post)
                 {
-                    //this.facebookAPI.Users.GetInfoAsync(post.source_id, new Users.GetInfoCallback(GetUser_Completed), post);
+                    profile userSource = null;
+                    profile userTarget = null;
+                    foreach (profile unUser in profiles)
+                    {                     
+                        if (post.actor_id > 0 && post.actor_id != post.source_id)
+                        {
+                            if (post.actor_id == unUser.id)
+                                userSource = unUser;
+                            if (post.source_id == unUser.id)
+                                userTarget = unUser;
+                        }
+                        else
+                        {
+                            if (post.source_id == unUser.id)
+                                userSource = unUser;
+                        }
+                    }
+                    TopicFB topicFB = new TopicFB(post, userSource, userTarget);
+                    DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                    dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
+                    this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
+                }
 
+                if (this.feeds.ContainsKey(filtre.ToString()) && this.feeds[filtre.ToString()].Count > 0)
+                {
+                    Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre.ToString()];
+                    if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
+                        this.LoadFeedsCalled.Invoke();
+                }
+
+                //LoadStreamFeedsContext(filtre.ToString());
+
+                /*
+                foreach (stream_post post in data.posts.stream_post)
+                {
                     if (post.actor_id > 0 && post.actor_id != post.source_id)
                         if (!userIds.Contains(post.actor_id))
                             userIds.Add((long)post.actor_id);
 
                     if(!userIds.Contains(post.source_id))
                         userIds.Add(post.source_id);
-                    
                 }
-                 
-
-
+                
                 this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUsers_Completed), data.posts.stream_post);
+                 * */
             }
             else
                 this.busy = false;
         }
 
-        
 
+        /*
         private void GetUsers_Completed(IList<user> users, object data, FacebookException ex)
         {
             if (users != null)
@@ -482,29 +509,7 @@ namespace EIP
                 }
             this.busy = false;
         }
-        /*
-        private void GetUser_Completed(IList<user> users, object o, FacebookException ex)
-        {
-            //stream_post post = (stream_post)o;
-            if (users != null)
-                if (users.Count > 0)
-                {
-                    stream_post post = (stream_post)o;
-                    TopicFB topicFB = new TopicFB(post, users[0]);
-                    DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                    dateTime = dateTime.AddSeconds(post.updated_time).AddHours(1);
-                    this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.userID, topicFB));
-
-                    LoadStreamFeedsContext(post.filter_key);
-                    //
-                    //if (streamFeeds != null && this.feeds[post.filter_key].Count >= 30)
-                    //{
-                    //    streamFeeds.allTopics[this.account.userID.ToString()] = this.feeds[post.filter_key];
-                    //    streamFeeds.LoadContext();
-                    //}
-                }
-        }*/
-
+        */
 
         /// <summary>
         /// Met à jour l'affichage avec les feeds récupérés
@@ -512,53 +517,25 @@ namespace EIP
         /// <param name="filtre"></param>
         private void LoadStreamFeedsContext(string filtre)
         {
-           /* if (this.feeds.ContainsKey(filtre))
-                if (streamFeeds != null && this.feeds[filtre].Count >= 1)
-                {
-                    Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
-                    streamFeeds.LoadContext();
-                }
-            */
-            if (streamFeeds != null && this.feeds.ContainsKey(filtre) && this.feeds[filtre].Count > 0)
+            if (this.feeds.ContainsKey(filtre) && this.feeds[filtre].Count > 0)
             {
-                /*List<Topic> f_topics = null;
-                if (checkLast)
-                {
-                    if (Connexion.allTopics.ContainsKey(this.account.userID.ToString()))
-                        f_topics = (List<Topic>)Connexion.allTopics[this.account.userID.ToString()];
-                    if (f_topics != null && f_topics.Count > 0)
-                    {
-
-                        stream_post last = f_topics[0].fb_post.post;
-                        if ((last.post_id != this.feeds[filtre][0].fb_post.post.post_id) || (last.filter_key != this.feeds[filtre][0].fb_post.post.filter_key) || first)
-                        {
-                            Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
-                            streamFeeds.LoadContext();
-                        }
-                        
-                    }
-                    else
-                    {
-                        Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
-                        streamFeeds.LoadContext();
-                       
-                    }
-                }
-                else
-                {*/
-                    Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
-                    streamFeeds.LoadContext();
-                //}
+                Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
+                if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
+                    this.LoadFeedsCalled.Invoke();
             }
         }
 
-        public void LoadFilters(LeftMenu menuFeeds)
+        public delegate void OnLoadFiltersCompleted(long accounID, List<stream_filter> filters);
+        public event OnLoadFiltersCompleted LoadFiltersCalled;
+
+        public void LoadFilters()
         {
-            this.menuFeeds = menuFeeds;
+            //this.menuFeeds = menuFeeds;
             if (this.filters == null)
                 this.facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), menuFeeds);
             else
-                menuFeeds.LoadFilters(this);
+                if (this.LoadFiltersCalled != null)//evite que ca plante si pas dabo
+                    this.LoadFiltersCalled.Invoke(this.account.accountID, this.filters);
         }
 
         private void GetFiltersCompleted(IList<stream_filter> filtres, object o, FacebookException ex)
@@ -566,7 +543,8 @@ namespace EIP
             if (filtres != null)
             {
                 this.filters = filtres as List<stream_filter>;
-                menuFeeds.LoadFilters(this);
+                if (this.LoadFiltersCalled != null)//evite que ca plante si pas dabo
+                    this.LoadFiltersCalled.Invoke(this.account.accountID, this.filters);
             }
         }
 

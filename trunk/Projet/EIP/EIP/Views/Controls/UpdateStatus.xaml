@@ -18,8 +18,18 @@
             <ColumnDefinition Width="25*"></ColumnDefinition>
             <ColumnDefinition Width="25*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
         
-        <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <Popup>
+            
+            
+        </Popup>   
+
+   
+
+
+
+            <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <TextBox Name="statuValue" Width="280" Margin="5 0"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="4" Name="NetworkStackPanel" Orientation="Horizontal">

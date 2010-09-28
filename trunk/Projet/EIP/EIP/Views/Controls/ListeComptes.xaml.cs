@@ -99,7 +99,11 @@ namespace EIP.Views.Controls
 
                         foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                         {
-                           
+                            UnCompte compte = new UnCompte(oneAccount.Value);
+                            compte.Margin = new Thickness(0, 0, 0, 5);
+
+                            LayoutPanel.Children.Add(compte);
+                           /*
                             StackPanel panel = new StackPanel();
                             panel.Orientation = Orientation.Horizontal;
                             
@@ -183,7 +187,8 @@ namespace EIP.Views.Controls
                             
 
                             LayoutPanel.Children.Add(panel);
-                              
+                            * 
+                            * */                              
                         }
 
                     });

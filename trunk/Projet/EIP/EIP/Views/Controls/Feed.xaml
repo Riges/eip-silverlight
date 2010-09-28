@@ -40,12 +40,24 @@
             <ColumnDefinition Width="75*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"  Margin="0,5,0,5" HorizontalAlignment="Right" >
+        
+        <!--<Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"  Margin="0,5,5,5" HorizontalAlignment="Right" >
                 <Image.Projection>
                     <PlaneProjection  RotationY="-35" CenterOfRotationX="0"  />
                 </Image.Projection>
-        </Image>
-        
+        </Image>-->
+
+        <Border CornerRadius="20" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="3" Width="100" Height="100" Grid.RowSpan="3" Grid.Column="0" Margin="0,5,20,5" HorizontalAlignment="Right">
+            <Border.Background>
+                <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
+                    <ImageBrush.ImageSource>
+                        <BitmapImage x:Name="picUser" >
+                        </BitmapImage>
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </Border.Background>
+        </Border>
+
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
             <Image Name="imgCpt" Width="16"></Image>
             <HyperlinkButton  Name="nameUser" Margin="5,0,0,0" Style="{StaticResource HyperlinkButtonStyle}"></HyperlinkButton>
@@ -62,10 +74,10 @@
             <TextBlock Name="dateTimeFeed"></TextBlock>
             <TextBlock Margin="3,0,0,0" Name="viaAppliText" Visibility="Collapsed">via</TextBlock>
             <HyperlinkButton Style="{StaticResource HyperlinkButtonStyle}" Margin="3,0,0,0" Name="viaAppli" Visibility="Collapsed"></HyperlinkButton>
-            <Control:jaime Margin="3,0,0,0" x:Name="jaimeButton"></Control:jaime>
+            <Control:jaime Margin="3,5,0,0" x:Name="jaimeButton"></Control:jaime>
         </StackPanel>
 
-        <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" x:Name="comsControl" Width="600" HorizontalAlignment="Center" VerticalAlignment="Stretch" ></Control:Coms>
+        <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" Margin="0,5,0,0" x:Name="comsControl" Width="600" HorizontalAlignment="Center" VerticalAlignment="Stretch" ></Control:Coms>
         
         
         <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
