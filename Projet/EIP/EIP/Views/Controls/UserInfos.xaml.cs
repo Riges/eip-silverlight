@@ -30,8 +30,7 @@ namespace EIP.Views.Controls
         }
 
         private void LoadInfos(long accountID, long uid)
-        {
-            
+        {  
             switch (Connexion.accounts[accountID].account.typeAccount)
             {
                 case EIP.ServiceEIP.Account.TypeAccount.Facebook:
@@ -87,6 +86,7 @@ namespace EIP.Views.Controls
                         }
                         else
                         {
+                            this.interesse.Children.Clear();
                             foreach (string sex in monUser.meeting_sex.sex)
                             {
                                 TextBlock txtBlock = new TextBlock();
@@ -104,6 +104,7 @@ namespace EIP.Views.Controls
                         }
                         else
                         {
+                            this.recherche.Children.Clear();
                             foreach (string seek in monUser.meeting_for.seeking)
                             {
                                 TextBlock txtBlock = new TextBlock();

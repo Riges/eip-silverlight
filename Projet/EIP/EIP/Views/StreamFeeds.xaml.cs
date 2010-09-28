@@ -97,13 +97,17 @@ namespace EIP.Views
 
                                 /*if (this.NavigationContext.QueryString.ContainsKey("filter"))
                                     filter = this.NavigationContext.QueryString["filter"];*/
+                                ((AccountFacebookLight)accountLight.Value).LoadFeedsCalled += new AccountFacebookLight.OnLoadFeedsCompleted(StreamFeeds_LoadFeedsCalled);
+
                                 if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
                                     ((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, this, true);
                                 else
                                     ((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, this, false);
                                 break;
                             case Account.TypeAccount.Twitter:
-                               
+
+                                ((AccountTwitterLight)accountLight.Value).LoadHomeStatusesCalled += new AccountTwitterLight.OnLoadHomeStatusesCompleted(StreamFeeds_LoadHomeStatusesCalled);
+
                                 if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
                                     ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this, true);
                                 else
@@ -119,8 +123,19 @@ namespace EIP.Views
             
         }
 
+        void StreamFeeds_LoadHomeStatusesCalled()
+        {
+            LoadContext();
+        }
+
+        void StreamFeeds_LoadFeedsCalled()
+        {
+            LoadContext();
+        }
+
         public void LoadContext()
         {
+            
             Dispatcher.BeginInvoke(() =>
                 {
                     topics = new List<Topic>();
@@ -135,6 +150,7 @@ namespace EIP.Views
                     ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
                     ContentPanel.Visibility = System.Windows.Visibility.Visible;
                 });
+             
         }
 
     }

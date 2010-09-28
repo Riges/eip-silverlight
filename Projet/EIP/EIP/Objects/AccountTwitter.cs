@@ -57,11 +57,7 @@ namespace EIP
             filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
 
             Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
-
-
         }
-
-
 
 
         /// <summary>
@@ -70,32 +66,20 @@ namespace EIP
         /// </summary>
         public void SendStatus(string status)
         {
-            // Send a status update with automatic URL shortening
-            /*
-            var twitter = FluentTwitter.CreateRequest()
-                 .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
-                 .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-                 .Statuses().Update(status).AsXml()
-                 .CallbackTo(StatusSended);
-            
-            twitter.RequestAsync();
-             * */
-            if (status != "")
+            if (status.Trim() != "")
             {
                 Connexion.serviceEIP.SendTweetAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, status);
             }
         }
 
 
-
-        /*void serviceEIP_SendStatusCompleted(object sender, LoadHomeStatusesCompletedEventArgs e)
-        {
-
-        }*/
-
           //********************************\\
          //*Methodes de récupération d'infos*\\
         //************************************\\
+
+
+        public delegate void OnLoadHomeStatusesCompleted();
+        public event OnLoadHomeStatusesCompleted LoadHomeStatusesCalled;
 
         /// <summary>
         /// Met à jour l'attribut "homeStatuses" (les tweets de la homepage)
@@ -107,15 +91,6 @@ namespace EIP
                 this.streamFeeds = aStreamFeeds;
                 LoadStreamFeedsContext(first);
             }
-            /*
-            var homeTimeline = FluentTwitter.CreateRequest()
-               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
-               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-               .Statuses().OnHomeTimeline().Take(10)
-               .CallbackTo(HomeTimelineReceived);
-           
-            homeTimeline.RequestAsync();
-             */
 
             Connexion.serviceEIP.LoadHomeStatusesAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret);
         }
@@ -187,15 +162,7 @@ namespace EIP
         /// </summary>
         public void LoadFriends()
         {
-            /*
-            var getFriends = FluentTwitter.CreateRequest()
-               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
-               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-               .Users().GetFriends()
-               .CallbackTo(FriendsReceived);
 
-            getFriends.RequestAsync();
-             * */
         }
 
         /// <summary>
@@ -252,7 +219,6 @@ namespace EIP
             }
         }
         */
-       
 
         private void LoadStreamFeedsContext(bool first)
         {
@@ -269,16 +235,27 @@ namespace EIP
                         if (last.Id != this.homeStatuses[0].t_post.Id)
                         {
                             Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
-                            streamFeeds.LoadContext();
+                            if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
+                                this.LoadHomeStatusesCalled.Invoke();
                         }
                     }
                     else
                     {
                         Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
-                        streamFeeds.LoadContext();
-
+                        if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
+                            this.LoadHomeStatusesCalled.Invoke();
                     }
             }
+        }
+
+
+         public delegate void OnLoadFiltersCompleted(long accountID, List<TwitterFilter> filters);
+        public event OnLoadFiltersCompleted LoadFiltersCalled;
+
+        public void LoadFilters()
+        {
+            if (this.LoadFiltersCalled != null)//evite que ca plante si pas dabo
+                this.LoadFiltersCalled.Invoke(this.account.accountID, this.filters);
         }
 
     

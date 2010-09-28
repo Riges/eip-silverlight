@@ -109,6 +109,7 @@ namespace EIPWCF
             if (!response.IsTwitterError)
             {
                 var statuses = response.AsStatuses();
+
                 return statuses;
             }
 
@@ -163,6 +164,32 @@ namespace EIPWCF
                 return true;
 
         }
+
+        public TwitterUser GetUserInfos(string token, string tokenSecret, int userId)
+        {
+            List<int> list = new List<int>();
+            list.Add(userId);
+
+            SetClientInfo();
+
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .Users().Lookup(list);
+
+            var response = query.Request();
+
+            if (!response.IsTwitterError)
+            {
+                var users = response.AsUsers();
+                if (users.Count() > 0)
+                {
+                    return users.First();
+                }
+            }
+
+            return null;
+        }
+
 
         public bool SaveAccount(Account accountToSave)
         {

@@ -40,8 +40,8 @@ namespace EIP.Views.Controls
           
             this.Loaded += new RoutedEventHandler(Feed_Loaded);
 
-            picUser.MouseEnter += new MouseEventHandler(picUser_MouseEnter);
-            picUser.MouseLeave += new MouseEventHandler(picUser_MouseLeave);
+           // picUser.MouseEnter += new MouseEventHandler(picUser_MouseEnter);
+            //picUser.MouseLeave += new MouseEventHandler(picUser_MouseLeave);
 
 
            
@@ -90,16 +90,17 @@ namespace EIP.Views.Controls
 
                             BitmapImage btImgFB = null;
 
-                            if (post.userSource.pic != null) // verif si gif
+                            if (post.userSource.pic_square != null) // verif si gif
                             {
-                                Uri uriImg = new Uri(post.userSource.pic);
-                                btImgFB = new BitmapImage(uriImg);
+                                Uri uriImg = new Uri(post.userSource.pic_square);
+                                //btImgFB = new BitmapImage(uriImg);
+
+                                picUser.UriSource = uriImg;
                             }
-                            picUser.Source = btImgFB;
                             nameUser.Content = post.userSource.name;
                             if (post.userTarget != null)
                                 nameUser.Content += " > " + post.userTarget.name;
-                            nameUser.NavigateUri = new Uri("/ProfilInfos/" + post.userSource.uid + "/Account/" + topic.accountID, UriKind.Relative);
+                            nameUser.NavigateUri = new Uri("/ProfilInfos/" + post.userSource.id + "/Account/" + topic.accountID, UriKind.Relative);
                            
 
                             imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
@@ -175,7 +176,7 @@ namespace EIP.Views.Controls
                             // stream_comments stream_coms = topic.fb_post.post.comments;
                             comsControl.profiles = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).profiles;
                             comsControl.postId = post.post.post_id;
-                            comsControl.postUserId = (long)post.userSource.uid;
+                            comsControl.postUserId = (long)post.userSource.id;
                             comsControl.accountID = topic.accountID;
                             comsControl.likes = post.post.likes;
                             comsControl.Commentaires = post.post.comments;
@@ -207,9 +208,10 @@ namespace EIP.Views.Controls
                             if (status.User.ProfileImageUrl != null)
                             {
                                 Uri uriImg = new Uri(status.User.ProfileImageUrl);
-                                btImg = new BitmapImage(uriImg);
+                                //btImg = new BitmapImage(uriImg);
+
+                                picUser.UriSource = uriImg;
                             }
-                            picUser.Source = btImg;
                             nameUser.Content = status.User.Name;
                             imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
 

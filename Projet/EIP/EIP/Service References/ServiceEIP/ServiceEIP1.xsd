@@ -185,18 +185,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetUserByMail">
+  <xs:element name="GetUserInfos">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="tokenSecret" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetUserByMailResponse">
+  <xs:element name="GetUserInfosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetUserByMailResult" nillable="true" type="q10:TwitterUser" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetUserInfosResult" nillable="true" type="q10:TwitterUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
