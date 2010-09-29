@@ -88,6 +88,8 @@ namespace EIP.Views.Controls
                         {
                             post = topic.fb_post;
 
+                           
+
                             BitmapImage btImgFB = null;
 
                             if (post.userSource.pic_square != null) // verif si gif

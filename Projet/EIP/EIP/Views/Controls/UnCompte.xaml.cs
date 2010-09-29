@@ -45,15 +45,20 @@ namespace EIP.Views.Controls
                     imgIcone = "../../Assets/Images/facebook-icon.png";
                  break;
                 case Account.TypeAccount.Twitter:
-                    if (((AccountTwitterLight)oneAccount).userInfos != null)
-                    {
-                        if (((AccountTwitterLight)oneAccount).userInfos.Status != null && ((AccountTwitterLight)oneAccount).userInfos.Status.Text != null && ((AccountTwitterLight)oneAccount).userInfos.Status.Text != "")
-                        {
-                            status = ((AccountTwitterLight)oneAccount).userInfos.Status.Text;
-                        }
-                        if (((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl != null && ((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl != "")
-                            imgAcc = ((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl;
-                    }
+                 if (((AccountTwitterLight)oneAccount).userInfos != null)
+                 {
+                     if (((AccountTwitterLight)oneAccount).userInfos.Status != null && ((AccountTwitterLight)oneAccount).userInfos.Status.Text != null && ((AccountTwitterLight)oneAccount).userInfos.Status.Text != "")
+                     {
+                         status = ((AccountTwitterLight)oneAccount).userInfos.Status.Text;
+                     }
+                     if (((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl != null && ((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl != "")
+                         imgAcc = ((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl;
+                 }
+                 else
+                 {
+                     ((AccountTwitterLight)oneAccount).GetUserInfoCalled += new AccountTwitterLight.OnGetUserInfoCompleted(UnCompte_GetUserInfoCalled);
+                     ((AccountTwitterLight)oneAccount).GetUserInfo(oneAccount.account.userID);
+                 }
                     imgIcone = "../../Assets/Images/twitter-icon.png";
                     break;
                 default:
@@ -61,6 +66,8 @@ namespace EIP.Views.Controls
 	        }
             LoadAccount(oneAccount, oneAccount.account.typeAccount, oneAccount.account.name, imgIcone, imgAcc, status);
         }
+
+  
 
         private void LoadAccount(AccountLight oneAccount, Account.TypeAccount typeAccount, string userName, string imgIcone, string imgAcc, string status)
         {
@@ -95,6 +102,20 @@ namespace EIP.Views.Controls
                 {
                     accountStatus.Text = monUser.status.message;
                     accountStatusTooltip.Text = monUser.status.message;
+                }
+
+            });
+        }
+
+        void UnCompte_GetUserInfoCalled(TwitterUser user)
+        {
+            this.Dispatcher.BeginInvoke(() =>
+            {
+                ((Image)LayoutRoot.FindName("img" + user.Id)).Source = new BitmapImage(new Uri(user.ProfileImageUrl, UriKind.Absolute));
+                if (user.Status != null && user.Status.Text != null && user.Status.Text != "")
+                {
+                    accountStatus.Text = user.Status.Text;
+                    accountStatusTooltip.Text = user.Status.Text;
                 }
 
             });

@@ -39,7 +39,7 @@ namespace EIP
         */
 
         //Controls
-        private StreamFeeds streamFeeds;
+        //private StreamFeeds streamFeeds;
 
         public AccountTwitterLight()
         {
@@ -57,7 +57,18 @@ namespace EIP
             filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
 
             Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
+            Connexion.serviceEIP.GetUserInfosCompleted += new EventHandler<GetUserInfosCompletedEventArgs>(serviceEIP_GetUserInfosCompleted);
         }
+
+        public void Start()
+        {
+            if (this.account != null)
+            {
+                this.GetUserInfo(this.account.userID);
+            }
+        }
+
+      
 
 
         /// <summary>
@@ -69,6 +80,37 @@ namespace EIP
             if (status.Trim() != "")
             {
                 Connexion.serviceEIP.SendTweetAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, status);
+            }
+        }
+
+        public delegate void OnGetUserInfoCompleted(TwitterUser user);
+        public event OnGetUserInfoCompleted GetUserInfoCalled;
+
+        public void GetUserInfo(long userId)
+        {
+            if (userInfos != null && userInfos.Id == userId)
+            {
+                if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
+                    this.GetUserInfoCalled.Invoke(userInfos);
+            }
+            else
+                Connexion.serviceEIP.GetUserInfosAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, userId);
+        }
+
+        void serviceEIP_GetUserInfosCompleted(object sender, GetUserInfosCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                if (e.Result != null)
+                {
+                    TwitterUser user = e.Result;
+
+                    if (user.Id == account.userID)
+                        userInfos = user;
+
+                    if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
+                        this.GetUserInfoCalled.Invoke(user);
+                }
             }
         }
 
@@ -84,15 +126,19 @@ namespace EIP
         /// <summary>
         /// Met à jour l'attribut "homeStatuses" (les tweets de la homepage)
         /// </summary>
-        public void LoadHomeStatuses(StreamFeeds aStreamFeeds, bool first)
+        public bool LoadHomeStatuses(bool first)
         {
-            if (aStreamFeeds != null)
-            {
-                this.streamFeeds = aStreamFeeds;
-                LoadStreamFeedsContext(first);
-            }
+            //if (aStreamFeeds != null)
+            //{
+               // this.streamFeeds = aStreamFeeds;
+
+            bool ret = false;
+            ret = LoadStreamFeedsContext(first);
+           // }
 
             Connexion.serviceEIP.LoadHomeStatusesAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret);
+
+            return ret;
         }
 
         void serviceEIP_LoadHomeStatusesCompleted(object sender, LoadHomeStatusesCompletedEventArgs e)
@@ -220,32 +266,37 @@ namespace EIP
         }
         */
 
-        private void LoadStreamFeedsContext(bool first)
+        private bool LoadStreamFeedsContext(bool first)
         {
-            if (streamFeeds != null)
-            {
-                List<Topic> t_topics = null;
+            //if (streamFeeds != null)
+            //{
+            List<Topic> t_topics = null;
 
-                if (Connexion.allTopics.ContainsKey(this.account.userID.ToString()))
-                    t_topics = (List<Topic>)Connexion.allTopics[this.account.userID.ToString()];
-                if (this.homeStatuses.Count > 0)
-                    if (t_topics != null && t_topics.Count > 0 && !first)
-                    {
-                        TwitterStatus last = t_topics[0].t_post;
-                        if (last.Id != this.homeStatuses[0].t_post.Id)
-                        {
-                            Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
-                            if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
-                                this.LoadHomeStatusesCalled.Invoke();
-                        }
-                    }
-                    else
+            if (Connexion.allTopics.ContainsKey(this.account.userID.ToString()))
+                t_topics = (List<Topic>)Connexion.allTopics[this.account.userID.ToString()];
+            if (this.homeStatuses.Count > 0)
+            {
+                if (t_topics != null && t_topics.Count > 0 && !first)
+                {
+                    TwitterStatus last = t_topics[0].t_post;
+                    if (last.Id != this.homeStatuses[0].t_post.Id)
                     {
                         Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                         if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
                             this.LoadHomeStatusesCalled.Invoke();
                     }
+                }
+                else
+                {
+                    Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
+                    if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
+                        this.LoadHomeStatusesCalled.Invoke();
+                }
+                return true;
             }
+
+            return false;
+           //}
         }
 
 

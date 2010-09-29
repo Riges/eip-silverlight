@@ -16,6 +16,7 @@ using Hammock;
 using Newtonsoft.Json;
 using Hammock.Web;
 using System.Windows.Controls.Primitives;
+using System.IO;
 
 namespace EIP.Views.Controls
 {
@@ -148,6 +149,9 @@ namespace EIP.Views.Controls
 
         private void DisplayPopup()
         {
+
+            myPopup.IsOpen = true;
+            /*
             // Create some content to show in the popup. Typically you would 
             // create a user control.
             Border border = new Border();
@@ -187,7 +191,7 @@ namespace EIP.Views.Controls
            
             
             // Open the popup.
-           
+           */
         }
 
 
@@ -257,6 +261,51 @@ namespace EIP.Views.Controls
                     }
                 }
             }
+        }
+
+        private void myPopup_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data == null) return;
+
+            var files = e.Data.GetData(DataFormats.FileDrop) as FileInfo[];
+
+            if (files == null) return;
+
+            //List<BitmapImage> Images = new List<BitmapImage>();
+            foreach (var fileInfo in files)
+            {
+                
+                using (System.IO.Stream str = fileInfo.OpenRead())  
+                {  
+                    Byte[] bytes = new Byte[str.Length];  
+                    str.Read(bytes, 0, bytes.Length);
+
+                    Connexion.serviceEIP.UploadPhotoAsync(fileInfo.Name, bytes);
+                    Connexion.serviceEIP.UploadPhotoCompleted += new EventHandler<UploadPhotoCompletedEventArgs>(serviceEIP_UploadPhotoCompleted);
+                }  
+               
+                /*using (var fileStream = fileInfo.OpenRead())
+                {
+                    var bitmapImage = new BitmapImage();
+                    bitmapImage.SetSource(fileStream);
+                    Images.Add(bitmapImage);
+                   
+                   
+                    fileStream.Close();
+                }*/
+
+            }
+           
+        }
+
+        void serviceEIP_UploadPhotoCompleted(object sender, UploadPhotoCompletedEventArgs e)
+        {
+            string message = e.Result;
+        }
+
+        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //myPopup.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

@@ -209,7 +209,7 @@ namespace EIP.Views.Controls
                     });
             }
         }
-
+        /*
         void ListeComptes_GetFirstUserInfoCalled(Facebook.Schema.user monUser)
         {
             this.Dispatcher.BeginInvoke(() =>
@@ -291,6 +291,7 @@ namespace EIP.Views.Controls
             else
                 Connexion.contentFrame.Navigate(source);
         }
+         */
 
         /*
        void btnAccount_Click(object sender, RoutedEventArgs e)

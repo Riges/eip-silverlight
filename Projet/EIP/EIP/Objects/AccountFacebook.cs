@@ -58,8 +58,7 @@ namespace EIP
         //private int nbFeeds = 0;
 
         //Controls
-        private StreamFeeds streamFeeds;
-        private LeftMenu menuFeeds;
+        //private StreamFeeds streamFeeds;
 
         public AccountFacebookLight()
         {
@@ -97,6 +96,15 @@ namespace EIP
             Connexion.accounts[this.account.accountID] = this;
 
             this.GetUserInfo(this.facebookAPI.Session.UserId, GetUserInfoFrom.Login);
+            
+            
+            //pré load
+
+            this.UploadPhoto();
+            this.LoadFriends();
+            this.LoadFilters();
+            this.LoadFeeds("", false);
+            
         }
 
         public void SendStatus(string status)
@@ -374,16 +382,20 @@ namespace EIP
         /// </summary>
         /// <param name="filtre">Filtre de la liste des feeds.</param>
         /// <param name="aStreamFeeds">object StreamFeeds permettant de vérifier s'il y a de nouveau feeds pour mettre à jour ou non la liste.</param>
-        public void LoadFeeds(string filtre, StreamFeeds aStreamFeeds, bool first)
+        public bool LoadFeeds(string filtre, bool first)
         {
-            if(aStreamFeeds != null)
+            //if(aStreamFeeds != null)
+            //{
+                //this.streamFeeds = aStreamFeeds;
+            bool ret = false;
+            if (first)
             {
-                this.streamFeeds = aStreamFeeds;
-                if (first)
-                    LoadStreamFeedsContext(filtre);
+                ret = LoadStreamFeedsContext(filtre);
             }
+            //}
             if(!busy)
                 this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
+            return ret;
         }
 
         /*
@@ -515,14 +527,16 @@ namespace EIP
         /// Met à jour l'affichage avec les feeds récupérés
         /// </summary>
         /// <param name="filtre"></param>
-        private void LoadStreamFeedsContext(string filtre)
+        private bool LoadStreamFeedsContext(string filtre)
         {
             if (this.feeds.ContainsKey(filtre) && this.feeds[filtre].Count > 0)
             {
                 Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre];
                 if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
                     this.LoadFeedsCalled.Invoke();
+                return true;
             }
+            return false;
         }
 
         public delegate void OnLoadFiltersCompleted(long accounID, List<stream_filter> filters);
@@ -530,9 +544,8 @@ namespace EIP
 
         public void LoadFilters()
         {
-            //this.menuFeeds = menuFeeds;
             if (this.filters == null)
-                this.facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), menuFeeds);
+                this.facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), null);
             else
                 if (this.LoadFiltersCalled != null)//evite que ca plante si pas dabo
                     this.LoadFiltersCalled.Invoke(this.account.accountID, this.filters);
@@ -560,7 +573,6 @@ namespace EIP
 
         public void GetComs(string postId)
         {
-            //this.facebookAPI.Comments.GetAsync(xid.Split('_')[1], new Comments.GetCallback(GetComs_Completed), type);
             this.facebookAPI.Fql.QueryAsync<comments_get_response>("SELECT xid, fromid, post_id, time, text, id, username FROM comment WHERE object_id=" + postId.Split('_')[1], new Fql.QueryCallback<comments_get_response>(GetComsFQL_Completed), postId);
         }
 
@@ -623,11 +635,6 @@ namespace EIP
             }
         }
 
-       /* public void GetComs_Completed(IList<comment> coms, object obj, FacebookException ex)
-        {
-           
-        }*/
-
         public void AddCom(string postId, string comment)
         {
             this.facebookAPI.Stream.AddCommentAsync(postId, comment, new Stream.AddCommentCallback(AddCom_Completed), postId);
@@ -643,10 +650,6 @@ namespace EIP
 
         public void DeleteCom(comment com, string postId)
         {
-            
-            //MessageBox msgBox = new MessageBox(com.id, com.post_id, MessageBoxButton.OK);
-            //msgBox.Show();
-            //string[] tmp = com.id.Split('_');
             this.facebookAPI.Stream.RemoveCommentAsync(com.id, new Stream.RemoveCommentCallback(DeleteCom_Completed), postId);
         }
 
@@ -654,14 +657,10 @@ namespace EIP
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    //MessageBox msgBoxs = new MessageBox(result.ToString(), ex.Message, MessageBoxButton.OK);
-                    //msgBoxs.Show();
                     if (ex == null)
                     {
                         if (result)
                         {
-                            //MessageBox msgBox = new MessageBox("Succès", "Le commentaire à bien été supprimé.", MessageBoxButton.OK);
-                            //msgBox.Show();
                             if (obj != null)
                                 this.GetComs(obj.ToString());
                         }
@@ -731,7 +730,6 @@ namespace EIP
         {
             if (ex == null && albums.Count > 0)
             {
-                //this.albums[(long)uid] = new List<album>();
                 this.albums[(long)uid] = (List<album>)albums;
 
                 List<string> covers = new List<string>();
@@ -742,13 +740,7 @@ namespace EIP
 
                 this.facebookAPI.Photos.GetAsync(null, null, covers, new Photos.GetCallback(GetAlbumsCover_Completed), uid);
 
-
-                //this.GetAlbumsCalled.Invoke(true, (long)uid);
-            }
-            /*else if (ex == null)
-            {
-                this.facebookAPI.Fql.QueryAsync<photos_getAlbums_response>("SELECT aid, owner, cover_pid, name, created, modified, description, location, size, link, visible, modified_major, edit_link, type, object_id, can_upload FROM album WHERE owner=" + uid, new Fql.QueryCallback<photos_getAlbums_response>(GetAlbumsFQL_Completed), uid);
-            }*/
+            }   
         }
 
         /*private void GetAlbumsFQL_Completed(photos_getAlbums_response albums, object uid, FacebookException ex)
@@ -885,6 +877,42 @@ namespace EIP
                     this.GetUsersLikesCalled.Invoke(true, obj.ToString());
             }
         }
+
+        public void UploadPhoto()
+        {
+            attachment test = new attachment();
+            test.caption = "captionnn";
+            //test.latitude = string.Empty;
+            //test.longitude = string.Empty;
+            //test.comments_xid = string.Empty;
+
+            test.name = "namee";
+            test.description = "descriptioneuhhh";
+          
+            
+            attachment_media media = new attachment_media();
+            media.type = attachment_media_type.image;
+            //test.media = new List<attachment_media>();
+            //test.properties = new List<attachment_property>();
+            //test.media.Add(media);
+
+             test.media = new List<attachment_media>(){ new attachment_media_image()
+                                {
+                                    type = attachment_media_type.image,
+                                    src = "http://sphotos.ak.fbcdn.net/hphotos-ak-ash2/hs011.ash2/33900_1592267456173_1520509439_31468853_3802398_n.jpg"
+                              
+
+                                }};
+
+            // this.facebookAPI.Stream.PublishAsync("kikoolol", test, null, "609934043", this.account.userID, new Stream.PublishCallback(PublishStream_completed), null);
+        }
+
+        private void PublishStream_completed(string result, object o, FacebookException ex)
+        {
+
+        }
+
+    
 
         //////////////////////////////////////////////////////
         /////////               Vidéos              //////////

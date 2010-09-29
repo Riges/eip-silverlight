@@ -1034,9 +1034,14 @@ namespace EIP.ServiceEIP {
         bool EndSendTweet(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetUserInfos", ReplyAction="http://tempuri.org/IServiceEIP/GetUserInfosResponse")]
-        System.IAsyncResult BeginGetUserInfos(string token, string tokenSecret, int userId, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetUserInfos(string token, string tokenSecret, long userId, System.AsyncCallback callback, object asyncState);
         
         EIP.ServiceEIP.TwitterUser EndGetUserInfos(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/UploadPhoto", ReplyAction="http://tempuri.org/IServiceEIP/UploadPhotoResponse")]
+        System.IAsyncResult BeginUploadPhoto(string name, byte[] img, System.AsyncCallback callback, object asyncState);
+        
+        string EndUploadPhoto(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1311,6 +1316,25 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UploadPhotoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UploadPhotoCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ServiceEIPClient : System.ServiceModel.ClientBase<EIP.ServiceEIP.IServiceEIP>, EIP.ServiceEIP.IServiceEIP {
         
         private BeginOperationDelegate onBeginIsUpDelegate;
@@ -1397,6 +1421,12 @@ namespace EIP.ServiceEIP {
         
         private System.Threading.SendOrPostCallback onGetUserInfosCompletedDelegate;
         
+        private BeginOperationDelegate onBeginUploadPhotoDelegate;
+        
+        private EndOperationDelegate onEndUploadPhotoDelegate;
+        
+        private System.Threading.SendOrPostCallback onUploadPhotoCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -1477,6 +1507,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<SendTweetCompletedEventArgs> SendTweetCompleted;
         
         public event System.EventHandler<GetUserInfosCompletedEventArgs> GetUserInfosCompleted;
+        
+        public event System.EventHandler<UploadPhotoCompletedEventArgs> UploadPhotoCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -2089,7 +2121,7 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetUserInfos(string token, string tokenSecret, int userId, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetUserInfos(string token, string tokenSecret, long userId, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginGetUserInfos(token, tokenSecret, userId, callback, asyncState);
         }
         
@@ -2101,7 +2133,7 @@ namespace EIP.ServiceEIP {
         private System.IAsyncResult OnBeginGetUserInfos(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string token = ((string)(inValues[0]));
             string tokenSecret = ((string)(inValues[1]));
-            int userId = ((int)(inValues[2]));
+            long userId = ((long)(inValues[2]));
             return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetUserInfos(token, tokenSecret, userId, callback, asyncState);
         }
         
@@ -2118,11 +2150,11 @@ namespace EIP.ServiceEIP {
             }
         }
         
-        public void GetUserInfosAsync(string token, string tokenSecret, int userId) {
+        public void GetUserInfosAsync(string token, string tokenSecret, long userId) {
             this.GetUserInfosAsync(token, tokenSecret, userId, null);
         }
         
-        public void GetUserInfosAsync(string token, string tokenSecret, int userId, object userState) {
+        public void GetUserInfosAsync(string token, string tokenSecret, long userId, object userState) {
             if ((this.onBeginGetUserInfosDelegate == null)) {
                 this.onBeginGetUserInfosDelegate = new BeginOperationDelegate(this.OnBeginGetUserInfos);
             }
@@ -2136,6 +2168,54 @@ namespace EIP.ServiceEIP {
                         token,
                         tokenSecret,
                         userId}, this.onEndGetUserInfosDelegate, this.onGetUserInfosCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginUploadPhoto(string name, byte[] img, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUploadPhoto(name, img, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string EIP.ServiceEIP.IServiceEIP.EndUploadPhoto(System.IAsyncResult result) {
+            return base.Channel.EndUploadPhoto(result);
+        }
+        
+        private System.IAsyncResult OnBeginUploadPhoto(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string name = ((string)(inValues[0]));
+            byte[] img = ((byte[])(inValues[1]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginUploadPhoto(name, img, callback, asyncState);
+        }
+        
+        private object[] OnEndUploadPhoto(System.IAsyncResult result) {
+            string retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndUploadPhoto(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUploadPhotoCompleted(object state) {
+            if ((this.UploadPhotoCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UploadPhotoCompleted(this, new UploadPhotoCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UploadPhotoAsync(string name, byte[] img) {
+            this.UploadPhotoAsync(name, img, null);
+        }
+        
+        public void UploadPhotoAsync(string name, byte[] img, object userState) {
+            if ((this.onBeginUploadPhotoDelegate == null)) {
+                this.onBeginUploadPhotoDelegate = new BeginOperationDelegate(this.OnBeginUploadPhoto);
+            }
+            if ((this.onEndUploadPhotoDelegate == null)) {
+                this.onEndUploadPhotoDelegate = new EndOperationDelegate(this.OnEndUploadPhoto);
+            }
+            if ((this.onUploadPhotoCompletedDelegate == null)) {
+                this.onUploadPhotoCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUploadPhotoCompleted);
+            }
+            base.InvokeAsync(this.onBeginUploadPhotoDelegate, new object[] {
+                        name,
+                        img}, this.onEndUploadPhotoDelegate, this.onUploadPhotoCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -2387,7 +2467,7 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetUserInfos(string token, string tokenSecret, int userId, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginGetUserInfos(string token, string tokenSecret, long userId, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[3];
                 _args[0] = token;
                 _args[1] = tokenSecret;
@@ -2399,6 +2479,20 @@ namespace EIP.ServiceEIP {
             public EIP.ServiceEIP.TwitterUser EndGetUserInfos(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 EIP.ServiceEIP.TwitterUser _result = ((EIP.ServiceEIP.TwitterUser)(base.EndInvoke("GetUserInfos", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUploadPhoto(string name, byte[] img, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = name;
+                _args[1] = img;
+                System.IAsyncResult _result = base.BeginInvoke("UploadPhoto", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndUploadPhoto(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("UploadPhoto", _args, result)));
                 return _result;
             }
         }
