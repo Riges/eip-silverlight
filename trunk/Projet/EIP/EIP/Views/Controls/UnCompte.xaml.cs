@@ -21,10 +21,11 @@ namespace EIP.Views.Controls
         public Frame contentFrame { get; set; }
         private ListeComptes.ListeCptMode mode;
 
-        public UnCompte(AccountLight oneAccount)
+        public UnCompte(AccountLight oneAccount, ListeComptes.ListeCptMode leMode)
         {
             InitializeComponent();
 
+            this.mode = leMode;
             string status = string.Empty;
             string imgIcone = string.Empty;
             string imgAcc = string.Empty;

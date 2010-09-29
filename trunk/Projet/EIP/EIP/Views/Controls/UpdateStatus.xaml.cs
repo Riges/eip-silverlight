@@ -149,49 +149,7 @@ namespace EIP.Views.Controls
 
         private void DisplayPopup()
         {
-
             myPopup.IsOpen = true;
-            /*
-            // Create some content to show in the popup. Typically you would 
-            // create a user control.
-            Border border = new Border();
-            border.BorderBrush = new SolidColorBrush(Colors.Black);
-            border.BorderThickness = new Thickness(3.0);
-            
-            //border.CornerRadius = new CornerRadius(5);
-
-            StackPanel panel1 = new StackPanel();
-            
-            
-            panel1.Background = new SolidColorBrush(Colors.LightGray);
-
-            Button button1 = new Button();
-            button1.Content = "Close";
-            button1.Margin = new Thickness(5.0);
-            button1.Click += new RoutedEventHandler(buttonClose_Click);
-            TextBlock textblock1 = new TextBlock();
-            textblock1.Text = "The popup controlsssssssssssssss";
-            textblock1.Margin = new Thickness(5.0);
-            panel1.Children.Add(textblock1);
-            panel1.Children.Add(button1);
-            border.Child = panel1;
-
-            // Set the Child property of Popup to the border 
-            // which contains a stackpanel, textblock and button.
-            p.Child = border;
-
-            // Set where the popup will show up on the screen.
-            p.VerticalOffset = 25;
-            p.HorizontalOffset = 0;
-          
-
-            p.IsOpen = true;
-
-
-           
-            
-            // Open the popup.
-           */
         }
 
 

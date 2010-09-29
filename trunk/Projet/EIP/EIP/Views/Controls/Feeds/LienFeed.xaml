@@ -21,7 +21,7 @@
         <toolkit:WrapPanel Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Name="message" Visibility="Collapsed"></toolkit:WrapPanel>
 
         <HyperlinkButton Style="{StaticResource HyperlinkButtonStyle}" Name="linkImg" Grid.Row="1" Grid.Column="0" TargetName="_blank"  Visibility="Collapsed">
-            <Border Name="imgBorder" BorderThickness="1" BorderBrush="Gray" Padding="5,5,5,5" VerticalAlignment="Top" Margin="0,5,5,0" Visibility="Collapsed">
+            <Border Name="imgBorder" BorderThickness="5" BorderBrush="White" VerticalAlignment="Top" Margin="0,5,5,0" Visibility="Collapsed">
                 <Image Name="img" Stretch="None"></Image>
             </Border>
         </HyperlinkButton>

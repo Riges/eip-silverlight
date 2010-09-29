@@ -18,9 +18,19 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Image Grid.RowSpan="2" Grid.Column="0" Name="imgUser" Width="40" Height="40" Stretch="Uniform" Margin="0,0,10,10" ></Image>
+        <!--<Image Grid.RowSpan="2" Grid.Column="0" Name="imgUser" Width="40" Height="40" Stretch="Uniform" Margin="0,0,10,10" ></Image>-->
 
-       <!--<HyperlinkButton Grid.Row="0" Grid.Column="1" Name="nameUser" Margin="5,0,0,0"></HyperlinkButton>-->
+        <Border CornerRadius="10" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="2" Width="40" Height="40" Grid.RowSpan="2" Grid.Column="0" Margin="0,0,10,10" >
+            <Border.Background>
+                <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
+                    <ImageBrush.ImageSource>
+                        <BitmapImage x:Name="imgUser" />
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </Border.Background>
+        </Border>
+
+        <!--<HyperlinkButton Grid.Row="0" Grid.Column="1" Name="nameUser" Margin="5,0,0,0"></HyperlinkButton>-->
 
         <toolkit:WrapPanel  Grid.Row="0" Grid.Column="1" Name="content"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></toolkit:WrapPanel>
 

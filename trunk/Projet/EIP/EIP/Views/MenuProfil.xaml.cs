@@ -74,12 +74,8 @@ namespace EIP.Views
             {
                 if (monUser != null)
                 {
-                    photoUser.Source = new BitmapImage(new Uri(monUser.pic_big, UriKind.Absolute));
-
-
+                    photoUser.UriSource = new Uri(monUser.pic_big, UriKind.Absolute);
                 }
-
-
             });
         }
 

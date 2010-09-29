@@ -23,7 +23,17 @@
         </Grid.ColumnDefinitions>
 
 
-        <Image Name="photoUser" Grid.Row="0" Grid.Column="0" Margin="5,0,0,10"></Image>
+        <!--<Image Name="photoUser" Grid.Row="0" Grid.Column="0" Margin="5,0,0,10"></Image>-->
+
+        <Border CornerRadius="20" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="3" Grid.Row="0" Grid.Column="0" Height="200" Margin="5,0,0,10">
+            <Border.Background>
+                <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
+                    <ImageBrush.ImageSource>
+                        <BitmapImage x:Name="photoUser"  />
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </Border.Background>
+        </Border>
 
         <Button Grid.Row="1" Grid.Column="0" Margin="5,5,0,5" >Mur</Button>
         <Button Grid.Row="2" Grid.Column="0" Margin="5,5,0,5" Name="infosBtn" Click="infosBtn_Click">Infos</Button>
