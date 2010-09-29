@@ -9,7 +9,7 @@
            xmlns:Controls="clr-namespace:EIP.Views.Controls"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Title="AlbumsView Page">
+           Title="AlbumsView Page" Margin="10,0,10,0">
 
     <navigation:Page.DataContext>
         <vm:InCoverFlowContentControlSampleData />
@@ -42,7 +42,7 @@
         </DataTemplate>-->
     </navigation:Page.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -50,14 +50,12 @@
 
         <TextBlock Name="PseudoUser" Grid.Row="0" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
 
-        <fl:FlowItemsControl3D Grid.Row="1" Name="flowControl" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center"  >
+        <fl:FlowItemsControl3D Grid.Row="1"  Name="flowControl" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center"  >
             <!--ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
                         <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
                         <!--<Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>-->
-                    </StackPanel>
                 </DataTemplate>
             </fl:FlowItemsControl3D.ItemTemplate>
                 

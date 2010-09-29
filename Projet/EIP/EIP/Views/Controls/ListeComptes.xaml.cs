@@ -99,7 +99,7 @@ namespace EIP.Views.Controls
 
                         foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                         {
-                            UnCompte compte = new UnCompte(oneAccount.Value);
+                            UnCompte compte = new UnCompte(oneAccount.Value, mode);
                             compte.Margin = new Thickness(0, 0, 0, 5);
 
                             LayoutPanel.Children.Add(compte);

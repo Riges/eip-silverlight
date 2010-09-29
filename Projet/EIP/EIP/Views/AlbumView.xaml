@@ -8,30 +8,28 @@
            xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Title="AlbumView Page">
-
-
-
+           Title="AlbumView Page" Margin="10,0,10,0" AllowDrop="True" Drop="Page_Drop">
 
     <Grid x:Name="LayoutRoot">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBlock Name="PseudoUser" Grid.Row="0"  FontSize="22" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
 
-        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="1" ItemsSource="{Binding}"  >
+        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="1" ItemsSource="{Binding}" VerticalAlignment="Top">
             <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
                     <Controls:PhotoControl x:Name="photoItem"  VerticalAlignment="Top" Cursor="Hand"></Controls:PhotoControl>
                </DataTemplate>
             </fl:FlowItemsControl3D.ItemTemplate>
-
-
         </fl:FlowItemsControl3D>
+
+        <TextBlock Name="dragText" Grid.Row="2" Text="Pour ajouter des photos à cet album, déposez les sur cette page."></TextBlock>
 
     </Grid>
 </navigation:Page>

@@ -46,7 +46,7 @@ namespace EIP.Views.Controls
                 BitmapImage btImgFB = null;
                 Uri uriImg = new Uri(profile.pic_square);
                 btImgFB = new BitmapImage(uriImg);
-                imgUser.Source = btImgFB;
+                imgUser.UriSource = uriImg;// btImgFB;
             }
 
 

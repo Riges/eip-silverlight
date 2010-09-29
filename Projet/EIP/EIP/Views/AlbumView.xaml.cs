@@ -11,6 +11,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using Facebook.Schema;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace EIP.Views
 {
@@ -84,6 +86,33 @@ namespace EIP.Views
 
             //photo tof = new photo();
            
+        }
+
+        private void Page_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data == null) return;
+
+            var files = e.Data.GetData(DataFormats.FileDrop) as FileInfo[];
+
+            if (files == null) return;
+
+            //List<BitmapImage> Images = new List<BitmapImage>();
+            //foreach (var fileInfo in files)
+            //{
+            //    using (var fileStream = fileInfo.OpenRead())
+            //    {
+            //        var bitmapImage = new BitmapImage();
+            //        bitmapImage.SetSource(fileStream);
+            //        Images.Add(bitmapImage);
+             
+            //        fileStream.Close();
+            //    }
+            //}
+
+
+
+
+
         }
 
         
