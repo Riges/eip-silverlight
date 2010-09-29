@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Height="50">
+    d:DesignHeight="300" d:DesignWidth="400" Height="50" LostFocus="UserControl_LostFocus">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationBackgroundColorBrush}" MouseEnter="LayoutRoot_MouseEnter" >
         <Grid.RowDefinitions>
@@ -20,9 +20,18 @@
         </Grid.ColumnDefinitions>
 
         
-        <Popup>
-            
-            
+        <Popup AllowDrop="True" Name="myPopup" Drop="myPopup_Drop" VerticalOffset="25" IsOpen="False">
+            <Border BorderBrush="Black" BorderThickness="3">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="200" AllowDrop="True" Drop="myPopup_Drop"></TextBox>
+                        <Button Content="Envoyer"></Button>
+                    </StackPanel>
+                   
+
+
+                </StackPanel>
+            </Border>
         </Popup>   
 
    

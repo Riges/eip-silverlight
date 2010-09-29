@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using EIPLibrary;
 using TweetSharp.Twitter.Model;
+using System.IO;
 //using Dimebrain.TweetSharp.Model;
 //using Dimebrain.TweetSharp.Fluent;
 
@@ -66,7 +67,10 @@ namespace EIPWCF
         bool SendTweet(string token, string tokenSecret, string tweet);
 
         [OperationContract]
-        TwitterUser GetUserInfos(string token, string tokenSecret, int userId);
+        TwitterUser GetUserInfos(string token, string tokenSecret, long userId);
+
+        [OperationContract]
+        string UploadPhoto(string name, byte[] img);
      
 
         /*[OperationContract]

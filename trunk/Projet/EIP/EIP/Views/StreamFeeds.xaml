@@ -17,7 +17,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>-->
       
-        <StackPanel Name="ImgLoad" Visibility="Visible">
+        <StackPanel Name="ImgLoad" Visibility="Collapsed">
             <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
         </StackPanel>
       

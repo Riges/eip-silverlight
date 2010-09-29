@@ -293,6 +293,7 @@ namespace EIP
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
+                            newAccountTwitter.Start();
                             //accounts.Add(newAccountTwitter);
                             accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
                             break;
@@ -606,6 +607,7 @@ namespace EIP
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
+                            newAccountTwitter.Start();
                             //accounts.Add(newAccountTwitter);
                             accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
                             break;

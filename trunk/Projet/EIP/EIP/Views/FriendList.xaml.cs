@@ -84,7 +84,7 @@ namespace EIP.Views
         {
             foreach (user toto in friendsFB)
             {
-                string key = (toto.proxied_email != null) ? toto.proxied_email : toto.name;
+                string key = toto.name; // (toto.proxied_email != null) ? toto.proxied_email : 
 
                 if (friends.Keys.Contains(key))
                 {

@@ -22,6 +22,9 @@ using TweetSharp.Fluent;
 using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using System.ComponentModel;
+using System.Drawing.Imaging;
 
 
 namespace EIPWCF
@@ -165,10 +168,10 @@ namespace EIPWCF
 
         }
 
-        public TwitterUser GetUserInfos(string token, string tokenSecret, int userId)
+        public TwitterUser GetUserInfos(string token, string tokenSecret, long userId)
         {
             List<int> list = new List<int>();
-            list.Add(userId);
+            list.Add(Convert.ToInt32(userId));
 
             SetClientInfo();
 
@@ -188,6 +191,39 @@ namespace EIPWCF
             }
 
             return null;
+        }
+
+
+        public string UploadPhoto(string name, byte[] img)
+        {
+  
+            /*if (bmp != null)
+            {
+                TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
+                Bitmap b = (Bitmap)tc.ConvertFrom(bmp);
+
+                b.Save("", System.Drawing.Imaging.ImageFormat.Jpeg);
+            }*/
+
+         
+            
+            try
+            {
+                string save = @"c:\www\photos\" + name;
+
+
+                Image monImage = Image.FromStream(new MemoryStream(img));
+                FileStream stream = new FileStream(save, FileMode.Create);
+                monImage.Save(stream, ImageFormat.Jpeg);
+
+                stream.Close();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+            return "http://mynetwork.selfip.net/photos/" + name;
         }
 
 

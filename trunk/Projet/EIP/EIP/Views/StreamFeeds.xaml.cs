@@ -51,7 +51,7 @@ namespace EIP.Views
             Connexion.navigationContext = NavigationContext;
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
-
+               // ImgLoad.Visibility = System.Windows.Visibility.Visible;
                 dt_Tick(true, null);
                 /*
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
@@ -87,6 +87,8 @@ namespace EIP.Views
         {
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
+                bool wait = false;
+
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
                     if(accountLight.Value.selected)
@@ -99,19 +101,26 @@ namespace EIP.Views
                                     filter = this.NavigationContext.QueryString["filter"];*/
                                 ((AccountFacebookLight)accountLight.Value).LoadFeedsCalled += new AccountFacebookLight.OnLoadFeedsCompleted(StreamFeeds_LoadFeedsCalled);
 
+                                bool waitFB = false;
+
                                 if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
-                                    ((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, this, true);
+                                    waitFB = !((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, true);
                                 else
-                                    ((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, this, false);
+                                    waitFB = !((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, false);
+                                if (waitFB)
+                                    wait = waitFB;
+                               
                                 break;
                             case Account.TypeAccount.Twitter:
 
                                 ((AccountTwitterLight)accountLight.Value).LoadHomeStatusesCalled += new AccountTwitterLight.OnLoadHomeStatusesCompleted(StreamFeeds_LoadHomeStatusesCalled);
-
+                                bool waitT = false;
                                 if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
-                                    ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this, true);
+                                    waitT = !((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(true);
                                 else
-                                    ((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(this, false);
+                                    waitT = !((AccountTwitterLight)accountLight.Value).LoadHomeStatuses(false);
+                                if (waitT)
+                                    wait = waitT;
                                 break;
                             case Account.TypeAccount.Myspace:
                                 break;
@@ -119,6 +128,11 @@ namespace EIP.Views
                                 break;
                         }
                 }
+
+                if (wait)
+                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                else
+                    ImgLoad.Visibility = System.Windows.Visibility.Visible;
             }
             
         }
