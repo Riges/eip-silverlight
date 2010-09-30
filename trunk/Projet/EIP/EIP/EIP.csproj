@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Objects\Account.cs" />
     <Compile Include="Objects\AccountFacebook.cs" />
+    <Compile Include="Objects\AlbumToImageConverter.cs" />
     <Compile Include="Objects\Connexion.cs" />
     <Compile Include="Objects\AccountTwitter.cs" />
     <Compile Include="MainPage.xaml.cs">
