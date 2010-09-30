@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using Facebook.Schema;
 using System.Windows.Media.Imaging;
 using System.IO;
+using EIP.Views.Controls;
 
 namespace EIP.Views
 {
@@ -42,6 +43,18 @@ namespace EIP.Views
             if (this.NavigationContext.QueryString.ContainsKey("accid"))
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
             */
+
+            if (this.uid == Connexion.accounts[this.accountID].account.userID)
+            {
+                dragText.Visibility = System.Windows.Visibility.Visible;
+                this.AllowDrop = true;
+            }
+            else
+            {
+                dragText.Visibility = System.Windows.Visibility.Collapsed;
+                this.AllowDrop = false;
+            }
+
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
                 /*foreach (KeyValuePair<long, AccountLight> acc in Connexion.accounts)
@@ -82,6 +95,15 @@ namespace EIP.Views
                 this.Dispatcher.BeginInvoke(() =>
                 {
                     flowControl.DataContext = ((AccountFacebookLight)Connexion.accounts[this.accountID]).photos[this.aid].Values;
+
+
+
+                    List<album> albums = ((AccountFacebookLight)Connexion.accounts[this.accountID]).albums[this.uid];
+                     var al = from a in albums
+                            where a.aid == this.aid
+                            select a;
+
+                     albumName.Text = al.First().name;
                 });
 
             //photo tof = new photo();
@@ -96,6 +118,9 @@ namespace EIP.Views
 
             if (files == null) return;
 
+            UploadPhotos uploadPhotos = new UploadPhotos(this.accountID, this.uid, this.aid, files);
+            uploadPhotos.Show();
+
             //List<BitmapImage> Images = new List<BitmapImage>();
             //foreach (var fileInfo in files)
             //{
@@ -108,9 +133,6 @@ namespace EIP.Views
             //        fileStream.Close();
             //    }
             //}
-
-
-
 
 
         }

@@ -100,7 +100,6 @@ namespace EIP
             
             //pré load
 
-            this.UploadPhoto();
             this.LoadFriends();
             this.LoadFilters();
             this.LoadFeeds("", false);
@@ -878,8 +877,35 @@ namespace EIP
             }
         }
 
-        public void UploadPhoto()
+
+        public delegate void CreateAlbumCompleted(album album);
+        public event CreateAlbumCompleted CreateAlbumCalled;
+
+        public void CreateAlbum(string name, string location, string description)
         {
+            this.facebookAPI.Photos.CreateAlbumAsync(name, location, description, new Photos.CreateAlbumCallback(CreateAlbum_Completed), null);
+        }
+
+        private void CreateAlbum_Completed(album album, object o, FacebookException ex)
+        {
+            if (this.CreateAlbumCalled != null)
+                this.CreateAlbumCalled.Invoke(album);
+        }
+
+        public void UploadPhoto(string aid, string caption)
+        {
+            byte[] bytes;
+            
+            //this.facebookAPI.Photos.UploadAsync(aid, caption, bytes, null, new Photos.UploadCallback(UploadPhoto_Completed), null);
+
+
+
+
+
+
+
+
+            /*
             attachment test = new attachment();
             test.caption = "captionnn";
             //test.latitude = string.Empty;
@@ -905,7 +931,15 @@ namespace EIP
                                 }};
 
             // this.facebookAPI.Stream.PublishAsync("kikoolol", test, null, "609934043", this.account.userID, new Stream.PublishCallback(PublishStream_completed), null);
+             
+             */
         }
+
+        private void UploadPhoto_Completed(photo photo, object o, FacebookException ex)
+        {
+
+        }
+
 
         private void PublishStream_completed(string result, object o, FacebookException ex)
         {
