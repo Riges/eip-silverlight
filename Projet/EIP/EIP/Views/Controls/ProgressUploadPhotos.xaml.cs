@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Facebook.Schema;
 using System.Windows.Media.Imaging;
+using EIP.Objects;
 
 namespace EIP.Views.Controls
 {
@@ -62,12 +63,12 @@ namespace EIP.Views.Controls
                     str.Read(bytes, 0, bytes.Length);
 
                     str.Close();
-                    if (GetFileType(file) != Enums.FileType.jp2)
+                    if (Utils.GetFileType(file) != Enums.FileType.jp2)
                     {
                         sendPhotoImg.Source = btImg;
                         sendPhotoText.Text = "Upload de la photo " + ++i + " / " + this.photos.Count;
                         ((AccountFacebookLight)Connexion.accounts[this.accountID]).UploadPhotoCalled += new AccountFacebookLight.UploadPhotoCompleted(UploadPhotos_UploadPhotoCalled);
-                        ((AccountFacebookLight)Connexion.accounts[this.accountID]).UploadPhoto(this.aid, photo.text, bytes, GetFileType(file));
+                        ((AccountFacebookLight)Connexion.accounts[this.accountID]).UploadPhoto(this.aid, photo.text, bytes, Utils.GetFileType(file));
                     }
                 }
                 //i++;
@@ -88,19 +89,7 @@ namespace EIP.Views.Controls
 
         }
 
-        private Enums.FileType GetFileType(FileInfo file)
-        {
-            switch (file.Extension.ToLower())
-            {
-                case ".jpg": return Enums.FileType.jpg;
-                case ".bmp": return Enums.FileType.bmp;
-                case ".gif": return Enums.FileType.gif;
-                case ".tiff": return Enums.FileType.tiff;
-                case ".png": return Enums.FileType.png;
-                default: return Enums.FileType.jp2;
-            }
-
-        }
+       
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
