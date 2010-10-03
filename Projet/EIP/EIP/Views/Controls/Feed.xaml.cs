@@ -99,10 +99,19 @@ namespace EIP.Views.Controls
 
                                 picUser.UriSource = uriImg;
                             }
-                            nameUser.Content = post.userSource.name;
+                            userSource.Content = post.userSource.name;
+                            userSource.NavigateUri = new Uri("/ProfilInfos/" + post.userSource.id + "/Account/" + topic.accountID, UriKind.Relative);
                             if (post.userTarget != null)
-                                nameUser.Content += " > " + post.userTarget.name;
-                            nameUser.NavigateUri = new Uri("/ProfilInfos/" + post.userSource.id + "/Account/" + topic.accountID, UriKind.Relative);
+                            {
+                                chevronUserTarget.Visibility = System.Windows.Visibility.Visible;
+                                userTarget.Content = post.userTarget.name;
+                                userTarget.NavigateUri = new Uri("/ProfilInfos/" + post.userTarget.id + "/Account/" + topic.accountID, UriKind.Relative);
+                            }
+                            else
+                            {
+                                chevronUserTarget.Visibility = System.Windows.Visibility.Collapsed;
+                            }
+                            
                            
 
                             imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
@@ -214,7 +223,7 @@ namespace EIP.Views.Controls
 
                                 picUser.UriSource = uriImg;
                             }
-                            nameUser.Content = status.User.Name;
+                            userSource.Content = status.User.Name;
                             imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
 
                             //LoadMessage(status.Text);
@@ -262,6 +271,12 @@ namespace EIP.Views.Controls
                 }
             }
             
+        }
+
+        private void picUserBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+           
+            Connexion.navigationService.Navigate(new Uri("/ProfilInfos/" + post.userSource.id + "/Account/" + topic.accountID, UriKind.Relative));
         }
 
 

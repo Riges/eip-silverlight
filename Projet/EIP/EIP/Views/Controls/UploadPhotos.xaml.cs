@@ -20,6 +20,7 @@ namespace EIP.Views.Controls
         private long accountID;
         private long uid;
         private string aid;
+        private List<UpPhoto> photos;
         
 
         public UploadPhotos(long laccountID, long luserID, string laid, FileInfo[] files)
@@ -39,14 +40,15 @@ namespace EIP.Views.Controls
 
             foreach (var fileInfo in files)
             {
-                using (var fileStream = fileInfo.OpenRead())
+               /* using (var fileStream = fileInfo.OpenRead())
                 {
                     var bitmapImage = new BitmapImage();
                     bitmapImage.SetSource(fileStream);
                     Images.Add(new  UpPhoto("", bitmapImage));
 
                     fileStream.Close();
-                }
+                }*/
+                Images.Add(new UpPhoto("", fileInfo));
             }
 
             PhotosControl.DataContext = Images;
@@ -63,6 +65,8 @@ namespace EIP.Views.Controls
             if (albumsResult != null)
             {
                 List<album> albums = new List<album>();
+
+
                 albums.AddRange(albumsResult);
                 albums.Add(new album() { name = "Nouvel Album" });
 
@@ -82,46 +86,91 @@ namespace EIP.Views.Controls
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
 
+            album album = comboAlbums.SelectedItem as album;
+            this.photos = PhotosControl.DataContext as List<UpPhoto>;
 
+            if (album.aid == null || album.aid == "")
+            {
+                ((AccountFacebookLight)Connexion.accounts[this.accountID]).CreateAlbumCalled += new AccountFacebookLight.CreateAlbumCompleted(UploadPhotos_CreateAlbumCalled);
+                ((AccountFacebookLight)Connexion.accounts[this.accountID]).CreateAlbum(nameAlbum.Text.Trim(), lieuAlbum.Text.Trim(), descriptionAlbum.Text.Trim());
+            }
+            else
+            {
+                LetsUploadPhotos(album);
+            }
+
+            //this.DialogResult = true;
+        }
+
+        void UploadPhotos_CreateAlbumCalled(album album)
+        {
+            Dispatcher.BeginInvoke(() =>
+                {
+                    LetsUploadPhotos(album);
+                });
+        }
+
+        private void LetsUploadPhotos(album album)
+        {
+            ProgressUploadPhotos progressUploadPhotos = new ProgressUploadPhotos(this.accountID, this.uid, this.aid, this.photos);
+
+            progressUploadPhotos.Show();
+            
 
 
             this.DialogResult = true;
+
+            //foreach( UpPhoto photo in this.photos)
+            //{
+            //    FileInfo file = photo.img;
+            //    using (System.IO.Stream str = file.OpenRead())
+            //    {
+            //        Byte[] bytes = new Byte[str.Length];
+            //        str.Read(bytes, 0, bytes.Length);
+
+            //        if (GetFileType(file) != Enums.FileType.jp2)
+            //        {
+            //            ((AccountFacebookLight)Connexion.accounts[this.accountID]).UploadPhotoCalled += new AccountFacebookLight.UploadPhotoCompleted(UploadPhotos_UploadPhotoCalled);
+            //            ((AccountFacebookLight)Connexion.accounts[this.accountID]).UploadPhoto(album.aid, photo.text, bytes, GetFileType(file));
+            //        }
+            //    }
+            //}
         }
+
+       
+
+        
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-
-
-
-
         }
 
         private void comboAlbums_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             album selectedAlbum = (album)comboAlbums.SelectedItem;
-
-            if (selectedAlbum.aid == null || selectedAlbum.aid == "")
+            if (selectedAlbum != null)
             {
-                nameAlbum.IsEnabled = true;
-                nameAlbum.Text = "";
+                if (selectedAlbum.aid == null || selectedAlbum.aid == "")
+                {
+                    nameAlbum.IsEnabled = true;
+                    nameAlbum.Text = "";
+                }
+                else
+                {
+                    nameAlbum.Text = selectedAlbum.name;
+                    nameAlbum.IsEnabled = false;
+                }
             }
-            else
-            {
-                nameAlbum.Text = selectedAlbum.name;
-                nameAlbum.IsEnabled = false;
-            }
-            
-
         }
     }
 
     public class UpPhoto
     {
-        public BitmapImage img { get; set; }
+        public FileInfo img { get; set; }
         public string text { get; set; }
 
-        public UpPhoto(string unText, BitmapImage uneImg)
+        public UpPhoto(string unText, FileInfo uneImg)
         {
             this.text = unText;
             this.img = uneImg;

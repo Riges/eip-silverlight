@@ -47,7 +47,7 @@
                 </Image.Projection>
         </Image>-->
 
-        <Border CornerRadius="20" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="3" Width="100" Height="100" Grid.RowSpan="3" Grid.Column="0" Margin="0,5,20,5" HorizontalAlignment="Right">
+        <Border CornerRadius="20" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="3" Width="100" Height="100" Grid.RowSpan="3" Grid.Column="0" Margin="0,5,20,5" HorizontalAlignment="Right" MouseLeftButtonUp="picUserBorder_MouseLeftButtonUp" Cursor="Hand" >
             <Border.Background>
                 <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
                     <ImageBrush.ImageSource>
@@ -60,7 +60,9 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
             <Image Name="imgCpt" Width="16"></Image>
-            <HyperlinkButton  Name="nameUser" Margin="5,0,0,0" Style="{StaticResource HyperlinkButtonStyle}"></HyperlinkButton>
+            <HyperlinkButton  Name="userSource" Margin="5,0,0,0" Style="{StaticResource HyperlinkButtonStyle}"></HyperlinkButton>
+            <TextBlock Name="chevronUserTarget" Text=">" Margin="5,0,5,0" Visibility="Collapsed"></TextBlock>
+            <HyperlinkButton  Name="userTarget" Margin="0,0,0,0" Style="{StaticResource HyperlinkButtonStyle}"></HyperlinkButton>
         </StackPanel>
         
         

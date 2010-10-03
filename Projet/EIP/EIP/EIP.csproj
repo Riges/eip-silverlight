@@ -110,6 +110,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Objects\FileInfoToBitmapImage.cs" />
     <Compile Include="Objects\Friend.cs" />
     <Compile Include="Objects\ThreadMessage.cs" />
     <Compile Include="Objects\Profil.cs" />
@@ -204,6 +205,9 @@
     </Compile>
     <Compile Include="Views\Controls\PhotoControl.xaml.cs">
       <DependentUpon>PhotoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ProgressUploadPhotos.xaml.cs">
+      <DependentUpon>ProgressUploadPhotos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\UnCompte.xaml.cs">
       <DependentUpon>UnCompte.xaml</DependentUpon>
@@ -385,6 +389,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\PhotoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ProgressUploadPhotos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
