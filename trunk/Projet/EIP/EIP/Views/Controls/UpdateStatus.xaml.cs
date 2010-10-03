@@ -232,7 +232,6 @@ namespace EIP.Views.Controls
             //List<BitmapImage> Images = new List<BitmapImage>();
             foreach (var fileInfo in files)
             {
-                
                 using (System.IO.Stream str = fileInfo.OpenRead())  
                 {  
                     Byte[] bytes = new Byte[str.Length];  
@@ -253,7 +252,6 @@ namespace EIP.Views.Controls
                 }*/
 
             }
-           
         }
 
         void serviceEIP_UploadPhotoCompleted(object sender, UploadPhotoCompletedEventArgs e)

@@ -57,6 +57,7 @@ namespace EIP.Views.Controls
             userName.Style = App.Current.Resources["HyperlinkButtonStyle"] as Style;
             userName.Content = profile.name;
             userName.Margin = new Thickness(0, 0, 5, 0);
+            userName.NavigateUri = new Uri("/ProfilInfos/" + unProfile.id + "/Account/" + this.accountID, UriKind.Relative);
             content.Children.Add(userName);
 
             if (com.text != "")

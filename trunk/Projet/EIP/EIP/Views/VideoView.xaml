@@ -6,7 +6,7 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
              xmlns:mp="clr-namespace:MediaPlayer;assembly=MediaPlayer"
-    Width="610" Height="413">
+    Width="610" Height="413" Margin="10,0,10,0">
     <navigation:Page.Resources>
         <Storyboard x:Name="controlsIn">
             <DoubleAnimation BeginTime="00:00" Storyboard.TargetName="controlsContainer" From="0" To="1" Storyboard.TargetProperty="Opacity" />
@@ -23,6 +23,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </navigation:Page.Resources>
+    
     <Grid x:Name="LayoutRoot">
         <Canvas x:Name="PlayIcon" Width="100" Height="100" Canvas.ZIndex="99" Cursor="Hand" MouseLeftButtonUp="PlayIcon_MouseLeftButtonUp">
             <Path Width="100" Height="100" Canvas.Left="0" Canvas.Top="0" Stretch="Fill" Fill="#77000000" Data="F1 M 15,0L 85,0C 93.2843,0 100,6.71573 100,15L 100,85C 100,93.2843 93.2843,100 85,100L 15,100C 6.71573,100 0,93.2843 0,85L 0,15C 0,6.71573 6.71573,0 15,0 Z "/>

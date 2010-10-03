@@ -8,7 +8,7 @@
 
     <controls:ChildWindow.Resources>
         <objects:AlbumToImageConverter x:Key="AlbumToImageConverter"></objects:AlbumToImageConverter>
-        
+        <objects:FileInfoToBitmapImage x:Key="FileInfoToBitmapImage"></objects:FileInfoToBitmapImage>        
     </controls:ChildWindow.Resources>
 
         <Grid x:Name="LayoutRoot" Margin="2" HorizontalAlignment="Center">
@@ -79,17 +79,13 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Image Margin="0,0,0,5" Source="{Binding Path=img}"></Image>
-                        <TextBox Margin="0,0,0,10" Text="{Binding Path=text}"></TextBox>
+                        <Image Margin="0,0,0,5" Source="{Binding Path=img, Converter={StaticResource FileInfoToBitmapImage}}"></Image>
+                        <TextBox Margin="0,0,0,10" Text="{Binding Path=text, Mode=TwoWay}"></TextBox>
                     </StackPanel>
                 </DataTemplate>
 
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
-       
-
-       
 
         <TextBlock Grid.Row="1" Grid.Column="1" Text="Choisir un album" Margin="0,0,10,0"  VerticalAlignment="Center"></TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="Titre de l'album" VerticalAlignment="Center"></TextBlock>
@@ -109,8 +105,8 @@
 
         <TextBox Name="nameAlbum" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
         
-        <TextBox Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-        <TextBox Grid.Row="4" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+        <TextBox Name="lieuAlbum" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+        <TextBox Name="descriptionAlbum" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
 
         
         

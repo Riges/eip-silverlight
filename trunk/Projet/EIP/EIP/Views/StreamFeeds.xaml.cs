@@ -131,7 +131,7 @@ namespace EIP.Views
 
                 if (wait)
                     ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                else
+                else if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
                     ImgLoad.Visibility = System.Windows.Visibility.Visible;
             }
             

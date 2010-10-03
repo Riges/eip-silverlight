@@ -49,7 +49,7 @@ namespace EIP.Views
                     else
                         acc.Value.selected = false;
                 }
-                Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.ReadOnly;
+                //Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.ReadOnly;
                 Connexion.listeComptes.Reload();
                 
 

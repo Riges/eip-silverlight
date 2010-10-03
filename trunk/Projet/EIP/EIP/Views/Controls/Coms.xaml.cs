@@ -145,10 +145,10 @@ namespace EIP.Views.Controls
 
                         foreach (long uid in uids)
                         {
-                            profile prof = ((AccountFacebookLight)(Connexion.accounts[accountID])).profiles.Where<profile>(delegate(profile profTmp) { if (profTmp.id == uid)return true; return false; }).First();
+                            profile prof = ((AccountFacebookLight)(Connexion.accounts[accountID])).profiles.Where<profile>(delegate(profile profTmp) { if (profTmp != null && profTmp.id == uid)return true; return false; }).First();
                             if (prof != null)
                             {
-                                HyperlinkButton link = new HyperlinkButton() { Content = prof.name, Style = App.Current.Resources["HyperlinkButtonStyle"] as Style };
+                                HyperlinkButton link = new HyperlinkButton() { Content = prof.name, Style = App.Current.Resources["HyperlinkButtonStyle"] as Style, NavigateUri = new Uri("/ProfilInfos/" + uid + "/Account/" + this.accountID, UriKind.Relative) };
                                 if (jaimePanel.Children.Count > 0)
                                     jaimePanel.Children.Add(new TextBlock() { Text = ", " });
                                 jaimePanel.Children.Add(link);

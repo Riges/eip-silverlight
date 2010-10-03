@@ -28,9 +28,10 @@ namespace EIP
     {
 
         public static Dispatcher dispatcher;
-        
-        public Api facebookAPI { get; set; }
-        private BrowserSession browserSession { get; set; }
+
+        private Api facebookAPI;
+        private BrowserSession browserSession;
+        public string appID { get; set; }
         public user userInfos { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }
         public List<user> friends { get; set; }
@@ -69,6 +70,7 @@ namespace EIP
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
             this.videos = new Dictionary<long, Dictionary<long, VideoLight>>();
             this.profiles = new List<profile>();
+            this.appID = "185484705355";
             //this.thumbVideos = new Dictionary<long, string>();
 
             Connexion.dispatcher.BeginInvoke(() =>
@@ -462,6 +464,8 @@ namespace EIP
                     if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
                         this.LoadFeedsCalled.Invoke();
                 }
+
+                this.busy = false;
 
                 //LoadStreamFeedsContext(filtre.ToString());
 
@@ -892,17 +896,13 @@ namespace EIP
                 this.CreateAlbumCalled.Invoke(album);
         }
 
-        public void UploadPhoto(string aid, string caption)
+        public delegate void UploadPhotoCompleted(photo photo);
+        public event UploadPhotoCompleted UploadPhotoCalled;
+
+        public void UploadPhoto(string aid, string caption, byte[] photos, Enums.FileType type)
         {
-            byte[] bytes;
-            
-            //this.facebookAPI.Photos.UploadAsync(aid, caption, bytes, null, new Photos.UploadCallback(UploadPhoto_Completed), null);
 
-
-
-
-
-
+            this.facebookAPI.Photos.UploadAsync(aid, caption, photos, type, new Photos.UploadCallback(UploadPhoto_Completed), null);
 
 
             /*
@@ -937,13 +937,14 @@ namespace EIP
 
         private void UploadPhoto_Completed(photo photo, object o, FacebookException ex)
         {
-
+            if (this.UploadPhotoCalled != null)//evite que ca plante si pas dabo
+                this.UploadPhotoCalled.Invoke(photo);
         }
 
 
         private void PublishStream_completed(string result, object o, FacebookException ex)
         {
-
+            
         }
 
     

@@ -81,7 +81,9 @@ namespace EIP.Views.Controls
             if (oneAccount.selected)
                 box.IsChecked = true;
 
-            accountName.Text = userName;
+            accountName.Content = userName;
+
+            accountName.NavigateUri = new Uri("/ProfilInfos/" + oneAccount.account.userID + "/Account/" + oneAccount.account.accountID, UriKind.Relative);
             
 
             imgAccount.Name = "img" + oneAccount.account.userID;

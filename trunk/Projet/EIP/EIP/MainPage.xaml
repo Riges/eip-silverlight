@@ -32,7 +32,7 @@
                             <Rectangle x:Name="DividerHome" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="LinkFriends" Style="{StaticResource LinkStyle}" 
-                                     NavigateUri="/Friends" TargetName="ContentFrame" Content="Friends"/>
+                                     NavigateUri="/Friends" TargetName="ContentFrame" Content="Amis"/>
 
                             <Rectangle x:Name="DividerFriends" Style="{StaticResource DividerStyle}"/>
 
@@ -41,10 +41,10 @@
 
                             <Rectangle x:Name="DividerMessages" Style="{StaticResource DividerStyle}"/>
 
-                            <HyperlinkButton x:Name="LinkProfil" Style="{StaticResource LinkStyle}" 
+                            <!--<HyperlinkButton x:Name="LinkProfil" Style="{StaticResource LinkStyle}" 
                                      NavigateUri="/Profil" TargetName="ContentFrame" Content="Profil"/>
 
-                            <Rectangle x:Name="DividerProfil" Style="{StaticResource DividerStyle}"/>
+                            <Rectangle x:Name="DividerProfil" Style="{StaticResource DividerStyle}"/>-->
 
                             <HyperlinkButton x:Name="LinkCreateNewAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewAccount_Click"
                                       Content="Ajouter un compte"/>
