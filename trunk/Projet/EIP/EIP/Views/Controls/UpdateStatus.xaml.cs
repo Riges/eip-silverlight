@@ -17,6 +17,8 @@ using Newtonsoft.Json;
 using Hammock.Web;
 using System.Windows.Controls.Primitives;
 using System.IO;
+using EIP.Objects;
+using Facebook.Schema;
 
 namespace EIP.Views.Controls
 {
@@ -175,6 +177,7 @@ namespace EIP.Views.Controls
 
         private void sendStatu_Click(object sender, RoutedEventArgs e)
         {
+            /*
             string tweet = statuValue.Text;
             Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
             MatchCollection mactches = regx.Matches(tweet);
@@ -219,6 +222,7 @@ namespace EIP.Views.Controls
                     }
                 }
             }
+             * */
         }
 
         private void myPopup_Drop(object sender, DragEventArgs e)
@@ -229,39 +233,87 @@ namespace EIP.Views.Controls
 
             if (files == null) return;
 
+            
+
             //List<BitmapImage> Images = new List<BitmapImage>();
             foreach (var fileInfo in files)
             {
-                using (System.IO.Stream str = fileInfo.OpenRead())  
-                {  
-                    Byte[] bytes = new Byte[str.Length];  
-                    str.Read(bytes, 0, bytes.Length);
 
-                    Connexion.serviceEIP.UploadPhotoAsync(fileInfo.Name, bytes);
-                    Connexion.serviceEIP.UploadPhotoCompleted += new EventHandler<UploadPhotoCompletedEventArgs>(serviceEIP_UploadPhotoCompleted);
-                }  
-               
-                /*using (var fileStream = fileInfo.OpenRead())
+                Enums.FileType fileType = Utils.GetFileType(fileInfo);
+                if (fileType != Enums.FileType.gif && fileType != Enums.FileType.jp2)
                 {
-                    var bitmapImage = new BitmapImage();
-                    bitmapImage.SetSource(fileStream);
-                    Images.Add(bitmapImage);
-                   
-                   
-                    fileStream.Close();
-                }*/
+                    using (var fileStream = fileInfo.OpenRead())
+                    {
+                        var bitmapImage = new BitmapImage();
+                        bitmapImage.SetSource(fileStream);
+                        imgPhoto.Source = bitmapImage;
+                        shareLink.Visibility = System.Windows.Visibility.Collapsed;
+                        dropPhotoText.Visibility = System.Windows.Visibility.Collapsed;
+                        removePhotoLink.Visibility = System.Windows.Visibility.Visible;
 
+
+                        fileStream.Close();
+                    }
+                    break;
+                }
             }
+
+           
         }
 
         void serviceEIP_UploadPhotoCompleted(object sender, UploadPhotoCompletedEventArgs e)
         {
             string message = e.Result;
+            /*
+            using (System.IO.Stream str = fileInfo.OpenRead())
+            {
+                Byte[] bytes = new Byte[str.Length];
+                str.Read(bytes, 0, bytes.Length);
+
+                Connexion.serviceEIP.UploadPhotoAsync(fileInfo.Name, bytes);
+                Connexion.serviceEIP.UploadPhotoCompleted += new EventHandler<UploadPhotoCompletedEventArgs>(serviceEIP_UploadPhotoCompleted);
+            }  
+             * */
         }
 
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
             //myPopup.Visibility = System.Windows.Visibility.Collapsed;
+            borderPopup.MaxHeight = 31;
+            borderPopup.MaxWidth = 300;
+        }
+
+        private void TextBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            borderPopup.MaxHeight = 350;
+            borderPopup.MaxWidth = 410;
+
+            //myPopup.Height = 76;
+            //myPopup.Width = 406;
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            borderPopup.MaxHeight = 350;
+            borderPopup.MaxWidth = 410;
+        }
+
+        private void borderPopup_LostFocus(object sender, RoutedEventArgs e)
+        {
+            borderPopup.MaxHeight = 31;
+            borderPopup.MaxWidth = 300;
+        }
+
+        private void borderPopup_MouseEnter(object sender, MouseEventArgs e)
+        {
+            borderPopup.MaxHeight = 350;
+            borderPopup.MaxWidth = 410;
+        }
+
+        private void borderPopup_MouseLeave(object sender, MouseEventArgs e)
+        {
+            borderPopup.MaxHeight = 31;
+            borderPopup.MaxWidth = 300;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="EIP" EntryPointType="EIP.App" RuntimeVersion="4.0.50826.0">
+﻿<Deployment xmlns="http://schemas.microsoft.com/client/2007/deployment" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" EntryPointAssembly="EIP" EntryPointType="EIP.App" RuntimeVersion="4.0.50401.0">
   <Deployment.OutOfBrowserSettings>
     <OutOfBrowserSettings ShortName="MyNetWork" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
       <OutOfBrowserSettings.Blurb>MyNetWork on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>

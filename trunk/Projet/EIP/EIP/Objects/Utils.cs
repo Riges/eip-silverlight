@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using Facebook.Schema;
+using System.IO;
 
 namespace EIP.Objects
 {
@@ -186,6 +188,20 @@ namespace EIP.Objects
                     return new string(letters);                
                 }
             return text;
+        }
+
+        public static Enums.FileType GetFileType(FileInfo file)
+        {
+            switch (file.Extension.ToLower())
+            {
+                case ".jpg": return Enums.FileType.jpg;
+                case ".bmp": return Enums.FileType.bmp;
+                case ".gif": return Enums.FileType.gif;
+                case ".tiff": return Enums.FileType.tiff;
+                case ".png": return Enums.FileType.png;
+                default: return Enums.FileType.jp2;
+            }
+
         }
 
     }
