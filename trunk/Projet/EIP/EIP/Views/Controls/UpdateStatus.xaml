@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Height="50" Width="400" LostFocus="UserControl_LostFocus">
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationBackgroundColorBrush}" MouseEnter="LayoutRoot_MouseEnter" >
+    <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationBackgroundColorBrush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -20,18 +20,62 @@
         </Grid.ColumnDefinitions>
 
         
-        <Popup AllowDrop="True" Name="myPopup" Drop="myPopup_Drop" VerticalOffset="10" IsOpen="True"  >
-            <Border Name="borderPopup" BorderBrush="Black" BorderThickness="3" MaxHeight="31" MaxWidth="300" Background="{StaticResource BgColor}" Drop="myPopup_Drop" AllowDrop="True" MouseEnter="borderPopup_MouseEnter" MouseLeave="borderPopup_MouseLeave">
+        <Popup AllowDrop="True" Name="myPopup" Drop="myPopup_Drop" VerticalOffset="5" IsOpen="True" >
+            <Border Name="borderPopup" CornerRadius="10" Padding="5,5,5,5"  BorderThickness="3" MaxHeight="41" MaxWidth="315" Background="{StaticResource BgColor}" Drop="myPopup_Drop" AllowDrop="True" MouseEnter="borderPopup_MouseEnter" MouseLeave="borderPopup_MouseLeave">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="300" AllowDrop="True" Drop="myPopup_Drop" MouseLeftButtonDown="TextBox_MouseLeftButtonDown" GotFocus="TextBox_GotFocus"></TextBox>
-                        <Button Content="Partager" HorizontalContentAlignment="Center" Width="90" Margin="10,0,10,0" Height="25" ></Button>
+                        <TextBox Width="300" AllowDrop="True" Drop="myPopup_Drop" MouseLeftButtonDown="TextBox_MouseLeftButtonDown" Name="statutBox"></TextBox>
+                        <Button Content="Partager" HorizontalContentAlignment="Center" Width="90" Margin="10,0,10,0" Height="25" Click="sendStatut_Click" ></Button>
                     </StackPanel>
-                    <HyperlinkButton Name="shareLink" Content="Partager un lien" Style="{StaticResource HyperlinkButtonStyle}" HorizontalAlignment="Left" Cursor="Hand"></HyperlinkButton>
+
+                    <StackPanel  Name="NetworkStackPanel" Orientation="Horizontal">
+                    </StackPanel>
+
+                    <HyperlinkButton Name="shareLink" Content="Partager un lien" Style="{StaticResource HyperlinkButtonStyle}" HorizontalAlignment="Left" Cursor="Hand" Click="shareLink_Click"></HyperlinkButton>
                     <TextBlock Name="dropPhotoText" Text="Déposez une photo ici pour la partager." HorizontalAlignment="Left"></TextBlock>
 
-                    <HyperlinkButton Name="removePhotoLink" Content="Supprimer la photo" Visibility="Collapsed" Style="{StaticResource HyperlinkButtonStyle}"></HyperlinkButton>
+                    <HyperlinkButton Name="removePhotoLink" Content="Supprimer la photo" Visibility="Collapsed" Style="{StaticResource HyperlinkButtonStyle}" Click="removePhotoLink_Click"></HyperlinkButton>
+                    <HyperlinkButton Name="removeLink" Content="Supprimer le lien" Visibility="Collapsed" Style="{StaticResource HyperlinkButtonStyle}" Click="removeLink_Click"></HyperlinkButton>
                     <Image MaxHeight="100" MaxWidth="250" Stretch="Uniform" Name="imgPhoto" ></Image>
+                    
+                    <StackPanel Name="shareLinkTextBox" Orientation="Horizontal" Visibility="Collapsed" Margin="0,5,0,0">
+                        <TextBox Name="linkText" Width="300" GotFocus="TextBox_GotFocus" LostFocus="linkText_LostFocus" Text="http://"></TextBox>
+                        <Button Name="joinLinkBtn" Content="Joindre" Width="90" Margin="10,0,10,0"></Button>
+                    </StackPanel>
+                    
+                    
+                    <Grid Name="shareLinkGrid" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" MaxHeight="100" MaxWidth="120"></Image>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Name="linkTitle"></TextBlock>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="2" Name="theLink"></TextBlock>
+                        
+                        <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
+                            <Button Content="Précédent" Name="prevMini"></Button>
+                            <TextBlock Text="0 sur 0" Margin="5,0,5,0"></TextBlock>
+                            <Button Content="Suivant" Name="nextMini"></Button>
+                            <TextBlock Margin="10,0,0,0" Text="Choisissez une miniature"></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal">
+                            <CheckBox Name="noVignetteBox" Margin="0,0,5,0"></CheckBox>
+                            <TextBlock Text="Pas de vignette"></TextBlock>
+                            
+                        </StackPanel>
+                        
+                        
+                    </Grid>
 
 
 
@@ -47,8 +91,7 @@
             <TextBox Name="statuValue" Width="280" Margin="5 0"></TextBox>
         </StackPanel>-->
         
-        <StackPanel Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="4" Name="NetworkStackPanel" Orientation="Horizontal">
-        </StackPanel>
+       
         <!--<TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold">Twitter</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Bottom" FontWeight="Bold">Facebook</TextBlock>-->
         <!--<Button Content="Envoyer" Grid.Column="3" Height="20" HorizontalAlignment="Left" Name="sendStatu" VerticalAlignment="Stretch" Width="100" Click="sendStatu_Click" />-->

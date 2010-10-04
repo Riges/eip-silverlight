@@ -47,10 +47,8 @@ namespace EIP.Views.Controls
                         {
                             if (oneAccount.Value.selected)
                             {
-
                                 StackPanel panel = new StackPanel();
                                 panel.Orientation = Orientation.Horizontal;
-
 
                                 Image img = new Image();
                                 img.Width = 12;
@@ -81,79 +79,21 @@ namespace EIP.Views.Controls
                             }
                         }
 
-                        //if (NetworkStackPanel.Children == null || NetworkStackPanel.Children.Count == 0)
-                        //{
-                        //    NetworkStackPanel.Children.Clear();
-                        //    TextBlock text = new TextBlock();
-                        //    text.Text = "Accounts selected";
-                        //    text.FontStyle = FontStyles.Italic;
-                        //    text.FontSize = 10;
-                        //    text.Foreground = brush;
-                        //    text.VerticalAlignment = System.Windows.VerticalAlignment.Center; ;
-                        //    NetworkStackPanel.Children.Add(text);
-                        //}
-
                     });
                 }
-                //else
-                //{
-                //    NetworkStackPanel.Children.Clear();
-                //    TextBlock text = new TextBlock();
-                //    text.Text = "Accounts selected";
-                //    text.FontStyle = FontStyles.Italic;
-                //    text.FontSize = 10;
-                //    text.Foreground = brush;
-                //    text.VerticalAlignment = System.Windows.VerticalAlignment.Center; ;
-                //    NetworkStackPanel.Children.Add(text);
-                //}
             }
             else
             {
                 Dispatcher.BeginInvoke(() =>
                 {
                     NetworkStackPanel.Children.Clear();
-
-                    //TextBlock text = new TextBlock();
-                    //text.Text = "Accounts selected";
-                    //text.FontStyle = FontStyles.Italic;
-                    //text.FontSize = 10;
-                    //text.Foreground = brush;
-                    //text.VerticalAlignment = System.Windows.VerticalAlignment.Center;;
-                    //NetworkStackPanel.Children.Add(text);
                 });
             }
         }
 
-        void buttonClose_Click(object sender, RoutedEventArgs e)
-        {
-            // Close the popup.
-            p.IsOpen = false;
-
-        }
-
-
         public RoutedEventHandler box_Checked { get; set; }
 
         public RoutedEventHandler box_Unchecked { get; set; }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            LoadAccountButtons();
-        }
-
-        private void LayoutRoot_MouseEnter(object sender, MouseEventArgs e)
-        {
-            DisplayPopup();
-            LoadAccountButtons();
-
-        }
-
-
-        private void DisplayPopup()
-        {
-            myPopup.IsOpen = true;
-        }
-
 
         private bool checkIfTwitterActiveAccount()
         {
@@ -175,10 +115,10 @@ namespace EIP.Views.Controls
                 return "******************************";
         }
 
-        private void sendStatu_Click(object sender, RoutedEventArgs e)
+        private void sendStatut_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            string tweet = statuValue.Text;
+
+            string tweet = statutBox.Text;
             Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
             MatchCollection mactches = regx.Matches(tweet);
             foreach (Match match in mactches)
@@ -198,21 +138,40 @@ namespace EIP.Views.Controls
                             {
                                 if (oneAccount.Value.selected)
                                 {
-
                                     switch (oneAccount.Value.account.typeAccount)
                                     {
                                         case Account.TypeAccount.Facebook:
-                                            ((AccountFacebookLight)oneAccount.Value).SendStatus(statuValue.Text);
+                                            if (shareLinkTextBox.Visibility == System.Windows.Visibility.Visible)
+                                            {
+                                                if(linkText.Text.Trim() != "" && linkText.Text.Trim() != "http://")
+                                                    ((AccountFacebookLight)oneAccount.Value).SendStreamLink(statutBox.Text, linkText.Text.Trim());
+                                                else
+                                                    ((AccountFacebookLight)oneAccount.Value).SendStatus(statutBox.Text);
+                                            }
+                                            else
+                                            {
+                                                ((AccountFacebookLight)oneAccount.Value).SendStatus(statutBox.Text);
+                                            }
                                             break;
                                         case Account.TypeAccount.Twitter:
-                                            ((AccountTwitterLight)oneAccount.Value).SendStatus(statuValue.Text);
+                                            string status = statutBox.Text;
+
+                                            if (shareLinkTextBox.Visibility == System.Windows.Visibility.Visible)
+                                            {
+                                                if (linkText.Text.Trim() != "" && linkText.Text.Trim() != "http://")
+                                                    status += " " + linkText.Text.Trim();
+                                            }
+                                            ((AccountTwitterLight)oneAccount.Value).SendStatus(status);
+                                           
                                             break;
                                         default:
                                             break;
                                     }
                                 }
                             }
-                            statuValue.Text = "";
+                            statutBox.Text = "";
+                            linkText.Text = "";
+                            removeLink_Click(null, null);
                         });
                     }
                     else
@@ -222,20 +181,15 @@ namespace EIP.Views.Controls
                     }
                 }
             }
-             * */
+           
         }
 
         private void myPopup_Drop(object sender, DragEventArgs e)
         {
             if (e.Data == null) return;
-
             var files = e.Data.GetData(DataFormats.FileDrop) as FileInfo[];
-
             if (files == null) return;
 
-            
-
-            //List<BitmapImage> Images = new List<BitmapImage>();
             foreach (var fileInfo in files)
             {
 
@@ -250,7 +204,6 @@ namespace EIP.Views.Controls
                         shareLink.Visibility = System.Windows.Visibility.Collapsed;
                         dropPhotoText.Visibility = System.Windows.Visibility.Collapsed;
                         removePhotoLink.Visibility = System.Windows.Visibility.Visible;
-
 
                         fileStream.Close();
                     }
@@ -278,42 +231,86 @@ namespace EIP.Views.Controls
 
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
-            //myPopup.Visibility = System.Windows.Visibility.Collapsed;
-            borderPopup.MaxHeight = 31;
-            borderPopup.MaxWidth = 300;
+            ClosePopup();
         }
 
         private void TextBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            borderPopup.MaxHeight = 350;
-            borderPopup.MaxWidth = 410;
-
-            //myPopup.Height = 76;
-            //myPopup.Width = 406;
+            OpenPopup();
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            borderPopup.MaxHeight = 350;
-            borderPopup.MaxWidth = 410;
+            if (linkText.Text.Trim() == "http://")
+            {
+                linkText.Text = "";
+            }
+        }
+
+        private void linkText_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (linkText.Text.Trim() == "")
+            {
+                linkText.Text = "http://";
+            }
         }
 
         private void borderPopup_LostFocus(object sender, RoutedEventArgs e)
         {
-            borderPopup.MaxHeight = 31;
-            borderPopup.MaxWidth = 300;
+            ClosePopup();
         }
 
         private void borderPopup_MouseEnter(object sender, MouseEventArgs e)
         {
-            borderPopup.MaxHeight = 350;
-            borderPopup.MaxWidth = 410;
+            OpenPopup();
         }
 
         private void borderPopup_MouseLeave(object sender, MouseEventArgs e)
         {
-            borderPopup.MaxHeight = 31;
-            borderPopup.MaxWidth = 300;
+            ClosePopup();
         }
+
+        private void OpenPopup()
+        {
+            LoadAccountButtons();
+            borderPopup.MaxHeight = 500;
+            borderPopup.MaxWidth = 415;
+            borderPopup.BorderBrush = new SolidColorBrush(){  Color = Colors.Black};
+        } 
+
+        private void ClosePopup()
+        {
+            borderPopup.MaxHeight = 41;
+            borderPopup.MaxWidth = 315;
+            borderPopup.BorderBrush = new SolidColorBrush();
+        }
+
+        private void removePhotoLink_Click(object sender, RoutedEventArgs e)
+        {
+            shareLink.Visibility = System.Windows.Visibility.Visible;
+            dropPhotoText.Visibility = System.Windows.Visibility.Visible;
+            removePhotoLink.Visibility = System.Windows.Visibility.Collapsed;
+            imgPhoto.Source = null;
+        }
+
+        private void shareLink_Click(object sender, RoutedEventArgs e)
+        {
+            shareLink.Visibility = System.Windows.Visibility.Collapsed;
+            dropPhotoText.Visibility = System.Windows.Visibility.Collapsed;
+            removeLink.Visibility = System.Windows.Visibility.Visible;
+
+            shareLinkTextBox.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void removeLink_Click(object sender, RoutedEventArgs e)
+        {
+            shareLink.Visibility = System.Windows.Visibility.Visible;
+            dropPhotoText.Visibility = System.Windows.Visibility.Visible;
+            removeLink.Visibility = System.Windows.Visibility.Collapsed;
+
+            shareLinkTextBox.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+
     }
 }
