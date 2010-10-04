@@ -882,6 +882,10 @@ namespace EIP
         }
 
 
+        //////////////////////////////////////////////////////
+        /////////               Photos              //////////
+        //////////////////////////////////////////////////////
+
         public delegate void CreateAlbumCompleted(album album);
         public event CreateAlbumCompleted CreateAlbumCalled;
 
@@ -942,9 +946,25 @@ namespace EIP
         }
 
 
-        private void PublishStream_completed(string result, object o, FacebookException ex)
+        //////////////////////////////////////////////////////
+        /////////               Liens              //////////
+        //////////////////////////////////////////////////////
+
+        public void SendStreamLink(string msg, string link)
         {
-            
+            attachment attachment = new attachment();
+            attachment.href = link;
+            attachment.name = link;
+
+            this.facebookAPI.Stream.PublishAsync(msg, attachment, null, this.account.userID.ToString(), this.account.userID, new Stream.PublishCallback(SendStreamLink_Completed), null);
+        }
+
+        private void SendStreamLink_Completed(string result, object o, FacebookException ex)
+        {
+            if (ex == null)
+            {
+                Connexion.navigationService.Navigate(new Uri("/Home", UriKind.Relative));
+            }
         }
 
     
