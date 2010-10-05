@@ -224,6 +224,10 @@ namespace EIP
         public delegate void OnGetMessagesCompleted(List<ThreadMessage> liste);
         public event OnGetMessagesCompleted GetMessagesCalled;
 
+
+        public delegate void OnGetThreadCompleted(thread th);
+        public event OnGetThreadCompleted GetThreadCalled;
+
         public void LoadInboxMessages()
         {
 
@@ -239,7 +243,6 @@ namespace EIP
             this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=1", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
 
         }
-
 
         public void GetThreadsFQL_Completed(message_getThreadsInFolder_response liste, object obj, FacebookException ex)
         {
@@ -332,6 +335,51 @@ namespace EIP
             if(this.GetMessagesCalled != null)
                 this.GetMessagesCalled.Invoke(liste2);
             
+        }
+
+
+
+        public void LoadThreadMessages(thread th)
+        {
+            int test = 1;
+            this.facebookAPI.Fql.QueryAsync("SELECT message_id, thread_id, author_id, body,created_time,attachment,viewer_id from message where thread_id=" + th.thread_id + " ORDER BY created_time ASC", new Fql.QueryCallback(GetThreadMessagesFQL_Completed), th);
+
+        }
+
+        public void GetThreadMessagesFQL_Completed(String messagesXml, object obj, FacebookException ex)
+        {
+            List<message> liste = new List<message>();
+            using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(messagesXml)))
+            {
+                do
+                {
+                    try
+                    {
+                        message myMessage = new message();
+
+                        reader.ReadToFollowing("message_id");
+                        myMessage.message_id = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("author_id");
+                        myMessage.author_id = reader.ReadElementContentAsLong();
+                        reader.ReadToFollowing("body");
+                        myMessage.body = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("created_time");
+                        myMessage.created_time = reader.ReadElementContentAsLong();
+                        //reader.ReadToFollowing("attachment");
+                        //myMessage.attachment = reader.ReadElementContentAs(stream_attachment, null);
+
+
+                        liste.Add(myMessage);
+                    }
+                    catch (Exception e)
+                    {
+                        break;
+                    }
+                } while (!reader.EOF);
+                ((thread)obj).messages.message = liste;
+                if (this.GetMessagesCalled != null)
+                    this.GetThreadCalled.Invoke((thread)obj);
+            }
         }
 
 
