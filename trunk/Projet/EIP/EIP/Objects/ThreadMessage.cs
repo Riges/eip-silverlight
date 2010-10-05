@@ -104,5 +104,27 @@ namespace EIP.Objects
             return null;
         }
 
+        public Boolean hasDetails()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    return true;
+                    break;
+            }
+            return false;
+        }
+
+
+        public thread getThread()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    return this.MessageFb;
+                    break;
+            }
+            return null;
+        }
     }
 }

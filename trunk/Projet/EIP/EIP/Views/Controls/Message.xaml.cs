@@ -30,28 +30,6 @@ namespace EIP.Views.Controls
         {
             InitializeComponent();
 
-            /*Image avatar = new Image();
-            avatar.Width = 50;
-            avatar.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            if (th.getPic() != null) // verif si gif
-            {
-                Uri uriImg = new Uri(th.getPic());
-                avatar.Source = new BitmapImage(uriImg);
-            }
-            messagesPanel.Children.Add(avatar);
-            TextBlock authorName = new TextBlock();
-            authorName.Text = th.getAuthorName();
-            messagesPanel.Children.Add(authorName);
-            TextBlock subject = new TextBlock();
-            subject.Text = th.getSubject();
-            messagesPanel.Children.Add(subject);
-            if (th.getSummary() != "")
-            {
-                TextBlock summary = new TextBlock();
-                summary.Text = th.getSummary();
-                messagesPanel.Children.Add(summary);
-            }*/
-
             if (th.getPic() != null) // verif si gif
             {
                 Uri uriImg = new Uri(th.getPic());
@@ -60,6 +38,9 @@ namespace EIP.Views.Controls
             //subject.Text = th.getSubject();
             subjectText.Text = th.getSubject();
             subject.NavigateUri = new Uri("/Messages/", UriKind.Relative); //TODO
+            //if (th.hasDetails() && th.getThread().thread_id == 1438170797750)
+                //((AccountFacebookLight)Connexion.accounts[th.accountID]).LoadThreadMessages(th.getThread());
+            //subject.Click += ((AccountFacebookLight)Connexion.accounts[th.accountID]).LoadThreadMessages(th.getThread());
             if (th.getSummary() != "")
                 summary.Text = th.getSummary().Replace("\n", " ");
             else
