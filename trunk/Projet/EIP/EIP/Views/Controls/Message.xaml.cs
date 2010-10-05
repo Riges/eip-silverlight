@@ -16,6 +16,8 @@ namespace EIP.Views.Controls
 {
     public partial class Message : UserControl
     {
+        ThreadMessage thread;
+
         public Message()
         {
             InitializeComponent();
@@ -30,6 +32,7 @@ namespace EIP.Views.Controls
         {
             InitializeComponent();
 
+            thread = th;
             if (th.getPic() != null) // verif si gif
             {
                 Uri uriImg = new Uri(th.getPic());
@@ -40,7 +43,7 @@ namespace EIP.Views.Controls
             subject.NavigateUri = new Uri("/Messages/", UriKind.Relative); //TODO
             //if (th.hasDetails() && th.getThread().thread_id == 1438170797750)
                 //((AccountFacebookLight)Connexion.accounts[th.accountID]).LoadThreadMessages(th.getThread());
-            //subject.Click += ((AccountFacebookLight)Connexion.accounts[th.accountID]).LoadThreadMessages(th.getThread());
+            subject.Click += subject_Click;
             if (th.getSummary() != "")
                 summary.Text = th.getSummary().Replace("\n", " ");
             else
@@ -48,6 +51,11 @@ namespace EIP.Views.Controls
             personText.Text = th.getAuthorName();
             person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
             date.Text = th.date.ToString();
+        }
+
+        private void subject_Click(object sender, RoutedEventArgs e)
+        {
+            ((AccountFacebookLight)Connexion.accounts[thread.accountID]).LoadThreadMessages(thread.getThread());
         }
 
     }
