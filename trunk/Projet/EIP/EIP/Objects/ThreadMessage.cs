@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
 using EIP.ServiceEIP;
+using System.Collections.Generic;
 
 namespace EIP.Objects
 {
@@ -22,6 +23,7 @@ namespace EIP.Objects
         // Facebook
         private thread MessageFb { get; set; }
         private profile authorFb { get; set; }
+        private List<MessageFacebook> messagesFb { get; set; }
 
         public ThreadMessage() { }
 
@@ -125,6 +127,12 @@ namespace EIP.Objects
                     break;
             }
             return null;
+        }
+
+        // Facebook
+        public void setMessages(List<MessageFacebook> liste)
+        {
+            this.messagesFb = liste;
         }
     }
 }

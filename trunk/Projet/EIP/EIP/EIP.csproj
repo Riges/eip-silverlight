@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Objects\FileInfoToBitmapImage.cs" />
     <Compile Include="Objects\Friend.cs" />
+    <Compile Include="Objects\MessageFacebook.cs" />
     <Compile Include="Objects\ThreadMessage.cs" />
     <Compile Include="Objects\Profil.cs" />
     <Compile Include="Objects\Topic.cs" />

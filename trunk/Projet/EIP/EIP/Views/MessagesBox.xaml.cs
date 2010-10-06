@@ -92,7 +92,7 @@ namespace EIP.Views
             
         }
 
-        void Messages_GetThreadCalled(thread th)
+        void Messages_GetThreadCalled(ThreadMessage th)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {

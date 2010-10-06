@@ -225,7 +225,7 @@ namespace EIP
         public event OnGetMessagesCompleted GetMessagesCalled;
 
 
-        public delegate void OnGetThreadCompleted(thread th);
+        public delegate void OnGetThreadCompleted(ThreadMessage th);
         public event OnGetThreadCompleted GetThreadCalled;
 
         public void LoadInboxMessages()
@@ -271,11 +271,17 @@ namespace EIP
                             userIds.Add(th.snippet_author);
 
                     }
-                    this.facebookAPI.Fql.QueryAsync("SELECT id, name, url, pic_square, type from profile where id IN (" + String.Join(",", userIds) + ")", new Fql.QueryCallback(GetAuthor_Completed), liste2);
+                    //this.facebookAPI.Fql.QueryAsync("SELECT id, name, url, pic_square, type from profile where id IN (" + String.Join(",", userIds) + ")", new Fql.QueryCallback(GetAuthor_Completed), liste2);
+                    GetAuthors(userIds, liste2, new Fql.QueryCallback(GetAuthor_Completed));
                 }
             }
 
 
+        }
+
+        public void GetAuthors(List<long> userIds, object obj, Fql.QueryCallback callback)
+        {
+            this.facebookAPI.Fql.QueryAsync("SELECT id, name, url, pic_square, type from profile where id IN (" + String.Join(",", userIds) + ")", callback, obj);
         }
 
         public void GetAuthor_Completed(String usersXml, object data, FacebookException ex)
@@ -349,6 +355,7 @@ namespace EIP
         public void GetThreadMessagesFQL_Completed(String messagesXml, object obj, FacebookException ex)
         {
             List<message> liste = new List<message>();
+            List<long> userIds = new List<long>();
             using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(messagesXml)))
             {
                 do
@@ -361,6 +368,7 @@ namespace EIP
                         myMessage.message_id = reader.ReadElementContentAsString();
                         reader.ReadToFollowing("author_id");
                         myMessage.author_id = reader.ReadElementContentAsLong();
+                        userIds.Add(myMessage.author_id);
                         reader.ReadToFollowing("body");
                         myMessage.body = reader.ReadElementContentAsString();
                         reader.ReadToFollowing("created_time");
@@ -377,13 +385,76 @@ namespace EIP
                     }
                 } while (!reader.EOF);
                 ((thread)obj).messages.message = liste;
-                if (this.GetMessagesCalled != null)
-                    this.GetThreadCalled.Invoke((thread)obj);
+                /*if (this.GetMessagesCalled != null)
+                    this.GetThreadCalled.Invoke((thread)obj);*/
+                GetAuthors(userIds, obj, new Fql.QueryCallback(GetAuthorThread_Completed));
             }
         }
 
 
+        public void GetAuthorThread_Completed(String usersXml, object obj, FacebookException ex)
+        {
+            thread th = obj as thread;
+            List<MessageFacebook> liste = new List<MessageFacebook>();
+            List<profile> users = new List<profile>();
+            // A la mano parce que pas de type de retour de l'api pour les profile
+            using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(usersXml)))
+            {
+                do
+                {
+                    try
+                    {
+                        profile myUser = new profile();
 
+                        reader.ReadToFollowing("id");
+                        myUser.id = reader.ReadElementContentAsLong();
+                        reader.ReadToFollowing("name");
+                        myUser.name = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("url");
+                        myUser.url = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("pic_square");
+                        myUser.pic_square = reader.ReadElementContentAsString();
+                        reader.ReadToFollowing("type");
+                        myUser.type = reader.ReadElementContentAsString();
+
+                        users.Add(myUser);
+                    }
+                    catch (Exception e)
+                    {
+                        break;
+                    }
+                } while (!reader.EOF);
+
+            }
+
+
+            if (users != null)
+                if (users.Count > 0)
+                {
+
+                    MessageFacebook tmp = new MessageFacebook();
+                    foreach (message mess in th.messages.message)
+                    {
+                        foreach (profile unUser in users)
+                        {
+                            
+                            if (mess.author_id > 0)
+                            {
+                                if (mess.author_id == unUser.id)
+                                {
+                                    tmp = new MessageFacebook(mess, unUser);
+                                    liste.Add(tmp);
+                                }
+                            }
+                        }
+                    }
+                }
+            ThreadMessage thread = new ThreadMessage((thread)obj, this.account.accountID);
+            thread.setMessages(liste);
+             if (this.GetMessagesCalled != null)
+                 this.GetThreadCalled.Invoke(thread);
+
+        }
 
 
 
