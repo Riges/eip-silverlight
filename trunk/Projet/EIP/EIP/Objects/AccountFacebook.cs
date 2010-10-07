@@ -1005,6 +1005,47 @@ namespace EIP
         /////////               Photos              //////////
         //////////////////////////////////////////////////////
 
+        public delegate void CreateMyNetWorkAlbumCompleted(album album);
+        public event CreateMyNetWorkAlbumCompleted CreateMyNetWorkAlbumCalled;
+
+        public void CreateMyNetWorkAlbum()
+        {
+            if (this.albums.Count > 0)
+            {
+                CheckIfAlbumExist("myNETwork");
+            }
+            else
+            {
+                this.GetAlbumsCalled += new OnGetAlbumsCompleted(AccountFacebookLight_GetAlbumsCalled);
+                this.GetAlbums(this.account.userID);
+            }
+        }
+
+        private void AccountFacebookLight_GetAlbumsCalled(List<album> albums)
+        {
+            CheckIfAlbumExist("myNETwork");
+        }
+
+        private void CheckIfAlbumExist(string albumText)
+        {
+            bool exist = false;
+
+            var result = from album al in this.albums
+                         where al.name == albumText
+                         select al;
+
+            if(result.Count() > 0)
+                exist = true;
+
+            if (!exist)
+            {
+                this.CreateAlbum("myNETwork", "", "Album de l'application myNETwork");
+            }
+
+          
+        }
+
+
         public delegate void CreateAlbumCompleted(album album);
         public event CreateAlbumCompleted CreateAlbumCalled;
 
