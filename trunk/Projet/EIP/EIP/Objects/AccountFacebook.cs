@@ -1005,14 +1005,14 @@ namespace EIP
         /////////               Photos              //////////
         //////////////////////////////////////////////////////
 
-        public delegate void CreateMyNetWorkAlbumCompleted(album album);
+        public delegate void CreateMyNetWorkAlbumCompleted(AccountFacebookLight acount, album album);
         public event CreateMyNetWorkAlbumCompleted CreateMyNetWorkAlbumCalled;
 
         public void CreateMyNetWorkAlbum()
         {
             if (this.albums.Count > 0)
             {
-                CheckIfAlbumExist("myNETwork");
+                CheckIfAlbumExist("myNETwork", this.account.userID);
             }
             else
             {
@@ -1023,26 +1023,36 @@ namespace EIP
 
         private void AccountFacebookLight_GetAlbumsCalled(List<album> albums)
         {
-            CheckIfAlbumExist("myNETwork");
+            CheckIfAlbumExist("myNETwork", this.account.userID);
         }
 
-        private void CheckIfAlbumExist(string albumText)
+        private void CheckIfAlbumExist(string albumText, long uid)
         {
             bool exist = false;
 
-            var result = from album al in this.albums
+            var result = from album al in this.albums[uid]
                          where al.name == albumText
                          select al;
 
-            if(result.Count() > 0)
+            if (result.Count() > 0)
                 exist = true;
 
             if (!exist)
             {
-                this.CreateAlbum("myNETwork", "", "Album de l'application myNETwork");
+                this.CreateAlbumCalled += new CreateAlbumCompleted(AccountFacebookLight_CreateAlbumCalled);
+                this.CreateAlbum(albumText, "", "Album de l'application myNETwork");
             }
+            else
+            {
+                if (this.CreateMyNetWorkAlbumCalled != null)
+                    this.CreateMyNetWorkAlbumCalled.Invoke(this, result.First());
+            }
+        }
 
-          
+        void AccountFacebookLight_CreateAlbumCalled(album album)
+        {
+            if (this.CreateMyNetWorkAlbumCalled != null)
+                this.CreateMyNetWorkAlbumCalled.Invoke(this, album);
         }
 
 
