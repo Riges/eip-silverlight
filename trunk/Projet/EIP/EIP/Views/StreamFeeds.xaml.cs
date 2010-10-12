@@ -21,6 +21,7 @@ using TweetSharp.Model;
 //using TweetSharp.Twitter.Model;
 using EIP.ServiceEIP;
 using EIP.Objects;
+using EIP.Views.Controls;
 //using EIP.ServiceEIP;
 
 namespace EIP.Views
@@ -43,6 +44,8 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
+
             if (this.NavigationContext.QueryString.ContainsKey("filter"))
                 this.filterFB = this.NavigationContext.QueryString["filter"];
 

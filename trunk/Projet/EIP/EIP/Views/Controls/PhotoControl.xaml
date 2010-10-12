@@ -13,7 +13,16 @@
            
         </Grid.RowDefinitions>
 
-        <Image Name="imgPhoto" Grid.Row="0" MaxWidth="500" Stretch="Uniform" VerticalAlignment="Top" MouseRightButtonUp="imgPhoto_MouseRightButtonUp"></Image> <!--Width="450"-->
+        <Image Name="imgPhoto" Grid.Row="0" MaxWidth="500" Stretch="Uniform" VerticalAlignment="Top" ></Image> <!--Width="450"-->
         <!--<TextBlock Name="titlePhoto" Text="" Grid.Row="1" VerticalAlignment="Center" Margin="0,15,0,15" HorizontalAlignment="Center"></TextBlock>-->
+
+
+        <!--<Popup Name="ContextMenu">
+            <Border CornerRadius="10" Background="White" BorderBrush="Black" BorderThickness="2">
+                <HyperlinkButton Content="Supprimer"></HyperlinkButton>
+            </Border>
+            
+        </Popup>-->
+        
     </Grid>
 </UserControl>

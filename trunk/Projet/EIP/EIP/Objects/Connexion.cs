@@ -127,6 +127,7 @@ namespace EIP
 
         public static void StartDisplay()
         {
+            Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
             listeComptes.Reload();
         }
 
@@ -228,7 +229,10 @@ namespace EIP
             }
 
             if (listeComptes != null)
+            {
+                Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
                 listeComptes.Reload();
+            }
            
             
         }
@@ -305,6 +309,7 @@ namespace EIP
                     }
                 }
                 SetSession(groupid);
+                Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
                 listeComptes.Reload();
                 Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
             }
@@ -623,6 +628,7 @@ namespace EIP
                 //LoginToAccount();
 
                 //LoadFromStorage();
+                Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
                 listeComptes.Reload();
                 addAccount = false;
 
@@ -693,6 +699,38 @@ namespace EIP
             accounts.Remove(accountID);
             listeComptes.Reload();
         }
+
+
+        public static bool SaveStorageValue(string key, object data)
+        {
+            try
+            {
+                storage[key] = data;
+                storage.Save();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static object GetStorageValue(string key)
+        {
+            try
+            {
+                if(storage.Contains(key))
+                    return storage[key];
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
     }
 }

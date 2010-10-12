@@ -6,8 +6,8 @@
                  xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
-           d:DesignWidth="640" d:DesignHeight="480"
-           Title="LeftMenu Page" Background="{StaticResource BgColor}">
+           d:DesignWidth="640" d:DesignHeight="480" MinHeight="300"
+           Title="myNETwork" Background="{StaticResource BgColor}">
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
         <!--<StackPanel Orientation="Vertical" Name="LayoutPanel" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Button Content="Actualités"></Button>

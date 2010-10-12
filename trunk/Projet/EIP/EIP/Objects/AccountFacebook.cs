@@ -862,7 +862,12 @@ namespace EIP
 
                 this.facebookAPI.Photos.GetAsync(null, null, covers, new Photos.GetCallback(GetAlbumsCover_Completed), uid);
 
-            }   
+            }
+            else
+            {
+                if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
+                    this.GetAlbumsCalled.Invoke(new List<album>());
+            }
         }
 
         /*private void GetAlbumsFQL_Completed(photos_getAlbums_response albums, object uid, FacebookException ex)
@@ -1210,14 +1215,19 @@ namespace EIP
 
             if (vids.Count > 0)
             {
+                this.videos[(long)uid] = new Dictionary<long, VideoLight>();
                 foreach (VideoLight vid in vids)
                 {
-                    this.videos[(long)uid] = new Dictionary<long, VideoLight>();
                     this.videos[(long)uid][vid.vid] = vid;
                 }
 
                 if (this.GetVideosCalled != null)
                     this.GetVideosCalled.Invoke(this.videos[(long)uid], (long)uid);
+            }
+            else
+            {
+                if (this.GetVideosCalled != null)
+                    this.GetVideosCalled.Invoke(new Dictionary<long, VideoLight>(), (long)uid);
             }
 
         }

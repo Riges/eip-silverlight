@@ -49,7 +49,7 @@ namespace EIP.Views
                     else
                         acc.Value.selected = false;
                 }
-                //Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.ReadOnly;
+                Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.ReadOnly;
                 Connexion.listeComptes.Reload();
                 
 
@@ -83,7 +83,15 @@ namespace EIP.Views
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    flowControl.DataContext = albums;
+                    if (albums.Count > 0)
+                    {
+                        noAlbums.Visibility = System.Windows.Visibility.Collapsed;
+                        flowControl.DataContext = albums;
+                    }
+                    else
+                    {
+                        noAlbums.Visibility = System.Windows.Visibility.Visible;                        
+                    }
                 });
         }
 

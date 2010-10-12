@@ -24,6 +24,9 @@
         <TextBlock Name="albumName" Grid.Row="1" FontSize="22" FontWeight="Bold" Margin="0,0,0,0" HorizontalAlignment="Center"></TextBlock>
         <TextBlock Name="dragText" Grid.Row="2" Text="Pour ajouter des photos à cet album, déposez les sur cette page." Visibility="Collapsed"></TextBlock>
 
+        <TextBlock Grid.Row="3" Name="noPhotos" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,20,0" Visibility="Collapsed" Text="Cet utilisateur ne possède pas de photos ou ne souhaite pas que vous y accédiez."></TextBlock>
+
+
         <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="3" ItemsSource="{Binding}" VerticalAlignment="Top">
             <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>

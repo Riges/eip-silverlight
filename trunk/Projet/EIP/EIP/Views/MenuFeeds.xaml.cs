@@ -37,12 +37,13 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            menufiltre.Items.Clear();
             foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
                 if (account.Value.selected)
                 {
                     AccordionItem item = new AccordionItem();
-
+                    
                     Image img = new Image();
                     img.Width = 16;
                     switch (account.Value.account.typeAccount)
@@ -72,6 +73,10 @@ namespace EIP.Views
                     item.Header = panelHeader;
 
                     menufiltre.Items.Add(item);
+
+                    //item = new AccordionItem();
+                    //menufiltre.Items.Add(item);
+                    //menufiltre.Items.RemoveAt(menufiltre.Items.Count - 1);
                 }
             }
 
@@ -159,11 +164,12 @@ namespace EIP.Views
                     linkFilter.DataContext = filter.filter_key;
                     linkFilter.Margin = new Thickness(5, 0, 0, 0);
                     linkFilter.Cursor = Cursors.Hand;
+                    linkFilter.Text = filter.name;
 
-                    Binding binding = new Binding();
-                    binding.Source = filter;
-                    binding.Path = new PropertyPath("name");
-                    linkFilter.SetBinding(TextBlock.TextProperty, binding);
+                    //Binding binding = new Binding();
+                    //binding.Source = filter;
+                    //binding.Path = new PropertyPath("name");
+                    //linkFilter.SetBinding(TextBlock.TextProperty, binding);
 
                     panelFilter.Children.Add(imgFilter);
                     panelFilter.Children.Add(linkFilter);

@@ -69,7 +69,16 @@ namespace EIP.Views
             Connexion.dispatcher.BeginInvoke(() =>
             {
 
-                flowControl.DataContext = videos.Values.ToList();
+
+                if (videos.Count > 0)
+                {
+                    noVideos.Visibility = System.Windows.Visibility.Collapsed;
+                    flowControl.DataContext = videos.Values.ToList();
+                }
+                else
+                {
+                    noVideos.Visibility = System.Windows.Visibility.Visible;
+                }
             });
         }
 

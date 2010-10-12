@@ -19,7 +19,7 @@ namespace EIP.Web
         {
             /*context.Response.ContentType = "text/plain";*/
             /*context.Response.Write("Hello World");*/
-            string imageLink = context.Request.Params["link"];
+            string imageLink = context.Request.Params["link"].Replace("||", "&");
 
             context.Response.ContentType = "image/jpeg";
 
