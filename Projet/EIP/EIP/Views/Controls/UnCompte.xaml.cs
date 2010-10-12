@@ -76,9 +76,13 @@ namespace EIP.Views.Controls
                 imgReseau.Source = new BitmapImage(new Uri(imgIcone, UriKind.Relative));
             if (imgAcc != string.Empty)
                 imgAccount.Source = new BitmapImage(new Uri(imgAcc, UriKind.Absolute));
-                  
+
+
+            Account acc = oneAccount.account;
+            string key = acc.groupID + "-" + acc.userID + "-selected";
+
             box.CommandParameter = oneAccount;
-            if (oneAccount.selected)
+            if (oneAccount.selected || Convert.ToBoolean(Connexion.GetStorageValue(key)))
                 box.IsChecked = true;
 
             accountName.Content = userName;
@@ -147,6 +151,10 @@ namespace EIP.Views.Controls
 
         void box_Unchecked(object sender, RoutedEventArgs e)
         {
+            Account acc = ((AccountLight)box.CommandParameter).account;
+            string key = acc.groupID + "-" + acc.userID + "-selected";
+            Connexion.SaveStorageValue(key, false);
+
             Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.accountID].selected = false;
             if (this.mode == ListeComptes.ListeCptMode.Normal)
                 ReloadPage();
@@ -154,6 +162,10 @@ namespace EIP.Views.Controls
 
         void box_Checked(object sender, RoutedEventArgs e)
         {
+            Account acc = ((AccountLight)box.CommandParameter).account;
+            string key = acc.groupID + "-" + acc.userID + "-selected";
+            Connexion.SaveStorageValue(key, true);
+
             Connexion.accounts[((AccountLight)((CheckBox)sender).CommandParameter).account.accountID].selected = true;
             if (this.mode == ListeComptes.ListeCptMode.Normal)
                 ReloadPage();
@@ -178,22 +190,25 @@ namespace EIP.Views.Controls
         private void ReloadPage()
         {
             string sourceStr = Application.Current.Host.NavigationState;
-            string query = "?time=" + DateTime.Now.Ticks;
-
-            foreach (KeyValuePair<string, string> param in Connexion.navigationContext.QueryString)
+            if (!sourceStr.StartsWith("/WaitLoad"))
             {
-                if (param.Key != "time")
-                {
-                    //query += (query == string.Empty ? "?" : "&");
-                    query += string.Format("{0}{1}={2}", "&", param.Key, param.Value);
-                }
-            }
+                string query = "?time=" + DateTime.Now.Ticks;
 
-            Uri source = new Uri((sourceStr.Contains('?') ? sourceStr.Substring(0, sourceStr.IndexOf('?')) : sourceStr) + query, UriKind.Relative);
-            if (Connexion.navigationService != null)
-                Connexion.navigationService.Navigate(source);
-            else
-                Connexion.contentFrame.Navigate(source);
+                foreach (KeyValuePair<string, string> param in Connexion.navigationContext.QueryString)
+                {
+                    if (param.Key != "time")
+                    {
+                        //query += (query == string.Empty ? "?" : "&");
+                        query += string.Format("{0}{1}={2}", "&", param.Key, param.Value);
+                    }
+                }
+
+                Uri source = new Uri((sourceStr.Contains('?') ? sourceStr.Substring(0, sourceStr.IndexOf('?')) : sourceStr) + query, UriKind.Relative);
+                if (Connexion.navigationService != null)
+                    Connexion.navigationService.Navigate(source);
+                else
+                    Connexion.contentFrame.Navigate(source);
+            }
         }
     }
 }

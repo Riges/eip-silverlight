@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     Height="12" Width="202">
     
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" >
         <Canvas>
             <Canvas.Triggers>
                 <EventTrigger RoutedEvent="StackPanel.Loaded">

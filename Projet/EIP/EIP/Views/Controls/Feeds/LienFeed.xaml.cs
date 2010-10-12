@@ -37,7 +37,16 @@ namespace EIP.Views.Controls.Feeds
             {
                 if (topic.post.attachment.media.stream_media[0].src != "" && topic.post.attachment.media.stream_media[0].src != null)
                 {
-                    img.Source = new BitmapImage(new Uri(topic.post.attachment.media.stream_media[0].src, UriKind.Absolute));
+                    string urlImg = string.Empty;
+                    if (topic.post.attachment.media.stream_media[0].src.ToLower().EndsWith(".gif"))
+                    {
+
+                        urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[0].src.Replace("&", "||");
+                    }
+                    else
+                        urlImg = topic.post.attachment.media.stream_media[0].src;
+
+                    img.Source = new BitmapImage(new Uri(urlImg, UriKind.Absolute));
                     imgBorder.Visibility = System.Windows.Visibility.Visible;
                     linkImg.Visibility = System.Windows.Visibility.Visible;
                 }
@@ -90,7 +99,7 @@ namespace EIP.Views.Controls.Feeds
                     if(property.href == null)
                         propertyPanel.Children.Add(new TextBlock() { Text = property.text });
                     else
-                        propertyPanel.Children.Add(new HyperlinkButton() { Content = property.text, NavigateUri = new Uri(property.href, UriKind.Absolute), TargetName = "_blank" });
+                        propertyPanel.Children.Add(new HyperlinkButton() { Content = property.text, NavigateUri = new Uri(property.href, UriKind.Absolute), TargetName = "_blank", Style = Resources["HyperlinkButtonStyle"] as Style });
                     properties.Children.Add(propertyPanel);
                 }
                 

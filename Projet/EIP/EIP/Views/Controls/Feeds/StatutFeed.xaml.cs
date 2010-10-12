@@ -41,6 +41,7 @@ namespace EIP.Views.Controls.Feeds
                     if (mot.StartsWith("www."))
                         theMot = "http://" + mot;
                     HyperlinkButton link = new HyperlinkButton();
+                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
                     link.NavigateUri = new Uri(theMot, UriKind.Absolute);
                     link.Content = theMot + " ";
                     link.TargetName = "_blank";
@@ -49,6 +50,7 @@ namespace EIP.Views.Controls.Feeds
                 else if (mot.StartsWith("@"))
                 {
                     HyperlinkButton link = new HyperlinkButton();
+                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
                     if (mot.EndsWith("!"))
                         link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
                     else
@@ -60,6 +62,7 @@ namespace EIP.Views.Controls.Feeds
                 else if (mot.StartsWith("#"))
                 {
                     HyperlinkButton link = new HyperlinkButton();
+                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
                     link.NavigateUri = new Uri("http://twitter.com/#search?q=" + mot, UriKind.Absolute);
                     link.Content = mot + " ";
                     link.TargetName = "_blank";

@@ -39,20 +39,20 @@ namespace EIP.Views.Controls
             }
         }
 
-        private void imgPhoto_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //ContextMenu.IsOpen = false;
-            //e.Handled = true;
-            //var p = e.GetPosition(null);
-            //lastSelectedObject = ((Shape)sender);
-            //initMenu = true;
-            //foreach (RadioButton rb in stackPopup.Children)
-            //    rb.IsChecked = lastSelectedObject.Tag.ToString() == rb.Tag.ToString();
-            //initMenu = false;
-            //ContextMenu.IsOpen = true;
-            //ContextMenu.SetValue(Canvas.LeftProperty, (double)p.X);
-            //ContextMenu.SetValue(Canvas.TopProperty, (double)p.Y);
+        //private void imgPhoto_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    ContextMenu.IsOpen = false;
+        //    e.Handled = true;
+        //    var p = e.GetPosition(null);
+        //    //lastSelectedObject = ((Shape)sender);
+        //    //initMenu = true;
+        //    //foreach (RadioButton rb in stackPopup.Children)
+        //    //    rb.IsChecked = lastSelectedObject.Tag.ToString() == rb.Tag.ToString();
+        //    //initMenu = false;
+        //    ContextMenu.IsOpen = true;
+        //    ContextMenu.SetValue(Canvas.LeftProperty, (double)p.X);
+        //    ContextMenu.SetValue(Canvas.TopProperty, (double)p.Y);
             
-        }
+        //}
     }
 }

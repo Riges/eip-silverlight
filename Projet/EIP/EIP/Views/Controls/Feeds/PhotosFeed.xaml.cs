@@ -32,8 +32,16 @@ namespace EIP.Views.Controls.Feeds
              * */
             if (topic.post.attachment.media.stream_media.Count >= 1)
             {
+                string urlImg = string.Empty;
+                if (topic.post.attachment.media.stream_media[0].src.ToLower().EndsWith(".gif"))
+                {
+                    urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[0].src.Replace("&", "||");
+                }
+                else
+                    urlImg = topic.post.attachment.media.stream_media[0].src;
+
+                img1.Source = new BitmapImage(new Uri(urlImg, UriKind.Absolute));
                 
-                img1.Source = new BitmapImage(new Uri(topic.post.attachment.media.stream_media[0].src, UriKind.Absolute));
                 img1Border.Visibility = System.Windows.Visibility.Visible;
 
                 /*MessageBox msgBox = new MessageBox("", topic.post.attachment.media.stream_media[0].photo.aid);
@@ -42,12 +50,30 @@ namespace EIP.Views.Controls.Feeds
             }
             if (topic.post.attachment.media.stream_media.Count >= 2)
             {
-                img2.Source = new BitmapImage(new Uri(topic.post.attachment.media.stream_media[1].src, UriKind.Absolute));
+                string urlImg = string.Empty;
+                if (topic.post.attachment.media.stream_media[0].src.ToLower().EndsWith(".gif"))
+                {
+
+                    urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[0].src.Replace("&", "||");
+                }
+                else
+                    urlImg = topic.post.attachment.media.stream_media[0].src;
+
+                img2.Source = new BitmapImage(new Uri(urlImg, UriKind.Absolute));
                 img2Border.Visibility = System.Windows.Visibility.Visible;                
             }
             if (topic.post.attachment.media.stream_media.Count >= 3)
             {
-                img3.Source = new BitmapImage(new Uri(topic.post.attachment.media.stream_media[2].src, UriKind.Absolute));
+                string urlImg = string.Empty;
+                if (topic.post.attachment.media.stream_media[0].src.ToLower().EndsWith(".gif"))
+                {
+
+                    urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[0].src.Replace("&", "||");
+                }
+                else
+                    urlImg = topic.post.attachment.media.stream_media[0].src;
+
+                img3.Source = new BitmapImage(new Uri(urlImg, UriKind.Absolute));
                 img3Border.Visibility = System.Windows.Visibility.Visible;
             }
 

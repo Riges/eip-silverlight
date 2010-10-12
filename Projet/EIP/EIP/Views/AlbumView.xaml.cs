@@ -91,19 +91,29 @@ namespace EIP.Views
 
         void account_GetPhotosCalled(bool ok)
         {
-            if(ok)
+            if (ok)
                 this.Dispatcher.BeginInvoke(() =>
                 {
-                    flowControl.DataContext = ((AccountFacebookLight)Connexion.accounts[this.accountID]).photos[this.aid].Values;
+
+                    if (((AccountFacebookLight)Connexion.accounts[this.accountID]).photos.ContainsKey(this.aid))
+                        if (((AccountFacebookLight)Connexion.accounts[this.accountID]).photos[this.aid].Values.Count > 0)
+                        {
+                            noPhotos.Visibility = System.Windows.Visibility.Collapsed;
+                            flowControl.DataContext = ((AccountFacebookLight)Connexion.accounts[this.accountID]).photos[this.aid].Values;
 
 
 
-                    List<album> albums = ((AccountFacebookLight)Connexion.accounts[this.accountID]).albums[this.uid];
-                     var al = from a in albums
-                            where a.aid == this.aid
-                            select a;
+                            List<album> albums = ((AccountFacebookLight)Connexion.accounts[this.accountID]).albums[this.uid];
+                            var al = from a in albums
+                                     where a.aid == this.aid
+                                     select a;
 
-                     albumName.Text = al.First().name;
+                            albumName.Text = al.First().name;
+                        }
+                        else
+                        {
+                            noPhotos.Visibility = System.Windows.Visibility.Visible;
+                        }
                 });
 
             //photo tof = new photo();

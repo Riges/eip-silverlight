@@ -19,6 +19,8 @@
 
         <TextBlock Name="PseudoUser" Grid.Row="0" FontSize="22" FontWeight="Bold" Margin="0,0,0,10"></TextBlock>
 
+        <TextBlock Grid.Row="1" Name="noVideos" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,20,0" Visibility="Collapsed" Text="Cet utilisateur ne possède pas de vidéos ou ne souhaite pas que vous y accédiez."></TextBlock>
+
         <fl:FlowItemsControl3D Grid.Row="1" Name="flowControl" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center"  >
             <!--ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
