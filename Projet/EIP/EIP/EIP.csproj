@@ -59,20 +59,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dimebrain.TweetSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Facebook.Silverlight">
       <HintPath>Lib\Facebook.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="Hammock.Silverlight">
-      <HintPath>..\EIPWCF\bin\Hammock.Silverlight.dll</HintPath>
+      <HintPath>Lib\Hammock.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json.Silverlight">
+      <HintPath>Lib\Newtonsoft.Json.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="SStuff.FlowControls">
-      <HintPath>Bin\SStuff.FlowControls.dll</HintPath>
+      <HintPath>Lib\SStuff.FlowControls.dll</HintPath>
     </Reference>
     <Reference Include="SStuff.LayoutAlgorithms">
-      <HintPath>Bin\SStuff.LayoutAlgorithms.dll</HintPath>
+      <HintPath>Lib\SStuff.LayoutAlgorithms.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -95,10 +96,8 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\Microsoft SDKs\Silverlight\v3.0\Toolkit\Nov09\Bin\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="System.Windows.Ria, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
-    <Reference Include="TweetSharp.Silverlight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
