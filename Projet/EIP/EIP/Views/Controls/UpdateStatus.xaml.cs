@@ -399,6 +399,24 @@ namespace EIP.Views.Controls
            
         }
 
+        private void statutBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            if (statutBox.Text.Trim() == "Exprime toi !")
+            {
+                statutBox.Text = "";
+            }
+
+        }
+
+        private void statutBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (statutBox.Text.Trim() == "")
+            {
+                statutBox.Text = "Exprime toi !";
+            }
+        }
+
 
     }
 }

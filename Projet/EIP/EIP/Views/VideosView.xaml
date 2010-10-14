@@ -9,7 +9,7 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Title="videosView Page" Margin="10,0,10,0">
+            Margin="10,0,10,0">
     <Grid x:Name="LayoutRoot">
         
         <Grid.RowDefinitions>

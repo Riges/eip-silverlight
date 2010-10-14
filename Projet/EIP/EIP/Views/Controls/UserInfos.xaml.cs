@@ -16,20 +16,26 @@ namespace EIP.Views.Controls
 {
     public partial class UserInfos : UserControl
     {
+        private List<user> mutualFriends;
+        private long accountID;
+        private long uid;
+
         public UserInfos()
         {
             InitializeComponent();
         }
 
-
         public UserInfos(long accountID, long uid)
         {
+            this.accountID = accountID;
+            this.uid = uid;
+
             InitializeComponent();
             LayoutRoot.Visibility = System.Windows.Visibility.Collapsed;
-            LoadInfos(accountID, uid);
+            LoadInfos();
         }
 
-        private void LoadInfos(long accountID, long uid)
+        private void LoadInfos()
         {  
             switch (Connexion.accounts[accountID].account.typeAccount)
             {
@@ -38,6 +44,12 @@ namespace EIP.Views.Controls
                     acc.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
                     acc.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
 
+                    //acc.LoadFriendsOfCalled += new AccountFacebookLight.OnLoadFriendsOfCompleted(acc_LoadFriendsOfCalled);
+                    //acc.LoadFriendsOf(uid);
+
+                    acc.LoadMutualFriendsCalled += new AccountFacebookLight.OnLoadMutualFriendsCompleted(acc_LoadMutualFriendsCalled);
+                    acc.LoadMutualFriends(uid);
+
                     break;
                 case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                     break;
@@ -45,6 +57,8 @@ namespace EIP.Views.Controls
                     break;
             }
         }
+
+
 
         void acc_GetUserInfoCalled(user monUser)
         {
@@ -219,5 +233,96 @@ namespace EIP.Views.Controls
 
                 });
         }
+
+        void acc_LoadMutualFriendsCalled(long uid, List<user> friendsFB)
+        {
+            this.mutualFriends = friendsFB;
+            LoadFriendsToFlowControl(this.mutualFriends);
+        }
+
+        private void LoadFriendsToFlowControl(List<user> users)
+        {
+            Dispatcher.BeginInvoke(() =>
+                {
+                    if (users != null)
+                    {
+                        if (users.Count > 0)
+                        {
+                            amisCommun.Text = users.Count + " amis en commun";
+                            List<Friend> friends = new List<Friend>();
+                            foreach (user friend in users)
+                            {
+                                friends.Add(new Friend() { accountID = this.accountID, userFB = friend });
+                            }
+
+                            flowControl.DataContext = friends;
+                            return;
+                        }
+                    }
+
+
+                    amisCommun.Text = "Pas d'amis en commun";
+
+                });
+  
+        }
+
+        private void searchFriend_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<user> users = new List<user>();
+            if (searchFriend.Text.Trim() != "" && searchFriend.Text.Trim() != "Chercher un ami...")
+            {
+                var result = from user friend in this.mutualFriends
+                             where friend.first_name.ToLower().StartsWith(searchFriend.Text.Trim().ToLower())
+                             || friend.last_name.ToLower().StartsWith(searchFriend.Text.Trim().ToLower())
+                             select friend;
+
+                users = result.ToList<user>();
+                
+            }
+            else
+                users = mutualFriends;
+
+            if (users.Count > 0)
+            {
+                List<Friend> friends = new List<Friend>();
+                foreach (user friend in users)
+                {
+                    friends.Add(new Friend() { accountID = this.accountID, userFB = friend });
+                }
+                flowControl.DataContext = friends;
+            }
+            else
+            {
+                flowControl.DataContext = null;
+            }
+        }
+
+        private void searchFriend_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchFriend.Text.Trim() == "Chercher un ami...")
+            {
+                searchFriend.Text = "";
+            }
+        }
+
+        private void searchFriend_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchFriend.Text.Trim() == "")
+            {
+                searchFriend.Text = "Chercher un ami...";
+                /*
+                List<Friend> friends = new List<Friend>();
+                foreach (user friend in this.mutualFriends)
+                {
+                    friends.Add(new Friend() { accountID = this.accountID, userFB = friend });
+                }
+
+                flowControl.DataContext = friends;*/
+            }
+        }
+
+      
+
     }
 }
