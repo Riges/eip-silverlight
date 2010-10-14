@@ -71,8 +71,6 @@ namespace EIP.Views
                                 }
                             }
                             break;
-                        case EIP.ServiceEIP.Account.TypeAccount.Myspace:
-                            break;
                         default:
                             break;
                     }
@@ -112,42 +110,46 @@ namespace EIP.Views
 
             foreach (KeyValuePair<String, Friend> poto in friends)
             {
-                if (poto.Value.userFB != null)
-                {
-                    FriendView fv = new FriendView();
+                FriendView friend = new FriendView(poto.Value);
 
-                    BitmapImage btImgFB = null;
+                this.Liste.Children.Add(friend);
 
-                    if (poto.Value.userFB.pic_square != null)
-                    {
-                        Uri uriImg = new Uri(poto.Value.userFB.pic_square);
-                        btImgFB = new BitmapImage(uriImg);
-                    }
-                    fv.imgUser.Source = btImgFB;
+                //if (poto.Value.userFB != null)
+                //{
+                //    FriendView fv = new FriendView(poto.Value);
 
-                    fv.nomFriend.Text = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
-                    fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userFB.uid, UriKind.Relative);
+                //    BitmapImage btImgFB = null;
 
-                    this.Liste.Children.Add(fv);
-                }
-                else if (poto.Value.userTW != null)
-                {
-                    FriendView fv = new FriendView();
+                //    if (poto.Value.userFB.pic_square != null)
+                //    {
+                //        Uri uriImg = new Uri(poto.Value.userFB.pic_square);
+                //        btImgFB = new BitmapImage(uriImg);
+                //    }
+                //    fv.imgUser.Source = btImgFB;
 
-                    BitmapImage btImgFB = null;
+                //    fv.nomFriend.Text = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
+                //    fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userFB.uid, UriKind.Relative);
 
-                    if (poto.Value.userTW.ProfileImageUrl != null)
-                    {
-                        Uri uriImg = new Uri(poto.Value.userTW.ProfileImageUrl);
-                        btImgFB = new BitmapImage(uriImg);
-                    }
-                    fv.imgUser.Source = btImgFB;
+                //    this.Liste.Children.Add(fv);
+                //}
+                //else if (poto.Value.userTW != null)
+                //{
+                //    FriendView fv = new FriendView();
 
-                    fv.nomFriend.Text = poto.Value.userTW.Name;
-                    // fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userTW.);
+                //    BitmapImage btImgFB = null;
 
-                    this.Liste.Children.Add(fv);
-                }
+                //    if (poto.Value.userTW.ProfileImageUrl != null)
+                //    {
+                //        Uri uriImg = new Uri(poto.Value.userTW.ProfileImageUrl);
+                //        btImgFB = new BitmapImage(uriImg);
+                //    }
+                //    fv.imgUser.Source = btImgFB;
+
+                //    fv.nomFriend.Text = poto.Value.userTW.Name;
+                //    // fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userTW.);
+
+                //    this.Liste.Children.Add(fv);
+                //}
             }
             ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
             Liste.Visibility = System.Windows.Visibility.Visible;

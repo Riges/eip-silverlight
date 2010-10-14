@@ -73,6 +73,7 @@ namespace EIP.Views
                 {
                     if (monUser != null)
                     {
+                        this.Title = "Albums photo de " + monUser.name;
                         PseudoUser.Text = monUser.name;
                     }
                 });

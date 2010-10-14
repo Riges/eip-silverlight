@@ -74,6 +74,7 @@ namespace EIP.Views
             {
                 if (monUser != null)
                 {
+                    this.Title = "Profil de " + monUser.name;
                     photoUser.UriSource = new Uri(monUser.pic_big, UriKind.Absolute);
                 }
             });

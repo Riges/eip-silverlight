@@ -9,7 +9,7 @@
            xmlns:Controls="clr-namespace:EIP.Views.Controls"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Title="AlbumsView Page" Margin="10,0,10,0">
+           Margin="10,0,10,0">
 
     <navigation:Page.DataContext>
         <vm:InCoverFlowContentControlSampleData />

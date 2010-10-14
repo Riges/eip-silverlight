@@ -136,7 +136,14 @@ namespace EIP.Objects
                     HyperlinkButton link = new HyperlinkButton();
                     link.Style = Resources["HyperlinkButtonStyle"] as Style;
                     link.Foreground = new SolidColorBrush(Colors.White);
-                    link.NavigateUri = new Uri(theMot, UriKind.Absolute);
+                    try
+                    {
+                        link.NavigateUri = new Uri(theMot, UriKind.Absolute);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }               
                     link.Content = theMot + " ";
                     link.TargetName = "_blank";
                     list.Add(link);

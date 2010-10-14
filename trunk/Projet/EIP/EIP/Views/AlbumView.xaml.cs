@@ -23,6 +23,7 @@ namespace EIP.Views
         public long uid { get; set; }
         public long accountID { get; set; }
 
+
         public AlbumView()
         {
             InitializeComponent();
@@ -84,6 +85,7 @@ namespace EIP.Views
             {
                 if (monUser != null)
                 {
+                    this.Title = "Album de " + monUser.name;
                     PseudoUser.Text = monUser.name;
                 }
             });

@@ -16,6 +16,7 @@ namespace EIP.Objects
 {
     public class Friend
     {
+        public long accountID { get; set; }        
         public user userFB { get; set; }
         public TwitterUser userTW {  get; set; }
     }

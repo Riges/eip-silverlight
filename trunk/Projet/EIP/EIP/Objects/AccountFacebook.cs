@@ -35,6 +35,8 @@ namespace EIP
         public user userInfos { get; set; }
         public Dictionary<string, List<Topic>> feeds { get; set; }
         public List<user> friends { get; set; }
+        public Dictionary<long, List<user>> allFriends { get; set; }
+        public Dictionary<long, List<user>> mutualFriends { get; set; }
         public List<stream_filter> filters { get; set; }
         public List<profile> profiles { get; set; }
         public List<thread> box { get; set; }
@@ -66,6 +68,8 @@ namespace EIP
             this.account = new AccountFacebook();
             this.feeds = new Dictionary<string, List<Topic>>();
             this.friends = new List<user>();
+            this.allFriends = new Dictionary<long, List<user>>();
+            this.mutualFriends = new Dictionary<long, List<user>>();
             this.albums = new Dictionary<long, List<album>>();
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
             this.videos = new Dictionary<long, Dictionary<long, VideoLight>>();
@@ -219,7 +223,8 @@ namespace EIP
         }
 
 
-         ///  Messages
+        ////////// Messages \\\\\\\\\\\
+        #region Messages
 
         public delegate void OnGetMessagesCompleted(List<ThreadMessage> liste);
         public event OnGetMessagesCompleted GetMessagesCalled;
@@ -340,14 +345,11 @@ namespace EIP
                 }
             if(this.GetMessagesCalled != null)
                 this.GetMessagesCalled.Invoke(liste2);
-            
         }
-
 
 
         public void LoadThreadMessages(thread th)
         {
-            int test = 1;
             this.facebookAPI.Fql.QueryAsync("SELECT message_id, thread_id, author_id, body,created_time,attachment,viewer_id from message where thread_id=" + th.thread_id + " ORDER BY created_time ASC", new Fql.QueryCallback(GetThreadMessagesFQL_Completed), th);
 
         }
@@ -456,7 +458,14 @@ namespace EIP
 
         }
 
+        #endregion
 
+
+
+        #region Friends
+
+        public delegate void OnGetFriendsCompleted(List<user> friendsFB);
+        public event OnGetFriendsCompleted GetFriendsCalled;
 
         public void LoadFriends()
         {
@@ -478,9 +487,7 @@ namespace EIP
                  }
         }
 
-        public delegate void OnGetFriendsCompleted(List<user> friendsFB);
-        public event OnGetFriendsCompleted GetFriendsCalled;
-
+        
         private void GetFriends_Completed(IList<user> users, Object obj, FacebookException ex)
         {
             if (users != null)
@@ -493,6 +500,130 @@ namespace EIP
                  }
         }
 
+
+        //public delegate void OnLoadFriendsOfCompleted(long uid, List<user> friendsFB);
+        //public event OnLoadFriendsOfCompleted LoadFriendsOfCalled;
+
+
+        //public void LoadFriendsOf(long uid)
+        //{
+        //    if (this.allFriends.ContainsKey(uid) && this.allFriends[uid].Count > 0)
+        //    {
+        //        if (this.LoadFriendsOfCalled != null)//evite que ca plante si pas dabo
+        //            this.LoadFriendsOfCalled.Invoke(uid, this.allFriends[uid]);
+        //    }
+        //    else
+        //    {
+        //         this.facebookAPI.Friends.GetAsync(uid, new Friends.GetFriendsCallback(LoadFriendsOfIDs_Completed), uid);
+        //    }
+
+            
+        //}
+
+        //private void LoadFriendsOfIDs_Completed(IList<long> usersIDs, Object uid, FacebookException ex)
+        //{
+        //    if (usersIDs != null)
+        //        if (usersIDs.Count > 0)
+        //        {
+        //            this.facebookAPI.Users.GetInfoAsync((List<long>)usersIDs, new Users.GetInfoCallback(LoadFriendsOf_Completed), uid);
+        //        }
+        //}
+
+        //private void LoadFriendsOf_Completed(IList<user> users, Object uidObj, FacebookException ex)
+        //{
+        //    long uid = Convert.ToInt64(uidObj);
+        //    if (users != null)
+        //        if (users.Count > 0)
+        //        {
+        //            this.allFriends[uid] = users as List<user>;
+
+        //            this.LoadMutualFriends(uid);
+
+        //            if (this.LoadFriendsOfCalled != null)//evite que ca plante si pas dabo
+        //                this.LoadFriendsOfCalled.Invoke(uid, this.allFriends[uid]);
+        //        }
+        //}
+
+        public delegate void OnLoadMutualFriendsCompleted(long uid, List<user> friendsFB);
+        public event OnLoadMutualFriendsCompleted LoadMutualFriendsCalled;
+
+
+        public void LoadMutualFriends(long uid)
+        {
+            if (this.mutualFriends.ContainsKey(uid) && this.mutualFriends[uid].Count > 0)
+            {
+                if (this.LoadMutualFriendsCalled != null)//evite que ca plante si pas dabo
+                    this.LoadMutualFriendsCalled.Invoke(uid, this.mutualFriends[uid]);
+            }
+            else
+            {
+                this.facebookAPI.Friends.GetMutualFriendsAsync(uid, LoadMutualFriendIDs_Completed, uid);
+            }
+
+
+        }
+
+        private void LoadMutualFriendIDs_Completed(IList<long> usersIDs, Object uid, FacebookException ex)
+        {
+            if (usersIDs != null)
+                if (usersIDs.Count > 0)
+                {
+                    this.facebookAPI.Users.GetInfoAsync((List<long>)usersIDs, new Users.GetInfoCallback(LoadMutualFriends_Completed), uid);
+                }
+        }
+
+        private void LoadMutualFriends_Completed(IList<user> users, Object uidObj, FacebookException ex)
+        {
+            long uid = Convert.ToInt64(uidObj);
+            if (users != null)
+                if (users.Count > 0)
+                {
+                    if(this.mutualFriends.ContainsKey(uid))
+                        this.mutualFriends[uid].Clear();
+
+
+                    this.mutualFriends[uid] = users as List<user>;
+
+                    if (this.LoadMutualFriendsCalled != null)//evite que ca plante si pas dabo
+                        this.LoadMutualFriendsCalled.Invoke(uid, this.mutualFriends[uid]);
+                }
+        }
+
+        /*private void LoadMutualFriends_Completed(IList<long> usersIDs, Object uidObj, FacebookException ex)
+        {
+            long uid = Convert.ToInt64(uidObj);
+
+            if (usersIDs != null)
+                if (usersIDs.Count > 0)
+                {
+                    if (this.allFriends.ContainsKey(uid))
+                    {
+                        this.mutualFriends[uid].Clear();
+                        foreach (long id in usersIDs)
+                        {
+                            var result = from user friend in this.allFriends[uid]
+                                         where friend.uid == id
+                                         select friend;
+                            if (result != null && result.Count() > 0)
+                            {
+                                this.mutualFriends[uid].Add(result.First());
+                            }
+                        }
+                    }
+
+                    if (this.LoadMutualFriendsCalled != null)//evite que ca plante si pas dabo
+                        this.LoadMutualFriendsCalled.Invoke(uid, this.mutualFriends[uid]);
+                    return;
+                }
+
+            if (this.LoadMutualFriendsCalled != null)//evite que ca plante si pas dabo
+                this.LoadMutualFriendsCalled.Invoke(uid, new List<user>());
+        }*/
+
+        #endregion
+
+        /////////// Feeds \\\\\\\\\\\\\\\\
+        #region Feeds
 
         public delegate void OnLoadFeedsCompleted();
         public event OnLoadFeedsCompleted LoadFeedsCalled;
@@ -689,6 +820,8 @@ namespace EIP
             Photo,
             Video
         }
+
+        #endregion
 
         public delegate void OnGetComsCompleted(List<comment> coms, string postId);
         public event OnGetComsCompleted GetComsCalled;

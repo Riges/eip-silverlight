@@ -7,22 +7,31 @@
     mc:Ignorable="d"
     d:DesignHeight="45" d:DesignWidth="170">
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
+    <Grid x:Name="LayoutRoot" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Image Grid.RowSpan="2" Grid.Column="0" Name="imgUser" Width="100" Height="100" Stretch="Uniform" Margin="0,0,10,10" ></Image>
-        
-        <!--<toolkit:WrapPanel  Grid.Row="0" Grid.Column="1" Name="nomFriend"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></toolkit:WrapPanel>-->
-        <TextBlock Grid.Row="0" Grid.Column="1" Name="nomFriend" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,10">
-            <HyperlinkButton Style="{StaticResource HyperlinkButtonStyle}" Name="voirProfil" Click="voirProfil_Click" Content="Voir Profil"></HyperlinkButton>
-        </StackPanel>
+       
+
+        <!--<Border CornerRadius="20" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="3" Width="100" Height="100" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Cursor="Hand" >
+            <Border.Background>
+                <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
+                    <ImageBrush.ImageSource>
+                        <BitmapImage x:Name="imgUser" >
+                        </BitmapImage>
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </Border.Background>
+        </Border>-->
+
+        <Image Name="imgUser" Grid.Row="0" MaxWidth="300" Stretch="Uniform" VerticalAlignment="Top" ></Image>
+
+        <HyperlinkButton Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="nomFriend" Foreground="Black" FontWeight="Bold" Margin="0,10,0,10"></HyperlinkButton>
+
     </Grid>
 </UserControl>

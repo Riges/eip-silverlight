@@ -3,28 +3,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="clr-namespace:EIP.Views.Controls"
+    xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Margin="10,0,10,0">
     
     <Grid x:Name="LayoutRoot" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition> <!--0-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--1-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--2-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--3-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--4-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--5-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--6-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--7-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--8-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--9-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--10-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--11-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--12-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--13-->
+            <RowDefinition Height="*"></RowDefinition> <!--14-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--15-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--16-->
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -68,6 +70,21 @@
 
         <TextBlock Grid.Column="0" Grid.Row="11" Name="quoteLabel">Citations favorites</TextBlock>
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Grid.Row="11" Name="quote" Margin="0,0,0,10"></TextBlock>
+
+        
+        <Rectangle  Grid.Column="0"  Grid.ColumnSpan="3" Grid.Row="12" Fill="Gray" Stretch="Fill" Height="2"></Rectangle>
+        
+        <TextBlock Grid.Column="0" Grid.Row="13" Text="Amis en commun" FontWeight="Bold" FontSize="14" Name="amisCommun"></TextBlock>
+        <TextBox Grid.Column="2" Grid.Row="13" Width="150" HorizontalAlignment="Right" Text="Chercher un ami..." Name="searchFriend" TextChanged="searchFriend_TextChanged" GotFocus="searchFriend_GotFocus" LostFocus="searchFriend_LostFocus"></TextBox>
+        
+        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="14" Grid.ColumnSpan="3" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
+            <fl:FlowItemsControl3D.ItemTemplate>
+                <DataTemplate>
+                    <Controls:FriendView x:Name="photoItem" VerticalAlignment="Top" Cursor="Hand"></Controls:FriendView>
+                </DataTemplate>
+            </fl:FlowItemsControl3D.ItemTemplate>
+        </fl:FlowItemsControl3D>
 
 
     </Grid>

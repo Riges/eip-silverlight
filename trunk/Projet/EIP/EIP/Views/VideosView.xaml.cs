@@ -88,6 +88,7 @@ namespace EIP.Views
             {
                 if (monUser != null)
                 {
+                    this.Title = "Vidéos de " + monUser.name;
                     PseudoUser.Text = monUser.name;
                 }
             });

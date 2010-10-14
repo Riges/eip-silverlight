@@ -180,9 +180,6 @@
     <Compile Include="Views\Controls\FilterButton.xaml.cs">
       <DependentUpon>FilterButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\FriendInfo.xaml.cs">
-      <DependentUpon>FriendInfo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Controls\FriendView.xaml.cs">
       <DependentUpon>FriendView.xaml</DependentUpon>
     </Compile>
@@ -354,10 +351,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\FilterButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\FriendInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
