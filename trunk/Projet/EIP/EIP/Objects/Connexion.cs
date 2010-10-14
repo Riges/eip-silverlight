@@ -32,10 +32,10 @@ using System.ComponentModel;
 //using TweetSharp.Twitter.Extensions;
 //using TweetSharp.Twitter.Model;
 
-using TweetSharp;
+//using TweetSharp;
 using EIP.Views.Child;
 using EIP.Objects;
-using TweetSharp.Fluent;
+//using TweetSharp.Fluent;
 
 
 

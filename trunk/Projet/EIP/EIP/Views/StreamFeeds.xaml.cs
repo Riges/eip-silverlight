@@ -17,7 +17,7 @@ using System.Collections;
 using System.Windows.Browser;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using TweetSharp.Model;
+//using TweetSharp.Model;
 //using TweetSharp.Twitter.Model;
 using EIP.ServiceEIP;
 using EIP.Objects;
