@@ -56,7 +56,7 @@
     <Content Include="ClientBin\EIP.xap" />
     <Content Include="crossdomain.xml" />
     <Content Include="Default.aspx" />
-    <Content Include="EIPTestPage.html" />
+    <Content Include="index.html" />
     <Content Include="fblogin.js" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config">

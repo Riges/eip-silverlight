@@ -60,7 +60,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dimebrain.TweetSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Facebook.Silverlight, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Facebook.Silverlight">
+      <HintPath>Lib\Facebook.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="Hammock.Silverlight">
       <HintPath>..\EIPWCF\bin\Hammock.Silverlight.dll</HintPath>
     </Reference>

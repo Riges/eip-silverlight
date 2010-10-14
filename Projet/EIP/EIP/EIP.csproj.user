@@ -18,9 +18,9 @@
           </StartCmdLineArguments>
           <StartWorkingDirectory>
           </StartWorkingDirectory>
-          <ShowWebRefOnDebugPrompt>True</ShowWebRefOnDebugPrompt>
+          <ShowWebRefOnDebugPrompt>False</ShowWebRefOnDebugPrompt>
           <OutOfBrowserProjectToDebug>EIP.Web</OutOfBrowserProjectToDebug>
-          <ShowRiaSvcsOnDebugPrompt>True</ShowRiaSvcsOnDebugPrompt>
+          <ShowRiaSvcsOnDebugPrompt>False</ShowRiaSvcsOnDebugPrompt>
         </SilverlightProjectProperties>
       </FlavorProperties>
     </VisualStudio>
