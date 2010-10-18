@@ -15,6 +15,12 @@
   <wsdl:message name="IServiceEIP_IsUp_OutputMessage">
     <wsdl:part name="parameters" element="tns:IsUpResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetFBAppKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFBAppKey" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetFBAppKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFBAppKeyResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_GetAccountByUserID_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAccountByUserID" />
   </wsdl:message>
@@ -104,6 +110,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/IsUp" message="tns:IServiceEIP_IsUp_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/IsUpResponse" message="tns:IServiceEIP_IsUp_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetFBAppKey">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetFBAppKey" message="tns:IServiceEIP_GetFBAppKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetFBAppKeyResponse" message="tns:IServiceEIP_GetFBAppKey_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetAccountByUserID">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountByUserID" message="tns:IServiceEIP_GetAccountByUserID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountByUserIDResponse" message="tns:IServiceEIP_GetAccountByUserID_OutputMessage" />
@@ -165,6 +175,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="IsUp">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/IsUp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFBAppKey">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetFBAppKey" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

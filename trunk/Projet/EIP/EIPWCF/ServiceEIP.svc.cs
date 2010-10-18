@@ -36,11 +36,13 @@ namespace EIPWCF
         {
             return Model.IsDBUp();
         }
-        /*
-        public bool test(Account newAccount)
+
+        public string GetFBAppKey()
         {
-            return AddAccount(newAccount);
-        }*/
+            return ConfigurationManager.AppSettings["FBAppKey"];
+        }
+
+
 
         public Account GetAccountByUserID(long userID)
         {
@@ -196,17 +198,6 @@ namespace EIPWCF
 
         public string UploadPhoto(string name, byte[] img)
         {
-  
-            /*if (bmp != null)
-            {
-                TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
-                Bitmap b = (Bitmap)tc.ConvertFrom(bmp);
-
-                b.Save("", System.Drawing.Imaging.ImageFormat.Jpeg);
-            }*/
-
-         
-            
             try
             {
                 string save = @"c:\www\photos\" + name;
@@ -260,49 +251,10 @@ namespace EIPWCF
         }
 
 
-/*
-        public string AuthorizeDesktop(string consumerKey, string consumerSecret)
-        {
-            var requestToken = GetRequestToken(consumerKey, consumerSecret);
-            
-            
-            FluentTwitter.CreateRequest()
-               .Authentication
-               .AuthorizeDesktop(consumerKey,
-                                 consumerSecret,
-                                 requestToken.Token);
-             
-            
-            return requestToken.Token;
-        }*/
-        /*
-        public IFluentTwitter GetFluent()
-        {
-            return FluentTwitter.CreateRequest();
-        }*/
-        /*
-        private static void GetResponse(TwitterResult response)
-        {
-            var identity = response.AsUser();
-            if (identity != null)
-            {
-                Console.WriteLine("{0} authenticated successfully.", identity.ScreenName);
-            }
-            else
-            {
-                var error = response.AsError();
-                if (error != null)
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
-            }
-        }*/
-        
-
-        public string GetRequestToken(string consumerKey, string consumerSecret)
+        public string GetRequestToken()//string consumerKey, string consumerSecret
         {
             var requestToken = FluentTwitter.CreateRequest()
-                .Authentication.GetRequestToken(consumerKey, consumerSecret);
+                .Authentication.GetRequestToken(ConfigurationManager.AppSettings["ConsumerKey"], ConfigurationManager.AppSettings["ConsumerSecret"]);
 
             var response = requestToken.Request();
             var result = response.AsToken();
@@ -317,76 +269,6 @@ namespace EIPWCF
 
             return null;
         }
-        /*
-        public AccountTwitter GetAccessToken(string consumerKey, string consumerSecret, string token, string pin)
-        {
-           
-            var accessToken = FluentTwitter.CreateRequest()
-                .Authentication.GetAccessToken(consumerKey, consumerSecret, token, pin);
-
-            var response = accessToken.Request();
-            var result = response.AsToken();
-
-            if (result == null)
-            {
-               
-                var error = response.AsError();
-                if (error != null)
-                {
-                    throw new Exception(error.ErrorMessage);
-                }
-            }
-            AccountTwitter accountTwitter = new AccountTwitter();
-            
-            accountTwitter.token = result.Token;
-            accountTwitter.tokenSecret = result.TokenSecret;
-            accountTwitter.name = result.ScreenName;
-            accountTwitter.userID =  Convert.ToInt64(result.UserId);
-
-            
-
-            return accountTwitter;// result.TokenSecret;
-        }
-        */
-        /*
-        public TwitterUser TwitterGetUserInfo(string consumerKey, string consumerSecret, string token, string tokenSecret, long userId)
-        {
-            var userInfo = FluentTwitter.CreateRequest()
-               .AuthenticateWith(consumerKey, consumerSecret, token, tokenSecret)
-               .Users().ShowProfileFor(userId);
-
-            var response = userInfo.Request();
-            var result = response.AsUser();
-
-            return result;
-        }*/
-        /*
-        public long TwitterCheckUserInfo(string username, string password)
-        {
-            var userInfo = FluentTwitter.CreateRequest()
-               .AuthenticateAs(username, password);
-               
-            var response = userInfo.Request();
-
-            var result = response.AsToken();
-
-            return Convert.ToInt64(result.UserId);
-        }*/
-        /*
-        public IEnumerable<TwitterStatus> TwitterGetHomeStatuses(string consumerKey, string consumerSecret, string token, string tokenSecret)
-        {
-            var userInfo = FluentTwitter.CreateRequest()
-               .AuthenticateWith(consumerKey, consumerSecret, token, tokenSecret)
-               .Statuses().OnHomeTimeline();
-
-            var response = userInfo.Request();
-            var result = response.AsStatuses();
-
-            return result;
-        }*/
-
-
-        
 
         
     }
