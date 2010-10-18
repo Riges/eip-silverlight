@@ -14,6 +14,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetFBAppKey">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFBAppKeyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFBAppKeyResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetAccountByUserID">
     <xs:complexType>
       <xs:sequence>
@@ -141,10 +153,7 @@
   </xs:element>
   <xs:element name="GetRequestToken">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="consumerKey" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="consumerSecret" nillable="true" type="xs:string" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetRequestTokenResponse">

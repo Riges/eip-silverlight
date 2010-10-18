@@ -49,20 +49,17 @@ namespace EIP
         private static BrowserSession browserSession { get; set; }
 
         //api key Facebook
-        public const string ApplicationKey = "e0c1f6b95b88d23bfc9727e0ea90602a";
+        public static string ApplicationKey = "";// = "e0c1f6b95b88d23bfc9727e0ea90602a";
 
         //api key Twitter
-        public const string ProxyUrl = "http://localhost:4164/proxy";
-        public const string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
-        public const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
+        //public const string ProxyUrl = "http://localhost:4164/proxy";
+        //public const string consumerKey = "BuHnRBigk7Z9ODANTQxxLg";
+        //public const string consumerSecret = "UkVn1sB1MkUwcHEKcWERsBHTEc0REPn5vdw4jDqk4";
 
         //Accounts
-        //public static List<AccountLight> accounts { get; set; }
         public static Dictionary<long, AccountLight> accounts { get; set; }
-        //public static List<AccountLight> currentAccounts { get; set; }
-        //public static List<AccountLight> storageAccounts { get; set; }
-        //public static AccountLight currentAccount { get; set; }
 
+        //storage
         public static IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
        
         //Controls
@@ -96,6 +93,8 @@ namespace EIP
             loadingChild = new Loading();
 
             serviceEIP.IsUpCompleted += new EventHandler<IsUpCompletedEventArgs>(serviceEIP_IsUpCompleted);
+            serviceEIP.GetFBAppKeyCompleted += new EventHandler<GetFBAppKeyCompletedEventArgs>(serviceEIP_GetFBAppKeyCompleted);
+            serviceEIP.GetFBAppKeyAsync();
 
             try
             {
@@ -110,6 +109,14 @@ namespace EIP
 
             Connexion.serviceEIP.DeleteAccountCompleted += new EventHandler<DeleteAccountCompletedEventArgs>(serviceEIP_DeleteAccountCompleted);
             
+        }
+
+        static void serviceEIP_GetFBAppKeyCompleted(object sender, GetFBAppKeyCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                ApplicationKey = e.Result;
+            }
         }
 
         
@@ -184,38 +191,20 @@ namespace EIP
 
         private static void GetSession()
         {
-            /*
-            if (storage.Contains("CurrentAccount"))
-            {
-                if (storage["CurrentAccount"] != null)
-                {
-                    string curAccountKey = storage["CurrentAccount"].ToString();
-                    if (storage.Contains(curAccountKey))
-                        currentAccount = (AccountLight)storage[curAccountKey];
-                }
-            }*/
             if (connexionActive)
             {
                 if (storage.Contains("groupID"))
                 {
                     if (storage["groupID"] != null && (storage["groupID"].ToString() != "0"))
                     {
-                        /*
-                        string curAccountKey = storage["groupID"].ToString();
-                        if (storage.Contains(curAccountKey))
-                            currentAccount = (AccountLight)storage[curAccountKey];
-                         */
                         serviceEIP.GetAccountsByGroupIDCompleted += new EventHandler<GetAccountsByGroupIDCompletedEventArgs>(serviceEIP_GetAccountsByGroupIDCompleted);
                         serviceEIP.GetAccountsByGroupIDAsync(Convert.ToInt64(storage["groupID"].ToString()));
                         
-                       // if (listeComptes != null)
-                        //    listeComptes.Reload();
                     }
                 }
             }
             else
             {
-               // List<AccountLight> storageAccounts = new List<AccountLight>();
                 foreach (string key in storage.Keys)
                 {
                     if (key.StartsWith("Account-"))
@@ -225,16 +214,13 @@ namespace EIP
                         accounts[((AccountLight)storage[key]).account.accountID] = tmp;// (AccountLight)storage[key];
                     }
                 }
-               
             }
 
             if (listeComptes != null)
             {
                 Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
                 listeComptes.Reload();
-            }
-           
-            
+            } 
         }
 
         private static void SetSession(long groupID)
@@ -413,7 +399,7 @@ namespace EIP
                      */
 
                     serviceEIP.GetRequestTokenCompleted += new EventHandler<GetRequestTokenCompletedEventArgs>(serviceEIP_GetRequestTokenCompleted);
-                    serviceEIP.GetRequestTokenAsync(consumerKey, consumerSecret);
+                    serviceEIP.GetRequestTokenAsync();
 
 
 

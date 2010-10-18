@@ -20,6 +20,9 @@ namespace EIPWCF
         [OperationContract]
         bool IsUp();
 
+        [OperationContract]
+        string GetFBAppKey();
+
         /*
         [OperationContract]
         bool test(Account newAccount);
@@ -58,7 +61,7 @@ namespace EIPWCF
 
 
         [OperationContract]
-        string GetRequestToken(string consumerKey, string consumerSecret);
+        string GetRequestToken();
 
         [OperationContract]
         IEnumerable<TwitterStatus> LoadHomeStatuses(string token, string tokenSecret);
