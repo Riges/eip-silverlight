@@ -92,7 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="eip.snk" />
-    <Content Include="Web.prod.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EIPLibrary\EIPLibrary.csproj">
