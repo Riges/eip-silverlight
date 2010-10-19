@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cc009b26-03b6-422f-a50b-6e3eb9b86418" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies>
+      <ReferencedAssembly AssemblyName="System.Runtime.Serialization" />
+    </ReferencedAssemblies>
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://mynetwork.selfip.net/WCF/ServiceEIP.svc/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="7bf33b7b-e2b3-4510-81af-0b80e7476e36" SourceId="1" SourceUrl="http://mynetwork.selfip.net/WCF/ServiceEIP.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="d689e768-c753-436a-9737-c50e65e4ba83" SourceId="1" SourceUrl="http://mynetwork.selfip.net/WCF/ServiceEIP.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="ee45a1d7-f0e1-464b-9f27-820071250246" SourceId="1" SourceUrl="http://mynetwork.selfip.net/WCF/ServiceEIP.svc/mex" />
+    <MetadataFile FileName="EIPLibrary.xsd" MetadataType="Schema" ID="24b25334-2358-43e5-bd93-3f403e6a34b1" SourceId="1" SourceUrl="http://mynetwork.selfip.net/WCF/ServiceEIP.svc/mex" />
+    <MetadataFile FileName="TweetSharp.Twitter.Model.xsd" MetadataType="Schema" ID="ab91db70-78a1-4e85-aa15-55bdfa64a2c6" SourceId="1" SourceUrl="http://mynetwork.selfip.net/WCF/ServiceEIP.svc/mex" />
+    <MetadataFile FileName="TweetSharp.Model.xsd" MetadataType="Schema" ID="79517042-cdf3-41a8-9279-7edf9efd8fdb" SourceId="1" SourceUrl="http://mynetwork.selfip.net/WCF/ServiceEIP.svc/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

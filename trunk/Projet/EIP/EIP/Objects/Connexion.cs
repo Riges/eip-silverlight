@@ -230,7 +230,7 @@ namespace EIP
 
             foreach (KeyValuePair<long, AccountLight> acc in accounts)
             {
-                storage["Account-" + acc.Value.account.accountID] = acc.Value.account;
+                storage["Account-" + acc.Value.account.accountID] = acc.Value;//.account;
             }
             storage.Save();
             
