@@ -6,7 +6,7 @@
     xmlns:Control="clr-namespace:EIP.Views.Controls"
     xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Height="Auto">
+    d:DesignHeight="300" d:DesignWidth="400" Height="Auto" Width="Auto">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}" MouseMove="LayoutRoot_MouseMove" MouseLeave="LayoutRoot_MouseLeave">
         <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <!--<Image Grid.RowSpan="2" Grid.Column="0" Name="imgUser" Width="40" Height="40" Stretch="Uniform" Margin="0,0,10,10" ></Image>-->
