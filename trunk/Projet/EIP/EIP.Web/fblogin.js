@@ -44,7 +44,66 @@ function facebook_login() {
         facebook_prompt_permission("read_mailbox");
         facebook_prompt_permission("read_stream");
         facebook_prompt_permission("offline_access");
-        facebook_prompt_permission("publish_stream");        
+        facebook_prompt_permission("publish_stream");
+
+
+        facebook_prompt_permission("read_requests");
+        facebook_prompt_permission("read_insights");
+        facebook_prompt_permission("read_friendlists"); 
+
+
+        facebook_prompt_permission("user_photos");
+        facebook_prompt_permission("friends_photos");
+          	
+        facebook_prompt_permission("user_birthday");
+        facebook_prompt_permission("friends_birthday");
+
+        facebook_prompt_permission("user_activities");
+        facebook_prompt_permission("friends_activities");
+          	
+        facebook_prompt_permission("user_education_history");
+        facebook_prompt_permission("friends_education_history");
+
+        facebook_prompt_permission("user_hometown"); 
+        facebook_prompt_permission("friends_hometown");
+
+        facebook_prompt_permission("user_interests");
+        facebook_prompt_permission("friends_interests");
+
+        facebook_prompt_permission("user_likes");
+        facebook_prompt_permission("friends_likes");
+
+        facebook_prompt_permission("user_location");
+        facebook_prompt_permission("friends_location");
+
+        facebook_prompt_permission("user_online_presence");
+        facebook_prompt_permission("friends_online_presence");
+
+        facebook_prompt_permission("user_photo_video_tags");
+        facebook_prompt_permission("friends_photo_video_tags"); 
+          
+        facebook_prompt_permission("user_relationships");   
+        facebook_prompt_permission("friends_relationships");   
+
+        facebook_prompt_permission("user_relationship_details");   
+        facebook_prompt_permission("friends_relationship_details");  
+         
+        facebook_prompt_permission("user_religion_politics");   
+        facebook_prompt_permission("friends_religion_politics");  
+         
+        facebook_prompt_permission("user_status");   
+        facebook_prompt_permission("friends_status"); 
+          
+        facebook_prompt_permission("user_videos");   
+        facebook_prompt_permission("friends_videos"); 
+          
+        facebook_prompt_permission("user_website");   
+        facebook_prompt_permission("friends_website"); 
+          
+        facebook_prompt_permission("user_work_history");   
+        facebook_prompt_permission("friends_work_history");   
+
+             
     });
 }
 

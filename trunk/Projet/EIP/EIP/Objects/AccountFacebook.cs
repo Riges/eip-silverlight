@@ -74,13 +74,26 @@ namespace EIP
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
             this.videos = new Dictionary<long, Dictionary<long, VideoLight>>();
             this.profiles = new List<profile>();
-            this.appID = "185484705355";
+
+            #if (DEBUG)
+                this.appID = "131664040210585";
+            #else
+                this.appID = "185484705355";
+            #endif
+
             //this.thumbVideos = new Dictionary<long, string>();
 
             Connexion.dispatcher.BeginInvoke(() =>
                 {
-                    browserSession = new BrowserSession(Connexion.ApplicationKey);
-                    browserSession.LoginCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(browserSession_LoginCompleted);
+                    if (Connexion.ApplicationKey != "")
+                    {
+                        browserSession = new BrowserSession(Connexion.ApplicationKey, Connexion.perms);
+                        browserSession.LoginCompleted += new EventHandler<System.ComponentModel.AsyncCompletedEventArgs>(browserSession_LoginCompleted);
+                    }
+                    else
+                    {
+
+                    }
                 });
         }
 
@@ -673,7 +686,7 @@ namespace EIP
                         needUpdate = false;
             }
 
-            if(needUpdate)
+            if(needUpdate && data != null && ex == null)
             {
                 this.feeds[filtre.ToString()] = new List<Topic>();
 

@@ -81,6 +81,8 @@ namespace EIP
         private static bool connexionActive = false;
 
         public static DispatcherTimer dt = new DispatcherTimer();
+
+        public static Enums.ExtendedPermissions[] perms = new Enums.ExtendedPermissions[8];
        
         /////////
    
@@ -94,7 +96,16 @@ namespace EIP
 
             serviceEIP.IsUpCompleted += new EventHandler<IsUpCompletedEventArgs>(serviceEIP_IsUpCompleted);
             serviceEIP.GetFBAppKeyCompleted += new EventHandler<GetFBAppKeyCompletedEventArgs>(serviceEIP_GetFBAppKeyCompleted);
-            serviceEIP.GetFBAppKeyAsync();
+            Connexion.serviceEIP.DeleteAccountCompleted += new EventHandler<DeleteAccountCompletedEventArgs>(serviceEIP_DeleteAccountCompleted);
+
+            perms[0] = Enums.ExtendedPermissions.offline_access;
+            perms[1] = Enums.ExtendedPermissions.publish_stream;
+            perms[2] = Enums.ExtendedPermissions.photo_upload;
+            perms[3] = Enums.ExtendedPermissions.read_mailbox;
+            perms[4] = Enums.ExtendedPermissions.email;
+            perms[5] = Enums.ExtendedPermissions.status_update;
+            perms[6] = Enums.ExtendedPermissions.read_stream;
+            perms[7] = Enums.ExtendedPermissions.manage_mailbox;
 
             try
             {
@@ -107,7 +118,7 @@ namespace EIP
 
             //SetTwitterClientInfo();
 
-            Connexion.serviceEIP.DeleteAccountCompleted += new EventHandler<DeleteAccountCompletedEventArgs>(serviceEIP_DeleteAccountCompleted);
+            
             
         }
 
@@ -116,6 +127,7 @@ namespace EIP
             if (e.Error == null)
             {
                 ApplicationKey = e.Result;
+                GetSession();
             }
         }
 
@@ -126,8 +138,8 @@ namespace EIP
             if (e.Error == null && e.Result == true)
             {
                 connexionActive = true;
+                serviceEIP.GetFBAppKeyAsync();
             }
-            GetSession();
         }
 
 
@@ -211,7 +223,7 @@ namespace EIP
                     {
                         AccountLight tmp = new AccountLight();
                         tmp.account = (Account)storage[key];
-                        accounts[((AccountLight)storage[key]).account.accountID] = tmp;// (AccountLight)storage[key];
+                        accounts[tmp.account.accountID] = tmp;// (AccountLight)storage[key];
                     }
                 }
             }
@@ -230,7 +242,7 @@ namespace EIP
 
             foreach (KeyValuePair<long, AccountLight> acc in accounts)
             {
-                storage["Account-" + acc.Value.account.accountID] = acc.Value;//.account;
+                storage["Account-" + acc.Value.account.accountID] = acc.Value.account;
             }
             storage.Save();
             
@@ -515,7 +527,8 @@ namespace EIP
 
         private static void BrowserSession_LogoutCompleted(object sender, EventArgs e)
         {
-            browserSession = new BrowserSession(ApplicationKey);
+
+            browserSession = new BrowserSession(ApplicationKey, perms);
             browserSession.LoginCompleted += NewAccountFacebook_LoginCompleted;
             browserSession.Login();
         }
@@ -572,14 +585,28 @@ namespace EIP
 
         static void serviceEIP_GetAccountsByUserIDCompleted(object sender, GetAccountsByUserIDCompletedEventArgs e)
         {
-            
             if (e.Error == null)
-                LoadAccountsFromDB(e.Result);
+            {LoadAccountsFromDB(e.Result);
+
+                //if (e.Result != null)
+                //{
+                //    if (e.Result.Count > 0)
+                //        LoadAccountsFromDB(e.Result);
+                //    else
+                //    {
+                //        dispatcher.BeginInvoke(() =>
+                //            {
+                //                MessageBox msgBox = new MessageBox(
+                //            });
+                //    }
+                //}
+
+            }
         }
 
         private static void LoadAccountsFromDB(List<Account> result)
         {
-            if (result != null)
+            if (result != null && result.Count > 0)
             {
                 accounts = new Dictionary<long, AccountLight>();
                 foreach (Account oneAccount in result)

@@ -92,6 +92,15 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Web.prod.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.prod.Debug.config">
+      <DependentUpon>Web.prod.config</DependentUpon>
+    </Content>
+    <Content Include="Web.prod.Release.config">
+      <DependentUpon>Web.prod.config</DependentUpon>
+    </Content>
     <None Include="eip.snk" />
   </ItemGroup>
   <ItemGroup>
