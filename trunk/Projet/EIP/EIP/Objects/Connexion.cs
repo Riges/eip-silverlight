@@ -527,10 +527,14 @@ namespace EIP
 
         private static void BrowserSession_LogoutCompleted(object sender, EventArgs e)
         {
-
-            browserSession = new BrowserSession(ApplicationKey, perms);
-            browserSession.LoginCompleted += NewAccountFacebook_LoginCompleted;
-            browserSession.Login();
+            if (ApplicationKey != "")
+            {
+                browserSession = new BrowserSession(ApplicationKey, perms);
+                browserSession.LoginCompleted += NewAccountFacebook_LoginCompleted;
+                browserSession.Login();
+            }
+            else
+                serviceEIP.GetFBAppKeyAsync();
         }
 
         private static void NewAccountFacebook_LoginCompleted(object sender, EventArgs e)
