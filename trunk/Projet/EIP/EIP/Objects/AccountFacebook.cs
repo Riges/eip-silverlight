@@ -41,6 +41,8 @@ namespace EIP
         public List<profile> profiles { get; set; }
         public List<thread> box { get; set; }
 
+        public Dictionary<long, List<Topic>> walls { get; set; }
+
         public Dictionary<long, List<album>> albums { get; set; }
         public Dictionary<string, Dictionary<string, photo>> photos { get; set; }
 
@@ -736,64 +738,11 @@ namespace EIP
 
                 this.busy = false;
 
-                //LoadStreamFeedsContext(filtre.ToString());
-
-                /*
-                foreach (stream_post post in data.posts.stream_post)
-                {
-                    if (post.actor_id > 0 && post.actor_id != post.source_id)
-                        if (!userIds.Contains(post.actor_id))
-                            userIds.Add((long)post.actor_id);
-
-                    if(!userIds.Contains(post.source_id))
-                        userIds.Add(post.source_id);
-                }
-                
-                this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUsers_Completed), data.posts.stream_post);
-                 * */
+              
             }
             else
                 this.busy = false;
         }
-
-
-        /*
-        private void GetUsers_Completed(IList<user> users, object data, FacebookException ex)
-        {
-            if (users != null)
-                if (users.Count > 0)
-                {
-                    List<stream_post> posts = data as List<stream_post>;
-
-                    foreach (stream_post post in posts)
-                    {
-                        user userSource = null;
-                        user userTarget = null;
-                        foreach (user unUser in users)
-                        {
-                            if (post.actor_id > 0 && post.actor_id != post.source_id)
-                            {
-                                if (post.actor_id == unUser.uid)
-                                    userSource = unUser;
-                                if (post.source_id == unUser.uid)
-                                    userTarget = unUser;
-                            }
-                            else
-                            {
-                                if (post.source_id == unUser.uid)
-                                    userSource = unUser;
-                            }
-                        }
-                        TopicFB topicFB = new TopicFB(post, userSource, userTarget);
-                        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                        dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
-                        this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
-                    }
-                    LoadStreamFeedsContext(posts[0].filter_key);
-                }
-            this.busy = false;
-        }
-        */
 
         /// <summary>
         /// Met à jour l'affichage avec les feeds récupérés
@@ -810,6 +759,71 @@ namespace EIP
             }
             return false;
         }
+
+        public delegate void OnLoadWallCompleted(long uid, List<Topic> feeds);
+        public event OnLoadWallCompleted LoadWallCalled;
+
+        public void LoadWall(long uid)
+        {
+           
+            if (this.facebookAPI != null)
+            { 
+                if(this.walls.ContainsKey(uid))
+                    if(this.walls[uid].Count > 0)
+                    {
+                        if (this.LoadWallCalled != null)//evite que ca plante si pas dabo
+                            this.LoadWallCalled.Invoke(uid, this.walls[uid]);
+                    }
+
+                List<long> uids = new List<long>();
+                uids.Add(uid);
+                this.facebookAPI.Stream.GetAsync(this.account.userID, uids, null, null, 30, "", new Stream.GetCallback(LoadWallCompleted), uid);
+            }
+        }
+
+        private void LoadWallCompleted(stream_data data, object uid, FacebookException ex)
+        {
+            this.walls[(long)uid] = new List<Topic>();
+
+            profiles.AddRange(data.profiles.profile);
+
+            foreach (stream_post post in data.posts.stream_post)
+            {
+                profile userSource = null;
+                profile userTarget = null;
+                foreach (profile unUser in profiles)
+                {
+                    if (post.actor_id > 0 && post.actor_id != post.source_id)
+                    {
+                        if (post.actor_id == unUser.id)
+                            userSource = unUser;
+                        if (post.source_id == unUser.id)
+                            userTarget = unUser;
+                    }
+                    else
+                    {
+                        if (post.source_id == unUser.id)
+                            userSource = unUser;
+                    }
+                }
+                TopicFB topicFB = new TopicFB(post, userSource, userTarget);
+                DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
+                this.walls[(long)uid].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
+            }
+
+            /*
+            if (this.feeds.ContainsKey(filtre.ToString()) && this.feeds[filtre.ToString()].Count > 0)
+            {
+                Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre.ToString()];
+                if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
+                    this.LoadFeedsCalled.Invoke();
+            }*/
+        }
+
+
+        #endregion
+
 
         public delegate void OnLoadFiltersCompleted(long accounID, List<stream_filter> filters);
         public event OnLoadFiltersCompleted LoadFiltersCalled;
@@ -843,7 +857,7 @@ namespace EIP
             Video
         }
 
-        #endregion
+       
 
         public delegate void OnGetComsCompleted(List<comment> coms, string postId);
         public event OnGetComsCompleted GetComsCalled;
