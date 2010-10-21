@@ -279,6 +279,9 @@
     <Compile Include="Views\WaitLoad.xaml.cs">
       <DependentUpon>WaitLoad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Wall.xaml.cs">
+      <DependentUpon>Wall.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -481,6 +484,10 @@
     <Page Include="Views\WaitLoad.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Wall.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Resource Include="Assets\Styles.xaml">
       <SubType>Designer</SubType>
