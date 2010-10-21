@@ -1043,6 +1043,11 @@ namespace EIP.ServiceEIP {
         
         EIP.ServiceEIP.TwitterUser EndGetUserInfos(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetFiends", ReplyAction="http://tempuri.org/IServiceEIP/GetFiendsResponse")]
+        System.IAsyncResult BeginGetFiends(string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser> EndGetFiends(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/UploadPhoto", ReplyAction="http://tempuri.org/IServiceEIP/UploadPhotoResponse")]
         System.IAsyncResult BeginUploadPhoto(string name, byte[] img, System.AsyncCallback callback, object asyncState);
         
@@ -1340,6 +1345,25 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetFiendsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetFiendsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class UploadPhotoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -1451,6 +1475,12 @@ namespace EIP.ServiceEIP {
         
         private System.Threading.SendOrPostCallback onGetUserInfosCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGetFiendsDelegate;
+        
+        private EndOperationDelegate onEndGetFiendsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetFiendsCompletedDelegate;
+        
         private BeginOperationDelegate onBeginUploadPhotoDelegate;
         
         private EndOperationDelegate onEndUploadPhotoDelegate;
@@ -1539,6 +1569,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<SendTweetCompletedEventArgs> SendTweetCompleted;
         
         public event System.EventHandler<GetUserInfosCompletedEventArgs> GetUserInfosCompleted;
+        
+        public event System.EventHandler<GetFiendsCompletedEventArgs> GetFiendsCompleted;
         
         public event System.EventHandler<UploadPhotoCompletedEventArgs> UploadPhotoCompleted;
         
@@ -2243,6 +2275,54 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetFiends(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetFiends(token, tokenSecret, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser> EIP.ServiceEIP.IServiceEIP.EndGetFiends(System.IAsyncResult result) {
+            return base.Channel.EndGetFiends(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetFiends(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string token = ((string)(inValues[0]));
+            string tokenSecret = ((string)(inValues[1]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetFiends(token, tokenSecret, callback, asyncState);
+        }
+        
+        private object[] OnEndGetFiends(System.IAsyncResult result) {
+            System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndGetFiends(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetFiendsCompleted(object state) {
+            if ((this.GetFiendsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetFiendsCompleted(this, new GetFiendsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetFiendsAsync(string token, string tokenSecret) {
+            this.GetFiendsAsync(token, tokenSecret, null);
+        }
+        
+        public void GetFiendsAsync(string token, string tokenSecret, object userState) {
+            if ((this.onBeginGetFiendsDelegate == null)) {
+                this.onBeginGetFiendsDelegate = new BeginOperationDelegate(this.OnBeginGetFiends);
+            }
+            if ((this.onEndGetFiendsDelegate == null)) {
+                this.onEndGetFiendsDelegate = new EndOperationDelegate(this.OnEndGetFiends);
+            }
+            if ((this.onGetFiendsCompletedDelegate == null)) {
+                this.onGetFiendsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetFiendsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetFiendsDelegate, new object[] {
+                        token,
+                        tokenSecret}, this.onEndGetFiendsDelegate, this.onGetFiendsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginUploadPhoto(string name, byte[] img, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginUploadPhoto(name, img, callback, asyncState);
         }
@@ -2561,6 +2641,20 @@ namespace EIP.ServiceEIP {
             public EIP.ServiceEIP.TwitterUser EndGetUserInfos(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 EIP.ServiceEIP.TwitterUser _result = ((EIP.ServiceEIP.TwitterUser)(base.EndInvoke("GetUserInfos", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetFiends(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = token;
+                _args[1] = tokenSecret;
+                System.IAsyncResult _result = base.BeginInvoke("GetFiends", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser> EndGetFiends(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterUser>)(base.EndInvoke("GetFiends", _args, result)));
                 return _result;
             }
             

@@ -195,6 +195,46 @@ namespace EIPWCF
             return null;
         }
 
+        public List<TwitterUser> GetFiends(string token, string tokenSecret)
+        {
+            List<TwitterUser> allFriends = new List<TwitterUser>();
+
+            SetClientInfo();
+
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .Users().GetFriends();
+
+            var response = query.Request();
+
+            if (!response.IsTwitterError)
+            {
+                var users = response.AsUsers();
+                allFriends.AddRange(users);
+            }
+
+            var query2 = FluentTwitter.CreateRequest()
+                  .AuthenticateWith(token, tokenSecret)
+                  .Users().GetFollowers();
+
+            var response2 = query2.Request();
+
+            if (!response2.IsTwitterError)
+            {
+                var users = response.AsUsers();
+                foreach (TwitterUser user in users)
+                {
+                    if (!allFriends.Contains(user))
+                    {
+                        allFriends.Add(user);
+
+                    }
+                }
+            }
+
+            return allFriends;
+        }
+
 
         public string UploadPhoto(string name, byte[] img)
         {

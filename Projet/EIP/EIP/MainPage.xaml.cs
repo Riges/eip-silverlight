@@ -86,18 +86,18 @@ namespace EIP
         {
             Connexion.Loading(true);
 
-            bool showLogin = true;
-             if (storage.Contains("groupID"))
-                 if (storage["groupID"].ToString() != "0")
-                 {
-                     showLogin = false;
-                 }
-             if (showLogin)
-             {
-                 Login loginWindow = new Login(false);
-                 loginWindow.Show();
-                 Connexion.Loading(false);
-             }
+            //bool showLogin = true;
+            // if (storage.Contains("groupID"))
+            //     if (storage["groupID"].ToString() != "0")
+            //     {
+            //         showLogin = false;
+            //     }
+            // if (showLogin)
+            // {
+            //     Login loginWindow = new Login(false);
+            //     loginWindow.Show();
+            //     Connexion.Loading(false);
+            // }
              //Connexion.Loading(false);
         }
 

@@ -99,6 +99,12 @@
   <wsdl:message name="IServiceEIP_GetUserInfos_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUserInfosResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetFiends_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFiends" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetFiends_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFiendsResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_UploadPhoto_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadPhoto" />
   </wsdl:message>
@@ -165,6 +171,10 @@
     <wsdl:operation name="GetUserInfos">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetUserInfos" message="tns:IServiceEIP_GetUserInfos_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetUserInfosResponse" message="tns:IServiceEIP_GetUserInfos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFiends">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetFiends" message="tns:IServiceEIP_GetFiends_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetFiendsResponse" message="tns:IServiceEIP_GetFiends_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UploadPhoto">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/UploadPhoto" message="tns:IServiceEIP_UploadPhoto_InputMessage" />
@@ -301,6 +311,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetUserInfos">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetUserInfos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFiends">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetFiends" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
