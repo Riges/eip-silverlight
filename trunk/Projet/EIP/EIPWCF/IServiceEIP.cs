@@ -72,6 +72,10 @@ namespace EIPWCF
         [OperationContract]
         TwitterUser GetUserInfos(string token, string tokenSecret, long userId);
 
+
+        [OperationContract]
+        List<TwitterUser> GetFiends(string token, string tokenSecret);
+
         [OperationContract]
         string UploadPhoto(string name, byte[] img);
      

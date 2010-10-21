@@ -85,4 +85,10 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="TwitterUser" nillable="true" type="tns:TwitterUser" />
+  <xs:complexType name="ArrayOfTwitterUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TwitterUser" nillable="true" type="tns:TwitterUser" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTwitterUser" nillable="true" type="tns:ArrayOfTwitterUser" />
 </xs:schema>

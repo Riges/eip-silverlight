@@ -7,6 +7,8 @@
     <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"> </script>
     <script type="text/javascript" src="fblogin.js"></script>
     
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="icon" type="image/gif" href="images/animated_favicon1.gif">
     
     <title>EIP</title>
     <style type="text/css">

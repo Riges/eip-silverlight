@@ -203,14 +203,17 @@ namespace EIP
 
         private static void GetSession()
         {
+            bool showLogin = true;
+
             if (connexionActive)
             {
-                if (storage.Contains("groupID"))
+                if (storage.Contains("groupID-" + ApplicationKey))
                 {
-                    if (storage["groupID"] != null && (storage["groupID"].ToString() != "0"))
+                    if (storage["groupID-" + ApplicationKey] != null && (storage["groupID-" + ApplicationKey].ToString() != "0"))
                     {
+                        showLogin = false;
                         serviceEIP.GetAccountsByGroupIDCompleted += new EventHandler<GetAccountsByGroupIDCompletedEventArgs>(serviceEIP_GetAccountsByGroupIDCompleted);
-                        serviceEIP.GetAccountsByGroupIDAsync(Convert.ToInt64(storage["groupID"].ToString()));
+                        serviceEIP.GetAccountsByGroupIDAsync(Convert.ToInt64(storage["groupID-" + ApplicationKey].ToString()));
                         
                     }
                 }
@@ -219,13 +222,21 @@ namespace EIP
             {
                 foreach (string key in storage.Keys)
                 {
-                    if (key.StartsWith("Account-"))
+                    if (key.StartsWith("Account-" + ApplicationKey + "-"))
                     {
+                        showLogin = false;
                         AccountLight tmp = new AccountLight();
                         tmp.account = (Account)storage[key];
                         accounts[tmp.account.accountID] = tmp;// (AccountLight)storage[key];
                     }
                 }
+            }
+    
+            if (showLogin)
+            {
+                Login loginWindow = new Login(false);
+                loginWindow.Show();
+                Connexion.Loading(false);
             }
 
             if (listeComptes != null)
@@ -237,12 +248,12 @@ namespace EIP
 
         private static void SetSession(long groupID)
         {
-            storage["groupID"] = groupID.ToString();
+            storage["groupID-" + ApplicationKey] = groupID.ToString();
             storage.Save();
 
             foreach (KeyValuePair<long, AccountLight> acc in accounts)
             {
-                storage["Account-" + acc.Value.account.accountID] = acc.Value.account;
+                storage["Account-" + ApplicationKey +"-" + acc.Value.account.accountID] = acc.Value.account;
             }
             storage.Save();
             
@@ -309,7 +320,7 @@ namespace EIP
                 SetSession(groupid);
                 Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
                 listeComptes.Reload();
-                Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
+                Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
             }
         }
 
@@ -518,6 +529,7 @@ namespace EIP
                 int number = rand.Next(999999999);
                 accountTwitter.account.groupID = number;// Convert.ToInt64(token.UserId);// (long)tmp.userID;
             }
+            accountTwitter.selected = true;
 
             SetSession(accountTwitter.account.groupID);
             serviceEIP.AddAccountCompleted += new EventHandler<AddAccountCompletedEventArgs>(serviceEIP_AddAccountCompleted);
@@ -562,6 +574,7 @@ namespace EIP
                     newAccount.account.typeAccount = Account.TypeAccount.Facebook;
                     newAccount.account.userID = facebookAPI.Session.UserId;
                     newAccount.account.name = users[0].name;
+                    newAccount.selected = true;
                     ((AccountFacebook)newAccount.account).sessionExpires = facebookAPI.Session.SessionExpires;
                     ((AccountFacebook)newAccount.account).sessionKey = facebookAPI.Session.SessionKey;
                     ((AccountFacebook)newAccount.account).sessionSecret = facebookAPI.Session.SessionSecret;
@@ -649,7 +662,7 @@ namespace EIP
                 listeComptes.Reload();
                 addAccount = false;
 
-                Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
+                Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
             }
             else
             {
@@ -668,7 +681,7 @@ namespace EIP
                 if (e.Result)
                 {
                     GetSession();
-                    Connexion.contentFrame.Navigate(new Uri("/Intro", UriKind.Relative));
+                    Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
                 }
                 else
                 {

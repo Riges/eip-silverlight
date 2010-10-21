@@ -118,10 +118,12 @@ namespace EIP
             
             
             //pré load
-
-            this.LoadFriends();
-            this.LoadFilters();
-            this.LoadFeeds("", false);
+            if (this.facebookAPI != null)
+            {
+                this.LoadFriends();
+                this.LoadFilters();
+                this.LoadFeeds("", false);
+            }
             
         }
 
@@ -652,13 +654,17 @@ namespace EIP
             //{
                 //this.streamFeeds = aStreamFeeds;
             bool ret = false;
-            if (first)
+            if (this.facebookAPI != null)
             {
-                ret = LoadStreamFeedsContext(filtre);
+                if (first)
+                {
+                    ret = LoadStreamFeedsContext(filtre);
+                }
+                //}
+                if (!busy)
+                    this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
             }
-            //}
-            if(!busy)
-                this.facebookAPI.Stream.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
+
             return ret;
         }
 
@@ -810,11 +816,14 @@ namespace EIP
 
         public void LoadFilters()
         {
-            if (this.filters == null)
-                this.facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), null);
-            else
-                if (this.LoadFiltersCalled != null)//evite que ca plante si pas dabo
-                    this.LoadFiltersCalled.Invoke(this.account.accountID, this.filters);
+            if (this.facebookAPI != null)
+            {
+                if (this.filters == null)
+                    this.facebookAPI.Stream.GetFiltersAsync(new Stream.GetFiltersCallback(GetFiltersCompleted), null);
+                else
+                    if (this.LoadFiltersCalled != null)//evite que ca plante si pas dabo
+                        this.LoadFiltersCalled.Invoke(this.account.accountID, this.filters);
+            }
         }
 
         private void GetFiltersCompleted(IList<stream_filter> filtres, object o, FacebookException ex)

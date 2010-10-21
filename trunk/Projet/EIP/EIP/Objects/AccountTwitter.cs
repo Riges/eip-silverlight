@@ -58,7 +58,11 @@ namespace EIP
 
             Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
             Connexion.serviceEIP.GetUserInfosCompleted += new EventHandler<GetUserInfosCompletedEventArgs>(serviceEIP_GetUserInfosCompleted);
+
+            Connexion.serviceEIP.GetFiendsCompleted += new EventHandler<GetFiendsCompletedEventArgs>(serviceEIP_GetFiendsCompleted);
         }
+
+      
 
         public void Start()
         {
@@ -104,7 +108,7 @@ namespace EIP
                 if (e.Result != null)
                 {
                     TwitterUser user = e.Result;
-
+                    
                     if (user.Id == account.userID)
                         userInfos = user;
 
@@ -157,58 +161,39 @@ namespace EIP
             }
         }
 
-        /*
-        /// <summary>
-        /// Met à jour la liste des topics si streamFeeds à été précédemment passé en parametre
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="result"></param>
-        private void HomeTimelineReceived(object sender, TwitterResult result)
-        {
-            var statuses = result.AsStatuses();
-
-            if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (result.AsError() == null) && (statuses != null))
-            {
-                homeStatuses = new List<Topic>();
-                foreach (TwitterStatus status in statuses)
-                {
-                    homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.userID, status));
-                }
-
-                LoadStreamFeedsContext(false);
-                /*
-                if (streamFeeds != null)
-                {
-                    List<Topic> t_topics = null;
-
-                    if (streamFeeds.allTopics.ContainsKey(this.account.userID.ToString()))
-                        t_topics = (List<Topic>)streamFeeds.allTopics[this.account.userID.ToString()];
-                    if (t_topics != null)
-                    {
-                        TwitterStatus last = t_topics[0].t_post;
-                        if (last.Id != this.homeStatuses[0].t_post.Id)
-                        {
-                            streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
-                            streamFeeds.LoadContext();
-                        }
-                    }
-                    else
-                    {
-                        streamFeeds.allTopics[this.account.userID.ToString()] = this.homeStatuses;
-                        streamFeeds.LoadContext();
-                    }
-                }
-
-                //Connexion.SaveAccount(this);
-            }
-        }
-*/
+       
         /// <summary>
         /// methode pour charger les amis (gens que l'on suit)
         /// </summary>
+        public delegate void OnGetFriendsCompleted(List<TwitterUser> friends);
+        public event OnGetFriendsCompleted GetFriendsCalled;
+
         public void LoadFriends()
         {
+            if (this.friends == null || this.friends.Count == 0)
+                Connexion.serviceEIP.GetFiendsAsync(((AccountTwitter)this.account).token, ((AccountTwitter)this.account).tokenSecret);
+            else
+            {
+                if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
+                    this.GetFriendsCalled.Invoke(this.friends);
+            }
+        }
 
+
+
+        void serviceEIP_GetFiendsCompleted(object sender, GetFiendsCompletedEventArgs e)
+        {
+            if(e.Error == null)
+            {
+            if (e.Result != null)
+                if (e.Result.Count > 0)
+                {
+                    this.friends = e.Result;
+
+                    if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
+                        this.GetFriendsCalled.Invoke(this.friends);
+                }
+            }
         }
 
         /// <summary>

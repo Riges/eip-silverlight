@@ -87,10 +87,12 @@ namespace EIP.Views
                     switch (account.Value.account.typeAccount)
                     {
                         case Account.TypeAccount.Facebook:
+                            ((AccountFacebookLight)account.Value).LoadFiltersCalled -= new AccountFacebookLight.OnLoadFiltersCompleted(LeftMenu_LoadFiltersCalled);
                             ((AccountFacebookLight)account.Value).LoadFiltersCalled += new AccountFacebookLight.OnLoadFiltersCompleted(LeftMenu_LoadFiltersCalled);
                             ((AccountFacebookLight)account.Value).LoadFilters();
                             break;
                         case Account.TypeAccount.Twitter:
+                            ((AccountTwitterLight)account.Value).LoadFiltersCalled -= new AccountTwitterLight.OnLoadFiltersCompleted(LeftMenu_LoadFiltersCalled);
                             ((AccountTwitterLight)account.Value).LoadFiltersCalled += new AccountTwitterLight.OnLoadFiltersCompleted(LeftMenu_LoadFiltersCalled);
                             ((AccountTwitterLight)account.Value).LoadFilters();
                             break;
