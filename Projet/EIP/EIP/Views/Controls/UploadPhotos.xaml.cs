@@ -154,12 +154,18 @@ namespace EIP.Views.Controls
                 if (selectedAlbum.aid == null || selectedAlbum.aid == "")
                 {
                     nameAlbum.IsEnabled = true;
+                    lieuAlbum.IsEnabled = true;
+                    descriptionAlbum.IsEnabled = true;
                     nameAlbum.Text = "";
+                    lieuAlbum.Text = "";
+                    descriptionAlbum.Text = "";
                 }
                 else
                 {
                     nameAlbum.Text = selectedAlbum.name;
                     nameAlbum.IsEnabled = false;
+                    lieuAlbum.IsEnabled = false;
+                    descriptionAlbum.IsEnabled = false;
                 }
             }
         }

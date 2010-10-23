@@ -31,8 +31,8 @@ namespace EIP.Views.Controls
             if (!this.loaded)
             {
                 this.photo = this.DataContext as photo;
-
-                imgPhoto.Source = new BitmapImage(new Uri(this.photo.src_big, UriKind.Absolute));
+                if (this.photo != null)
+                    imgPhoto.Source = new BitmapImage(new Uri(this.photo.src_big, UriKind.Absolute));
                 
                 
                 this.loaded = true;

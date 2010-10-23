@@ -51,13 +51,13 @@ namespace EIP.Views.Controls.Feeds
             if (topic.post.attachment.media.stream_media.Count >= 2)
             {
                 string urlImg = string.Empty;
-                if (topic.post.attachment.media.stream_media[0].src.ToLower().EndsWith(".gif"))
+                if (topic.post.attachment.media.stream_media[1].src.ToLower().EndsWith(".gif"))
                 {
 
-                    urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[0].src.Replace("&", "||");
+                    urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[1].src.Replace("&", "||");
                 }
                 else
-                    urlImg = topic.post.attachment.media.stream_media[0].src;
+                    urlImg = topic.post.attachment.media.stream_media[1].src;
 
                 img2.Source = new BitmapImage(new Uri(urlImg, UriKind.Absolute));
                 img2Border.Visibility = System.Windows.Visibility.Visible;                
@@ -65,13 +65,13 @@ namespace EIP.Views.Controls.Feeds
             if (topic.post.attachment.media.stream_media.Count >= 3)
             {
                 string urlImg = string.Empty;
-                if (topic.post.attachment.media.stream_media[0].src.ToLower().EndsWith(".gif"))
+                if (topic.post.attachment.media.stream_media[2].src.ToLower().EndsWith(".gif"))
                 {
 
-                    urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[0].src.Replace("&", "||");
+                    urlImg = "http://localhost:4164/GifHandler.ashx?link=" + topic.post.attachment.media.stream_media[2].src.Replace("&", "||");
                 }
                 else
-                    urlImg = topic.post.attachment.media.stream_media[0].src;
+                    urlImg = topic.post.attachment.media.stream_media[2].src;
 
                 img3.Source = new BitmapImage(new Uri(urlImg, UriKind.Absolute));
                 img3Border.Visibility = System.Windows.Visibility.Visible;

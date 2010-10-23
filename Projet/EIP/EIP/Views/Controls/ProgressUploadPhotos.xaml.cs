@@ -84,7 +84,10 @@ namespace EIP.Views.Controls
                         SendPhoto();
                     }
                     else
+                    {
+                        ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetPhotos(aid);
                         this.DialogResult = true;
+                    }
                 });
 
         }
