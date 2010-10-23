@@ -461,7 +461,7 @@ namespace EIP
                             {
                                 if (mess.author_id == unUser.id)
                                 {
-                                    tmp = new MessageFacebook(mess, unUser);
+                                    tmp = new MessageFacebook(mess, unUser, this.account.accountID);
                                     liste.Add(tmp);
                                 }
                             }

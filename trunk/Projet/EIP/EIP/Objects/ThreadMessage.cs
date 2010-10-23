@@ -134,5 +134,9 @@ namespace EIP.Objects
         {
             this.messagesFb = liste;
         }
+        public List<MessageFacebook> getMessages()
+        {
+            return this.messagesFb;
+        }
     }
 }
