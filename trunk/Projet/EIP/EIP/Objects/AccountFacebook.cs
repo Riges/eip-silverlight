@@ -1089,7 +1089,7 @@ namespace EIP
             }
         }
 
-        public delegate void OnGetPhotosCompleted(bool ok);
+        public delegate void OnGetPhotosCompleted(bool ok, string aid, Dictionary<string, photo> photos);
         public event OnGetPhotosCompleted GetPhotosCalled;
 
         /// <summary>
@@ -1098,28 +1098,35 @@ namespace EIP
         /// <param name="aid">album id</param>
         public void GetPhotos(string aid)
         {
-            //if (!this.photos.ContainsKey(aid))
-                this.facebookAPI.Photos.GetAsync(null, aid, null, new Photos.GetCallback(GetPhotos_Completed), aid);
+            if (this.photos.ContainsKey(aid))
+            {
+                if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
+                    this.GetPhotosCalled.Invoke(true, aid, this.photos[aid]);
+            }
+            this.facebookAPI.Photos.GetAsync(null, aid, null, new Photos.GetCallback(GetPhotos_Completed), aid);
         }
 
         private void GetPhotos_Completed(IList<photo> photos, object aid, FacebookException ex)
         {
-            if (ex == null)
+            if (ex == null && photos.Count > 0)
             {
-                //this.photos[aid.ToString()] = (List<photo>)photos;
-                foreach (photo tof in photos)
+                if (this.photos[aid.ToString()].Count != photos.Count)
                 {
-                    this.photos[aid.ToString()][tof.pid] = tof;
-                }
+                    this.photos[aid.ToString()] = new Dictionary<string, photo>();
+                    foreach (photo tof in photos)
+                    {
+                        this.photos[aid.ToString()][tof.pid] = tof;
+                    }
 
-                if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
-                    this.GetPhotosCalled.Invoke(true);
+                    if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
+                        this.GetPhotosCalled.Invoke(true, aid.ToString(), this.photos[aid.ToString()]);
+                }
 
             }
             else
             {
                 if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
-                    this.GetPhotosCalled.Invoke(false);
+                    this.GetPhotosCalled.Invoke(false, aid.ToString(), this.photos[aid.ToString()]);
             }
         }
 
