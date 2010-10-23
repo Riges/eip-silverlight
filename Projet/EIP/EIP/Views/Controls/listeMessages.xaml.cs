@@ -22,6 +22,7 @@ namespace EIP.Views.Controls
         public listeMessages()
         {
             InitializeComponent();
+               
         }
 
 
@@ -50,7 +51,20 @@ namespace EIP.Views.Controls
                 /*string tmp = this.box.Count.ToString();
                 MessageBox toto = new MessageBox("", "LoadMessages " + tmp);
                 toto.Show();*/
-                
+
+                 foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+                {
+                    switch (account.Value.account.typeAccount)
+                    {
+                        case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                            ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetThreadCalled += new AccountFacebookLight.OnGetThreadCompleted(Messages_GetThreadCalled);
+                            break;
+                        case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                            break;
+                        case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                            break;
+                    }
+                }
                 if (this.box.Count > 0)
                 {
                     messagesPanel.Children.Clear();
@@ -62,6 +76,26 @@ namespace EIP.Views.Controls
                     //FeedsControl.DataContext = this.box;
 
                 }
+            });
+        }
+
+        void Messages_GetThreadCalled(ThreadMessage th)
+        {
+            Connexion.dispatcher.BeginInvoke(() =>
+            {
+                messagesPanel.Children.Clear();
+                // tester si FB !!
+                foreach (MessageFacebook mess in th.getMessages())
+                {
+                    Message monMessage = new Message(mess);
+                    messagesPanel.Children.Add(monMessage);
+                    //break;
+                }
+                //listeMessagesBox.box = liste;
+                //listeMessagesBox.LoadMessages();
+                //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
+                //toto.Show();
+                messagesPanel = messagesPanel;
             });
         }
     }

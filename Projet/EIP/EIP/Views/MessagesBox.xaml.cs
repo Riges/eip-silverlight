@@ -54,8 +54,7 @@ namespace EIP.Views
                 {
                     case EIP.ServiceEIP.Account.TypeAccount.Facebook:
                         ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
-                        ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetThreadCalled += new AccountFacebookLight.OnGetThreadCompleted(Messages_GetThreadCalled);
-                        switch (this.boxActive)
+                         switch (this.boxActive)
                         {
                             case "outbox":
                                 HeaderText.Text = "Boîte d'envoi";
@@ -90,18 +89,6 @@ namespace EIP.Views
                 });
 
             
-        }
-
-        void Messages_GetThreadCalled(ThreadMessage th)
-        {
-            Connexion.dispatcher.BeginInvoke(() =>
-            {
-                th = th;
-                //listeMessagesBox.box = liste;
-                //listeMessagesBox.LoadMessages();
-                //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
-                //toto.Show();
-            });
         }
 
         

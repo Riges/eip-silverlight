@@ -16,14 +16,40 @@ namespace EIP.Objects
     {
         private profile author { get; set; }
         private message message { get; set; }
+        public long accountID { get; set; }
 
-        public MessageFacebook(message mess, profile unUser)
+        public MessageFacebook(message mess, profile unUser, long accountID)
         {
             this.message = mess;
             this.author = unUser;
+            this.accountID = accountID;
         }
 
         public MessageFacebook(){}
 
+        public String getPic()
+        {
+            return this.author.pic_square;
+        }
+
+        public String getContent()
+        {
+            return this.message.body;
+        }
+
+        public String getAuthorName()
+        {
+            return this.author.name;
+        }
+
+        public long getAuthorAccountID()
+        {
+            return this.author.id;
+        }
+
+        public long getDate()
+        {
+            return this.message.created_time;
+        }
     }
 }

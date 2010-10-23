@@ -69,6 +69,7 @@
             <!-- only for FB -->
             <TextBlock HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" FontStyle="Italic" FontSize="9" Foreground="#FFCCCCCC" />
 
+            <TextBlock Name="content" HorizontalAlignment="Left"  Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" />
         </StackPanel>
     </Grid>
     
