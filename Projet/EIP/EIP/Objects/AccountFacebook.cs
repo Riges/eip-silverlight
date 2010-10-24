@@ -482,7 +482,7 @@ namespace EIP
 
         #region Friends
 
-        public delegate void OnGetFriendsCompleted(List<user> friendsFB);
+        public delegate void OnGetFriendsCompleted(List<user> friendsFB, long accountID);
         public event OnGetFriendsCompleted GetFriendsCalled;
 
         public void LoadFriends()
@@ -492,7 +492,7 @@ namespace EIP
             else
             {
                 if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
-                         this.GetFriendsCalled.Invoke(this.friends);
+                         this.GetFriendsCalled.Invoke(this.friends, this.account.accountID);
             }
         }
 
@@ -514,7 +514,7 @@ namespace EIP
                      this.friends = users as List<user>;
 
                      if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
-                         this.GetFriendsCalled.Invoke(this.friends);
+                         this.GetFriendsCalled.Invoke(this.friends, this.account.accountID);
                  }
         }
 

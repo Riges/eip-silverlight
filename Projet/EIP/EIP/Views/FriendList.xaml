@@ -4,6 +4,7 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:Controls="clr-namespace:EIP.Views.Controls"
+           xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
@@ -13,8 +14,16 @@
         <StackPanel Name="ImgLoad" Visibility="Visible">
             <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
         </StackPanel>
-        <StackPanel Name="Liste" Orientation="Vertical" Visibility="Collapsed">
+        <!--<StackPanel Name="Liste" Orientation="Vertical" Visibility="Collapsed">
             <TextBlock Text="Friend List"></TextBlock>
-        </StackPanel>
+        </StackPanel>-->
+        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="14" Grid.ColumnSpan="3" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
+            <fl:FlowItemsControl3D.ItemTemplate>
+                <DataTemplate>
+                    <Controls:FriendView x:Name="photoItem" VerticalAlignment="Top" FriendsPage="true"  Cursor="Hand"></Controls:FriendView>
+                </DataTemplate>
+            </fl:FlowItemsControl3D.ItemTemplate>
+        </fl:FlowItemsControl3D>
     </Grid>
 </navigation:Page>
