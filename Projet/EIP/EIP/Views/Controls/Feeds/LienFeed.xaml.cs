@@ -73,7 +73,8 @@ namespace EIP.Views.Controls.Feeds
             }
 
             titre.Content = topic.post.attachment.name;
-            titre.NavigateUri = new Uri(topic.post.attachment.href, UriKind.Absolute);
+            if (topic.post.attachment.href != null)
+                titre.NavigateUri = new Uri(topic.post.attachment.href, UriKind.Absolute);
 
             if (topic.post.attachment.caption != "" && topic.post.attachment.caption != null)
             {

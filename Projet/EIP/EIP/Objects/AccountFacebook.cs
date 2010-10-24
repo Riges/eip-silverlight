@@ -76,6 +76,7 @@ namespace EIP
             this.photos = new Dictionary<string, Dictionary<string, photo>>();
             this.videos = new Dictionary<long, Dictionary<long, VideoLight>>();
             this.profiles = new List<profile>();
+            this.walls = new Dictionary<long, List<Topic>>();
 
             #if (DEBUG)
                 this.appID = "131664040210585";
@@ -765,7 +766,6 @@ namespace EIP
 
         public void LoadWall(long uid)
         {
-           
             if (this.facebookAPI != null)
             { 
                 if(this.walls.ContainsKey(uid))
@@ -783,7 +783,7 @@ namespace EIP
 
         private void LoadWallCompleted(stream_data data, object uid, FacebookException ex)
         {
-            this.walls[(long)uid] = new List<Topic>();
+            List<Topic> listTemp = new List<Topic>();
 
             profiles.AddRange(data.profiles.profile);
 
@@ -809,16 +809,28 @@ namespace EIP
                 TopicFB topicFB = new TopicFB(post, userSource, userTarget);
                 DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                 dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
-                this.walls[(long)uid].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
+                //this.walls[(long)uid].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
+                listTemp.Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
             }
 
-            /*
-            if (this.feeds.ContainsKey(filtre.ToString()) && this.feeds[filtre.ToString()].Count > 0)
+            bool send = false;
+
+            if (this.walls.ContainsKey((long)uid))
             {
-                Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre.ToString()];
-                if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
-                    this.LoadFeedsCalled.Invoke();
-            }*/
+                if (this.walls[(long)uid] != listTemp)
+                {
+                    send = true;
+                }
+            }
+            else
+                send = true;
+
+            if (send)
+            {
+                this.walls[(long)uid] = listTemp;
+                if (this.LoadWallCalled != null)
+                    this.LoadWallCalled.Invoke((long)uid, this.walls[(long)uid]);
+            }
         }
 
 

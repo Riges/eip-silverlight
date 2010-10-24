@@ -35,7 +35,7 @@
             </Border.Background>
         </Border>
 
-        <Button Grid.Row="1" Grid.Column="0" Margin="5,5,0,5" Cursor="Hand" >Mur</Button>
+        <Button Grid.Row="1" Grid.Column="0" Margin="5,5,0,5" Name="wallBtn" Click="wallBtn_Click" Cursor="Hand" >Mur</Button>
         <Button Grid.Row="2" Grid.Column="0" Margin="5,5,0,5" Name="infosBtn" Click="infosBtn_Click" Cursor="Hand">Infos</Button>
         <Button Grid.Row="3" Grid.Column="0" Margin="5,5,0,5" Name="photosBtn" Click="photosBtn_Click" Cursor="Hand">Photos</Button>
         <Button Grid.Row="4" Grid.Column="0" Margin="5,5,0,5" Name="videosBtn" Click="videosBtn_Click" Cursor="Hand">Vidéos</Button>

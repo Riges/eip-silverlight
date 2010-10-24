@@ -95,6 +95,11 @@ namespace EIP.Views
             this.NavigationService.Navigate(new Uri("/ProfilVideos/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));
         }
 
+        private void wallBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/ProfilWall/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));
+        }
+
 
 
 

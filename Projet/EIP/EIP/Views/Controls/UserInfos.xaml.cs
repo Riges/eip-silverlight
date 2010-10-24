@@ -248,7 +248,10 @@ namespace EIP.Views.Controls
                     {
                         if (users.Count > 0)
                         {
-                            amisCommun.Text = users.Count + " amis en commun";
+                            if (Connexion.accounts[accountID].account.userID == this.uid)
+                                amisCommun.Text = users.Count + " amis";
+                            else
+                                amisCommun.Text = users.Count + " amis en commun";
                             List<Friend> friends = new List<Friend>();
                             foreach (user friend in users)
                             {
