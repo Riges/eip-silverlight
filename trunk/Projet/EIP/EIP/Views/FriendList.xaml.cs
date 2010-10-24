@@ -78,7 +78,7 @@ namespace EIP.Views
             
         }
 
-        private void FriendList_GetFriendsCalled(List<user> friendsFB)
+        private void FriendList_GetFriendsCalled(List<user> friendsFB, long accountID)
         {
             foreach (user toto in friendsFB)
             {
@@ -92,6 +92,7 @@ namespace EIP.Views
                 else
                 {
                     Friend titi = new Friend();
+                    titi.accountID = accountID;
                     titi.userFB = toto;
                     friends.Add(key, titi);
                 }
@@ -107,52 +108,19 @@ namespace EIP.Views
 
         private void LoadDisplay()
         {
-
-            foreach (KeyValuePair<String, Friend> poto in friends)
-            {
-                FriendView friend = new FriendView(poto.Value);
-
-                this.Liste.Children.Add(friend);
-
-                //if (poto.Value.userFB != null)
-                //{
-                //    FriendView fv = new FriendView(poto.Value);
-
-                //    BitmapImage btImgFB = null;
-
-                //    if (poto.Value.userFB.pic_square != null)
-                //    {
-                //        Uri uriImg = new Uri(poto.Value.userFB.pic_square);
-                //        btImgFB = new BitmapImage(uriImg);
-                //    }
-                //    fv.imgUser.Source = btImgFB;
-
-                //    fv.nomFriend.Text = poto.Value.userFB.first_name + " " + poto.Value.userFB.last_name;
-                //    fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userFB.uid, UriKind.Relative);
-
-                //    this.Liste.Children.Add(fv);
-                //}
-                //else if (poto.Value.userTW != null)
-                //{
-                //    FriendView fv = new FriendView();
-
-                //    BitmapImage btImgFB = null;
-
-                //    if (poto.Value.userTW.ProfileImageUrl != null)
-                //    {
-                //        Uri uriImg = new Uri(poto.Value.userTW.ProfileImageUrl);
-                //        btImgFB = new BitmapImage(uriImg);
-                //    }
-                //    fv.imgUser.Source = btImgFB;
-
-                //    fv.nomFriend.Text = poto.Value.userTW.Name;
-                //    // fv.voirProfil.NavigateUri = new Uri("/Profil/" + poto.Value.userTW.);
-
-                //    this.Liste.Children.Add(fv);
-                //}
-            }
+            flowControl.DataContext = friends.Values;
+            
             ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-            Liste.Visibility = System.Windows.Visibility.Visible;
+            flowControl.Visibility = System.Windows.Visibility.Visible;
+
+            //foreach (KeyValuePair<String, Friend> poto in friends)
+            //{
+            //    FriendView friend = new FriendView(poto.Value);
+
+            //    this.Liste.Children.Add(friend);
+
+
+            //}
 
         }
     }

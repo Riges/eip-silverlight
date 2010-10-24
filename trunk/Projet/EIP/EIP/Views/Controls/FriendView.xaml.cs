@@ -22,6 +22,23 @@ namespace EIP.Views.Controls
         private user friendFB;
         private TwitterUser friendTW;
 
+        public bool FriendsPage
+        {
+            get
+            {
+                if (imgUser.MaxWidth == 400)
+                    return true;
+
+                return false;
+            }
+            set
+            {
+                imgUser.MaxWidth = 400;
+            }
+        }
+
+
+
         public FriendView()
         {
             InitializeComponent();
@@ -35,6 +52,7 @@ namespace EIP.Views.Controls
             LoadFriend(friend);  
         }
 
+   
         void FriendView_Loaded(object sender, RoutedEventArgs e)
         {
             Friend friend = (Friend)this.DataContext;
