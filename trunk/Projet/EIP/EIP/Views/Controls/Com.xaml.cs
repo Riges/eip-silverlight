@@ -93,5 +93,10 @@ namespace EIP.Views.Controls
         {
             deleteCom.Visibility = System.Windows.Visibility.Collapsed;
         }
+
+        private void picUserBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Connexion.navigationService.Navigate(new Uri("/ProfilInfos/" + profile.id + "/Account/" + this.accountID, UriKind.Relative));
+        }
     }
 }

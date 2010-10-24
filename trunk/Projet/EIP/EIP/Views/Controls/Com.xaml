@@ -20,7 +20,7 @@
 
         <!--<Image Grid.RowSpan="2" Grid.Column="0" Name="imgUser" Width="40" Height="40" Stretch="Uniform" Margin="0,0,10,10" ></Image>-->
 
-        <Border CornerRadius="10" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="2" Width="40" Height="40" Grid.RowSpan="2" Grid.Column="0" Margin="0,0,10,10" >
+        <Border CornerRadius="10" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="2" Width="40" Height="40" Grid.RowSpan="2" Grid.Column="0" Margin="0,0,10,10" Cursor="Hand" MouseLeftButtonUp="picUserBorder_MouseLeftButtonUp" >
             <Border.Background>
                 <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
                     <ImageBrush.ImageSource>

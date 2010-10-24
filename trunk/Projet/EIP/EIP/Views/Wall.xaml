@@ -10,8 +10,14 @@
            Title="Wall Page">
     <Grid x:Name="LayoutRoot">
 
+        <StackPanel Name="ImgLoad" Visibility="Collapsed">
+            <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
+        </StackPanel>
 
-        <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500">
+        <TextBlock  Name="noFeeds" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,20,0" Visibility="Collapsed" Text="Cet utilisateur ne souhaite pas que vous accédiez à son mur."></TextBlock>
+
+
+        <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500" Visibility="Collapsed">
             <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">

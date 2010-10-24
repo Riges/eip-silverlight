@@ -90,6 +90,7 @@
                         <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
 
                         <uriMapper:UriMapping Uri="/ProfilInfos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
+                        <uriMapper:UriMapping Uri="/ProfilWall/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilPhotos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilVideos/{userid}/Account/{accid}" MappedUri="/Views/MenuProfil.xaml?uid={userid}&amp;accid={accid}" />
 
@@ -136,8 +137,9 @@
                         <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
                             
                         <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}" MappedUri="/Views/ProfilPage.xaml?uid={userid}&amp;accid={accid}" />
-                            
+
                         <uriMapper:UriMapping Uri="/ProfilInfos/{userid}/Account/{accid}" MappedUri="/Views/ProfilInfos.xaml?uid={userid}&amp;accid={accid}" />
+                        <uriMapper:UriMapping Uri="/ProfilWall/{userid}/Account/{accid}" MappedUri="/Views/Wall.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilPhotos/{userid}/Account/{accid}" MappedUri="/Views/AlbumsView.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilVideos/{userid}/Account/{accid}" MappedUri="/Views/VideosView.xaml?uid={userid}&amp;accid={accid}" />
 
