@@ -9,7 +9,7 @@
            d:DesignWidth="640" d:DesignHeight="480"
            Title="StreamFeeds Page">
     
-  <Grid x:Name="LayoutRoot">
+  <Grid x:Name="LayoutRoot" >
 
 
             <!--<Grid.RowDefinitions>

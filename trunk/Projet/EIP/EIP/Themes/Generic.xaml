@@ -17,7 +17,7 @@
         </Setter>
     </Style>-->
 
-    <Style TargetType="local:TemplatedControl1">
+    <!--<Style TargetType="local:TemplatedControl1">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:TemplatedControl1">
@@ -28,5 +28,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 </ResourceDictionary>

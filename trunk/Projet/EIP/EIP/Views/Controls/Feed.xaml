@@ -26,8 +26,8 @@
 
     </UserControl.Resources>
     
-    <!--<Border BorderBrush="Red" BorderThickness="3">-->
-    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}"  >
+    <!--<Border CornerRadius="30" Name="borderFeed" >-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -46,8 +46,8 @@
                     <PlaneProjection  RotationY="-35" CenterOfRotationX="0"  />
                 </Image.Projection>
         </Image>-->
-
-        <Border CornerRadius="20" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="3" Width="100" Height="100" Grid.RowSpan="3" Grid.Column="0" Margin="0,5,20,5" HorizontalAlignment="Right" MouseLeftButtonUp="picUserBorder_MouseLeftButtonUp" Cursor="Hand" >
+<!--#3B5998 - #5ec7e5-->
+        <Border CornerRadius="20,20,8,20" x:Name="picUserBorder"  BorderThickness="0" Width="100" Height="100" Grid.RowSpan="3" Grid.Column="0" Margin="0,5,20,5" HorizontalAlignment="Right" MouseLeftButtonUp="picUserBorder_MouseLeftButtonUp" Cursor="Hand" >
             <Border.Background>
                 <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
                     <ImageBrush.ImageSource>
@@ -56,10 +56,12 @@
                     </ImageBrush.ImageSource>
                 </ImageBrush>
             </Border.Background>
+
+            <Image Name="imgCpt" Width="16" VerticalAlignment="Bottom" HorizontalAlignment="Right"></Image>
         </Border>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <Image Name="imgCpt" Width="16"></Image>
+            <!--<Image Name="imgCpt" Width="16"></Image>-->
             <HyperlinkButton  Name="userSource" Margin="5,0,0,0" Style="{StaticResource HyperlinkButtonStyle}"></HyperlinkButton>
             <TextBlock Name="chevronUserTarget" Text=">" Margin="5,0,5,0" Visibility="Collapsed"></TextBlock>
             <HyperlinkButton  Name="userTarget" Margin="0,0,0,0" Style="{StaticResource HyperlinkButtonStyle}"></HyperlinkButton>
@@ -80,12 +82,12 @@
         </StackPanel>
 
         <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" Margin="0,5,0,0" x:Name="comsControl" Width="600" HorizontalAlignment="Center" VerticalAlignment="Stretch" ></Control:Coms>
-        
-        
-        <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="Gray" ></Rectangle>
+
+
+            <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="Gray" Height="6" ></Rectangle>
             
        
     </Grid>
-       <!--</Border>-->
+     <!--</Border>-->
     
 </UserControl>
