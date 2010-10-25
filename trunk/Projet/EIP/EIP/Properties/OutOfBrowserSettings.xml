@@ -1,7 +1,7 @@
-<OutOfBrowserSettings ShortName="MyNetWork" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
-  <OutOfBrowserSettings.Blurb>MyNetWork on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
+<OutOfBrowserSettings ShortName="myNETwork" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>myNETwork on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
-    <WindowSettings Title="EIP Application" />
+    <WindowSettings Title="EIP Application" Height="700" Width="800" />
   </OutOfBrowserSettings.WindowSettings>
   <OutOfBrowserSettings.SecuritySettings>
     <SecuritySettings ElevatedPermissions="Required" />

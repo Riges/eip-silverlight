@@ -109,6 +109,12 @@ namespace EIP
                                                                 ((AccountFacebook)this.account).sessionSecret,
                                                                 Convert.ToInt32(((AccountFacebook)this.account).sessionExpires),
                                                                 this.account.userID);
+                    NotificationWindow notify = new NotificationWindow();
+                    notify.Height = 75; notify.Width = 200;
+                    TextBlock note = new TextBlock();
+                    note.Text = "Ceci est une notification Silverlight 4 !";
+                    notify.Content = note;
+                    notify.Show(4000);
                 });
         }
 
@@ -233,7 +239,10 @@ namespace EIP
                         break;
                     default:
                         break;
+
                 }
+              
+
 
                 
 
