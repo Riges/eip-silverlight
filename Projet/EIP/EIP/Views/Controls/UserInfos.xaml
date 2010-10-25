@@ -72,7 +72,7 @@
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Grid.Row="11" Name="quote" Margin="0,0,0,10"></TextBlock>
 
         
-        <Rectangle  Grid.Column="0"  Grid.ColumnSpan="3" Grid.Row="12" Fill="Gray" Stretch="Fill" Height="2"></Rectangle>
+        <Rectangle  Grid.Column="0"  Grid.ColumnSpan="3" Grid.Row="12" Fill="Gray" Stretch="Fill" Height="0"></Rectangle>
         
         <TextBlock Grid.Column="0" Grid.Row="13" FontWeight="Bold" FontSize="14" Name="amisCommun"></TextBlock>
         <TextBox Grid.Column="2" Grid.Row="13" Width="150" HorizontalAlignment="Right" Text="Chercher un ami..." Name="searchFriend" TextChanged="searchFriend_TextChanged" GotFocus="searchFriend_GotFocus" LostFocus="searchFriend_LostFocus"></TextBox>

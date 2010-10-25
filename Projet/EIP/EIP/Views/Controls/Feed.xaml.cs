@@ -115,7 +115,9 @@ namespace EIP.Views.Controls
                            
 
                             imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
-
+                            //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("3B", 16), G = Convert.ToByte("59", 16), B = Convert.ToByte("98", 16) });
+                            picUserBorder.BorderBrush = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("3B", 16), G = Convert.ToByte("59", 16), B = Convert.ToByte("98", 16) });
+                                //<!--#3B5998 -->
 
                             //LoadMessage(post.post.message);
                             //message.Text = post.post.message;
@@ -225,6 +227,9 @@ namespace EIP.Views.Controls
                             }
                             userSource.Content = status.User.Name;
                             imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                            //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
+                            picUserBorder.BorderBrush = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
+                            //<!--#5ec7e5--> 
 
                             //LoadMessage(status.Text);
                             StatutFeed statut = new StatutFeed(status.Text);

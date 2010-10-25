@@ -876,7 +876,47 @@ namespace EIP
 
         public void GetComs(string postId)
         {
-            this.facebookAPI.Fql.QueryAsync<comments_get_response>("SELECT xid, fromid, post_id, time, text, id, username FROM comment WHERE object_id=" + postId.Split('_')[1], new Fql.QueryCallback<comments_get_response>(GetComsFQL_Completed), postId);
+            this.facebookAPI.Stream.GetCommentsAsync(postId, new Stream.GetCommentsCallback(GetComs_Completed), postId);
+            //this.facebookAPI.Fql.QueryAsync<comments_get_response>("SELECT xid, fromid, post_id, time, text, id, username FROM comment WHERE object_id=" + postId.Split('_')[1], new Fql.QueryCallback<comments_get_response>(GetComsFQL_Completed), postId);
+        }
+
+        public void GetComs_Completed(IList<comment> coms, object obj, FacebookException ex)
+        {
+            if (ex == null && coms.Count > 0)
+            {
+                List<long> userIds = new List<long>();
+                foreach (comment com in coms)
+                {
+
+                    bool exist = false;
+                    foreach (profile prof in this.profiles)
+                    {
+                        if (com.fromid == prof.id)
+                            exist = true;
+                    }
+                    if (!exist)
+                        userIds.Add(com.fromid);
+                }
+
+                if (userIds.Count == 0)
+                {
+                    if (this.GetComsCalled != null)//evite que ca plante si pas dabo
+                        this.GetComsCalled.Invoke(coms.ToList(), obj.ToString());
+                }
+                else
+                {
+                    List<object> list = new List<object>();
+                    list.Add(coms);//[0]
+                    list.Add(obj);//[1]
+
+                    this.facebookAPI.Users.GetInfoAsync(userIds, new Users.GetInfoCallback(GetUserComs_Completed), list);
+                }
+            }
+            else if (ex == null && coms.Count == 0)
+            {
+                if (this.GetComsCalled != null)//evite que ca plante si pas dabo
+                    this.GetComsCalled.Invoke(null, obj.ToString());
+            }
         }
 
         public void GetComsFQL_Completed(comments_get_response coms, object obj, FacebookException ex)

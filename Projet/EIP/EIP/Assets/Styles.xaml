@@ -15,7 +15,8 @@
     
     
     <SolidColorBrush x:Key="LinkColorBrush" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="BgColor" Color="#FFB5B5B5"/>
+    <SolidColorBrush x:Key="BgColor" Color="#FFB5B5B5" />
+    <!--<SolidColorBrush x:Key="BgColor" Color="#FFB5B5B5"/>-->
 
 
     <!-- LayoutRoot Grid Style -->

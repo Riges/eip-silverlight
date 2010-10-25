@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Height="Auto">
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
+    <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>

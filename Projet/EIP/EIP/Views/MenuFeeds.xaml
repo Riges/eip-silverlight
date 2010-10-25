@@ -13,7 +13,7 @@
             <Button Content="Actualités"></Button>
             <Button Content="Status"></Button>
         </StackPanel> -->
-        <toolkit:Accordion Name="menufiltre" Background="{StaticResource BgColor}" Width="150">
+        <toolkit:Accordion Name="menufiltre" Background="{StaticResource BgColor}" Width="200">
         </toolkit:Accordion>
 
 

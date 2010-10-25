@@ -15,16 +15,25 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
         <my:DockPanel Background="{StaticResource BgColor}" LastChildFill="False">
 
-            <StackPanel my:DockPanel.Dock="Top" Height="50" >
-               
-                <Grid x:Name="NavigationGrid" Style="{StaticResource NavigationGridStyle}">
-                    <Image Source="Assets/Images/MyNetworkBulle_site.png" Height="45" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center"></Image>
-                    <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}">
+            <!--<StackPanel  >-->
+
+                <Grid x:Name="NavigationGrid" Style="{StaticResource NavigationGridStyle}" my:DockPanel.Dock="Top" Height="80">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="40*"></ColumnDefinition>
+                        <ColumnDefinition Width="50*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Image Source="Assets/Images/MyNetworkBulle_site.png" Grid.Column="0" Height="70" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center"></Image>
+
+                    <Controls:UpdateStatus x:Name="updateStatusControl" Grid.Column="1" Margin="25,0,0,0"></Controls:UpdateStatus>
+
+                    <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}" Grid.Column="2" HorizontalAlignment="Right">
                         <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
                             
                            
 
-                            <Controls:UpdateStatus x:Name="updateStatusControl" Margin="0,0,10,0"></Controls:UpdateStatus>
+                            
 
                             <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
                                      NavigateUri="/Home" TargetName="ContentFrame" Content="Home"/>
@@ -65,7 +74,13 @@
                     </Border>
 
                 </Grid>
-            </StackPanel>
+            <!--</StackPanel>-->
+
+            <Border x:Name="LinksBorderBottom" my:DockPanel.Dock="Bottom" Height="60" Background="{StaticResource NavigationBackgroundColorBrush}">
+                <StackPanel    >
+                    <TextBlock Text="Kikoooooooooo"></TextBlock>
+                </StackPanel>
+            </Border>
 
             <!--<StackPanel my:DockPanel.Dock="Bottom"  Height="100" >
                 <Button  Content="bas"  ></Button>
@@ -73,7 +88,7 @@
 
             <!--<StackPanel my:DockPanel.Dock="Left" Width="120" >-->
 
-            <navigation:Frame x:Name="LeftFrame" my:DockPanel.Dock="Left" Width="150" Margin="0,15,0,0" 
+            <navigation:Frame x:Name="LeftFrame" my:DockPanel.Dock="Left" Width="200" Margin="0,15,0,0" 
                                NavigationFailed="ContentFrame_NavigationFailed" ><!--Source="/MenuFeeds"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>
@@ -115,7 +130,7 @@
 
             <!--</StackPanel>-->
            
-            <StackPanel my:DockPanel.Dock="Right"  Width="200">
+            <StackPanel my:DockPanel.Dock="Right"  Width="250">
                     <Controls:ListeComptes x:Name="liste" Margin="0,15,0,0"></Controls:ListeComptes>
             </StackPanel>
 
