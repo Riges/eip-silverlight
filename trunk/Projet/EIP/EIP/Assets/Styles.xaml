@@ -45,7 +45,7 @@
     <Style x:Key="ContentFrameStyle" TargetType="navigation:Frame">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Padding" Value="10,10,10,10"/>
+        <Setter Property="Padding" Value="10,0,10,0"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
@@ -104,8 +104,8 @@
 
     <!-- Links Border Style -->
     <Style x:Key="LinksBorderStyle" TargetType="Border">
-        <Setter Property="Height" Value="50"/>
-        <Setter Property="Margin" Value="25,0,25,0"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Margin" Value="15,0,15,0"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
     </Style>
 
@@ -145,7 +145,7 @@
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="InteractiveElementBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                       <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="InteractiveElementBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
                                             <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.95"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)">
@@ -259,7 +259,9 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle x:Name="FocusVisualElement" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="2" Opacity="0" Margin="-1" RadiusX="1" RadiusY="1"/>
+                        
                         <Border x:Name="ActiveBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="1" Opacity="0"/>
+                        
                         <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Opacity="1">
                             <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Opacity="1">
                                 <ContentPresenter.Effect>
@@ -267,9 +269,15 @@
                                 </ContentPresenter.Effect>
                             </ContentPresenter>
                         </Border>
-                        <Border x:Name="InteractiveBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Background="{StaticResource HoverHyperLinkBackgroundColorBrush}" BorderThickness="1,1,1,1" Opacity="0" BorderBrush="{StaticResource HoverHyperLinkBackgroundColorBrush}" CornerRadius="1,1,1,1"/>
-                        <Border x:Name="InteractiveElementBorder" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed">
+
+
+
+                        <Border x:Name="InteractiveBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Background="{StaticResource HoverHyperLinkBackgroundColorBrush}" BorderThickness="1" Opacity="0" BorderBrush="{StaticResource HoverHyperLinkBackgroundColorBrush}" CornerRadius="1"/>
+                        
+                        <Border x:Name="InteractiveElementBorder" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed" >
+                            
                             <TextBlock x:Name="InteractiveElement" Foreground="{StaticResource HoverHyperlinkForegroundColorBrush}" FontSize="{TemplateBinding FontSize}" FontWeight="{TemplateBinding FontWeight}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Text="{TemplateBinding Content}"/>
+                           
                         </Border>
                         <TextBlock x:Name="DisabledOverlay" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Text="{TemplateBinding Content}" Foreground="#FFAAAAAA" Visibility="Collapsed"/>
                     </Grid>
