@@ -81,7 +81,8 @@
             <Control:jaime Margin="3,0,0,0" x:Name="jaimeButton"></Control:jaime>
         </StackPanel>
 
-        <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" Margin="0,5,0,0" x:Name="comsControl" Width="600" HorizontalAlignment="Center" VerticalAlignment="Stretch" ></Control:Coms>
+        
+        <Control:Coms Grid.Row="3" Grid.ColumnSpan="2" Margin="0,5,0,0" x:Name="comsControl" HorizontalAlignment="Center" VerticalAlignment="Stretch" ></Control:Coms> <!--Width="600"-->
 
 
             <Rectangle Grid.Row="4" Grid.ColumnSpan="2" Fill="Gray" Height="6" ></Rectangle>

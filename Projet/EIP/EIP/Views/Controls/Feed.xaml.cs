@@ -193,7 +193,7 @@ namespace EIP.Views.Controls
                             comsControl.accountID = topic.accountID;
                             comsControl.likes = post.post.likes;
                             comsControl.Commentaires = post.post.comments;
-                            comsControl.Width = this.ActualWidth * 0.7;
+                            //comsControl.Width = this.ActualWidth * 0.7;
 
                             comsControl.LoadComsControl();
 
