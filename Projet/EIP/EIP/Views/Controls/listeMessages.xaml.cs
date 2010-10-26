@@ -67,14 +67,14 @@ namespace EIP.Views.Controls
                 }
                 if (this.box.Count > 0)
                 {
-                    messagesPanel.Children.Clear();
+                    /*messagesPanel.Children.Clear();
                     foreach (ThreadMessage thread in this.box)
                     {
                         Message monMessage = new Message(thread);
                         messagesPanel.Children.Add(monMessage);
                     }
-                    //FeedsControl.DataContext = this.box;
-
+                    //FeedsControl.DataContext = this.box;*/
+                    MessagesControl.DataContext = this.box;
                 }
             });
         }
@@ -83,7 +83,7 @@ namespace EIP.Views.Controls
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                messagesPanel.Children.Clear();
+                /*messagesPanel.Children.Clear();
                 // tester si FB !!
                 foreach (MessageFacebook mess in th.getMessages())
                 {
@@ -95,7 +95,9 @@ namespace EIP.Views.Controls
                 //listeMessagesBox.LoadMessages();
                 //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
                 //toto.Show();
-                messagesPanel = messagesPanel;
+                messagesPanel = messagesPanel;*/
+
+                MessagesControl.DataContext = th.getMessages();
             });
         }
     }

@@ -7,9 +7,9 @@
     d:DesignHeight="300" d:DesignWidth="850" xmlns:my="clr-namespace:EIP.Views.Controls">
     
     <Grid x:Name="LayoutRoot" Background="White">
-        <StackPanel Orientation="Vertical" Name="messagesPanel">
+        
 
-            <ItemsControl Width="Auto" Height="Auto" Name="FeedsControl" ItemsSource="{Binding}">
+            <ItemsControl Width="Auto" Height="Auto" Name="MessagesControl" ItemsSource="{Binding}">
                 <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
                 <ItemsControl.Template>
                     <ControlTemplate TargetType="ItemsControl">
@@ -36,6 +36,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-        </StackPanel>
+       
     </Grid>
 </UserControl>
