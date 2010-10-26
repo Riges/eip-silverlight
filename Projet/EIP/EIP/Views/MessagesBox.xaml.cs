@@ -45,16 +45,47 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            e = e;
             if (this.NavigationContext.QueryString.ContainsKey("box"))
+            {
                 this.boxActive = this.NavigationContext.QueryString["box"];
 
-            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+                foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+                {
+                    switch (account.Value.account.typeAccount)
+                    {
+                        case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                            ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                            switch (this.boxActive)
+                            {
+                                case "outbox":
+                                    HeaderText.Text = "Boîte d'envoi";
+                                    ((AccountFacebookLight)account.Value).LoadOutboxMessages();
+                                    break;
+                                case "inbox":
+                                    HeaderText.Text = "Boîte de réception";
+                                    ((AccountFacebookLight)account.Value).LoadInboxMessages();
+                                    //this.box = ((AccountFacebookLight)account.Value).inbox;
+                                    break;
+                            }
+                            break;
+                        case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                            break;
+                        case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                            break;
+                    }
+                }
+            }
+            else if (this.NavigationContext.QueryString.ContainsKey("accountId") && this.NavigationContext.QueryString.ContainsKey("threadId"))
             {
-                switch (account.Value.account.typeAccount)
+                long accountId = Convert.ToInt64(this.NavigationContext.QueryString["accountId"]);
+                switch (Connexion.accounts[accountId].account.typeAccount)
                 {
                     case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
-                         switch (this.boxActive)
+                        //((AccountFacebookLight)Connexion.accounts[accountId]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                        ((AccountFacebookLight)Connexion.accounts[accountId]).GetThreadCalled += new AccountFacebookLight.OnGetThreadCompleted(Messages_GetThreadCalled);
+                        ((AccountFacebookLight)Connexion.accounts[accountId]).LoadThread(Convert.ToInt64(this.NavigationContext.QueryString["threadId"]));
+                          /*switch (this.boxActive)
                         {
                             case "outbox":
                                 HeaderText.Text = "Boîte d'envoi";
@@ -64,8 +95,8 @@ namespace EIP.Views
                                 HeaderText.Text = "Boîte de réception";
                                 ((AccountFacebookLight)account.Value).LoadInboxMessages();
                                 //this.box = ((AccountFacebookLight)account.Value).inbox;
-                                break;   
-                        }
+                                break;
+                        }*/
                         break;
                     case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                         break;
@@ -73,8 +104,7 @@ namespace EIP.Views
                         break;
                 }
             }
-
-
+            e = e;
         }
 
         void Messages_GetMessagesCalled(List<ThreadMessage> liste)
@@ -89,6 +119,13 @@ namespace EIP.Views
                 });
 
             
+        }
+        void Messages_GetThreadCalled(ThreadMessage th)
+        {
+            Connexion.dispatcher.BeginInvoke(() =>
+            {
+                listeMessagesBox.Messages_GetThreadCalled(th);
+            });
         }
 
         
