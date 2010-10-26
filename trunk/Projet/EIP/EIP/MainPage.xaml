@@ -96,6 +96,7 @@
                         <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/MenuFeeds.xaml"/>
                         <uriMapper:UriMapping Uri="/Messages/{filter}" MappedUri="/Views/MenuMessagesBox.xaml?box={filter}"/>
                         <uriMapper:UriMapping Uri="/Messages" MappedUri="/Views/MenuMessagesBox.xaml?box=inbox"/>
+                        <uriMapper:UriMapping Uri="/Messages/Thread/{accountId}/{threadId}" MappedUri="/Views/MenuMessagesBox.xaml?box=inbox"/>
                         <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/EmptyPage.xaml"/>
                         <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/EmptyPage.xaml"/>
                         <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/MenuFeeds.xaml?filter={filter}"   />
@@ -145,6 +146,7 @@
                         <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/StreamFeeds.xaml" />
                         <uriMapper:UriMapping Uri="/Messages/{filter}" MappedUri="/Views/MessagesBox.xaml?box={filter}"/>
                         <uriMapper:UriMapping Uri="/Messages" MappedUri="/Views/MessagesBox.xaml?box=inbox"/>
+                        <uriMapper:UriMapping Uri="/Messages/Thread/{accountId}/{threadId}" MappedUri="/Views/MessagesBox.xaml?accountId={accountId}&amp;threadId={threadId}"/>
                         <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/WaitLoad.xaml" />
                         <uriMapper:UriMapping Uri="/Intro" MappedUri="/Views/IntroPage.xaml" />
                         <uriMapper:UriMapping Uri="/Feeds/{filter}" MappedUri="/Views/StreamFeeds.xaml?filter={filter}" />

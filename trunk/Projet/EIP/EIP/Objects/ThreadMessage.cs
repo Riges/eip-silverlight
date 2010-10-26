@@ -129,6 +129,17 @@ namespace EIP.Objects
             return null;
         }
 
+        public long getThreadId()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    return this.MessageFb.thread_id;
+                    break;
+            }
+            return 0;
+        }
+
         // Facebook
         public void setMessages(List<MessageFacebook> liste)
         {

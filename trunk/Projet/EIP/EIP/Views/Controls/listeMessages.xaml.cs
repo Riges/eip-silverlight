@@ -52,19 +52,18 @@ namespace EIP.Views.Controls
                 MessageBox toto = new MessageBox("", "LoadMessages " + tmp);
                 toto.Show();*/
 
-                 foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+                /* foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
                 {
                     switch (account.Value.account.typeAccount)
                     {
                         case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                            ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetThreadCalled += new AccountFacebookLight.OnGetThreadCompleted(Messages_GetThreadCalled);
                             break;
                         case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                             break;
                         case EIP.ServiceEIP.Account.TypeAccount.Myspace:
                             break;
                     }
-                }
+                }*/
                 if (this.box.Count > 0)
                 {
                     /*messagesPanel.Children.Clear();
@@ -79,7 +78,7 @@ namespace EIP.Views.Controls
             });
         }
 
-        void Messages_GetThreadCalled(ThreadMessage th)
+        public void Messages_GetThreadCalled(ThreadMessage th)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
@@ -96,7 +95,7 @@ namespace EIP.Views.Controls
                 //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
                 //toto.Show();
                 messagesPanel = messagesPanel;*/
-
+                MessagesControl.DataContext = null;
                 MessagesControl.DataContext = th.getMessages();
             });
         }

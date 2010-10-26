@@ -374,9 +374,16 @@ namespace EIP
                 this.GetMessagesCalled.Invoke(liste2);
         }
 
-
-        public void LoadThreadMessages(thread th)
+        public void LoadThread(long thId)
         {
+            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where thread_id=" + thId, new Fql.QueryCallback<message_getThreadsInFolder_response>(GetLoadThreadFQL_Completed), thId);
+        }
+
+        public void GetLoadThreadFQL_Completed(message_getThreadsInFolder_response threadList, object obj, FacebookException ex)
+        {
+            thread th = new thread();
+            foreach (thread toto in threadList.thread)
+                th = toto;
             this.facebookAPI.Fql.QueryAsync("SELECT message_id, thread_id, author_id, body,created_time,attachment,viewer_id from message where thread_id=" + th.thread_id + " ORDER BY created_time ASC", new Fql.QueryCallback(GetThreadMessagesFQL_Completed), th);
 
         }
