@@ -22,11 +22,11 @@
                     </ControlTemplate>
                 </ItemsControl.Template>
 
-                <ItemsControl.ItemsPanel>
+                <!--ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>
                     </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+                </ItemsControl.ItemsPanel-->
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
