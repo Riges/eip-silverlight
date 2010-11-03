@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Xml;
 /*
 using Dimebrain.TweetSharp;
 using Dimebrain.TweetSharp.Fluent;
@@ -25,6 +26,9 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.ComponentModel;
 using System.Drawing.Imaging;
+using OAuth;
+using System.Globalization;
+using System.Web;
 
 
 namespace EIPWCF
@@ -186,6 +190,111 @@ namespace EIPWCF
             else
                 return true;
 
+        }
+
+        public string SendTwitPic(string token, string tokenSecret, byte[] fileByte, string fileContentType, string fileName, string tweet)
+        {
+            var twitpicApiKey = "ff46639ea6e738e51222d49c5b7289e8";
+            var oauthSignaturePattern = "OAuth realm=\"{0}\", oauth_consumer_key=\"{1}\", oauth_signature_method=\"HMAC-SHA1\", oauth_token=\"{2}\", oauth_timestamp=\"{3}\", oauth_nonce=\"{4}\", oauth_version=\"1.0\", oauth_signature=\"{5}\"";
+            var authenticationRealm = "http://api.twitter.com/";
+            var twitpicUploadApiUrl = "http://api.twitpic.com/2/upload.xml";
+            var twitterVerifyCredentialsApiUrl = "https://api.twitter.com/1/account/verify_credentials.json";
+            var contentEncoding = "iso-8859-1";
+            var ConsumerKey = ConfigurationManager.AppSettings["ConsumerKey"];
+            var ConsumerSecret = ConfigurationManager.AppSettings["ConsumerSecret"];
+
+            Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
+            MatchCollection mactches = regx.Matches(tweet);
+            foreach (Match match in mactches)
+            {
+                tweet = tweet.Replace(match.Value, MakeTinyUrl(match.Value));
+            }
+
+            var oauth = new OAuthBase();
+            string normalizedString, normalizedParameters;
+            var timestamp = oauth.GenerateTimeStamp();
+            var nounce = oauth.GenerateNonce();
+            var signature = oauth.GenerateSignature(
+                                new Uri(twitterVerifyCredentialsApiUrl),
+                                ConsumerKey,
+                                ConsumerSecret,
+                                token,
+                                tokenSecret,
+                                "GET",
+                                timestamp,
+                                nounce,
+                                out normalizedString,
+                                out normalizedParameters);
+
+            signature = HttpUtility.UrlEncode(signature);
+
+            var boundary = Guid.NewGuid().ToString();
+            var request = (HttpWebRequest)WebRequest.Create(twitpicUploadApiUrl);
+
+            request.PreAuthenticate = true;
+            request.AllowWriteStreamBuffering = true;
+            request.ContentType = string.Format("multipart/form-data; boundary={0}", boundary);
+
+            request.Headers.Add("X-Auth-Service-Provider", twitterVerifyCredentialsApiUrl);
+
+            var authorizationHeader = string.Format(
+                                        CultureInfo.InvariantCulture,
+                                        oauthSignaturePattern,
+                                        authenticationRealm,
+                                        ConsumerSecret,
+                                        token,
+                                        timestamp,
+                                        nounce,
+                                        signature);
+            request.Headers.Add("X-Verify-Credentials-Authorization", authorizationHeader);
+
+            request.Method = "POST";
+
+            var header = string.Format("--{0}", boundary);
+            var footer = string.Format("--{0}--", boundary);
+
+            var contents = new StringBuilder();
+            contents.AppendLine(header);
+
+            string fileHeader = string.Format("Content-Disposition: file; name=\"{0}\"; filename=\"{1}\"", "media", fileName);
+            string fileData = Encoding.GetEncoding(contentEncoding).GetString(fileByte);
+
+            contents.AppendLine(fileHeader);
+            contents.AppendLine(string.Format("Content-Type: {0}", fileContentType));
+            contents.AppendLine();
+            contents.AppendLine(fileData);
+
+            contents.AppendLine(header);
+            contents.AppendLine(string.Format("Content-Disposition: form-data; name=\"{0}\"", "key"));
+            contents.AppendLine();
+            contents.AppendLine(twitpicApiKey);
+
+            contents.AppendLine(header);
+            contents.AppendLine(String.Format("Content-Disposition: form-data; name=\"{0}\"", "message"));
+            contents.AppendLine();
+            contents.AppendLine(tweet + " " + Path.GetTempFileName()); // GetTempFileName is to avoid duplicate prevention.
+
+            contents.AppendLine(footer);
+
+            byte[] bytes = Encoding.GetEncoding(contentEncoding).GetBytes(contents.ToString());
+            request.ContentLength = bytes.Length;
+            using (var requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(bytes, 0, bytes.Length);
+
+                using (var twitpicResponse = (HttpWebResponse)request.GetResponse())
+                {
+                    using (var reader = new StreamReader(twitpicResponse.GetResponseStream()))
+                    {
+                        string data = reader.ReadToEnd();
+                        XmlDocument ret = new XmlDocument();
+                        ret.LoadXml(data);
+                        XmlElement retElem = ret.DocumentElement["url"];
+                        return retElem.InnerText;
+
+                    }
+                }
+            }
         }
 
         public TwitterUser GetUserInfos(string token, string tokenSecret, long userId)

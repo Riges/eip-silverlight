@@ -70,6 +70,9 @@ namespace EIPWCF
         bool SendTweet(string token, string tokenSecret, string tweet);
 
         [OperationContract]
+        string SendTwitPic(string token, string tokenSecret, byte[] fileByte, string fileContentType, string fileName, string tweet);
+
+        [OperationContract]
         TwitterUser GetUserInfos(string token, string tokenSecret, long userId);
 
 

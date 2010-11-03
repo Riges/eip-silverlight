@@ -87,6 +87,14 @@ namespace EIP
             }
         }
 
+        public void SendStatus(string status, byte[] fileByte, string fileContentType, string fileName)
+        {
+            if (status.Trim() != "")
+            {
+                Connexion.serviceEIP.SendTwitPicAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, fileByte, fileContentType, fileName, status);
+            }
+        }
+
         public delegate void OnGetUserInfoCompleted(TwitterUser user);
         public event OnGetUserInfoCompleted GetUserInfoCalled;
 
