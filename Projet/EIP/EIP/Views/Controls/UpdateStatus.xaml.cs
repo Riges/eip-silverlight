@@ -195,7 +195,9 @@ namespace EIP.Views.Controls
                                                         str.Read(bytes, 0, bytes.Length);
 
                                                         str.Close();
-                                                        ((AccountTwitterLight)oneAccount.Value).SendStatus(status, bytes, "image/"+this.file.Extension, this.file.Name);
+                                                        string fileType = this.file.Extension;
+                                                        fileType = "image/" + fileType.Substring(fileType.IndexOf("."), fileType.Length - 1);
+                                                        ((AccountTwitterLight)oneAccount.Value).SendStatus(status, bytes, fileType, this.file.Name);
                                                     }
                                                 }
                                                 else
