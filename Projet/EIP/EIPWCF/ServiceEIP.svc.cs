@@ -121,6 +121,24 @@ namespace EIPWCF
             return null;
         }
 
+        public IEnumerable<TwitterDirectMessage> LoadDirectMessages(string token, string tokenSecret)
+        {
+            SetClientInfo();
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .DirectMessages().Received();
+
+            var response = query.Request();
+            if (!response.IsTwitterError)
+            {
+                var dms = response.AsDirectMessages();
+
+                return dms;
+            }
+
+            return null;
+        }
+
         private static string MakeTinyUrl(string Url)
         {
             try

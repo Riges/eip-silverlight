@@ -123,6 +123,40 @@ namespace EIP
          //*Methodes de récupération d'infos*\\
         //************************************\\
 
+        public delegate void OnLoadDirectMessagesCompleted();
+        public event OnLoadDirectMessagesCompleted LoadDirectMessagesCalled;
+
+        public bool LoadDirectMessages()
+        {
+            //if (aStreamFeeds != null)
+            //{
+            // this.streamFeeds = aStreamFeeds;
+
+            //bool ret = false;
+            //ret = LoadStreamFeedsContext(first);
+            // }
+
+            Connexion.serviceEIP.LoadDirectMessagesAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret);
+
+            //return ret;
+        }
+
+        void serviceEIP_LoadDirectMessagesCompleted(object sender, LoadDirectMessagesCompletedEventArgs e)
+        {
+            List<ServiceEIP.TwitterDirectMessage> dms = e.Result;
+
+            if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (e.Error == null) && (dms != null))
+            {
+                homeStatuses = new List<Topic>();
+                foreach (ServiceEIP.TwitterDirectMessage dm in dms)
+                {
+                    //homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
+                }
+
+                LoadStreamFeedsContext(false);
+            }
+        }
+
 
         public delegate void OnLoadHomeStatusesCompleted();
         public event OnLoadHomeStatusesCompleted LoadHomeStatusesCalled;
