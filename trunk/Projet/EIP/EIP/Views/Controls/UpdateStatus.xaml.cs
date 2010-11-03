@@ -187,7 +187,21 @@ namespace EIP.Views.Controls
                                                     if (linkText.Text.Trim() != "" && linkText.Text.Trim() != "http://")
                                                         status += " " + linkText.Text.Trim();
                                                 }
-                                                ((AccountTwitterLight)oneAccount.Value).SendStatus(status);
+                                                if (this.file != null)
+                                                {
+                                                    using (System.IO.Stream str = file.OpenRead())
+                                                    {
+                                                        Byte[] bytes = new Byte[str.Length];
+                                                        str.Read(bytes, 0, bytes.Length);
+
+                                                        str.Close();
+                                                        ((AccountTwitterLight)oneAccount.Value).SendStatus(status, bytes, "image/"+this.file.Extension, this.file.Name);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    ((AccountTwitterLight)oneAccount.Value).SendStatus(status);
+                                                }
 
                                                 break;
                                             default:

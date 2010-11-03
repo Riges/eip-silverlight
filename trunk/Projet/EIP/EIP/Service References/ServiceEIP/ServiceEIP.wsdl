@@ -93,6 +93,12 @@
   <wsdl:message name="IServiceEIP_SendTweet_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendTweetResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_SendTwitPic_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendTwitPic" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_SendTwitPic_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendTwitPicResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_GetUserInfos_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserInfos" />
   </wsdl:message>
@@ -110,6 +116,12 @@
   </wsdl:message>
   <wsdl:message name="IServiceEIP_UploadPhoto_OutputMessage">
     <wsdl:part name="parameters" element="tns:UploadPhotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadDirectMessages_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDirectMessages" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadDirectMessages_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDirectMessagesResponse" />
   </wsdl:message>
   <wsdl:portType name="IServiceEIP">
     <wsdl:operation name="IsUp">
@@ -168,6 +180,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/SendTweet" message="tns:IServiceEIP_SendTweet_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/SendTweetResponse" message="tns:IServiceEIP_SendTweet_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SendTwitPic">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/SendTwitPic" message="tns:IServiceEIP_SendTwitPic_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/SendTwitPicResponse" message="tns:IServiceEIP_SendTwitPic_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetUserInfos">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetUserInfos" message="tns:IServiceEIP_GetUserInfos_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetUserInfosResponse" message="tns:IServiceEIP_GetUserInfos_OutputMessage" />
@@ -179,6 +195,10 @@
     <wsdl:operation name="UploadPhoto">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/UploadPhoto" message="tns:IServiceEIP_UploadPhoto_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/UploadPhotoResponse" message="tns:IServiceEIP_UploadPhoto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadDirectMessages">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessages" message="tns:IServiceEIP_LoadDirectMessages_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesResponse" message="tns:IServiceEIP_LoadDirectMessages_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceEIP" type="tns:IServiceEIP">
@@ -309,6 +329,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SendTwitPic">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/SendTwitPic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetUserInfos">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetUserInfos" style="document" />
       <wsdl:input>
@@ -329,6 +358,15 @@
     </wsdl:operation>
     <wsdl:operation name="UploadPhoto">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/UploadPhoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadDirectMessages">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadDirectMessages" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

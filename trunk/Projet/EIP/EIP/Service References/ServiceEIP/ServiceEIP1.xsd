@@ -194,6 +194,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendTwitPic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tokenSecret" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fileByte" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="fileContentType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tweet" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendTwitPicResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendTwitPicResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetUserInfos">
     <xs:complexType>
       <xs:sequence>
@@ -237,6 +256,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UploadPhotoResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadDirectMessages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tokenSecret" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadDirectMessagesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadDirectMessagesResult" nillable="true" type="q12:ArrayOfTwitterDirectMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

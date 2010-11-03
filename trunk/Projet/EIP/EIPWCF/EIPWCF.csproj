@@ -82,6 +82,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OAuthBase.cs" />
     <Compile Include="ServiceEIP.svc.cs">
       <DependentUpon>ServiceEIP.svc</DependentUpon>
     </Compile>

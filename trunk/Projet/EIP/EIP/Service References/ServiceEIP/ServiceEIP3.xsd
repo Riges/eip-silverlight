@@ -91,4 +91,29 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfTwitterUser" nillable="true" type="tns:ArrayOfTwitterUser" />
+  <xs:complexType name="ArrayOfTwitterDirectMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TwitterDirectMessage" nillable="true" type="tns:TwitterDirectMessage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTwitterDirectMessage" nillable="true" type="tns:ArrayOfTwitterDirectMessage" />
+  <xs:complexType name="TwitterDirectMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/TweetSharp.Model" base="q4:PropertyChangedBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreatedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Id" type="xs:long" />
+          <xs:element minOccurs="0" name="RawSource" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Recipient" nillable="true" type="tns:TwitterUser" />
+          <xs:element minOccurs="0" name="RecipientId" type="xs:long" />
+          <xs:element minOccurs="0" name="RecipientScreenName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Sender" nillable="true" type="tns:TwitterUser" />
+          <xs:element minOccurs="0" name="SenderId" type="xs:long" />
+          <xs:element minOccurs="0" name="SenderScreenName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TwitterDirectMessage" nillable="true" type="tns:TwitterDirectMessage" />
 </xs:schema>

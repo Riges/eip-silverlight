@@ -135,7 +135,7 @@
     <Compile Include="ViewModels\SampleDataItem.cs" />
     <Compile Include="ViewModels\SimpleCarouselAlgorithm.cs" />
     <Compile Include="ViewModels\VirtualizationSampleData.cs" />
-    <Compile Include="Views\AlbumsView.xaml.cs">
+    <Compile Include="Views\Controls\AlbumsView.xaml.cs">
       <DependentUpon>AlbumsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AlbumView.xaml.cs">
@@ -296,7 +296,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AlbumsView.xaml">
+    <Page Include="Views\Controls\AlbumsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -507,6 +507,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountTwitter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterDirectMessage.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterStatus.datasource">
