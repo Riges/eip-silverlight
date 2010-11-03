@@ -123,10 +123,10 @@ namespace EIP
          //*Methodes de récupération d'infos*\\
         //************************************\\
 
-        public delegate void OnLoadDirectMessagesCompleted();
+        public delegate void OnLoadDirectMessagesCompleted(List<ServiceEIP.TwitterDirectMessage> liste);
         public event OnLoadDirectMessagesCompleted LoadDirectMessagesCalled;
 
-        public bool LoadDirectMessages()
+        public void LoadDirectMessages()
         {
             //if (aStreamFeeds != null)
             //{
@@ -154,6 +154,8 @@ namespace EIP
                 }
 
                 LoadStreamFeedsContext(false);
+                if (this.LoadDirectMessagesCalled != null)
+                    this.LoadDirectMessagesCalled.Invoke(dms);
             }
         }
 
