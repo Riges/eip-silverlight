@@ -78,7 +78,9 @@ namespace EIPWCF
 
         [OperationContract]
         string UploadPhoto(string name, byte[] img);
-     
+
+        [OperationContract]
+        IEnumerable<TwitterDirectMessage> LoadDirectMessages(string token, string tokenSecret);
 
         /*[OperationContract]
         string AuthorizeDesktop(string consumerKey, string consumerSecret);
