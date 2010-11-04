@@ -213,6 +213,9 @@
     <Compile Include="Views\Controls\ProgressUploadPhotos.xaml.cs">
       <DependentUpon>ProgressUploadPhotos.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\Spinner.xaml.cs">
+      <DependentUpon>Spinner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\UnCompte.xaml.cs">
       <DependentUpon>UnCompte.xaml</DependentUpon>
     </Compile>
@@ -396,6 +399,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ProgressUploadPhotos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Spinner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
