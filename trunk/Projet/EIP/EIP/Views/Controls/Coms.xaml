@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Height="Auto">
+    d:DesignHeight="300" d:DesignWidth="400" Height="Auto" >
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}" >
         <!-- Background="#edeff4" Background="{StaticResource BgColor}"-->
@@ -28,8 +28,9 @@
 
         <StackPanel Grid.Row="1" Name="displayAllComsPanel" Orientation="Horizontal"  Grid.ColumnSpan="3"></StackPanel>
 
-        <StackPanel Grid.Row="2" Name="comsPanel" Grid.ColumnSpan="3"  HorizontalAlignment="Center" MinWidth="500" MaxWidth="800" >
-            
+        <StackPanel Grid.Row="2" Name="comsPanel" Grid.ColumnSpan="3"  HorizontalAlignment="Stretch"  >
+            <!--MinWidth="500" MaxWidth="800"-->
+
         </StackPanel>
 
         <!--<StackPanel Grid.Row="3" Name="addComPanel" Orientation="Horizontal" Margin="0,0,0,10"  >-->

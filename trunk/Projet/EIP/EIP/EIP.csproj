@@ -135,7 +135,7 @@
     <Compile Include="ViewModels\SampleDataItem.cs" />
     <Compile Include="ViewModels\SimpleCarouselAlgorithm.cs" />
     <Compile Include="ViewModels\VirtualizationSampleData.cs" />
-    <Compile Include="Views\Controls\AlbumsView.xaml.cs">
+    <Compile Include="Views\AlbumsView.xaml.cs">
       <DependentUpon>AlbumsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AlbumView.xaml.cs">
@@ -185,6 +185,9 @@
     </Compile>
     <Compile Include="Views\Controls\FilterButton.xaml.cs">
       <DependentUpon>FilterButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\Footer.xaml.cs">
+      <DependentUpon>Footer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\FriendView.xaml.cs">
       <DependentUpon>FriendView.xaml</DependentUpon>
@@ -299,9 +302,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Controls\AlbumsView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\AlbumsView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AlbumView.xaml">
       <SubType>Designer</SubType>
@@ -363,6 +366,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\FilterButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\Footer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

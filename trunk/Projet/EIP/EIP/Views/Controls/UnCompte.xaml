@@ -27,12 +27,12 @@
 
             <Image Name="imgAccount" Grid.Row="0" Grid.Column="2" Width="20" VerticalAlignment="Center"></Image>
 
-            <HyperlinkButton Name="accountName" FontSize="12" Foreground="White" FontWeight="Bold" Grid.Row="0" Grid.Column="3" Margin="5,0,0,0" VerticalAlignment="Center"></HyperlinkButton>
+            <HyperlinkButton Name="accountName" FontSize="12" Style="{StaticResource HyperlinkButtonFonceStyle}" FontWeight="Bold" Grid.Row="0" Grid.Column="3" Margin="5,0,0,0" VerticalAlignment="Center"></HyperlinkButton>
 
             <Image Name="imgDel" Grid.Row="0" Grid.Column="4" Width="20" Visibility="Collapsed" MouseLeftButtonUp="imgDel_MouseLeftButtonUp" MouseLeave="img_MouseLeave" MouseMove="img_MouseMove" VerticalAlignment="Center"></Image>
 
         </Grid>
-        <TextBlock Name="accountStatus" FontStyle="Italic" Foreground="White">
+        <TextBlock Name="accountStatus" FontStyle="Italic" Foreground="{StaticResource LinkColorFonceBrush}">
             <ToolTipService.ToolTip>
                 <ToolTip>
                     <TextBlock Name="accountStatusTooltip" FontStyle="Italic"></TextBlock>

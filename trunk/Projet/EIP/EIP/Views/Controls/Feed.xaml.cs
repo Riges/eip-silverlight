@@ -111,12 +111,20 @@ namespace EIP.Views.Controls
                             {
                                 chevronUserTarget.Visibility = System.Windows.Visibility.Collapsed;
                             }
-                            
-                           
 
-                            imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
+
+
+                            //imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative));
+                            imgCpt.UriSource = new Uri("../../Assets/Images/facebook-icon.png", UriKind.Relative);
+
+                            user userAccount = ((AccountFacebookLight)Connexion.accounts[topic.accountID]).userInfos;
+
+                            imgAccount.UriSource = new Uri(userAccount.pic_square, UriKind.Absolute);
+                            userAccountName.Content = userAccount.name;
                             //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("3B", 16), G = Convert.ToByte("59", 16), B = Convert.ToByte("98", 16) });
-                            picUserBorder.BorderBrush = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("3B", 16), G = Convert.ToByte("59", 16), B = Convert.ToByte("98", 16) });
+                            
+                            
+                            //picUserBorder.BorderBrush = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("3B", 16), G = Convert.ToByte("59", 16), B = Convert.ToByte("98", 16) });
                                 //<!--#3B5998 -->
 
                             //LoadMessage(post.post.message);
@@ -226,9 +234,17 @@ namespace EIP.Views.Controls
                                 picUser.UriSource = uriImg;
                             }
                             userSource.Content = status.User.Name;
-                            imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                            //imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
+                            imgCpt.UriSource = new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative);
+                            
+                            TwitterUser userAccount = ((AccountTwitterLight)Connexion.accounts[topic.accountID]).userInfos;
+
+                            imgAccount.UriSource = new Uri(userAccount.ProfileImageUrl, UriKind.Absolute);
+                            userAccountName.Content = userAccount.Name;
                             //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
-                            picUserBorder.BorderBrush = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
+                            
+                            
+                            //picUserBorder.BorderBrush = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
                             //<!--#5ec7e5--> 
 
                             //LoadMessage(status.Text);

@@ -37,13 +37,22 @@ namespace EIP.Views
         public StreamFeeds()
         {
             InitializeComponent();
+            App.Current.Host.Content.Resized += new EventHandler(Content_Resized);
 
             //scroolView.ScrollToVerticalOffset(scroolView.VerticalOffset + 25);
+        }
+
+        void Content_Resized(object sender, EventArgs e)
+        {
+            FeedsControl.MaxHeight = App.Current.Host.Content.ActualHeight - 140;
         }
 
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            FeedsControl.MaxHeight = App.Current.Host.Content.ActualHeight - 140;
+
+
             Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
 
             if (this.NavigationContext.QueryString.ContainsKey("filter"))

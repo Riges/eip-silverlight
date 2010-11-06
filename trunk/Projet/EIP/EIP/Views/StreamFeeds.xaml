@@ -22,34 +22,35 @@
         </StackPanel>
       
         <StackPanel Orientation="Vertical" Name="ContentPanel" Visibility="Collapsed">
-                        
-            <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500">
-            <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
+            
+                <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500" Width="750">
+            <!--<ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>-->
                 <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
                     <Border > <!--BorderBrush="Blue" BorderThickness="1"-->
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>
             </ItemsControl.Template>
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                <!--<ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>-->
 
-            <ItemsControl.ItemTemplate>
+                <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                        <Controls:Feed x:Name="Feed" />
-                </DataTemplate>
-                   
+                        <!--<Border BorderBrush="Black" BorderThickness="2">-->
+                            <Controls:Feed x:Name="Feed"/>
+                        <!--</Border>-->
+                    </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
-    </StackPanel>
+           
+        </StackPanel>
 
 </Grid>
 </navigation:Page>
