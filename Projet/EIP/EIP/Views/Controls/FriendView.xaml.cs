@@ -34,6 +34,7 @@ namespace EIP.Views.Controls
             set
             {
                 imgUser.MaxWidth = 400;
+                imgUser.MaxHeight = 400;
             }
         }
 

@@ -59,7 +59,7 @@ namespace EIP.Views.Controls
             if (this.Commentaires.count > this.Commentaires.comment_list.comment.Count())
             {
                 HyperlinkButton linkBtn = new HyperlinkButton();
-                linkBtn.Style = App.Current.Resources["HyperlinkButtonStyle"] as Style;
+                linkBtn.Style = App.Current.Resources["HyperlinkButtonFonceStyle"] as Style;
                 linkBtn.Content = "Afficher les " + this.Commentaires.count + " commentaires";
                 linkBtn.Click += new RoutedEventHandler(linkBtn_Click);
                 displayAllComsPanel.Children.Add(linkBtn);
@@ -148,7 +148,7 @@ namespace EIP.Views.Controls
                             profile prof = ((AccountFacebookLight)(Connexion.accounts[accountID])).profiles.Where<profile>(delegate(profile profTmp) { if (profTmp != null && profTmp.id == uid)return true; return false; }).First();
                             if (prof != null)
                             {
-                                HyperlinkButton link = new HyperlinkButton() { Content = prof.name, Style = App.Current.Resources["HyperlinkButtonStyle"] as Style, NavigateUri = new Uri("/ProfilInfos/" + uid + "/Account/" + this.accountID, UriKind.Relative) };
+                                HyperlinkButton link = new HyperlinkButton() { Content = prof.name, Style = App.Current.Resources["HyperlinkButtonFonceStyle"] as Style, NavigateUri = new Uri("/ProfilInfos/" + uid + "/Account/" + this.accountID, UriKind.Relative) };
                                 if (jaimePanel.Children.Count > 0)
                                     jaimePanel.Children.Add(new TextBlock() { Text = ", " });
                                 jaimePanel.Children.Add(link);

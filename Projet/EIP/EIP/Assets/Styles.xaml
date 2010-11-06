@@ -6,17 +6,22 @@
     <!-- ******MAIN PAGE STYLES****** -->
     <!-- **************************** -->
     <!-- Primary Color Brushes -->
-    <SolidColorBrush x:Key="NavigationBackgroundColorBrush" Color="#FF484848"/>
+    <SolidColorBrush x:Key="NavigationBackgroundColorBrush" Color="#333"/> <!--#FF484848-->
     <SolidColorBrush x:Key="NavigationForegroundColorBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="HighLightColorBrush" Color="#FF0097FC"/>
     <SolidColorBrush x:Key="HoverHyperlinkForegroundColorBrush" Color="#FFEBF7FF"/>
     <SolidColorBrush x:Key="HoverHyperLinkBackgroundColorBrush" Color="#FF747474"/>
     <SolidColorBrush x:Key="BodyTextColorBrush" Color="#FF313131"/>
-    
-    
-    <SolidColorBrush x:Key="LinkColorBrush" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="BgColor" Color="#FFB5B5B5" />
+
+
+    <SolidColorBrush x:Key="LinkColorClairBrush" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="LinkColorFonceBrush" Color="#333"/>
+    <SolidColorBrush x:Key="BgColor" Color="#F6F6F6" />
+    <SolidColorBrush x:Key="BgColorFonce" Color="#DFDFDF" /> 
     <!--<SolidColorBrush x:Key="BgColor" Color="#FFB5B5B5"/>-->
+
+    <SolidColorBrush x:Key="BgFB" Color="#3B5998" />
+    <SolidColorBrush x:Key="BgTW" Color="#33CCFF" />
 
 
     <!-- LayoutRoot Grid Style -->
@@ -339,10 +344,13 @@
     </Style>
 
     <Style x:Key="HyperlinkButtonStyle" TargetType="HyperlinkButton">
-        <Setter Property="Foreground" Value="{StaticResource LinkColorBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LinkColorClairBrush}"/>
     </Style>
     
-
+    
+    <Style x:Key="HyperlinkButtonFonceStyle" TargetType="HyperlinkButton">
+        <Setter Property="Foreground" Value="{StaticResource LinkColorFonceBrush}"/>
+    </Style>
 
 
 </ResourceDictionary>

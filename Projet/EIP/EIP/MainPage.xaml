@@ -79,10 +79,8 @@
                 </Grid>
             <!--</StackPanel>-->
 
-            <Border x:Name="LinksBorderBottom" my:DockPanel.Dock="Bottom" Height="60" Background="{StaticResource NavigationBackgroundColorBrush}">
-                <StackPanel    >
-                    <TextBlock Text="Kikoooooooooo"></TextBlock>
-                </StackPanel>
+            <Border x:Name="LinksBorderBottom" my:DockPanel.Dock="Bottom" Height="30" Background="{StaticResource NavigationBackgroundColorBrush}">
+                <Controls:Footer HorizontalAlignment="Center" VerticalAlignment="Center"></Controls:Footer>
             </Border>
 
             <!--<StackPanel my:DockPanel.Dock="Bottom"  Height="100" >
@@ -141,7 +139,7 @@
             <!--<StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">-->
                 
                 <navigation:Frame x:Name="ContentFrame" my:DockPanel.Dock="Top" Style="{StaticResource ContentFrameStyle}" Template="{StaticResource TransitioningFrame}" 
-                                  Source="/WaitLoad" Navigated="ContentFrame_Navigated" NavigationFailed="ContentFrame_NavigationFailed"><!--Source="/Home"-->
+                                  Source="/WaitLoad" Navigated="ContentFrame_Navigated" NavigationFailed="ContentFrame_NavigationFailed" Margin="0,15,0,0"><!--Source="/Home"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>
                         <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
