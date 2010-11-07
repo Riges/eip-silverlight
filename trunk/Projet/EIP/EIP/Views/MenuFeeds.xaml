@@ -7,16 +7,19 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480" MinHeight="300"
-           Title="myNETwork" >
+           Title="myNETwork" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}" >
         <!--<StackPanel Orientation="Vertical" Name="LayoutPanel" ScrollViewer.HorizontalScrollBarVisibmility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Button Content="Actualités"></Button>
             <Button Content="Status"></Button>
         </StackPanel> -->
+        
         <toolkit:Accordion Name="menufiltre" Background="{StaticResource BgColor}" Width="200">
         </toolkit:Accordion>
 
 
-
+        <sdk:TreeView HorizontalAlignment="Left" Margin="10,10,0,0" Name="treeViewFiltre" Background="{StaticResource BgColor}" VerticalAlignment="Top" BorderThickness="0"  >
+        </sdk:TreeView>
+        
     </Grid>
 </navigation:Page>

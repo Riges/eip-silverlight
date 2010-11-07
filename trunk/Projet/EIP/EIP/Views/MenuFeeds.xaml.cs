@@ -42,8 +42,9 @@ namespace EIP.Views
             {
                 if (account.Value.selected)
                 {
-                    AccordionItem item = new AccordionItem();
-                    
+                    //AccordionItem item = new AccordionItem();
+                    TreeViewItem item = new TreeViewItem();
+
                     Image img = new Image();
                     img.Width = 16;
                     switch (account.Value.account.typeAccount)
@@ -63,7 +64,7 @@ namespace EIP.Views
                     panelHeader.Orientation = Orientation.Horizontal;
 
                     TextBlock textHeader = new TextBlock();
-                    textHeader.Text = account.Value.account.name;
+                    textHeader.Text = account.Value.account.name + " - Filtres";
                     textHeader.Margin = new Thickness(5, 0, 0, 0);
 
                     panelHeader.Children.Add(img);
@@ -72,7 +73,7 @@ namespace EIP.Views
                     item.Name = account.Value.account.accountID.ToString();
                     item.Header = panelHeader;
 
-                    menufiltre.Items.Add(item);
+                    treeViewFiltre.Items.Add(item);
 
                     //item = new AccordionItem();
                     //menufiltre.Items.Add(item);
@@ -109,13 +110,14 @@ namespace EIP.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                AccordionItem item = (AccordionItem)FindName(accountID.ToString());
+                TreeViewItem item = (TreeViewItem)FindName(accountID.ToString());
                 StackPanel panelContent = new StackPanel();
                 foreach (TwitterFilter filter in filters)
                 {
+                    TreeViewItem itemChild = new TreeViewItem();
+
                     StackPanel panelFilter = new StackPanel();
                     panelFilter.Orientation = Orientation.Horizontal;
-
 
                     TextBlock linkFilter = new TextBlock();
                     linkFilter.MouseLeftButtonUp += new MouseButtonEventHandler(linkFilter_MouseLeftButtonUp);
@@ -133,9 +135,12 @@ namespace EIP.Views
 
 
                     panelFilter.Children.Add(linkFilter);
-                    panelContent.Children.Add(panelFilter);
+                    //panelContent.Children.Add(panelFilter);
+
+                    itemChild.Header = panelFilter;
+                    item.Items.Add(itemChild);
                 }
-                item.Content = panelContent;
+                
             }
            );
         }
@@ -144,10 +149,12 @@ namespace EIP.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                AccordionItem item = (AccordionItem)FindName(accountID.ToString());
+                TreeViewItem item = (TreeViewItem)FindName(accountID.ToString());
                 StackPanel panelContent = new StackPanel();
                 foreach (stream_filter filter in filters)
                 {
+                    TreeViewItem itemChild = new TreeViewItem();
+
                     StackPanel panelFilter = new StackPanel();
                     panelFilter.Orientation = Orientation.Horizontal;
                     Image imgFilter = new Image();
@@ -175,9 +182,12 @@ namespace EIP.Views
 
                     panelFilter.Children.Add(imgFilter);
                     panelFilter.Children.Add(linkFilter);
-                    panelContent.Children.Add(panelFilter);
+                    //panelContent.Children.Add(panelFilter);
+
+                    itemChild.Header = panelFilter;
+                    item.Items.Add(itemChild);
                 }
-                item.Content = panelContent;
+                //item.Content = panelContent;
             }
            );
         }
