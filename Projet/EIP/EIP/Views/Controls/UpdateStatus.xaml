@@ -21,10 +21,11 @@
 
         
         <Popup AllowDrop="True" Name="myPopup" Drop="myPopup_Drop" VerticalOffset="5" IsOpen="True" >
-            <Border Name="borderPopup" CornerRadius="10" Padding="5,5,5,5"  BorderThickness="3" MaxHeight="41" MaxWidth="315" Background="{StaticResource BgColor}" Drop="myPopup_Drop" AllowDrop="True" MouseEnter="borderPopup_MouseEnter" MouseLeave="borderPopup_MouseLeave">
+            <Border Name="borderPopup" CornerRadius="10" Padding="5,5,5,5"  BorderThickness="3" MaxHeight="41" MaxWidth="385" Background="{StaticResource BgColor}" Drop="myPopup_Drop" AllowDrop="True" MouseEnter="borderPopup_MouseEnter" MouseLeave="borderPopup_MouseLeave">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="300"  MouseLeftButtonDown="TextBox_MouseLeftButtonDown" Name="statutBox" Text="Exprime toi !" GotFocus="statutBox_GotFocus" LostFocus="statutBox_LostFocus"></TextBox>
+                        <TextBlock Width="360" Name="exprimeToiTxt" Text="Exprime toi !" VerticalAlignment="Center" FontSize="14"></TextBlock>
+                        <TextBox Width="360"  MouseLeftButtonDown="TextBox_MouseLeftButtonDown" Name="statutBox" Text="Exprime toi !" GotFocus="statutBox_GotFocus" LostFocus="statutBox_LostFocus" Visibility="Collapsed"></TextBox>
                         <Button Content="Partager" HorizontalContentAlignment="Center" Width="90" Margin="10,0,10,0" Height="25" Click="sendStatut_Click" ></Button>
                     </StackPanel>
 
