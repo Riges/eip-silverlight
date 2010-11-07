@@ -5,19 +5,37 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:Controls="clr-namespace:EIP.Views.Controls"
            xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
+
+           xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+                 
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="FriendList Page">
+    <toolkit:BusyIndicator Name="busyIndicator" Background="Transparent">
     <Grid x:Name="LayoutRoot">
-        <!--<Controls:FriendInfo></Controls:FriendInfo>-->
-        <StackPanel Name="ImgLoad" Visibility="Visible">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        
+
+        <!--<StackPanel Name="ImgLoad" Visibility="Visible" Grid.Row="0">
             <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
-        </StackPanel>
-        <!--<StackPanel Name="Liste" Orientation="Vertical" Visibility="Collapsed">
-            <TextBlock Text="Friend List"></TextBlock>
         </StackPanel>-->
-        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="14" Grid.ColumnSpan="3" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
+        
+        
+
+        <TextBlock Name="nbAmis" FontWeight="Bold" FontSize="14" Grid.Column="0"></TextBlock>
+        <TextBox Text="Chercher un ami..." Name="searchBox" Width="200" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Visibility="Collapsed" TextChanged="searchBox_TextChanged" GotFocus="searchBox_GotFocus" LostFocus="searchBox_LostFocus"></TextBox>
+        
+    
+        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
             <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
@@ -25,5 +43,10 @@
                 </DataTemplate>
             </fl:FlowItemsControl3D.ItemTemplate>
         </fl:FlowItemsControl3D>
+
+      
+
     </Grid>
+
+    </toolkit:BusyIndicator>
 </navigation:Page>
