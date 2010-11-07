@@ -81,7 +81,7 @@ namespace EIP.Views
             else if (this.NavigationContext.QueryString.ContainsKey("box"))
             {
                 this.boxActive = this.NavigationContext.QueryString["box"];
-
+                listeMessagesBox.box.Clear();
                 foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
                 {
                     if (account.Value.selected)
@@ -105,7 +105,7 @@ namespace EIP.Views
                                 break;
                             case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-
+                                ((AccountTwitterLight)account.Value).LoadDirectMessages();
                                 break;
                             case EIP.ServiceEIP.Account.TypeAccount.Myspace:
                                 break;
@@ -116,11 +116,17 @@ namespace EIP.Views
             e = e;
         }
 
-        void Messages_LoadDirectMessagesCalled(List<ServiceEIP.TwitterDirectMessage> liste)
+        void Messages_LoadDirectMessagesCalled(List<ThreadMessage> liste)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                liste = liste;
+                //liste = liste;
+
+                if (listeMessagesBox.box.Count > 0)
+                    listeMessagesBox.box.AddRange(liste);
+                else
+                    listeMessagesBox.box = liste;
+                listeMessagesBox.LoadMessages();
                 //listeMessagesBox.Messages_GetThreadCalled(th);
             });
         }
@@ -129,14 +135,18 @@ namespace EIP.Views
         {
             //this.box = liste;
             Connexion.dispatcher.BeginInvoke(() =>
-                {
+            {
+                if (listeMessagesBox.box.Count > 0)
+                    listeMessagesBox.box.AddRange(liste);
+                else
                     listeMessagesBox.box = liste;
-                    listeMessagesBox.LoadMessages();
-                    //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
-                    //toto.Show();
-                });
+                //listeMessagesBox.box = liste;
+                listeMessagesBox.LoadMessages();
+                //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
+                //toto.Show();
+            });
 
-            
+
         }
         void Messages_GetThreadCalled(ThreadMessage th)
         {

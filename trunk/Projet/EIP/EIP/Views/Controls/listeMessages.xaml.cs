@@ -22,7 +22,7 @@ namespace EIP.Views.Controls
         public listeMessages()
         {
             InitializeComponent();
-               
+            this.box = new List<ThreadMessage>();
         }
 
 

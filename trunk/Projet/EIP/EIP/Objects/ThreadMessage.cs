@@ -25,6 +25,9 @@ namespace EIP.Objects
         private profile authorFb { get; set; }
         private List<MessageFacebook> messagesFb { get; set; }
 
+        // Twitter
+        private TwitterDirectMessage MessageTwitter { get; set; }
+
         public ThreadMessage() { }
 
         // Facebook
@@ -38,12 +41,38 @@ namespace EIP.Objects
             this.date = this.date.AddSeconds(th.updated_time).AddHours(2); // TODO : GTM parametrable
         }
 
+        public ThreadMessage(TwitterDirectMessage dm, long accountID)
+        {
+            this.MessageTwitter = dm;
+            this.accountID = accountID;
+
+            this.typeAccount = Account.TypeAccount.Twitter;
+            this.date = dm.CreatedDate;
+        }
+
+
         public String getSubject()
         {
             switch (this.typeAccount)
             {
                 case Account.TypeAccount.Facebook:
                     return this.MessageFb.subject != "" ? this.MessageFb.subject : "(Sans objet)";
+
+                case Account.TypeAccount.Twitter:
+                    return "";
+            }
+            return null;
+        }
+
+        public String getContent()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    return "";
+
+                case Account.TypeAccount.Twitter:
+                    return this.MessageTwitter.Text;
             }
             return null;
         }
@@ -54,6 +83,9 @@ namespace EIP.Objects
             {
                 case Account.TypeAccount.Facebook:
                     return this.MessageFb.snippet;
+
+                case Account.TypeAccount.Twitter:
+                    return "";
             }
             return null;
         }
@@ -87,7 +119,11 @@ namespace EIP.Objects
                     if (this.authorFb != null)
                         return this.authorFb.name;
                     else
-                        return "Undefined"; 
+                        return "Undefined";
+
+
+                case Account.TypeAccount.Twitter:
+                    return this.MessageTwitter.Sender.ScreenName;
             }
             return null;
         }
@@ -101,6 +137,10 @@ namespace EIP.Objects
                 case Account.TypeAccount.Facebook:
                     if (this.authorFb != null && this.authorFb.pic_square != null && this.authorFb.pic_square != "")
                         return this.authorFb.pic_square;
+                    break;
+
+                case Account.TypeAccount.Twitter:
+                    return this.MessageTwitter.Sender.ProfileImageUrl;
                     break;
             }
             return null;
