@@ -47,9 +47,11 @@ namespace EIP.Objects
             return this.author.id;
         }
 
-        public long getDate()
+        public DateTime getDate()
         {
-            return this.message.created_time;
+            DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            date = date.AddSeconds(this.message.created_time).AddHours(2); // TODO : GTM parametrable
+            return date;
         }
     }
 }
