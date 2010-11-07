@@ -355,16 +355,22 @@ namespace EIP.Views.Controls
 
         private void OpenPopup()
         {
+            exprimeToiTxt.Visibility = System.Windows.Visibility.Collapsed;
+            statutBox.Visibility = System.Windows.Visibility.Visible;
+
             LoadAccountButtons();
             borderPopup.MaxHeight = 500;
-            borderPopup.MaxWidth = 415;
+            borderPopup.MaxWidth = 485;
             borderPopup.BorderBrush = new SolidColorBrush(){  Color = Colors.Black};
         } 
 
         private void ClosePopup()
         {
+            exprimeToiTxt.Visibility = System.Windows.Visibility.Visible;
+            statutBox.Visibility = System.Windows.Visibility.Collapsed;
+
             borderPopup.MaxHeight = 41;
-            borderPopup.MaxWidth = 315;
+            borderPopup.MaxWidth = 385;
             borderPopup.BorderBrush = new SolidColorBrush();
         }
 
