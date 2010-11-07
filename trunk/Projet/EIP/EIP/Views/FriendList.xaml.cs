@@ -31,7 +31,12 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+           
+            busyIndicator.BusyContent = "Chargement des amis en cours...";
+            busyIndicator.IsBusy = true;
+            busyIndicator.DisplayAfter = new TimeSpan(200);
 
+            this.Title = "Amis";
             this.friends = new Dictionary<String, Friend>();
             LoadList();
 
@@ -108,20 +113,63 @@ namespace EIP.Views
 
         private void LoadDisplay()
         {
+            nbAmis.Text = "Vous avez " + friends.Count + " Amis";
             flowControl.DataContext = friends.Values;
             
-            ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+            //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+            busyIndicator.IsBusy = false;
+            searchBox.Visibility = System.Windows.Visibility.Visible;
             flowControl.Visibility = System.Windows.Visibility.Visible;
-
-            //foreach (KeyValuePair<String, Friend> poto in friends)
-            //{
-            //    FriendView friend = new FriendView(poto.Value);
-
-            //    this.Liste.Children.Add(friend);
-
-
-            //}
-
         }
+
+        private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Dictionary<String, Friend> users = new Dictionary<String, Friend>();
+            if (searchBox.Text.Trim() != "" && searchBox.Text.Trim() != "Chercher un ami...")
+            {
+                string searchTxt = searchBox.Text.Trim().ToLower();
+                foreach (KeyValuePair<String, Friend> friend in this.friends)
+                {
+                    if (friend.Value.userFB != null)
+                    {
+                        if (friend.Value.userFB.first_name.ToLower().StartsWith(searchTxt) || friend.Value.userFB.last_name.ToLower().StartsWith(searchTxt))
+                            users.Add(friend.Key, friend.Value);
+                    }
+                    else if (friend.Value.userTW != null)
+                    {
+                        if (friend.Value.userTW.Name.ToLower().StartsWith(searchTxt) || friend.Value.userTW.ScreenName.ToLower().StartsWith(searchTxt))
+                            users.Add(friend.Key, friend.Value);
+                    }
+
+                }
+                nbAmis.Text = users.Count + " Amis";
+
+            }
+            else
+            {
+                users = this.friends;
+                nbAmis.Text = "Vous avez " + users.Count + " Amis";
+            }
+
+            flowControl.DataContext = users.Values;
+            
+        }
+
+        private void searchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchBox.Text.Trim() == "Chercher un ami...")
+            {
+                searchBox.Text = "";
+            }
+        }
+
+        private void searchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchBox.Text.Trim() == "")
+            {
+                searchBox.Text = "Chercher un ami...";
+            }
+        }
+
     }
 }
