@@ -57,6 +57,7 @@ namespace EIP
             filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
 
             Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
+            Connexion.serviceEIP.LoadDirectMessagesCompleted += new EventHandler<LoadDirectMessagesCompletedEventArgs>(serviceEIP_LoadDirectMessagesCompleted);
             Connexion.serviceEIP.GetUserInfosCompleted += new EventHandler<GetUserInfosCompletedEventArgs>(serviceEIP_GetUserInfosCompleted);
 
             Connexion.serviceEIP.GetFiendsCompleted += new EventHandler<GetFiendsCompletedEventArgs>(serviceEIP_GetFiendsCompleted);
@@ -131,7 +132,7 @@ namespace EIP
          //*Methodes de récupération d'infos*\\
         //************************************\\
 
-        public delegate void OnLoadDirectMessagesCompleted(List<ServiceEIP.TwitterDirectMessage> liste);
+        public delegate void OnLoadDirectMessagesCompleted(List<ThreadMessage> liste);
         public event OnLoadDirectMessagesCompleted LoadDirectMessagesCalled;
 
         public void LoadDirectMessages()
@@ -152,18 +153,20 @@ namespace EIP
         void serviceEIP_LoadDirectMessagesCompleted(object sender, LoadDirectMessagesCompletedEventArgs e)
         {
             List<ServiceEIP.TwitterDirectMessage> dms = e.Result;
+            List<ThreadMessage> directMessages = new List<ThreadMessage>();
 
             if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (e.Error == null) && (dms != null))
             {
-                homeStatuses = new List<Topic>();
                 foreach (ServiceEIP.TwitterDirectMessage dm in dms)
                 {
+                    ThreadMessage directMessage = new ThreadMessage(dm, this.account.accountID);
+                    directMessages.Add(directMessage);
                     //homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
                 }
 
-                LoadStreamFeedsContext(false);
+                //LoadStreamFeedsContext(false);
                 if (this.LoadDirectMessagesCalled != null)
-                    this.LoadDirectMessagesCalled.Invoke(dms);
+                    this.LoadDirectMessagesCalled.Invoke(directMessages);
             }
         }
 

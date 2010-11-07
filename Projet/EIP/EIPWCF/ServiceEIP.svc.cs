@@ -136,7 +136,7 @@ namespace EIPWCF
             if (!response.IsTwitterError)
             {
                 var dms = response.AsDirectMessages();
-
+                //dms.ElementAt(0).
                 return dms;
             }
 

@@ -36,17 +36,24 @@ namespace EIP.Views.Controls
                     Uri uriImg = new Uri(th.getPic());
                     picUser.Source = new BitmapImage(uriImg);
                 }
-                //subject.Text = th.getSubject();
-                content.Visibility = System.Windows.Visibility.Collapsed;
-                subjectText.Text = th.getSubject();
-                subject.NavigateUri = new Uri("/Messages/Thread/" + th.accountID + '/' + th.getThreadId(), UriKind.Relative); //TODO
-                //if (th.hasDetails() && th.getThread().thread_id == 1438170797750)
-                //((AccountFacebookLight)Connexion.accounts[th.accountID]).LoadThreadMessages(th.getThread());
-                //subject.Click += subject_Click;
+                if (th.getSubject() != "")
+                {
+                    //subject.Text = th.getSubject();
+                    content.Visibility = System.Windows.Visibility.Collapsed;
+                    subjectText.Text = th.getSubject();
+                    subject.NavigateUri = new Uri("/Messages/Thread/" + th.accountID + '/' + th.getThreadId(), UriKind.Relative); //TODO
+                    //if (th.hasDetails() && th.getThread().thread_id == 1438170797750)
+                    //((AccountFacebookLight)Connexion.accounts[th.accountID]).LoadThreadMessages(th.getThread());
+                    //subject.Click += subject_Click;
+                }
+                else
+                    subject.Visibility = System.Windows.Visibility.Collapsed;
                 if (th.getSummary() != "")
                     summary.Text = th.getSummary().Replace("\n", " ");
                 else
                     summary.Visibility = System.Windows.Visibility.Collapsed;
+                if (th.getContent() != "")
+                    content.Text = th.getContent();
                 personText.Text = th.getAuthorName();
                 person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
                 date.Text = th.date.ToString();
