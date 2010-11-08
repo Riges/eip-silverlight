@@ -18,8 +18,8 @@ namespace EIP.ServiceEIP {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Account", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountTwitter))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountFacebook))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountTwitter))]
     public partial class Account : object, System.ComponentModel.INotifyPropertyChanged {
         
         private long accountIDField;
@@ -123,57 +123,6 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountTwitter", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
-    public partial class AccountTwitter : EIP.ServiceEIP.Account {
-        
-        private string pinField;
-        
-        private string tokenField;
-        
-        private string tokenSecretField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string pin {
-            get {
-                return this.pinField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.pinField, value) != true)) {
-                    this.pinField = value;
-                    this.RaisePropertyChanged("pin");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string token {
-            get {
-                return this.tokenField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.tokenField, value) != true)) {
-                    this.tokenField = value;
-                    this.RaisePropertyChanged("token");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string tokenSecret {
-            get {
-                return this.tokenSecretField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.tokenSecretField, value) != true)) {
-                    this.tokenSecretField = value;
-                    this.RaisePropertyChanged("tokenSecret");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountFacebook", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
     public partial class AccountFacebook : EIP.ServiceEIP.Account {
         
@@ -218,6 +167,57 @@ namespace EIP.ServiceEIP {
                 if ((object.ReferenceEquals(this.sessionSecretField, value) != true)) {
                     this.sessionSecretField = value;
                     this.RaisePropertyChanged("sessionSecret");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountTwitter", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
+    public partial class AccountTwitter : EIP.ServiceEIP.Account {
+        
+        private string pinField;
+        
+        private string tokenField;
+        
+        private string tokenSecretField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string pin {
+            get {
+                return this.pinField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.pinField, value) != true)) {
+                    this.pinField = value;
+                    this.RaisePropertyChanged("pin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string token {
+            get {
+                return this.tokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tokenField, value) != true)) {
+                    this.tokenField = value;
+                    this.RaisePropertyChanged("token");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string tokenSecret {
+            get {
+                return this.tokenSecretField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tokenSecretField, value) != true)) {
+                    this.tokenSecretField = value;
+                    this.RaisePropertyChanged("tokenSecret");
                 }
             }
         }
