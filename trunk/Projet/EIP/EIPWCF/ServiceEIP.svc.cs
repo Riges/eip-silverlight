@@ -202,7 +202,7 @@ namespace EIPWCF
             var contentEncoding = "iso-8859-1";
             var ConsumerKey = ConfigurationManager.AppSettings["ConsumerKey"];
             var ConsumerSecret = ConfigurationManager.AppSettings["ConsumerSecret"];
-
+            
             Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
             MatchCollection mactches = regx.Matches(tweet);
             foreach (Match match in mactches)
