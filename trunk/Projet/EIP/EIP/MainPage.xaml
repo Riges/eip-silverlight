@@ -79,6 +79,7 @@
                 </Grid>
             <!--</StackPanel>-->
 
+            
             <Border x:Name="LinksBorderBottom" my:DockPanel.Dock="Bottom" Height="30" Background="{StaticResource NavigationBackgroundColorBrush}">
                 <Controls:Footer HorizontalAlignment="Center" VerticalAlignment="Center"></Controls:Footer>
             </Border>

@@ -193,7 +193,7 @@ namespace EIP.Views.Controls
                                                     {
                                                         Byte[] bytes = new Byte[str.Length];
                                                         str.Read(bytes, 0, bytes.Length);
-
+                                                        
                                                         str.Close();
                                                         string fileType = this.file.Extension;
                                                         fileType = "image/" + fileType.Substring(fileType.IndexOf(".") + 1, fileType.Length - 1);

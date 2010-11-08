@@ -210,7 +210,7 @@ namespace EIP
                 {
                     homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
                 }
-
+                
                 LoadStreamFeedsContext(false);
             }
         }
@@ -323,6 +323,7 @@ namespace EIP
                         Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                         if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
                             this.LoadHomeStatusesCalled.Invoke();
+                        Utils.NotificationMessage("Message Twitter mis à jours pour " + userInfos.ScreenName);
                     }
                 }
                 else
