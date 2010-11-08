@@ -746,7 +746,7 @@ namespace EIP
                     this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
                 }
 
-                if (this.feeds.ContainsKey(filtre.ToString()) && this.feeds[filtre.ToString()].Count > 0)
+                if (this.feeds.ContainsKey(filtre.ToString()) && this.feeds[filtre.ToString()].Count > 0 && this.selected)
                 {
                     Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre.ToString()];
                     if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo

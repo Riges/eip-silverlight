@@ -61,9 +61,11 @@ namespace EIP
             Connexion.serviceEIP.GetUserInfosCompleted += new EventHandler<GetUserInfosCompletedEventArgs>(serviceEIP_GetUserInfosCompleted);
 
             Connexion.serviceEIP.GetFiendsCompleted += new EventHandler<GetFiendsCompletedEventArgs>(serviceEIP_GetFiendsCompleted);
+
+            Connexion.serviceEIP.SendTwitPicCompleted += new EventHandler<SendTwitPicCompletedEventArgs>(serviceEIP_SendTwitPicCompleted);
         }
 
-      
+    
 
         public void Start()
         {
@@ -94,6 +96,11 @@ namespace EIP
             {
                 Connexion.serviceEIP.SendTwitPicAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, fileByte, fileContentType, fileName, status);
             }
+        }
+
+        void serviceEIP_SendTwitPicCompleted(object sender, SendTwitPicCompletedEventArgs e)
+        {
+            
         }
 
         public delegate void OnGetUserInfoCompleted(TwitterUser user);
