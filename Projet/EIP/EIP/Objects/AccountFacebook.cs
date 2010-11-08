@@ -751,6 +751,7 @@ namespace EIP
                     Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre.ToString()];
                     if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
                         this.LoadFeedsCalled.Invoke();
+                    Utils.NotificationMessage("Message Facebook mis à jours pour " + userInfos.last_name + " " + userInfos.first_name);
                 }
 
                 this.busy = false;

@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using Facebook.Schema;
 using System.IO;
+using System.Windows.Controls.Primitives;
+using EIP.Views.Controls;
 
 namespace EIP.Objects
 {
@@ -69,6 +71,43 @@ namespace EIP.Objects
 
 
             return jour;
+        }
+
+        public  static void NotificationMessage(string message)
+        {
+            if (App.Current.InstallState == InstallState.Installed)
+            {
+                NotificationWindow notify = new NotificationWindow();
+                notify.Width = 329;
+                notify.Height = 74;
+
+                TextBlock tb = new TextBlock();
+                tb.Text = message;
+                tb.FontSize = 9;
+
+                notify.Content = tb;
+
+                notify.Show(5000);
+            }
+            else
+            {
+                // Create a popup. 
+                Popup p = new Popup();
+
+                // Set the Child property of Popup to an instance of MyControl. 
+                p.Child = new NotificationPopup(message);
+                
+                // Set where the popup will show up on the screen. 
+                
+                p.VerticalOffset = App.Current.Host.Content.ActualHeight - 110;
+                p.HorizontalOffset = App.Current.Host.Content.ActualWidth - 250;
+                
+
+                
+
+                // Open the popup. 
+                p.IsOpen = true;
+            }
         }
 
         public static string GetMonthFr(int month)
