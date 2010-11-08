@@ -265,7 +265,7 @@ namespace EIP
 
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(0, (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);
 
-            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
+            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0 LIMIT 0, 2", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
 
         }
         public void LoadOutboxMessages()

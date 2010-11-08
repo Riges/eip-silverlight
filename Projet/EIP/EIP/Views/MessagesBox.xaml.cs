@@ -126,6 +126,8 @@ namespace EIP.Views
                     listeMessagesBox.box.AddRange(liste);
                 else
                     listeMessagesBox.box = liste;
+
+                //listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
                 listeMessagesBox.LoadMessages();
                 //listeMessagesBox.Messages_GetThreadCalled(th);
             });
@@ -140,6 +142,7 @@ namespace EIP.Views
                     listeMessagesBox.box.AddRange(liste);
                 else
                     listeMessagesBox.box = liste;
+                //listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
                 //listeMessagesBox.box = liste;
                 listeMessagesBox.LoadMessages();
                 //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
