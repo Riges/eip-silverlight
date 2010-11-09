@@ -73,6 +73,7 @@ namespace EIP.Views.Controls
                         messagesPanel.Children.Add(monMessage);
                     }
                     //FeedsControl.DataContext = this.box;*/
+                    MessagesControl.DataContext = null;
                     MessagesControl.DataContext = this.box;
                 }
             });

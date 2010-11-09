@@ -89,6 +89,7 @@ namespace EIP.Views
                         switch (account.Value.account.typeAccount)
                         {
                             case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
                                 ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
                                 switch (this.boxActive)
                                 {
@@ -104,6 +105,7 @@ namespace EIP.Views
                                 }
                                 break;
                             case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                                ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 ((AccountTwitterLight)account.Value).LoadDirectMessages();
                                 break;
@@ -120,14 +122,8 @@ namespace EIP.Views
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                //liste = liste;
-
-                if (listeMessagesBox.box.Count > 0)
-                    listeMessagesBox.box.AddRange(liste);
-                else
-                    listeMessagesBox.box = liste;
-
-                //listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
+                listeMessagesBox.box.AddRange(liste);
+                listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
                 listeMessagesBox.LoadMessages();
                 //listeMessagesBox.Messages_GetThreadCalled(th);
             });
@@ -138,15 +134,9 @@ namespace EIP.Views
             //this.box = liste;
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                if (listeMessagesBox.box.Count > 0)
-                    listeMessagesBox.box.AddRange(liste);
-                else
-                    listeMessagesBox.box = liste;
-                //listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
-                //listeMessagesBox.box = liste;
+                listeMessagesBox.box.AddRange(liste);
+                listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
                 listeMessagesBox.LoadMessages();
-                //MessageBox toto = new MessageBox("", "invoked count=" + liste.Count);
-                //toto.Show();
             });
 
 
