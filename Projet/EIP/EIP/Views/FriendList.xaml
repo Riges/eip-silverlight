@@ -35,18 +35,47 @@
         <TextBox Text="Chercher un ami..." Name="searchBox" Width="200" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Visibility="Collapsed" TextChanged="searchBox_TextChanged" GotFocus="searchBox_GotFocus" LostFocus="searchBox_LostFocus"></TextBox>
         
     
-        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
-            <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
+        <!--<fl:FlowItemsControl3D Name="flowControl"  Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
                     <Controls:FriendView x:Name="photoItem" VerticalAlignment="Top" FriendsPage="true"  Cursor="Hand"></Controls:FriendView>
                 </DataTemplate>
             </fl:FlowItemsControl3D.ItemTemplate>
-        </fl:FlowItemsControl3D>
+        </fl:FlowItemsControl3D>-->
 
-      
+<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource BgColor}">
+            <ItemsControl Name="flowControl" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding}" HorizontalAlignment="Stretch" >
+                <!--<ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>-->
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border >
+                            <!--BorderBrush="Blue" BorderThickness="1"-->
+                            <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0">-->
+                                <ItemsPresenter />
+                            <!--</ScrokllViewer>-->
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
 
-    </Grid>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        
+                        <toolkit:WrapPanel Orientation="Horizontal"></toolkit:WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!--<Border BorderBrush="Black" BorderThickness="2">-->
+                        <Controls:FriendView x:Name="friendItem" VerticalAlignment="Stretch" FriendsPage="true" Margin="5"></Controls:FriendView>
+                        <!--</Border>-->
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+</ScrollViewer>
+
+
+        </Grid>
 
     </toolkit:BusyIndicator>
 </navigation:Page>
