@@ -7,45 +7,48 @@
     d:DesignHeight="300" d:DesignWidth="400" Height="50" Width="400" LostFocus="UserControl_LostFocus">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationBackgroundColorBrush}" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*"></ColumnDefinition>
-            <ColumnDefinition Width="25*"></ColumnDefinition>
-            <ColumnDefinition Width="25*"></ColumnDefinition>
-            <ColumnDefinition Width="25*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+       
 
-        
-        <Popup AllowDrop="True" Name="myPopup" Drop="myPopup_Drop" VerticalOffset="5" IsOpen="True" >
+
+        <Popup AllowDrop="True" Name="myPopup" Drop="myPopup_Drop" VerticalOffset="5" IsOpen="True" ><!--MaxHeight="41" MaxWidth="385"-->
             <Border Name="borderPopup" CornerRadius="10" Padding="5,5,5,5"  BorderThickness="3" MaxHeight="41" MaxWidth="385" Background="{StaticResource BgColor}" Drop="myPopup_Drop" AllowDrop="True" MouseEnter="borderPopup_MouseEnter" MouseLeave="borderPopup_MouseLeave">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                   
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2">
                         <TextBlock Width="360" Name="exprimeToiTxt" Text="Exprime toi !" VerticalAlignment="Center" FontSize="14"></TextBlock>
                         <TextBox Width="360"  MouseLeftButtonDown="TextBox_MouseLeftButtonDown" Name="statutBox" Text="Exprime toi !" GotFocus="statutBox_GotFocus" LostFocus="statutBox_LostFocus" Visibility="Collapsed"></TextBox>
                         <Button Content="Partager" HorizontalContentAlignment="Center" Width="90" Margin="10,0,10,0" Height="25" Click="sendStatut_Click" ></Button>
                     </StackPanel>
 
-                    <StackPanel  Name="NetworkStackPanel" Orientation="Horizontal">
+                    <StackPanel  Name="NetworkStackPanel" Orientation="Vertical" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
                     </StackPanel>
 
-                    <HyperlinkButton Name="shareLink" Content="Partager un lien" Style="{StaticResource HyperlinkButtonStyle}" HorizontalAlignment="Left" Cursor="Hand" Click="shareLink_Click"></HyperlinkButton>
-                    <TextBlock Name="dropPhotoText" Text="Déposez une photo ici pour la partager." HorizontalAlignment="Left"></TextBlock>
+                    <HyperlinkButton Name="shareLink" Content="Partager un lien" Grid.Column="1" Grid.Row="2" Style="{StaticResource HyperlinkButtonFonceStyle}" HorizontalAlignment="Left" Cursor="Hand" Click="shareLink_Click"></HyperlinkButton>
+                        <TextBlock Name="dropPhotoText" Text="Déposez une photo ici pour la partager." Grid.Column="1" Grid.Row="3"  HorizontalAlignment="Left"></TextBlock>
 
-                    <HyperlinkButton Name="removePhotoLink" Content="Supprimer la photo" Visibility="Collapsed" Style="{StaticResource HyperlinkButtonStyle}" Click="removePhotoLink_Click"></HyperlinkButton>
-                    <HyperlinkButton Name="removeLink" Content="Supprimer le lien" Visibility="Collapsed" Style="{StaticResource HyperlinkButtonStyle}" Click="removeLink_Click"></HyperlinkButton>
-                    <Image MaxHeight="100" MaxWidth="250" Stretch="Uniform" Name="imgPhoto" ></Image>
-                    
-                    <StackPanel Name="shareLinkTextBox" Orientation="Horizontal" Visibility="Collapsed" Margin="0,5,0,0">
-                        <TextBox Name="linkText" Width="300" GotFocus="TextBox_GotFocus" LostFocus="linkText_LostFocus" Text="http://"></TextBox>
+                        <HyperlinkButton Name="removePhotoLink" Content="Supprimer la photo" Grid.Column="1" Grid.Row="2" Visibility="Collapsed" Style="{StaticResource HyperlinkButtonFonceStyle}" Click="removePhotoLink_Click"></HyperlinkButton>
+                        <HyperlinkButton Name="removeLink" Content="Supprimer le lien" Grid.Column="1" Grid.Row="2" Visibility="Collapsed" Style="{StaticResource HyperlinkButtonFonceStyle}" Click="removeLink_Click"></HyperlinkButton>
+                        <Image MaxHeight="100" MaxWidth="250" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Stretch="Uniform" Name="imgPhoto" ></Image>
+
+                    <StackPanel Name="shareLinkTextBox" Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Visibility="Collapsed" Margin="0,5,0,0">
+                        <TextBox Name="linkText" Width="250" GotFocus="TextBox_GotFocus" LostFocus="linkText_LostFocus" Text="http://"></TextBox>
                         <Button Name="joinLinkBtn" Content="Joindre" Width="90" Margin="10,0,10,0"></Button>
                     </StackPanel>
                     
                     
-                    <Grid Name="shareLinkGrid" Visibility="Collapsed">
+                    <!--<Grid Name="shareLinkGrid" Visibility="Collapsed" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -76,10 +79,10 @@
                         </StackPanel>
                         
                         
+                    </Grid>-->
+
+
                     </Grid>
-
-
-
                 </StackPanel>
             </Border>
         </Popup>   

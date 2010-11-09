@@ -36,8 +36,8 @@ namespace EIP.Views.Controls
         
         private void LoadAccountButtons()
         {
-            SolidColorBrush brush  = new SolidColorBrush();
-            brush.Color = Colors.White;//gray
+            //SolidColorBrush brush  = new SolidColorBrush();
+            //brush.Color = Colors.White;//gray
             if (Connexion.accounts != null)
             {
                 if (Connexion.accounts.Count > 0)
@@ -53,7 +53,7 @@ namespace EIP.Views.Controls
                                 panel.Orientation = Orientation.Horizontal;
 
                                 Image img = new Image();
-                                img.Width = 12;
+                                img.Width = 14;
                                 switch (oneAccount.Value.account.typeAccount)
                                 {
                                     case Account.TypeAccount.Facebook:
@@ -70,11 +70,13 @@ namespace EIP.Views.Controls
                                 panel.Children.Add(img);
 
                                 TextBlock text = new TextBlock();
-                                text.Text = oneAccount.Value.account.name + " ";
-                                text.FontStyle = FontStyles.Italic;
-                                text.FontSize = 10;
-                                text.Foreground = brush;
+                                text.Text = oneAccount.Value.account.name;
+                                //text.FontStyle = FontStyles.Italic;
+                                text.FontSize = 12;
+                                text.FontWeight = FontWeights.Bold;
+                                text.Foreground = App.Current.Resources["LinkColorFonceBrush"] as SolidColorBrush;
                                 text.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                                text.Margin = new Thickness(5, 0, 0, 0);
                                 panel.Children.Add(text);
 
                                 NetworkStackPanel.Children.Add(panel);

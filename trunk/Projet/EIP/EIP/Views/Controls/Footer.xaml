@@ -10,14 +10,14 @@
         
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Copyright myNETwork tout droit réservé"></TextBlock>
-            <TextBlock Text="2010"></TextBlock>
+            <TextBlock Text=" 2010"></TextBlock>
             <TextBlock Text="-" Margin="5,0,5,0"></TextBlock>
-            <HyperlinkButton Content="WebSite"></HyperlinkButton>
+            <HyperlinkButton Content="WebSite" Name="webSite" NavigateUri="http://mynetwork.selfip.net/site" TargetName="_blank"></HyperlinkButton>
             <TextBlock Text="-" Margin="5,0,5,0"></TextBlock>
-            <HyperlinkButton Content="Contact"></HyperlinkButton>
+            <HyperlinkButton Content="Contact" Name="contact" NavigateUri="mailto:pocketino@gmail.com" TargetName="_blank"></HyperlinkButton>
             <TextBlock Text="-" Margin="5,0,5,0"></TextBlock>
-            <HyperlinkButton Content="Téléchargez l'application"></HyperlinkButton>
-            <TextBlock Text="-" Margin="5,0,5,0"></TextBlock>
+            <HyperlinkButton Content="Télécharger l'application" Name="installApp" Click="installApp_Click"></HyperlinkButton>
+            <TextBlock Text="-" Margin="5,0,5,0" Name="installAppTiret"></TextBlock>
             <HyperlinkButton Content="FAQ"></HyperlinkButton>
         </StackPanel>
        
