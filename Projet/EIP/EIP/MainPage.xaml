@@ -5,14 +5,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     xmlns:Controls="clr-namespace:EIP.Views.Controls;assembly=EIP"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
     xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
              
     mc:Ignorable="d" 
     d:DesignHeight="400" d:DesignWidth="1300" Background="{StaticResource BgColor}" >
 
-
-    <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
+    <toolkit:BusyIndicator Name="mainBusyIndicator" BusyContent="Chargement de l'application myNETwork en cours...">
+        <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">
         <my:DockPanel Background="{StaticResource BgColor}" LastChildFill="False">
 
             <!--<StackPanel  >-->
@@ -95,6 +96,8 @@
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>
                             <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
+                        <uriMapper:UriMapping Uri="" MappedUri="/Views/EmptyPage.xaml" />
+                        <uriMapper:UriMapping Uri="/" MappedUri="/Views/MenuFeeds.xaml" />
                         <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/MenuFeeds.xaml"/>
                         <uriMapper:UriMapping Uri="/Messages/Thread/{accountId}/{threadId}" MappedUri="/Views/MenuMessagesBox.xaml?accountId={accountId}&amp;threadId={threadId}"/>
                         <uriMapper:UriMapping Uri="/Messages/{filter}" MappedUri="/Views/MenuMessagesBox.xaml?box={filter}"/>
@@ -145,6 +148,8 @@
                         <uriMapper:UriMapper>
                         <!--<uriMapper:UriMapping Uri="" MappedUri="/Views/MenuFeeds.xaml"/>-->
                         <!--<uriMapper:UriMapping Uri="/User/{id}" MappedUri="/Views/UserDetail.xaml?id={id}" />-->
+                        <uriMapper:UriMapping Uri="" MappedUri="/Views/WaitLoad.xaml" />
+                        <uriMapper:UriMapping Uri="/" MappedUri="/Views/StreamFeeds.xaml" />
                         <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/StreamFeeds.xaml" />
                         <uriMapper:UriMapping Uri="/Messages/Thread/{accountId}/{threadId}" MappedUri="/Views/MessagesBox.xaml?accountId={accountId}&amp;threadId={threadId}"/>
                         <uriMapper:UriMapping Uri="/Messages/{filter}" MappedUri="/Views/MessagesBox.xaml?box={filter}"/>
@@ -189,5 +194,5 @@
 
 
     </Grid>
-   
+    </toolkit:BusyIndicator>
 </UserControl>

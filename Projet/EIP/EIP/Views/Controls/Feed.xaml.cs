@@ -237,6 +237,7 @@ namespace EIP.Views.Controls
                                 picUser.UriSource = uriImg;
                             }
                             userSource.Content = status.User.ScreenName;//.Name;
+                            userSource.NavigateUri = new Uri("/ProfilInfos/" + status.User.Id + "/Account/" + topic.accountID, UriKind.Relative);
                             //imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
                             imgCpt.UriSource = new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative);
                             
@@ -244,7 +245,7 @@ namespace EIP.Views.Controls
 
                             imgAccount.UriSource = new Uri(userAccount.ProfileImageUrl, UriKind.Absolute);
                             userAccountName.Content = userAccount.Name;
-                            userAccountName.NavigateUri = new Uri("/ProfilInfos/" + Connexion.accounts[topic.accountID].account.userID + "/Account/" + topic.accountID, UriKind.Relative);
+                            userAccountName.NavigateUri = new Uri("/ProfilInfos/" + status.User.Id + "/Account/" + topic.accountID, UriKind.Relative);
                             barAccount.Background = App.Current.Resources["BgTW"] as SolidColorBrush;
                             //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
                             

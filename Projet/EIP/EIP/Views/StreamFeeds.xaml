@@ -4,12 +4,14 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:Controls="clr-namespace:EIP.Views.Controls;assembly=EIP"
+           xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="StreamFeeds Page">
-    
-  <Grid x:Name="LayoutRoot" >
+    <toolkit:BusyIndicator Name="busyIndicator" BusyContent="Chargement du fil d'actualités..." Background="{StaticResource BgColor}" >
+
+        <Grid x:Name="LayoutRoot" >
 
 
             <!--<Grid.RowDefinitions>
@@ -17,40 +19,31 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>-->
       
-        <StackPanel Name="ImgLoad" Visibility="Collapsed">
-            <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
-        </StackPanel>
-      
-        <StackPanel Orientation="Vertical" Name="ContentPanel" Visibility="Collapsed">
-            
-                <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500" Width="750">
-            <!--<ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>-->
-                <ItemsControl.Template>
-                <ControlTemplate TargetType="ItemsControl">
-                    <Border > <!--BorderBrush="Blue" BorderThickness="1"-->
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </ItemsControl.Template>
+    <!--<StackPanel Name="ImgLoad" Visibility="Collapsed">
+        <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
+    </StackPanel>-->
+            <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500" Width="750">
+        <ItemsControl.Template>
+            <ControlTemplate TargetType="ItemsControl">
+                <Border > <!--BorderBrush="Blue" BorderThickness="1"-->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </Border>
+            </ControlTemplate>
+        </ItemsControl.Template>
 
-                <!--<ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>-->
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                    <!--<Border BorderBrush="Black" BorderThickness="2">-->
+                        <Controls:Feed x:Name="Feed"/>
+                    <!--</Border>-->
+                </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 
-                <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                        <!--<Border BorderBrush="Black" BorderThickness="2">-->
-                            <Controls:Feed x:Name="Feed"/>
-                        <!--</Border>-->
-                    </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-           
-        </StackPanel>
 
-</Grid>
+    </Grid>
+    </toolkit:BusyIndicator>
+
 </navigation:Page>

@@ -20,15 +20,18 @@ namespace EIP.Views.Controls
     {
         public Frame contentFrame { get; set; }
         private ListeComptes.ListeCptMode mode;
+        private AccountLight account;
 
         public UnCompte(AccountLight oneAccount, ListeComptes.ListeCptMode leMode)
         {
+            this.account = oneAccount;
             InitializeComponent();
 
             this.mode = leMode;
             string status = string.Empty;
             string imgIcone = string.Empty;
             string imgAcc = string.Empty;
+
             switch (oneAccount.account.typeAccount)
 	        {
 		        case Account.TypeAccount.Facebook:
@@ -118,13 +121,15 @@ namespace EIP.Views.Controls
         {
             this.Dispatcher.BeginInvoke(() =>
             {
-                ((Image)LayoutRoot.FindName("img" + user.Id)).Source = new BitmapImage(new Uri(user.ProfileImageUrl, UriKind.Absolute));
-                if (user.Status != null && user.Status.Text != null && user.Status.Text != "")
+                if (this.account.account.userID == user.Id)
                 {
-                    accountStatus.Text = user.Status.Text;
-                    accountStatusTooltip.Text = user.Status.Text;
+                    ((Image)LayoutRoot.FindName("img" + user.Id)).Source = new BitmapImage(new Uri(user.ProfileImageUrl, UriKind.Absolute));
+                    if (user.Status != null && user.Status.Text != null && user.Status.Text != "")
+                    {
+                        accountStatus.Text = user.Status.Text;
+                        accountStatusTooltip.Text = user.Status.Text;
+                    }
                 }
-
             });
         }
 

@@ -178,6 +178,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="LoadUserStatuses">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="tokenSecret" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoadUserStatusesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadUserStatusesResult" nillable="true" type="q10:ArrayOfTwitterStatus" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SendTweet">
     <xs:complexType>
       <xs:sequence>
@@ -225,7 +241,7 @@
   <xs:element name="GetUserInfosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetUserInfosResult" nillable="true" type="q10:TwitterUser" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetUserInfosResult" nillable="true" type="q11:TwitterUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -240,7 +256,7 @@
   <xs:element name="GetFiendsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetFiendsResult" nillable="true" type="q11:ArrayOfTwitterUser" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetFiendsResult" nillable="true" type="q12:ArrayOfTwitterUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -270,7 +286,7 @@
   <xs:element name="LoadDirectMessagesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadDirectMessagesResult" nillable="true" type="q12:ArrayOfTwitterDirectMessage" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadDirectMessagesResult" nillable="true" type="q13:ArrayOfTwitterDirectMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

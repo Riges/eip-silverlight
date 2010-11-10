@@ -27,6 +27,8 @@ namespace EIP.Views
         // S'exécute lorsque l'utilisateur navigue vers cette page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            
+
             if (this.NavigationContext.QueryString.ContainsKey("uid"))
                 this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
 
@@ -42,7 +44,7 @@ namespace EIP.Views
         {
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
-                ImgLoad.Visibility = System.Windows.Visibility.Visible;
+                busyIndicator.IsBusy = true;
 
                 AccountLight accountLight = Connexion.accounts[this.accountID];
 
@@ -68,7 +70,7 @@ namespace EIP.Views
         {
             Dispatcher.BeginInvoke(() =>
                 {
-                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                    busyIndicator.IsBusy = false;
                     if (uid == this.uid && feeds != null && feeds.Count > 0)
                     {
                         FeedsControl.DataContext = feeds;

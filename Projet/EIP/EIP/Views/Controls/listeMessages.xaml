@@ -6,27 +6,18 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="850" xmlns:my="clr-namespace:EIP.Views.Controls">
     
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" >
         
 
-            <ItemsControl Width="Auto" Height="Auto" Name="MessagesControl" ItemsSource="{Binding}">
-                <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto"></ScrollViewer>
+            <ItemsControl Width="Auto" Height="Auto" Name="MessagesControl" ItemsSource="{Binding}" BorderThickness="0">
                 <ItemsControl.Template>
                     <ControlTemplate TargetType="ItemsControl">
                         <Border >
                             <!--BorderBrush="Blue" BorderThickness="1"-->
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <ItemsPresenter />
-                            </ScrollViewer>
                         </Border>
                     </ControlTemplate>
                 </ItemsControl.Template>
-
-                <!--ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel-->
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

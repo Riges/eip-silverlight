@@ -125,6 +125,24 @@ namespace EIPWCF
             return null;
         }
 
+        public List<TwitterStatus> LoadUserStatuses(string token, string tokenSecret, int userID)
+        {
+            SetClientInfo();
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .Statuses().OnUserTimeline().For(userID);
+
+            var response = query.Request();
+            if (!response.IsTwitterError)
+            {
+                var statuses = response.AsStatuses();
+
+                return statuses.ToList();
+            }
+
+            return null;
+        }
+
         public IEnumerable<TwitterDirectMessage> LoadDirectMessages(string token, string tokenSecret)
         {
             SetClientInfo();

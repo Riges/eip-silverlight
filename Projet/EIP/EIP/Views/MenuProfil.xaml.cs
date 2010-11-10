@@ -42,7 +42,11 @@ namespace EIP.Views
              * Views.ProfilPage.Tab>(this.NavigationContext.QueryString["tab"].ToString(), out tab);
             */
 
-            
+            if (Connexion.accounts[accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Twitter)
+            {
+                photosBtn.Visibility = System.Windows.Visibility.Collapsed;
+                videosBtn.Visibility = System.Windows.Visibility.Collapsed;
+            }
 
             LoadMenuProfil();
         }
@@ -53,12 +57,15 @@ namespace EIP.Views
             switch (Connexion.accounts[accountID].account.typeAccount)
             {
                 case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                    AccountFacebookLight acc = (AccountFacebookLight)Connexion.accounts[accountID];
-                    acc.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
-                    acc.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
+                    AccountFacebookLight accFB = (AccountFacebookLight)Connexion.accounts[accountID];
+                    accFB.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
+                    accFB.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
 
                     break;
                 case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                    AccountTwitterLight accTW = (AccountTwitterLight)Connexion.accounts[accountID];
+                    accTW.GetUserInfoCalled += new AccountTwitterLight.OnGetUserInfoCompleted(accTW_GetUserInfoCalled);
+                    accTW.GetUserInfo(this.uid);
                     break;
                 default:
                     break;
@@ -66,6 +73,20 @@ namespace EIP.Views
 
 
         }
+
+        void accTW_GetUserInfoCalled(ServiceEIP.TwitterUser user)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                if (user != null)
+                {
+                    this.Title = "Profil de " + user.ScreenName;
+                    photoUser.UriSource = new Uri(user.ProfileImageUrl, UriKind.Absolute);
+                }
+            });
+        }
+
+
 
 
         void acc_GetUserInfoCalled(user monUser)

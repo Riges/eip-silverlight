@@ -50,6 +50,9 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Connexion.Loading(false);
+            busyIndicator.IsBusy = true;
+
             FeedsControl.MaxHeight = App.Current.Host.Content.ActualHeight - 140;
 
 
@@ -91,7 +94,8 @@ namespace EIP.Views
             }
             else
             {
-                ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                busyIndicator.IsBusy = false;
+                //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
 
@@ -141,10 +145,12 @@ namespace EIP.Views
                         }
                 }
 
-                if (wait)
-                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                else if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
-                    ImgLoad.Visibility = System.Windows.Visibility.Visible;
+                //if (wait)
+                //    busyIndicator.IsBusy = false;
+                    //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+               // else if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)
+                //    busyIndicator.IsBusy = true;
+                    //ImgLoad.Visibility = System.Windows.Visibility.Visible;
             }
             
         }
@@ -173,8 +179,9 @@ namespace EIP.Views
 
                     topics.Sort(delegate(Topic t1, Topic t2) { return t2.date.CompareTo(t1.date); });
                     FeedsControl.DataContext = topics;
-                    ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                    ContentPanel.Visibility = System.Windows.Visibility.Visible;
+                    busyIndicator.IsBusy = false;
+                    //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                    FeedsControl.Visibility = System.Windows.Visibility.Visible;
                 });
              
         }

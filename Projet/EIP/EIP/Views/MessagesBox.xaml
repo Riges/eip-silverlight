@@ -12,7 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -21,6 +21,9 @@
                            Text="Messagerie" Grid.Row="0" />-->
         <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
                            Text="Messagerie" Grid.Row="1" />
-        <Controls:listeMessages x:Name="listeMessagesBox" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" />
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Stretch" Background="{StaticResource BgColor}">
+            <Controls:listeMessages x:Name="listeMessagesBox" />
+        </ScrollViewer>
     </Grid>
 </navigation:Page>

@@ -8,6 +8,7 @@ using EIP.Objects;
 //using TweetSharp.Extensions;
 using EIP.ServiceEIP;
 using EIP.Views;
+using System.Linq;
 
 namespace EIP
 {
@@ -24,9 +25,12 @@ namespace EIP
         public string pin { get; set; }
         public TwitterUser userInfos { get; set; }
         public List<Topic> homeStatuses { get; set; }
+        public Dictionary<int, List<Topic>> userStatuses { get; set; }
+
         public List<TwitterFilter> filters { get; set; }
         public List<TwitterUser> friends { get; set; }
-        public List<TwitterUser> followers { get; set; }
+        //public List<TwitterUser> followers { get; set; }
+        public List<TwitterUser> profiles { get; set; }
 
         /*
         OnFriendsTimeline
@@ -45,6 +49,10 @@ namespace EIP
         {
             this.account = new AccountTwitter();
             this.homeStatuses = new List<Topic>();
+            this.userStatuses = new Dictionary<int, List<Topic>>();
+            this.friends = new List<TwitterUser>();
+            this.profiles = new List<TwitterUser>();
+
 
             this.filters = new List<TwitterFilter>();
             filters.Add(new TwitterFilter("Home", "OnHomeTimeline"));
@@ -57,6 +65,8 @@ namespace EIP
             filters.Add(new TwitterFilter("RetweetedToMe", "RetweetedToMe"));
 
             Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
+            Connexion.serviceEIP.LoadUserStatusesCompleted += new EventHandler<LoadUserStatusesCompletedEventArgs>(serviceEIP_LoadUserStatusesCompleted);
+
             Connexion.serviceEIP.LoadDirectMessagesCompleted += new EventHandler<LoadDirectMessagesCompletedEventArgs>(serviceEIP_LoadDirectMessagesCompleted);
             Connexion.serviceEIP.GetUserInfosCompleted += new EventHandler<GetUserInfosCompletedEventArgs>(serviceEIP_GetUserInfosCompleted);
 
@@ -65,8 +75,6 @@ namespace EIP
             Connexion.serviceEIP.SendTwitPicCompleted += new EventHandler<SendTwitPicCompletedEventArgs>(serviceEIP_SendTwitPicCompleted);
         }
 
-    
-
         public void Start()
         {
             if (this.account != null)
@@ -74,8 +82,6 @@ namespace EIP
                 this.GetUserInfo(this.account.userID);
             }
         }
-
-      
 
 
         /// <summary>
@@ -114,7 +120,32 @@ namespace EIP
                     this.GetUserInfoCalled.Invoke(userInfos);
             }
             else
-                Connexion.serviceEIP.GetUserInfosAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, userId);
+            {
+                TwitterUser toto = null;
+                var resultFriends = from TwitterUser unUser in this.friends
+                             where unUser.Id == userId
+                             select unUser;
+                if (resultFriends.Count() > 0)
+                    toto = resultFriends.First() as TwitterUser;
+
+                if (toto == null)
+                {
+                    var resultProfiles = from TwitterUser unUser in this.profiles
+                                 where unUser.Id == userId
+                                 select unUser;
+                    if (resultProfiles.Count() > 0)
+                        toto = resultProfiles.First() as TwitterUser;
+                }
+
+                if (toto != null)
+                {
+                    if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
+                        this.GetUserInfoCalled.Invoke(toto);
+
+                }
+                else
+                    Connexion.serviceEIP.GetUserInfosAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, userId);
+            }
         }
 
         void serviceEIP_GetUserInfosCompleted(object sender, GetUserInfosCompletedEventArgs e)
@@ -124,9 +155,14 @@ namespace EIP
                 if (e.Result != null)
                 {
                     TwitterUser user = e.Result;
-                    
+
                     if (user.Id == account.userID)
                         userInfos = user;
+                    else
+                    {
+                        if(!this.profiles.Contains(user))
+                            this.profiles.Add(user);
+                    }
 
                     if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
                         this.GetUserInfoCalled.Invoke(user);
@@ -199,6 +235,9 @@ namespace EIP
             return ret;
         }
 
+        public delegate void OnLoadUserStatusesCompleted(int userID);
+        public event OnLoadUserStatusesCompleted LoadUserStatusesCalled;
+
         void serviceEIP_LoadHomeStatusesCompleted(object sender, LoadHomeStatusesCompletedEventArgs e)
         {
             List<ServiceEIP.TwitterStatus> statuses = e.Result;
@@ -212,6 +251,29 @@ namespace EIP
                 }
                 
                 LoadStreamFeedsContext(false);
+            }
+        }
+
+        public void LoadUserStatuses(int userID)
+        {
+           if(this.userStatuses.ContainsKey(userID))
+           {
+               if (this.LoadUserStatusesCalled != null)
+                   this.LoadUserStatusesCalled.Invoke(userID);
+           }
+           else
+               Connexion.serviceEIP.LoadUserStatusesAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, userID, userID);
+        }
+
+        void serviceEIP_LoadUserStatusesCompleted(object sender, LoadUserStatusesCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                this.userStatuses[(int)e.UserState] = new List<Topic>();
+                foreach (ServiceEIP.TwitterStatus status in e.Result)
+                {
+                    this.userStatuses[(int)e.UserState].Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
+                }
             }
         }
 

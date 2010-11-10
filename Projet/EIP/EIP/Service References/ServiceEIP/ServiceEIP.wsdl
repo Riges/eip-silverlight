@@ -87,6 +87,12 @@
   <wsdl:message name="IServiceEIP_LoadHomeStatuses_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoadHomeStatusesResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadUserStatuses_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadUserStatuses" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadUserStatuses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadUserStatusesResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_SendTweet_InputMessage">
     <wsdl:part name="parameters" element="tns:SendTweet" />
   </wsdl:message>
@@ -175,6 +181,10 @@
     <wsdl:operation name="LoadHomeStatuses">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadHomeStatuses" message="tns:IServiceEIP_LoadHomeStatuses_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadHomeStatusesResponse" message="tns:IServiceEIP_LoadHomeStatuses_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadUserStatuses">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadUserStatuses" message="tns:IServiceEIP_LoadUserStatuses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadUserStatusesResponse" message="tns:IServiceEIP_LoadUserStatuses_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendTweet">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/SendTweet" message="tns:IServiceEIP_SendTweet_InputMessage" />
@@ -313,6 +323,15 @@
     </wsdl:operation>
     <wsdl:operation name="LoadHomeStatuses">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadHomeStatuses" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadUserStatuses">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadUserStatuses" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

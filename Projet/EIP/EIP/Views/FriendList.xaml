@@ -12,7 +12,8 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="FriendList Page">
-    <toolkit:BusyIndicator Name="busyIndicator" Background="Transparent">
+
+    <toolkit:BusyIndicator Name="busyIndicator" Background="{StaticResource BgColor}">
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>

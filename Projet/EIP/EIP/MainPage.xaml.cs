@@ -28,6 +28,8 @@ namespace EIP
         public MainPage()
         {
             InitializeComponent();
+
+
            
 
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
@@ -35,6 +37,7 @@ namespace EIP
             Connexion.contentFrame = ContentFrame;
             //Connexion.LoginToAccount();
             Connexion.dispatcher = Dispatcher;
+            Connexion.mainBusyIndicator = mainBusyIndicator;
             Connexion.StartDisplay();
             LoadInterface();
 
