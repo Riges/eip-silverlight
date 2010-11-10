@@ -67,7 +67,9 @@ namespace EIP
         public static Dispatcher dispatcher;
         public static Frame contentFrame;
         public static NavigationContext navigationContext;
-        public static NavigationService navigationService;  
+        public static NavigationService navigationService;
+        public static BusyIndicator mainBusyIndicator;  
+
 
         //WCF
         public static ServiceEIP.ServiceEIPClient serviceEIP;
@@ -155,9 +157,11 @@ namespace EIP
             dispatcher.BeginInvoke(() =>
                 {
                     if (isLoading)
-                        loadingChild.Show();
+                        Connexion.mainBusyIndicator.IsBusy = true;
+                        //loadingChild.Show();
                     else
-                        loadingChild.Close();
+                        Connexion.mainBusyIndicator.IsBusy = false;
+                        //loadingChild.Close();
                 });
 
         }

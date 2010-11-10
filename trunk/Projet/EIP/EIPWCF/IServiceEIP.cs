@@ -67,6 +67,9 @@ namespace EIPWCF
         IEnumerable<TwitterStatus> LoadHomeStatuses(string token, string tokenSecret);
 
         [OperationContract]
+        List<TwitterStatus> LoadUserStatuses(string token, string tokenSecret, int userID);
+
+        [OperationContract]
         bool SendTweet(string token, string tokenSecret, string tweet);
 
         [OperationContract]

@@ -84,7 +84,7 @@ namespace EIP.Views.Controls
         public void Reload()
         {
             LoadAccountButtons();
-            Connexion.Loading(false);
+            //Connexion.Loading(false);
         }
 
         private void LoadAccountButtons()

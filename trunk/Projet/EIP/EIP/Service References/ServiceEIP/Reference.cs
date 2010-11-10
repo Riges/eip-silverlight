@@ -18,8 +18,8 @@ namespace EIP.ServiceEIP {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Account", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountTwitter))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountFacebook))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountTwitter))]
     public partial class Account : object, System.ComponentModel.INotifyPropertyChanged {
         
         private long accountIDField;
@@ -123,57 +123,6 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountTwitter", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
-    public partial class AccountTwitter : EIP.ServiceEIP.Account {
-        
-        private string pinField;
-        
-        private string tokenField;
-        
-        private string tokenSecretField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string pin {
-            get {
-                return this.pinField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.pinField, value) != true)) {
-                    this.pinField = value;
-                    this.RaisePropertyChanged("pin");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string token {
-            get {
-                return this.tokenField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.tokenField, value) != true)) {
-                    this.tokenField = value;
-                    this.RaisePropertyChanged("token");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string tokenSecret {
-            get {
-                return this.tokenSecretField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.tokenSecretField, value) != true)) {
-                    this.tokenSecretField = value;
-                    this.RaisePropertyChanged("tokenSecret");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountFacebook", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
     public partial class AccountFacebook : EIP.ServiceEIP.Account {
         
@@ -218,6 +167,57 @@ namespace EIP.ServiceEIP {
                 if ((object.ReferenceEquals(this.sessionSecretField, value) != true)) {
                     this.sessionSecretField = value;
                     this.RaisePropertyChanged("sessionSecret");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountTwitter", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
+    public partial class AccountTwitter : EIP.ServiceEIP.Account {
+        
+        private string pinField;
+        
+        private string tokenField;
+        
+        private string tokenSecretField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string pin {
+            get {
+                return this.pinField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.pinField, value) != true)) {
+                    this.pinField = value;
+                    this.RaisePropertyChanged("pin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string token {
+            get {
+                return this.tokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tokenField, value) != true)) {
+                    this.tokenField = value;
+                    this.RaisePropertyChanged("token");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string tokenSecret {
+            get {
+                return this.tokenSecretField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tokenSecretField, value) != true)) {
+                    this.tokenSecretField = value;
+                    this.RaisePropertyChanged("tokenSecret");
                 }
             }
         }
@@ -1190,6 +1190,11 @@ namespace EIP.ServiceEIP {
         
         System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> EndLoadHomeStatuses(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/LoadUserStatuses", ReplyAction="http://tempuri.org/IServiceEIP/LoadUserStatusesResponse")]
+        System.IAsyncResult BeginLoadUserStatuses(string token, string tokenSecret, int userID, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> EndLoadUserStatuses(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/SendTweet", ReplyAction="http://tempuri.org/IServiceEIP/SendTweetResponse")]
         System.IAsyncResult BeginSendTweet(string token, string tokenSecret, string tweet, System.AsyncCallback callback, object asyncState);
         
@@ -1474,6 +1479,25 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class LoadUserStatusesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public LoadUserStatusesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class SendTweetCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -1668,6 +1692,12 @@ namespace EIP.ServiceEIP {
         
         private System.Threading.SendOrPostCallback onLoadHomeStatusesCompletedDelegate;
         
+        private BeginOperationDelegate onBeginLoadUserStatusesDelegate;
+        
+        private EndOperationDelegate onEndLoadUserStatusesDelegate;
+        
+        private System.Threading.SendOrPostCallback onLoadUserStatusesCompletedDelegate;
+        
         private BeginOperationDelegate onBeginSendTweetDelegate;
         
         private EndOperationDelegate onEndSendTweetDelegate;
@@ -1782,6 +1812,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<GetRequestTokenCompletedEventArgs> GetRequestTokenCompleted;
         
         public event System.EventHandler<LoadHomeStatusesCompletedEventArgs> LoadHomeStatusesCompleted;
+        
+        public event System.EventHandler<LoadUserStatusesCompletedEventArgs> LoadUserStatusesCompleted;
         
         public event System.EventHandler<SendTweetCompletedEventArgs> SendTweetCompleted;
         
@@ -2396,6 +2428,56 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadUserStatuses(string token, string tokenSecret, int userID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLoadUserStatuses(token, tokenSecret, userID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> EIP.ServiceEIP.IServiceEIP.EndLoadUserStatuses(System.IAsyncResult result) {
+            return base.Channel.EndLoadUserStatuses(result);
+        }
+        
+        private System.IAsyncResult OnBeginLoadUserStatuses(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string token = ((string)(inValues[0]));
+            string tokenSecret = ((string)(inValues[1]));
+            int userID = ((int)(inValues[2]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadUserStatuses(token, tokenSecret, userID, callback, asyncState);
+        }
+        
+        private object[] OnEndLoadUserStatuses(System.IAsyncResult result) {
+            System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndLoadUserStatuses(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnLoadUserStatusesCompleted(object state) {
+            if ((this.LoadUserStatusesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.LoadUserStatusesCompleted(this, new LoadUserStatusesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void LoadUserStatusesAsync(string token, string tokenSecret, int userID) {
+            this.LoadUserStatusesAsync(token, tokenSecret, userID, null);
+        }
+        
+        public void LoadUserStatusesAsync(string token, string tokenSecret, int userID, object userState) {
+            if ((this.onBeginLoadUserStatusesDelegate == null)) {
+                this.onBeginLoadUserStatusesDelegate = new BeginOperationDelegate(this.OnBeginLoadUserStatuses);
+            }
+            if ((this.onEndLoadUserStatusesDelegate == null)) {
+                this.onEndLoadUserStatusesDelegate = new EndOperationDelegate(this.OnEndLoadUserStatuses);
+            }
+            if ((this.onLoadUserStatusesCompletedDelegate == null)) {
+                this.onLoadUserStatusesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLoadUserStatusesCompleted);
+            }
+            base.InvokeAsync(this.onBeginLoadUserStatusesDelegate, new object[] {
+                        token,
+                        tokenSecret,
+                        userID}, this.onEndLoadUserStatusesDelegate, this.onLoadUserStatusesCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginSendTweet(string token, string tokenSecret, string tweet, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginSendTweet(token, tokenSecret, tweet, callback, asyncState);
         }
@@ -2936,6 +3018,21 @@ namespace EIP.ServiceEIP {
             public System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> EndLoadHomeStatuses(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus>)(base.EndInvoke("LoadHomeStatuses", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginLoadUserStatuses(string token, string tokenSecret, int userID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = token;
+                _args[1] = tokenSecret;
+                _args[2] = userID;
+                System.IAsyncResult _result = base.BeginInvoke("LoadUserStatuses", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> EndLoadUserStatuses(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterStatus>)(base.EndInvoke("LoadUserStatuses", _args, result)));
                 return _result;
             }
             

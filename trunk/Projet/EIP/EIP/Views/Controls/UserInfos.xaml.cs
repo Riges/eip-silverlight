@@ -31,6 +31,9 @@ namespace EIP.Views.Controls
             this.uid = uid;
 
             InitializeComponent();
+
+            busyIndicator.IsBusy = true;
+
             LayoutRoot.Visibility = System.Windows.Visibility.Collapsed;
             LoadInfos();
         }
@@ -40,22 +43,58 @@ namespace EIP.Views.Controls
             switch (Connexion.accounts[accountID].account.typeAccount)
             {
                 case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                    AccountFacebookLight acc = (AccountFacebookLight)Connexion.accounts[accountID];
-                    acc.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
-                    acc.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
+                    AccountFacebookLight accFB = (AccountFacebookLight)Connexion.accounts[accountID];
+                    accFB.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
+                    accFB.GetUserInfo(this.uid, AccountFacebookLight.GetUserInfoFrom.Profil);
 
                     //acc.LoadFriendsOfCalled += new AccountFacebookLight.OnLoadFriendsOfCompleted(acc_LoadFriendsOfCalled);
                     //acc.LoadFriendsOf(uid);
 
-                    acc.LoadMutualFriendsCalled += new AccountFacebookLight.OnLoadMutualFriendsCompleted(acc_LoadMutualFriendsCalled);
-                    acc.LoadMutualFriends(uid);
+                    accFB.LoadMutualFriendsCalled += new AccountFacebookLight.OnLoadMutualFriendsCompleted(acc_LoadMutualFriendsCalled);
+                    accFB.LoadMutualFriends(uid);
 
                     break;
                 case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                    AccountTwitterLight accTW = (AccountTwitterLight)Connexion.accounts[accountID];
+                    accTW.GetUserInfoCalled += new AccountTwitterLight.OnGetUserInfoCompleted(accTW_GetUserInfoCalled);
+                    accTW.GetUserInfo(this.uid);
+
+
                     break;
                 default:
                     break;
             }
+        }
+
+        void accTW_GetUserInfoCalled(ServiceEIP.TwitterUser user)
+        {
+            Dispatcher.BeginInvoke(() =>
+              {
+                  busyIndicator.IsBusy = false;
+
+                  if (user != null)
+                  {
+                      pseudoUser.Text = user.ScreenName;
+                      statusUser.Text = user.Status.Text;
+
+                      if (user.Location == null || user.Location == "")
+                      {
+                          this.villeActuelleLabel.Visibility = System.Windows.Visibility.Collapsed;
+                          this.villeActuelle.Visibility = System.Windows.Visibility.Collapsed;
+                      }
+                      else
+                      {
+                          this.villeActuelle.Text = user.Location;
+
+                          this.villeActuelleLabel.Visibility = System.Windows.Visibility.Visible;
+                          this.villeActuelle.Visibility = System.Windows.Visibility.Visible;
+                      }
+
+                      //user.Status
+
+                      LayoutRoot.Visibility = System.Windows.Visibility.Visible;
+                  }
+              });
         }
 
 
@@ -64,9 +103,12 @@ namespace EIP.Views.Controls
         {
             Dispatcher.BeginInvoke(() =>
                 {
+                    busyIndicator.IsBusy = false;
+
                     if (monUser != null)
                     {
                         pseudoUser.Text = monUser.name;
+                        statusUser.Text = monUser.status.message;
                         
                         if (monUser.sex == null)
                         {
