@@ -13,19 +13,18 @@
 <toolkit:BusyIndicator Name="busyIndicator" BusyContent="Chargement du fil d'actualités...">
     <Grid x:Name="LayoutRoot">
 
-        <!--<StackPanel Name="ImgLoad" Visibility="Collapsed">
-            <Controls:Loader HorizontalAlignment="Center"></Controls:Loader>
-        </StackPanel>-->
 
-        <TextBlock  Name="noFeeds" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,20,0" Visibility="Collapsed" Text="Cet utilisateur ne souhaite pas que vous accédiez à son mur."></TextBlock>
+        <TextBlock  Name="noFeeds" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,20,0" Visibility="Collapsed" Text="Cet utilisateur ne souhaite pas que vous accédiez à son mur."></TextBlock>
 
-        <ScrollViewer x:Name="scroolView" VerticalScrollBarVisibility="Auto">
-            <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500" Visibility="Collapsed">
+            <!--<ScrollViewer Grid.Row="0" x:Name="scroolView" VerticalScrollBarVisibility="Auto">-->
+                <ItemsControl Name="FeedsControl" ItemsSource="{Binding}" MaxHeight="500" Width="750" Visibility="Collapsed" BorderThickness="0">
             
                 <ItemsControl.Template>
                     <ControlTemplate TargetType="ItemsControl">
                         <Border >
-                                <ItemsPresenter />
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Background="{StaticResource BgColor}">
+                                    <ItemsPresenter />
+                            </ScrollViewer>
                         </Border>
                     </ControlTemplate>
                 </ItemsControl.Template>
@@ -37,7 +36,6 @@
 
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
 
     </Grid>
 </toolkit:BusyIndicator>

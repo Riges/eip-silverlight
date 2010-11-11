@@ -9,7 +9,7 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="StreamFeeds Page">
-    <toolkit:BusyIndicator Name="busyIndicator" BusyContent="Chargement du fil d'actualités..." Background="{StaticResource BgColor}" >
+    <toolkit:BusyIndicator Name="busyIndicator" BusyContent="Chargement du fil d'actualités..." Background="Transparent" >
 
         <Grid x:Name="LayoutRoot" >
 
@@ -26,7 +26,7 @@
         <ItemsControl.Template>
             <ControlTemplate TargetType="ItemsControl">
                 <Border > <!--BorderBrush="Blue" BorderThickness="1"-->
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Background="{StaticResource BgColor}">
                         <ItemsPresenter />
                     </ScrollViewer>
                 </Border>
