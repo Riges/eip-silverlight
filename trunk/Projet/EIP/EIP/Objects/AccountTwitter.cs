@@ -254,14 +254,19 @@ namespace EIP
             }
         }
 
+
+        /// <summary>
+        /// Méthode pour charger les tweets d'un utilisateur
+        /// </summary>
+        /// <param name="userID">ID de l'utilisateur</param>
         public void LoadUserStatuses(int userID)
         {
-           if(this.userStatuses.ContainsKey(userID))
-           {
-               if (this.LoadUserStatusesCalled != null)
-                   this.LoadUserStatusesCalled.Invoke(userID);
-           }
-           else
+            if (this.userStatuses.ContainsKey(userID) && this.userStatuses[userID] != null && this.userStatuses[userID].Count > 0)
+            {
+                if (this.LoadUserStatusesCalled != null)
+                    this.LoadUserStatusesCalled.Invoke(userID);
+            }
+            else
                Connexion.serviceEIP.LoadUserStatusesAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, userID, userID);
         }
 
@@ -274,6 +279,9 @@ namespace EIP
                 {
                     this.userStatuses[(int)e.UserState].Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
                 }
+
+                if (this.LoadUserStatusesCalled != null)
+                    this.LoadUserStatusesCalled.Invoke((int)e.UserState);
             }
         }
 

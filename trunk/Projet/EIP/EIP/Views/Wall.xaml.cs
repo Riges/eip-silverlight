@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using EIP.ServiceEIP;
+using EIP.Objects;
 
 namespace EIP.Views
 {
@@ -22,12 +23,18 @@ namespace EIP.Views
         public Wall()
         {
             InitializeComponent();
+            App.Current.Host.Content.Resized += new EventHandler(Content_Resized);
+        }
+
+        void Content_Resized(object sender, EventArgs e)
+        {
+            FeedsControl.MaxHeight = App.Current.Host.Content.ActualHeight - 140;
         }
 
         // S'exécute lorsque l'utilisateur navigue vers cette page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
+            FeedsControl.MaxHeight = App.Current.Host.Content.ActualHeight - 140;
 
             if (this.NavigationContext.QueryString.ContainsKey("uid"))
                 this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
@@ -59,11 +66,36 @@ namespace EIP.Views
                         break;
                     case Account.TypeAccount.Twitter:
 
+                        ((AccountTwitterLight)accountLight).LoadUserStatusesCalled -= new AccountTwitterLight.OnLoadUserStatusesCompleted(Wall_LoadUserStatusesCalled);
+                        ((AccountTwitterLight)accountLight).LoadUserStatusesCalled += new AccountTwitterLight.OnLoadUserStatusesCompleted(Wall_LoadUserStatusesCalled);
+                        ((AccountTwitterLight)accountLight).LoadUserStatuses((int)this.uid);
+
                         break;
                     default:
                         break;
                 }
             }
+        }
+
+        void Wall_LoadUserStatusesCalled(int userID)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                AccountTwitterLight account = (AccountTwitterLight)Connexion.accounts[this.accountID];
+                List<Topic> statuses = account.userStatuses[userID];
+
+                busyIndicator.IsBusy = false;
+                if (uid == this.uid && statuses != null && statuses.Count > 0)
+                {
+                    FeedsControl.DataContext = statuses;
+                    noFeeds.Visibility = System.Windows.Visibility.Collapsed;
+                    FeedsControl.Visibility = System.Windows.Visibility.Visible;
+                }
+                else
+                {
+                    noFeeds.Visibility = System.Windows.Visibility.Visible;
+                }
+            });
         }
 
         private void Wall_LoadWallCalled(long uid, List<Objects.Topic> feeds)
