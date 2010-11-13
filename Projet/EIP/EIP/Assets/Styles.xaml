@@ -352,5 +352,9 @@
         <Setter Property="Foreground" Value="{StaticResource LinkColorFonceBrush}"/>
     </Style>
 
+    <Style x:Key="MessageListStyle" TargetType="StackPanel">
+        <Setter Property="Margin" Value="0,0,0,20"/>
+    </Style>
+
 
 </ResourceDictionary>

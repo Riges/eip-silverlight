@@ -45,7 +45,6 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            e = e;
             if (this.NavigationContext.QueryString.ContainsKey("accountId") && this.NavigationContext.QueryString.ContainsKey("threadId"))
             {
                 if (this.NavigationContext.QueryString.ContainsKey("box"))
@@ -115,7 +114,6 @@ namespace EIP.Views
                     }
                 }
             }
-            e = e;
         }
 
         void Messages_LoadDirectMessagesCalled(List<ThreadMessage> liste)
@@ -145,8 +143,15 @@ namespace EIP.Views
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
+                Back.Visibility = System.Windows.Visibility.Visible;
                 listeMessagesBox.Messages_GetThreadCalled(th);
             });
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            if (Connexion.navigationService.CanGoBack)
+                Connexion.navigationService.GoBack();
         }
 
         
