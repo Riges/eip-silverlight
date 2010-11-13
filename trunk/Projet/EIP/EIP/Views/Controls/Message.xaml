@@ -45,11 +45,11 @@
 
         </Grid.ColumnDefinitions>
         
-        <Image Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" >
+        <Image Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" VerticalAlignment="Top" >
         </Image>
         <!--TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="person" Text="Person" /-->
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
             <HyperlinkButton Height="Auto" Name="person" FontWeight="Bold">
                 <HyperlinkButton.Content>
                     <TextBlock TextWrapping="Wrap" Name="personText" Text="Title"/>
@@ -59,7 +59,7 @@
 
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+        <StackPanel Style="{StaticResource MessageListStyle}" Name="MessageList" Orientation="Vertical" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left">
             <HyperlinkButton Height="Auto" Name="subject" FontWeight="Bold">
                 <HyperlinkButton.Content>
                     <TextBlock TextWrapping="Wrap" Name="subjectText" Text="Title"/>

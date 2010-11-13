@@ -30,6 +30,7 @@ namespace EIP.Views.Controls
             {
                 ThreadMessage th = (ThreadMessage)this.DataContext;
 
+
                 thread = th;
                 if (th.getPic() != null) // verif si gif
                 {
