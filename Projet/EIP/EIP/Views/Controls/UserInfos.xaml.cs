@@ -108,7 +108,8 @@ namespace EIP.Views.Controls
                     if (monUser != null)
                     {
                         pseudoUser.Text = monUser.name;
-                        statusUser.Text = monUser.status.message;
+                        if (monUser.status != null && monUser.status.message != null)
+                            statusUser.Text = monUser.status.message;
                         
                         if (monUser.sex == null)
                         {
