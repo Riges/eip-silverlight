@@ -67,7 +67,8 @@ namespace EIP
             Connexion.serviceEIP.LoadHomeStatusesCompleted += new EventHandler<LoadHomeStatusesCompletedEventArgs>(serviceEIP_LoadHomeStatusesCompleted);
             Connexion.serviceEIP.LoadUserStatusesCompleted += new EventHandler<LoadUserStatusesCompletedEventArgs>(serviceEIP_LoadUserStatusesCompleted);
 
-            Connexion.serviceEIP.LoadDirectMessagesCompleted += new EventHandler<LoadDirectMessagesCompletedEventArgs>(serviceEIP_LoadDirectMessagesCompleted);
+            Connexion.serviceEIP.LoadDirectMessagesReceivedCompleted += new EventHandler<LoadDirectMessagesReceivedCompletedEventArgs>(serviceEIP_LoadDirectMessagesReceivedCompleted);
+            Connexion.serviceEIP.LoadDirectMessagesSentCompleted += new EventHandler<LoadDirectMessagesSentCompletedEventArgs>(serviceEIP_LoadDirectMessagesSentCompleted);
             Connexion.serviceEIP.GetUserInfosCompleted += new EventHandler<GetUserInfosCompletedEventArgs>(serviceEIP_GetUserInfosCompleted);
 
             Connexion.serviceEIP.GetFiendsCompleted += new EventHandler<GetFiendsCompletedEventArgs>(serviceEIP_GetFiendsCompleted);
@@ -178,7 +179,7 @@ namespace EIP
         public delegate void OnLoadDirectMessagesCompleted(List<ThreadMessage> liste);
         public event OnLoadDirectMessagesCompleted LoadDirectMessagesCalled;
 
-        public void LoadDirectMessages()
+        public void LoadDirectMessagesReceived()
         {
             //if (aStreamFeeds != null)
             //{
@@ -188,12 +189,26 @@ namespace EIP
             //ret = LoadStreamFeedsContext(first);
             // }
 
-            Connexion.serviceEIP.LoadDirectMessagesAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret);
+            Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret);
+
+            //return ret;
+        }
+        public void LoadDirectMessagesSent()
+        {
+            //if (aStreamFeeds != null)
+            //{
+            // this.streamFeeds = aStreamFeeds;
+
+            //bool ret = false;
+            //ret = LoadStreamFeedsContext(first);
+            // }
+
+            Connexion.serviceEIP.LoadDirectMessagesSentAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret);
 
             //return ret;
         }
 
-        void serviceEIP_LoadDirectMessagesCompleted(object sender, LoadDirectMessagesCompletedEventArgs e)
+        void serviceEIP_LoadDirectMessagesReceivedCompleted(object sender, LoadDirectMessagesReceivedCompletedEventArgs e)
         {
             List<ServiceEIP.TwitterDirectMessage> dms = e.Result;
             List<ThreadMessage> directMessages = new List<ThreadMessage>();
@@ -212,6 +227,27 @@ namespace EIP
                     this.LoadDirectMessagesCalled.Invoke(directMessages);
             }
         }
+
+        void serviceEIP_LoadDirectMessagesSentCompleted(object sender, LoadDirectMessagesSentCompletedEventArgs e)
+        {
+            List<ServiceEIP.TwitterDirectMessage> dms = e.Result;
+            List<ThreadMessage> directMessages = new List<ThreadMessage>();
+
+            if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (e.Error == null) && (dms != null))
+            {
+                foreach (ServiceEIP.TwitterDirectMessage dm in dms)
+                {
+                    ThreadMessage directMessage = new ThreadMessage(dm, this.account.accountID);
+                    directMessages.Add(directMessage);
+                    //homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
+                }
+
+                //LoadStreamFeedsContext(false);
+                if (this.LoadDirectMessagesCalled != null)
+                    this.LoadDirectMessagesCalled.Invoke(directMessages);
+            }
+        }
+        
 
 
         public delegate void OnLoadHomeStatusesCompleted();
