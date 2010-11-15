@@ -41,7 +41,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition Width="120"></ColumnDefinition>
-            <ColumnDefinition Width="410"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
 
         </Grid.ColumnDefinitions>
         
@@ -69,7 +69,7 @@
             <!-- only for FB -->
             <TextBlock HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" FontStyle="Italic" FontSize="9" Foreground="#FFCCCCCC" />
 
-            <TextBlock Name="content" HorizontalAlignment="Left"  Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" />
+            <TextBlock Name="content" HorizontalAlignment="Left" Width="Auto" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" />
         </StackPanel>
     </Grid>
     
