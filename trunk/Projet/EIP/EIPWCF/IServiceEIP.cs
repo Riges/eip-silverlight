@@ -80,7 +80,10 @@ namespace EIPWCF
         string UploadPhoto(string name, byte[] img);
 
         [OperationContract]
-        IEnumerable<TwitterDirectMessage> LoadDirectMessages(string token, string tokenSecret);
+        IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret);
+
+        [OperationContract]
+        IEnumerable<TwitterDirectMessage> LoadDirectMessagesSent(string token, string tokenSecret);
 
 
         [OperationContract]

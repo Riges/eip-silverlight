@@ -150,7 +150,25 @@ namespace EIPWCF
             return null;
         }
 
-        public IEnumerable<TwitterDirectMessage> LoadDirectMessages(string token, string tokenSecret)
+        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesSent(string token, string tokenSecret)
+        {
+            SetClientInfo();
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .DirectMessages().Sent();
+
+            var response = query.Request();
+            if (!response.IsTwitterError)
+            {
+                var dms = response.AsDirectMessages();
+                //dms.ElementAt(0).
+                return dms;
+            }
+
+            return null;
+        }
+
+        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret)
         {
             SetClientInfo();
             var query = FluentTwitter.CreateRequest()

@@ -99,6 +99,11 @@ namespace EIP.Objects
             {
                 case Account.TypeAccount.Facebook:
                     return this.MessageFb.snippet_author;
+                    break;
+
+                case Account.TypeAccount.Twitter:
+                    return this.MessageTwitter.Sender.Id == Connexion.accounts[this.accountID].account.userID ? this.MessageTwitter.Recipient.Id : this.MessageTwitter.Sender.Id;
+                    break;
             }
             return 0;
         }
@@ -126,7 +131,7 @@ namespace EIP.Objects
 
 
                 case Account.TypeAccount.Twitter:
-                    return this.MessageTwitter.Sender.ScreenName;
+                    return this.MessageTwitter.Sender.Id == Connexion.accounts[this.accountID].account.userID ? this.MessageTwitter.Recipient.ScreenName  : this.MessageTwitter.Sender.ScreenName;
             }
             return null;
         }
@@ -143,7 +148,7 @@ namespace EIP.Objects
                     break;
 
                 case Account.TypeAccount.Twitter:
-                    return this.MessageTwitter.Sender.ProfileImageUrl;
+                    return this.MessageTwitter.Sender.Id == Connexion.accounts[this.accountID].account.userID ? this.MessageTwitter.Recipient.ProfileImageUrl : this.MessageTwitter.Sender.ProfileImageUrl;
                     break;
             }
             return null;
@@ -224,6 +229,32 @@ namespace EIP.Objects
                     break;
             }
             return 0;
+        }
+
+        public String getAuthorThreadPic()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    if (Connexion.accounts[this.accountID].account.userID == this.authorFb.id)
+                    {
+                        foreach (profile user in this.getRecipients())
+                            if (Connexion.accounts[this.accountID].account.userID != user.id)
+                            {
+                                this.authorFb = user;
+                                break;
+                            }
+                        return getPic();
+                    }
+                    else
+                        return getPic();
+                    break;
+
+                case Account.TypeAccount.Twitter:
+                    return getPic();
+                    break;
+            }
+            return null;
         }
 
         public string getAuthorThreadName()

@@ -83,6 +83,17 @@ namespace EIP.Views
             {
                 this.boxActive = this.NavigationContext.QueryString["box"];
                 listeMessagesBox.box.Clear();
+
+                switch (this.boxActive)
+                {
+                    case "outbox":
+                        HeaderText.Text = "Boîte d'envoi";
+                        break;
+                    case "inbox":
+                        HeaderText.Text = "Boîte de réception";
+                        break;
+                }
+
                 foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
                 {
                     if (account.Value.selected)
@@ -95,11 +106,9 @@ namespace EIP.Views
                                 switch (this.boxActive)
                                 {
                                     case "outbox":
-                                        HeaderText.Text = "Boîte d'envoi";
                                         ((AccountFacebookLight)account.Value).LoadOutboxMessages();
                                         break;
                                     case "inbox":
-                                        HeaderText.Text = "Boîte de réception";
                                         ((AccountFacebookLight)account.Value).LoadInboxMessages();
                                         //this.box = ((AccountFacebookLight)account.Value).inbox;
                                         break;
@@ -108,7 +117,15 @@ namespace EIP.Views
                             case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-                                ((AccountTwitterLight)account.Value).LoadDirectMessages();
+                                switch (this.boxActive)
+                                {
+                                    case "outbox":
+                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesSent();
+                                        break;
+                                    case "inbox":
+                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesReceived();
+                                        break;
+                                }                                
                                 break;
                             case EIP.ServiceEIP.Account.TypeAccount.Flickr:
                                 break;
