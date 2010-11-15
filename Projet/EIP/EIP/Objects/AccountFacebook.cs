@@ -295,8 +295,10 @@ namespace EIP
                         liste2.Add(new ThreadMessage(th, this.account.accountID));
                         // TODO : si user courant, prendre un des destinataires
                         if (!userIds.Contains(th.snippet_author))
-                            userIds.Add(th.snippet_author);
-
+                            userIds.Add(th.snippet_author); 
+                        foreach (long id in th.recipients.uid)
+                            if (!userIds.Contains(id))
+                                userIds.Add(id); 
                     }
                     //this.facebookAPI.Fql.QueryAsync("SELECT id, name, url, pic_square, type from profile where id IN (" + String.Join(",", userIds) + ")", new Fql.QueryCallback(GetAuthor_Completed), liste2);
                     GetAuthors(userIds, liste2, new Fql.QueryCallback(GetAuthor_Completed));
@@ -361,7 +363,10 @@ namespace EIP
                                     mypost.setAuthor(unUser);
                                 }
                             }
+                            if (post.getThread().recipients.uid.Contains(unUser.id))
+                                mypost.addRecipient(unUser);
                         }
+                        //mypost.setRecipients(users);
                         liste2.Add(mypost);
                     }
                 }

@@ -55,8 +55,8 @@ namespace EIP.Views.Controls
                     summary.Visibility = System.Windows.Visibility.Collapsed;
                 if (th.getContent() != "")
                     content.Text = th.getContent();
-                personText.Text = th.getAuthorName();
-                person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
+                personText.Text = th.getAuthorThreadName();
+                person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorThreadAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
                 date.Text = th.date.ToString();
             }
             else if(this.DataContext.GetType() == typeof(MessageFacebook)) {
