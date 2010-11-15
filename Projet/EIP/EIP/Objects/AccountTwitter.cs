@@ -110,7 +110,7 @@ namespace EIP
             
         }
 
-        public delegate void OnGetUserInfoCompleted(TwitterUser user);
+        public delegate void OnGetUserInfoCompleted(TwitterUser user, long accountID, bool isUserAccount);
         public event OnGetUserInfoCompleted GetUserInfoCalled;
 
         public void GetUserInfo(long userId)
@@ -118,7 +118,7 @@ namespace EIP
             if (userInfos != null && userInfos.Id == userId)
             {
                 if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
-                    this.GetUserInfoCalled.Invoke(userInfos);
+                    this.GetUserInfoCalled.Invoke(userInfos, this.account.accountID, true);
             }
             else
             {
@@ -141,7 +141,7 @@ namespace EIP
                 if (toto != null)
                 {
                     if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
-                        this.GetUserInfoCalled.Invoke(toto);
+                        this.GetUserInfoCalled.Invoke(toto, this.account.accountID, false);
 
                 }
                 else
@@ -166,7 +166,12 @@ namespace EIP
                     }
 
                     if (this.GetUserInfoCalled != null)//evite que ca plante si pas dabo
-                        this.GetUserInfoCalled.Invoke(user);
+                    {
+                        if (user.Id == account.userID)
+                            this.GetUserInfoCalled.Invoke(user, this.account.accountID, true);
+                        else
+                            this.GetUserInfoCalled.Invoke(user, this.account.accountID, false);
+                    }
                 }
             }
         }

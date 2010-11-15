@@ -104,7 +104,7 @@ namespace EIP.Views
             });
         }
 
-        void accTW_GetUserInfoCalled(ServiceEIP.TwitterUser user)
+        void accTW_GetUserInfoCalled(ServiceEIP.TwitterUser user, long accountID, bool isUserAccount)
         {
             Dispatcher.BeginInvoke(() =>
             {

@@ -131,6 +131,7 @@ namespace EIP.Views
                             case Account.TypeAccount.Twitter:
                                 accountSelected = true;
 
+                                ((AccountTwitterLight)accountLight.Value).LoadHomeStatusesCalled -= new AccountTwitterLight.OnLoadHomeStatusesCompleted(StreamFeeds_LoadHomeStatusesCalled);
                                 ((AccountTwitterLight)accountLight.Value).LoadHomeStatusesCalled += new AccountTwitterLight.OnLoadHomeStatusesCompleted(StreamFeeds_LoadHomeStatusesCalled);
                                 bool waitT = false;
                                 if (sender.GetType() == typeof(Boolean) && Convert.ToBoolean(sender) == true)

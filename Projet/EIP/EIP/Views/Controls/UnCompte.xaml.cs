@@ -135,7 +135,7 @@ namespace EIP.Views.Controls
             });
         }
 
-        void UnCompte_GetUserInfoCalled(TwitterUser user)
+        void UnCompte_GetUserInfoCalled(TwitterUser user, long accountID, bool isUserAccount)
         {
             this.Dispatcher.BeginInvoke(() =>
             {

@@ -28,15 +28,20 @@ namespace EIP.Views.Controls
         {
             get
             {
-                if (imgUser.MaxWidth == 400)
+                if (imgUser.MaxWidth == 250)
                     return true;
 
                 return false;
             }
             set
             {
-                imgUser.MaxWidth = 250;
-                imgUser.MaxHeight = 150;
+                if (value)
+                {
+                    //imgUser.MaxWidth = 250;
+                    //imgUser.MaxHeight = 150;
+                    this.Width = 150;
+                    this.MaxHeight = 150;
+                }
             }
         }
 
@@ -58,6 +63,8 @@ namespace EIP.Views.Controls
    
         void FriendView_Loaded(object sender, RoutedEventArgs e)
         {
+            //this.Width = imgUser.MaxWidth;
+
             Friend friend = (Friend)this.DataContext;
             LoadFriend(friend);
         }

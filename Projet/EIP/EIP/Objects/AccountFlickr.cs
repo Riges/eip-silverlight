@@ -39,7 +39,7 @@ namespace EIP
 
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                this.flickr = new Flickr("de649ab5a4af089ff78ce07576f0477f", "3d2ad5bfaf480eae", ((AccountFlickr)this.account).token);
+                this.flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr, ((AccountFlickr)this.account).token);
             });
 
         }

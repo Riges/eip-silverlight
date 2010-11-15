@@ -97,9 +97,9 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
             <!--<Image Name="imgCpt" Width="16"></Image>-->
-            <HyperlinkButton  Name="userSource" Style="{StaticResource HyperlinkButtonFonceStyle}" FontSize="15"></HyperlinkButton>
+            <HyperlinkButton  Name="userSource" Style="{StaticResource HyperlinkButtonFonceStyle}" FontSize="15" FontWeight="Bold"></HyperlinkButton>
             <TextBlock Name="chevronUserTarget" Text=">" Margin="5,0,5,0" Visibility="Collapsed"></TextBlock>
-            <HyperlinkButton  Name="userTarget" Style="{StaticResource HyperlinkButtonFonceStyle}" FontSize="15"></HyperlinkButton>
+            <HyperlinkButton  Name="userTarget" Style="{StaticResource HyperlinkButtonFonceStyle}" FontSize="15" FontWeight="Bold"></HyperlinkButton>
         </StackPanel>
         
         
