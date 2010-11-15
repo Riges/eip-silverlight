@@ -1247,10 +1247,15 @@ namespace EIP.ServiceEIP {
         
         string EndUploadPhoto(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/LoadDirectMessages", ReplyAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesResponse")]
-        System.IAsyncResult BeginLoadDirectMessages(string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceived", ReplyAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceivedResponse")]
+        System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessages(System.IAsyncResult result);
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessagesReceived(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesSent", ReplyAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesSentResponse")]
+        System.IAsyncResult BeginLoadDirectMessagesSent(string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessagesSent(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/testfb", ReplyAction="http://tempuri.org/IServiceEIP/testfbResponse")]
         System.IAsyncResult Begintestfb(System.AsyncCallback callback, object asyncState);
@@ -1602,11 +1607,30 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class LoadDirectMessagesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class LoadDirectMessagesReceivedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public LoadDirectMessagesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public LoadDirectMessagesReceivedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class LoadDirectMessagesSentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public LoadDirectMessagesSentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -1801,11 +1825,17 @@ namespace EIP.ServiceEIP {
         
         private System.Threading.SendOrPostCallback onUploadPhotoCompletedDelegate;
         
-        private BeginOperationDelegate onBeginLoadDirectMessagesDelegate;
+        private BeginOperationDelegate onBeginLoadDirectMessagesReceivedDelegate;
         
-        private EndOperationDelegate onEndLoadDirectMessagesDelegate;
+        private EndOperationDelegate onEndLoadDirectMessagesReceivedDelegate;
         
-        private System.Threading.SendOrPostCallback onLoadDirectMessagesCompletedDelegate;
+        private System.Threading.SendOrPostCallback onLoadDirectMessagesReceivedCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginLoadDirectMessagesSentDelegate;
+        
+        private EndOperationDelegate onEndLoadDirectMessagesSentDelegate;
+        
+        private System.Threading.SendOrPostCallback onLoadDirectMessagesSentCompletedDelegate;
         
         private BeginOperationDelegate onBegintestfbDelegate;
         
@@ -1918,7 +1948,9 @@ namespace EIP.ServiceEIP {
         
         public event System.EventHandler<UploadPhotoCompletedEventArgs> UploadPhotoCompleted;
         
-        public event System.EventHandler<LoadDirectMessagesCompletedEventArgs> LoadDirectMessagesCompleted;
+        public event System.EventHandler<LoadDirectMessagesReceivedCompletedEventArgs> LoadDirectMessagesReceivedCompleted;
+        
+        public event System.EventHandler<LoadDirectMessagesSentCompletedEventArgs> LoadDirectMessagesSentCompleted;
         
         public event System.EventHandler<testfbCompletedEventArgs> testfbCompleted;
         
@@ -2743,51 +2775,99 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessages(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginLoadDirectMessages(token, tokenSecret, callback, asyncState);
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesReceived(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLoadDirectMessagesReceived(token, tokenSecret, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EIP.ServiceEIP.IServiceEIP.EndLoadDirectMessages(System.IAsyncResult result) {
-            return base.Channel.EndLoadDirectMessages(result);
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EIP.ServiceEIP.IServiceEIP.EndLoadDirectMessagesReceived(System.IAsyncResult result) {
+            return base.Channel.EndLoadDirectMessagesReceived(result);
         }
         
-        private System.IAsyncResult OnBeginLoadDirectMessages(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginLoadDirectMessagesReceived(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string token = ((string)(inValues[0]));
             string tokenSecret = ((string)(inValues[1]));
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessages(token, tokenSecret, callback, asyncState);
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesReceived(token, tokenSecret, callback, asyncState);
         }
         
-        private object[] OnEndLoadDirectMessages(System.IAsyncResult result) {
-            System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndLoadDirectMessages(result);
+        private object[] OnEndLoadDirectMessagesReceived(System.IAsyncResult result) {
+            System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndLoadDirectMessagesReceived(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnLoadDirectMessagesCompleted(object state) {
-            if ((this.LoadDirectMessagesCompleted != null)) {
+        private void OnLoadDirectMessagesReceivedCompleted(object state) {
+            if ((this.LoadDirectMessagesReceivedCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.LoadDirectMessagesCompleted(this, new LoadDirectMessagesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.LoadDirectMessagesReceivedCompleted(this, new LoadDirectMessagesReceivedCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void LoadDirectMessagesAsync(string token, string tokenSecret) {
-            this.LoadDirectMessagesAsync(token, tokenSecret, null);
+        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret) {
+            this.LoadDirectMessagesReceivedAsync(token, tokenSecret, null);
         }
         
-        public void LoadDirectMessagesAsync(string token, string tokenSecret, object userState) {
-            if ((this.onBeginLoadDirectMessagesDelegate == null)) {
-                this.onBeginLoadDirectMessagesDelegate = new BeginOperationDelegate(this.OnBeginLoadDirectMessages);
+        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, object userState) {
+            if ((this.onBeginLoadDirectMessagesReceivedDelegate == null)) {
+                this.onBeginLoadDirectMessagesReceivedDelegate = new BeginOperationDelegate(this.OnBeginLoadDirectMessagesReceived);
             }
-            if ((this.onEndLoadDirectMessagesDelegate == null)) {
-                this.onEndLoadDirectMessagesDelegate = new EndOperationDelegate(this.OnEndLoadDirectMessages);
+            if ((this.onEndLoadDirectMessagesReceivedDelegate == null)) {
+                this.onEndLoadDirectMessagesReceivedDelegate = new EndOperationDelegate(this.OnEndLoadDirectMessagesReceived);
             }
-            if ((this.onLoadDirectMessagesCompletedDelegate == null)) {
-                this.onLoadDirectMessagesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLoadDirectMessagesCompleted);
+            if ((this.onLoadDirectMessagesReceivedCompletedDelegate == null)) {
+                this.onLoadDirectMessagesReceivedCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLoadDirectMessagesReceivedCompleted);
             }
-            base.InvokeAsync(this.onBeginLoadDirectMessagesDelegate, new object[] {
+            base.InvokeAsync(this.onBeginLoadDirectMessagesReceivedDelegate, new object[] {
                         token,
-                        tokenSecret}, this.onEndLoadDirectMessagesDelegate, this.onLoadDirectMessagesCompletedDelegate, userState);
+                        tokenSecret}, this.onEndLoadDirectMessagesReceivedDelegate, this.onLoadDirectMessagesReceivedCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesSent(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLoadDirectMessagesSent(token, tokenSecret, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EIP.ServiceEIP.IServiceEIP.EndLoadDirectMessagesSent(System.IAsyncResult result) {
+            return base.Channel.EndLoadDirectMessagesSent(result);
+        }
+        
+        private System.IAsyncResult OnBeginLoadDirectMessagesSent(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string token = ((string)(inValues[0]));
+            string tokenSecret = ((string)(inValues[1]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesSent(token, tokenSecret, callback, asyncState);
+        }
+        
+        private object[] OnEndLoadDirectMessagesSent(System.IAsyncResult result) {
+            System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndLoadDirectMessagesSent(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnLoadDirectMessagesSentCompleted(object state) {
+            if ((this.LoadDirectMessagesSentCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.LoadDirectMessagesSentCompleted(this, new LoadDirectMessagesSentCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void LoadDirectMessagesSentAsync(string token, string tokenSecret) {
+            this.LoadDirectMessagesSentAsync(token, tokenSecret, null);
+        }
+        
+        public void LoadDirectMessagesSentAsync(string token, string tokenSecret, object userState) {
+            if ((this.onBeginLoadDirectMessagesSentDelegate == null)) {
+                this.onBeginLoadDirectMessagesSentDelegate = new BeginOperationDelegate(this.OnBeginLoadDirectMessagesSent);
+            }
+            if ((this.onEndLoadDirectMessagesSentDelegate == null)) {
+                this.onEndLoadDirectMessagesSentDelegate = new EndOperationDelegate(this.OnEndLoadDirectMessagesSent);
+            }
+            if ((this.onLoadDirectMessagesSentCompletedDelegate == null)) {
+                this.onLoadDirectMessagesSentCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnLoadDirectMessagesSentCompleted);
+            }
+            base.InvokeAsync(this.onBeginLoadDirectMessagesSentDelegate, new object[] {
+                        token,
+                        tokenSecret}, this.onEndLoadDirectMessagesSentDelegate, this.onLoadDirectMessagesSentCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3277,17 +3357,31 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult BeginLoadDirectMessages(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
                 _args[0] = token;
                 _args[1] = tokenSecret;
-                System.IAsyncResult _result = base.BeginInvoke("LoadDirectMessages", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("LoadDirectMessagesReceived", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessages(System.IAsyncResult result) {
+            public System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessagesReceived(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage>)(base.EndInvoke("LoadDirectMessages", _args, result)));
+                System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage>)(base.EndInvoke("LoadDirectMessagesReceived", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginLoadDirectMessagesSent(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = token;
+                _args[1] = tokenSecret;
+                System.IAsyncResult _result = base.BeginInvoke("LoadDirectMessagesSent", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessagesSent(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> _result = ((System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage>)(base.EndInvoke("LoadDirectMessagesSent", _args, result)));
                 return _result;
             }
             
