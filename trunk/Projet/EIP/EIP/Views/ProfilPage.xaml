@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Name="PseudoUser" Grid.Row="0">User</TextBlock>
+        <!--<TextBlock Name="PseudoUser" Grid.Row="0">User</TextBlock>
 
         <sdk:TabControl Name="tabControl" SelectionChanged="TabControl_SelectionChanged" Grid.Row="1">
             <sdk:TabItem Header="Mur" Name="murTab" DataContext="Mur">
@@ -31,7 +31,7 @@
             <sdk:TabItem Header="Vidéos" Name="videosTab" DataContext="Videos">
                 Mes Vidéos !
             </sdk:TabItem>
-        </sdk:TabControl>
+        </sdk:TabControl>-->
 
 
 

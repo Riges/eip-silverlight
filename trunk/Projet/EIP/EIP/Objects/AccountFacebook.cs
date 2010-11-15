@@ -112,7 +112,7 @@ namespace EIP
                     /*NotificationWindow notify = new NotificationWindow();
                     notify.Height = 75; notify.Width = 200;
                     TextBlock note = new TextBlock();
-                    note.Text = "Ceci est une notification Silverlight 4 !";
+                    note.Text = "Ceci est une notification myNETwork !";
                     notify.Content = note;
                     notify.Show(4000);*/
                 });

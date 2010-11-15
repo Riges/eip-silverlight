@@ -19,7 +19,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Name="PseudoUser" Grid.Row="0"  FontSize="22" FontWeight="Bold" Margin="0,0,0,0"></TextBlock>
+        <TextBlock Name="PseudoUser" Grid.Row="0" Text=" " FontSize="22" FontWeight="Bold" Margin="0,0,0,0"></TextBlock>
 
         <TextBlock Name="albumName" Grid.Row="1" FontSize="22" FontWeight="Bold" Margin="0,0,0,0" HorizontalAlignment="Center"></TextBlock>
         <TextBlock Name="dragText" Grid.Row="2" Text="Pour ajouter des photos à cet album, déposez les sur cette page." Visibility="Collapsed"></TextBlock>

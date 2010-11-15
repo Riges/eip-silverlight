@@ -51,13 +51,7 @@ namespace EIPWCF
 
 
 
-        [OperationContract]
-        AccountFacebook testfb();
-
-        [OperationContract]
-        AccountTwitter testT();
-
-
+       
 
 
         [OperationContract]
@@ -87,6 +81,19 @@ namespace EIPWCF
 
         [OperationContract]
         IEnumerable<TwitterDirectMessage> LoadDirectMessages(string token, string tokenSecret);
+
+
+        [OperationContract]
+        AccountFacebook testfb();
+
+        [OperationContract]
+        AccountTwitter testT();
+
+        [OperationContract]
+        AccountFlickr testFl();
+
+        [OperationContract]
+        bool TestAddAccount();
 
         /*[OperationContract]
         string AuthorizeDesktop(string consumerKey, string consumerSecret);

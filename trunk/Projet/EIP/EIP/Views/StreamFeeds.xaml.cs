@@ -52,6 +52,9 @@ namespace EIP.Views
         {
             Connexion.Loading(false);
             busyIndicator.IsBusy = true;
+            Connexion.navigationContext = NavigationContext;
+            //Connexion.GetFrob();
+
 
             FeedsControl.MaxHeight = App.Current.Host.Content.ActualHeight - 140;
 
@@ -63,7 +66,7 @@ namespace EIP.Views
 
 
             Connexion.allTopics = new Dictionary<string, List<Topic>>();
-            Connexion.navigationContext = NavigationContext;
+            
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
                // ImgLoad.Visibility = System.Windows.Visibility.Visible;
@@ -80,7 +83,7 @@ namespace EIP.Views
                             case Account.TypeAccount.Twitter:
                                 dt_Tick(null, null);
                                 break;
-                            case Account.TypeAccount.Myspace:
+                            case Account.TypeAccount.Flickr:
                                 break;
                             default:
                                 break;
@@ -104,6 +107,7 @@ namespace EIP.Views
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
                 bool wait = false;
+                bool accountSelected = false;
 
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
@@ -111,10 +115,7 @@ namespace EIP.Views
                         switch (accountLight.Value.account.typeAccount)
                         {
                             case Account.TypeAccount.Facebook:
-                                //string filter = string.Empty;
-
-                                /*if (this.NavigationContext.QueryString.ContainsKey("filter"))
-                                    filter = this.NavigationContext.QueryString["filter"];*/
+                                accountSelected = true;
                                 ((AccountFacebookLight)accountLight.Value).LoadFeedsCalled += new AccountFacebookLight.OnLoadFeedsCompleted(StreamFeeds_LoadFeedsCalled);
 
                                 bool waitFB = false;
@@ -128,6 +129,7 @@ namespace EIP.Views
                                
                                 break;
                             case Account.TypeAccount.Twitter:
+                                accountSelected = true;
 
                                 ((AccountTwitterLight)accountLight.Value).LoadHomeStatusesCalled += new AccountTwitterLight.OnLoadHomeStatusesCompleted(StreamFeeds_LoadHomeStatusesCalled);
                                 bool waitT = false;
@@ -138,11 +140,16 @@ namespace EIP.Views
                                 if (waitT)
                                     wait = waitT;
                                 break;
-                            case Account.TypeAccount.Myspace:
+                            case Account.TypeAccount.Flickr:
                                 break;
                             default:
                                 break;
                         }
+                }
+
+                if (!accountSelected)
+                {
+                    busyIndicator.IsBusy = false;                        
                 }
 
                 //if (wait)

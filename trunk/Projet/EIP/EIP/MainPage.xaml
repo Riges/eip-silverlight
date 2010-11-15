@@ -160,7 +160,7 @@
                         <uriMapper:UriMapping Uri="/Deconnexion" MappedUri="/Views/Deconnexion.xaml" />
                         <uriMapper:UriMapping Uri="/Friends" MappedUri="/Views/FriendList.xaml" />
                             
-                        <uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}" MappedUri="/Views/ProfilPage.xaml?uid={userid}&amp;accid={accid}" />
+                        <!--<uriMapper:UriMapping Uri="/Profil/{userid}/Account/{accid}" MappedUri="/Views/ProfilPage.xaml?uid={userid}&amp;accid={accid}" />-->
 
                         <uriMapper:UriMapping Uri="/ProfilInfos/{userid}/Account/{accid}" MappedUri="/Views/ProfilInfos.xaml?uid={userid}&amp;accid={accid}" />
                         <uriMapper:UriMapping Uri="/ProfilWall/{userid}/Account/{accid}" MappedUri="/Views/Wall.xaml?uid={userid}&amp;accid={accid}" />

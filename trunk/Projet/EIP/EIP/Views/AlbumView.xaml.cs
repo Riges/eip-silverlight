@@ -14,6 +14,8 @@ using Facebook.Schema;
 using System.Windows.Media.Imaging;
 using System.IO;
 using EIP.Views.Controls;
+using FlickrNet;
+using EIP.ServiceEIP;
 
 namespace EIP.Views
 {
@@ -21,6 +23,7 @@ namespace EIP.Views
     {
         public string aid { get; set; }
         public long uid { get; set; }
+        public string uidFlickr { get; set; }
         public long accountID { get; set; }
 
 
@@ -35,58 +38,89 @@ namespace EIP.Views
             if (this.NavigationContext.QueryString.ContainsKey("aid"))
                 this.aid = this.NavigationContext.QueryString["aid"];
 
-            if (this.NavigationContext.QueryString.ContainsKey("uid"))
-                this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
-
             if (this.NavigationContext.QueryString.ContainsKey("accid"))
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
-            /*
-            if (this.NavigationContext.QueryString.ContainsKey("accid"))
-                this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
-            */
-
-            if (this.uid == Connexion.accounts[this.accountID].account.userID)
+            if (this.accountID > 0)
             {
-                dragText.Visibility = System.Windows.Visibility.Visible;
-                this.AllowDrop = true;
-            }
-            else
-            {
-                dragText.Visibility = System.Windows.Visibility.Collapsed;
-                this.AllowDrop = false;
-            }
-
-            if (Connexion.accounts != null && Connexion.accounts.Count > 0)
-            {
-                /*foreach (KeyValuePair<long, AccountLight> acc in Connexion.accounts)
+                if (Connexion.accounts[this.accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Flickr)
                 {
-                    if (acc.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook && acc.Value.selected)
-                        this.accountID = acc.Value.account.accountID;
-                }*/
-                if (this.accountID != 0 && this.accountID > 0)
+                    if (this.NavigationContext.QueryString.ContainsKey("uid"))
+                        this.uidFlickr = this.NavigationContext.QueryString["uid"];
+                }
+                else
                 {
-                    AccountFacebookLight account = (AccountFacebookLight)Connexion.accounts[this.accountID];
-                    if (account.selected)
-                    {
-                        account.GetPhotosCalled += new AccountFacebookLight.OnGetPhotosCompleted(account_GetPhotosCalled);
-                        account.GetPhotos(this.aid);
-
-                        account.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
-                        account.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
-                    }
+                    if (this.NavigationContext.QueryString.ContainsKey("uid"))
+                        this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
                 }
 
+                if (this.uid == Connexion.accounts[this.accountID].account.userID ||
+                    (Connexion.accounts[this.accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Flickr && ((AccountFlickr)Connexion.accounts[this.accountID].account).userIDstr == this.uidFlickr  ))
+                {
+                    dragText.Visibility = System.Windows.Visibility.Visible;
+                    this.AllowDrop = true;
+                }
+                else
+                {
+                    dragText.Visibility = System.Windows.Visibility.Collapsed;
+                    this.AllowDrop = false;
+                }
+
+                if (Connexion.accounts != null && Connexion.accounts.Count > 0)
+                {
+                    if (this.accountID != 0 && this.accountID > 0)
+                    {
+                        switch (Connexion.accounts[this.accountID].account.typeAccount)
+                        {
+                            case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                                 AccountFacebookLight accFB = (AccountFacebookLight)Connexion.accounts[this.accountID];
+                                 if (accFB.selected)
+                                 {
+                                     accFB.GetPhotosCalled += new AccountFacebookLight.OnGetPhotosCompleted(account_GetPhotosCalled);
+                                     accFB.GetPhotos(this.aid);
+
+                                     accFB.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
+                                     accFB.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
+                                 }
+                                break;
+                            case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                                break;
+                            case EIP.ServiceEIP.Account.TypeAccount.Flickr:
+                                AccountFlickrLight accFK = (AccountFlickrLight)Connexion.accounts[this.accountID];
+
+                                accFK.GetPhotosCalled += new AccountFlickrLight.OnGetPhotosCompleted(accFK_GetPhotosCalled);
+                                accFK.GetPhotos(this.aid);
+
+                                accFK.GetUserInfoCalled += new AccountFlickrLight.OnGetUserInfoCompleted(accFK_GetUserInfoCalled);
+                                accFK.GetUserInfo(this.uidFlickr);
+                     
+                                break;
+                            default:
+                                break;
+                        }
+                       
+                    }
+
+                }
             }
         }
 
+      
+
+      
+
         void acc_GetUserInfoCalled(user monUser)
+        {
+            
+        }
+
+        void accFK_GetUserInfoCalled(FlickrNet.Person user)
         {
             Dispatcher.BeginInvoke(() =>
             {
-                if (monUser != null)
+                if (user != null)
                 {
-                    this.Title = "Album de " + monUser.name;
-                    PseudoUser.Text = monUser.name;
+                    this.Title = "Album de " + user.UserName;
+                    PseudoUser.Text = user.UserName;
                 }
             });
         }
@@ -122,6 +156,28 @@ namespace EIP.Views
            
         }
 
+        void accFK_GetPhotosCalled(string aid, FlickrNet.PhotosetPhotoCollection photos)
+        {
+            this.Dispatcher.BeginInvoke(() =>
+            {
+                if (aid == this.aid && photos.Count > 0)
+                {
+                    noPhotos.Visibility = System.Windows.Visibility.Collapsed;
+                    flowControl.DataContext = photos;
+
+                    PhotosetCollection albums = ((AccountFlickrLight)Connexion.accounts[this.accountID]).albums[this.uidFlickr];
+                    var al = from a in albums
+                                where a.PhotosetId == this.aid
+                                select a;
+
+                    albumName.Text = al.First().Title;
+                }
+                else
+                    noPhotos.Visibility = System.Windows.Visibility.Visible;
+
+            });
+        }
+
         private void Page_Drop(object sender, DragEventArgs e)
         {
             if (e.Data == null) return;
@@ -130,9 +186,16 @@ namespace EIP.Views
 
             if (files == null) return;
 
-            UploadPhotos uploadPhotos = new UploadPhotos(this.accountID, this.uid, this.aid, files);
-            uploadPhotos.Show();
-
+            if (Connexion.accounts[this.accountID].account.typeAccount == Account.TypeAccount.Flickr)
+            {
+                UploadPhotos uploadPhotos = new UploadPhotos(this.accountID, this.uidFlickr, this.aid, files);
+                uploadPhotos.Show();
+            }
+            else
+            {
+                UploadPhotos uploadPhotos = new UploadPhotos(this.accountID, this.uid, this.aid, files);
+                uploadPhotos.Show();
+            }
             //List<BitmapImage> Images = new List<BitmapImage>();
             //foreach (var fileInfo in files)
             //{

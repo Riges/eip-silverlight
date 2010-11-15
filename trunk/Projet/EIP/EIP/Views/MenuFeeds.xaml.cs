@@ -55,7 +55,7 @@ namespace EIP.Views
                         case Account.TypeAccount.Twitter:
                             img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
                             break;
-                        case Account.TypeAccount.Myspace:
+                        case Account.TypeAccount.Flickr:
                             break;
                         default:
                             break;
@@ -97,7 +97,7 @@ namespace EIP.Views
                             ((AccountTwitterLight)account.Value).LoadFiltersCalled += new AccountTwitterLight.OnLoadFiltersCompleted(LeftMenu_LoadFiltersCalled);
                             ((AccountTwitterLight)account.Value).LoadFilters();
                             break;
-                        case Account.TypeAccount.Myspace:
+                        case Account.TypeAccount.Flickr:
                             break;
                         default:
                             break;
@@ -268,7 +268,7 @@ namespace EIP.Views
                             panelContent.Children.Add(panelFilter);
                         }
                         break;
-                    case Account.TypeAccount.Myspace:
+                    case Account.TypeAccount.Flickr:
                         break;
                     default:
                         break;

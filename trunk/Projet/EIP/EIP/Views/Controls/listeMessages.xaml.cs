@@ -60,7 +60,7 @@ namespace EIP.Views.Controls
                             break;
                         case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                             break;
-                        case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                        case EIP.ServiceEIP.Account.TypeAccount.Flickr:
                             break;
                     }
                 }*/

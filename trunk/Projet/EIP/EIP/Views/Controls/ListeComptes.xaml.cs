@@ -120,7 +120,7 @@ namespace EIP.Views.Controls
                                     imgReseau.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
                                     //((AccountTwitterLight)oneAccount.Value).LoadFriends();
                                     break;
-                                case Account.TypeAccount.Myspace:
+                                case Account.TypeAccount.Flickr:
                                     break;
                                 default:
                                     break;

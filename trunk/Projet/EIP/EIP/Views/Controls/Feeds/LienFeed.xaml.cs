@@ -28,7 +28,7 @@ namespace EIP.Views.Controls.Feeds
 
             if (topic.post.message != "")
             {
-                foreach (UIElement element in Utils.LoadMessage(topic.post.message, Resources))
+                foreach (UIElement element in Utils.LoadMessage(topic.post.message))
                     message.Children.Add(element);
                 message.Visibility = System.Windows.Visibility.Visible;
             }
@@ -84,7 +84,7 @@ namespace EIP.Views.Controls.Feeds
 
             if (topic.post.attachment.description != "" && topic.post.attachment.description != null)
             {
-                foreach (UIElement element in Utils.LoadMessage(topic.post.attachment.description, Resources))
+                foreach (UIElement element in Utils.LoadMessage(topic.post.attachment.description))
                     description.Children.Add(element);
                 description.Visibility = System.Windows.Visibility.Visible;
                 
@@ -100,7 +100,7 @@ namespace EIP.Views.Controls.Feeds
                     if(property.href == null)
                         propertyPanel.Children.Add(new TextBlock() { Text = property.text });
                     else
-                        propertyPanel.Children.Add(new HyperlinkButton() { Content = property.text, NavigateUri = new Uri(property.href, UriKind.Absolute), TargetName = "_blank", Style = Resources["HyperlinkButtonStyle"] as Style });
+                        propertyPanel.Children.Add(new HyperlinkButton() { Content = property.text, NavigateUri = new Uri(property.href, UriKind.Absolute), TargetName = "_blank", Style = Resources["HyperlinkButtonFonceStyle"] as Style });
                     properties.Children.Add(propertyPanel);
                 }
                 

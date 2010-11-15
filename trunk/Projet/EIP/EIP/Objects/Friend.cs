@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Facebook.Rest;
 using Facebook.Schema;
 using EIP.ServiceEIP;
+using FlickrNet;
 
 namespace EIP.Objects
 {
@@ -18,6 +19,7 @@ namespace EIP.Objects
     {
         public long accountID { get; set; }        
         public user userFB { get; set; }
-        public TwitterUser userTW {  get; set; }
+        public TwitterUser userTW { get; set; }
+        public Contact userFK { get; set; }
     }
 }

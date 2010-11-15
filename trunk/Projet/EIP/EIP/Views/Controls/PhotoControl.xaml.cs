@@ -11,12 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
 using System.Windows.Media.Imaging;
+using FlickrNet;
 
 namespace EIP.Views.Controls
 {
     public partial class PhotoControl : UserControl
     {
         protected photo photo { get; set; }
+        protected Photo photoFlickr { get; set; }
         public long accountID { get; set; }
         bool loaded;
 
@@ -30,11 +32,16 @@ namespace EIP.Views.Controls
         {
             if (!this.loaded)
             {
+                if (this.DataContext.GetType() == typeof(photo))
                 this.photo = this.DataContext as photo;
+                else if (this.DataContext.GetType() == typeof(Photo))
+                    this.photoFlickr = this.DataContext as Photo;
+
                 if (this.photo != null)
                     imgPhoto.Source = new BitmapImage(new Uri(this.photo.src_big, UriKind.Absolute));
-                
-                
+                else if (this.photoFlickr != null)
+                    imgPhoto.Source = new BitmapImage(new Uri(this.photoFlickr.LargeUrl, UriKind.Absolute));
+ 
                 this.loaded = true;
             }
         }

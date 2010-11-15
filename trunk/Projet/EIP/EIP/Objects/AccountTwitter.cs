@@ -289,7 +289,7 @@ namespace EIP
         /// <summary>
         /// methode pour charger les amis (gens que l'on suit)
         /// </summary>
-        public delegate void OnGetFriendsCompleted(List<TwitterUser> friends);
+        public delegate void OnGetFriendsCompleted(List<TwitterUser> friends, long accountID);
         public event OnGetFriendsCompleted GetFriendsCalled;
 
         public void LoadFriends()
@@ -299,7 +299,7 @@ namespace EIP
             else
             {
                 if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
-                    this.GetFriendsCalled.Invoke(this.friends);
+                    this.GetFriendsCalled.Invoke(this.friends, this.account.accountID);
             }
         }
 
@@ -315,7 +315,7 @@ namespace EIP
                     this.friends = e.Result;
 
                     if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
-                        this.GetFriendsCalled.Invoke(this.friends);
+                        this.GetFriendsCalled.Invoke(this.friends, this.account.accountID);
                 }
             }
         }

@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 using EIP.ServiceEIP;
 using System.Windows.Media.Imaging;
 using System.Text.RegularExpressions;
-using Hammock;
+//using Hammock;
 using Newtonsoft.Json;
-using Hammock.Web;
+//using Hammock.Web;
 using System.Windows.Controls.Primitives;
 using System.IO;
 using EIP.Objects;
@@ -62,7 +62,7 @@ namespace EIP.Views.Controls
                                     case Account.TypeAccount.Twitter:
                                         img.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
                                         break;
-                                    case Account.TypeAccount.Myspace:
+                                    case Account.TypeAccount.Flickr:
                                         break;
                                     default:
                                         break;

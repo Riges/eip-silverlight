@@ -29,9 +29,6 @@ namespace EIP
         {
             InitializeComponent();
 
-
-           
-
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             Connexion.listeComptes = liste;
             Connexion.contentFrame = ContentFrame;
@@ -40,7 +37,6 @@ namespace EIP
             Connexion.mainBusyIndicator = mainBusyIndicator;
             Connexion.StartDisplay();
             LoadInterface();
-
         }
 
         private void LoadInterface()

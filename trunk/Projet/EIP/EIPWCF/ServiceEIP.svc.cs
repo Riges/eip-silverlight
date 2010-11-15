@@ -80,7 +80,10 @@ namespace EIPWCF
 
         public bool AddAccount(Account newAccount, string token, string pin)
         {
+            /*token = "wc1SUHpMRZdsWnPAdHaVMK2dm29UrhWLJnnDN6G2xU";
+            pin = "2137875";*/
             SetClientInfo();
+
             switch (newAccount.typeAccount)
             {
                 case Account.TypeAccount.Facebook:
@@ -92,13 +95,17 @@ namespace EIPWCF
                     TwitterResult result = accessToken.Request();
                     var tokenResult = result.AsToken();
 
-                    newAccount.name = tokenResult.ScreenName;
-                    newAccount.userID = Convert.ToInt64(tokenResult.UserId);
-                    ((AccountTwitter)newAccount).token = tokenResult.Token;
-                    ((AccountTwitter)newAccount).tokenSecret = tokenResult.TokenSecret;
-
+                    if (tokenResult != null)
+                    {
+                        newAccount.groupID = 1520509439;
+                        newAccount.name = tokenResult.ScreenName;
+                        newAccount.userID = Convert.ToInt64(tokenResult.UserId);
+                        newAccount.typeAccount = Account.TypeAccount.Twitter;
+                        ((AccountTwitter)newAccount).token = tokenResult.Token;
+                        ((AccountTwitter)newAccount).tokenSecret = tokenResult.TokenSecret;
+                    }
                     break;
-                case Account.TypeAccount.Myspace:
+               case Account.TypeAccount.Flickr:
                     break;
                 default:
                     break;
@@ -424,6 +431,16 @@ namespace EIPWCF
             return new AccountTwitter();
         }
 
+        public AccountFlickr testFl()
+        {
+            return new AccountFlickr() { typeAccount = Account.TypeAccount.Flickr };
+        }
+
+        public bool TestAddAccount()
+        {
+            return Model.AddAccount(new AccountFlickr());
+        }
+
         private void SetClientInfo()
         {
             var clientInfo = new TwitterClientInfo
@@ -438,6 +455,8 @@ namespace EIPWCF
 
         public string GetRequestToken()//string consumerKey, string consumerSecret
         {
+            //SetClientInfo();
+
             var requestToken = FluentTwitter.CreateRequest()
                 .Authentication.GetRequestToken(ConfigurationManager.AppSettings["ConsumerKey"], ConfigurationManager.AppSettings["ConsumerSecret"]);
 

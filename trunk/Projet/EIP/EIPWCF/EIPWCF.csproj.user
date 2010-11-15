@@ -7,8 +7,8 @@
           <StartPageUrl>ServiceEIP.svc</StartPageUrl>
           <StartAction>SpecificPage</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
-          <SilverlightDebugging>False</SilverlightDebugging>
-          <NativeDebugging>False</NativeDebugging>
+          <SilverlightDebugging>True</SilverlightDebugging>
+          <NativeDebugging>True</NativeDebugging>
           <SQLDebugging>False</SQLDebugging>
           <ExternalProgram>
           </ExternalProgram>

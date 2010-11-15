@@ -13,6 +13,7 @@ using Facebook.Schema;
 using EIP.Objects;
 using EIP.ServiceEIP;
 using System.Windows.Media.Imaging;
+using FlickrNet;
 
 namespace EIP.Views.Controls
 {
@@ -21,6 +22,7 @@ namespace EIP.Views.Controls
         private long accountID;
         private user friendFB;
         private TwitterUser friendTW;
+        private Contact friendFK;
 
         public bool FriendsPage
         {
@@ -76,6 +78,12 @@ namespace EIP.Views.Controls
                     this.friendTW = friend.userTW;
                     LoadFriendTW();
                 }
+
+                if (friend.userFK != null)
+                {
+                    this.friendFK = friend.userFK;
+                    LoadFriendFK();
+                }
             }
         }
 
@@ -99,10 +107,21 @@ namespace EIP.Views.Controls
                 imgUser.Source = new BitmapImage(new Uri(this.friendTW.ProfileImageUrl));
             }
 
-            nomFriend.Content = this.friendTW.Name;
+            nomFriend.Content = this.friendTW.ScreenName;
             nomFriend.NavigateUri = new Uri("/ProfilInfos/" + this.friendTW.Id + "/Account/" + accountID, UriKind.Relative);
 
 
+        }
+
+        private void LoadFriendFK()
+        {
+            if (this.friendFK.BuddyIconUrl != null)
+            {
+                imgUser.Source = new BitmapImage(new Uri(this.friendFK.BuddyIconUrl));
+            }
+
+            nomFriend.Content = this.friendFK.UserName;
+            nomFriend.NavigateUri = new Uri("/ProfilInfos/" + this.friendFK.UserId + "/Account/" + accountID, UriKind.Relative);
         }
 
     }

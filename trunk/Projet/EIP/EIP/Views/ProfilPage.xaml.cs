@@ -30,7 +30,7 @@ namespace EIP.Views
             //LoadProfil();
         }
 
-
+        /*
         public enum Tab
         {
             Mur,
@@ -98,6 +98,8 @@ namespace EIP.Views
                     break;
             }
         }
+
+        */
 
     }
 }
