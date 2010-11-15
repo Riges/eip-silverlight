@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -34,6 +35,7 @@ namespace EIP.Objects
         // Facebook
         public ThreadMessage(thread th, long accountID)
         {
+            recipientsFb = new List<profile>();
             this.MessageFb = th;
             this.accountID = accountID;
             
@@ -197,6 +199,55 @@ namespace EIP.Objects
         public List<profile> getRecipients()
         {
             return recipientsFb;
+        }
+
+        public long getAuthorThreadAccountID()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    if (Connexion.accounts[this.accountID].account.userID == this.authorFb.id)
+                    {
+                        foreach (profile user in this.getRecipients())
+                            if (Connexion.accounts[this.accountID].account.userID != user.id) {
+                                this.authorFb = user;
+                                break;
+                            }
+                        return getAuthorAccountID();
+                    }
+                    else
+                        return getAuthorAccountID();
+                    break;
+
+                case Account.TypeAccount.Twitter:
+                    return getAuthorAccountID();
+                    break;
+            }
+            return 0;
+        }
+
+        public string getAuthorThreadName()
+        {
+
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    if (Connexion.accounts[this.accountID].account.userID == this.authorFb.id)
+                        return this.getRecipients().ElementAt(0).name;
+                    else
+                        return getAuthorName();
+                    break;
+
+                case Account.TypeAccount.Twitter:
+                    return getAuthorName();
+                    break;
+            }
+            return null;
+        }
+
+        public void addRecipient(profile unUser)
+        {
+            recipientsFb.Add(unUser);
         }
     }
 }

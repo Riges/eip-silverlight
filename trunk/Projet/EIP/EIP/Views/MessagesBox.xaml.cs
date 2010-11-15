@@ -170,6 +170,8 @@ namespace EIP.Views
                     RecipientsList.Children.Add(txt2);
                 }
 
+                HeaderText.Text = th.getSubject();
+
                 busyIndicator.IsBusy = false;
             });
         }
