@@ -9,7 +9,17 @@
            d:DesignWidth="640" d:DesignHeight="480"
            Title="Inbox Page">
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}" >
-        <toolkit:Accordion Name="menufiltre">
-        </toolkit:Accordion>
+        <!--<toolkit:Accordion Name="menufiltre">
+        </toolkit:Accordion>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <HyperlinkButton NavigateUri="/Messages/inbox" Content="Boîte de réception" Grid.Column="0" Grid.Row="0" />
+        <HyperlinkButton NavigateUri="/Messages/outbox" Content="Boîte d'envoi" Grid.Column="0" Grid.Row="1" />
     </Grid>
 </navigation:Page>

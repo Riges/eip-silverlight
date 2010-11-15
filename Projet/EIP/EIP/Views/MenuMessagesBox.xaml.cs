@@ -37,7 +37,7 @@ namespace EIP.Views
             if (this.NavigationContext.QueryString.ContainsKey("box"))
                 this.boxActive = this.NavigationContext.QueryString["box"];
 
-            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+           /* foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
                 if (account.Value.selected)
                 {
@@ -73,9 +73,9 @@ namespace EIP.Views
 
                     menufiltre.Items.Add(item);
                 }
-            }
+            }*/
 
-            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+            /*foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
                 if (account.Value.selected)
                 {
@@ -93,7 +93,7 @@ namespace EIP.Views
                             break;
                     }
                 }
-            }
+            }*/
         }
 
 
