@@ -45,6 +45,8 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            busyIndicator.IsBusy = true;
+
             if (this.NavigationContext.QueryString.ContainsKey("accountId") && this.NavigationContext.QueryString.ContainsKey("threadId"))
             {
                 if (this.NavigationContext.QueryString.ContainsKey("box"))
@@ -123,6 +125,8 @@ namespace EIP.Views
                 listeMessagesBox.box.AddRange(liste);
                 listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
                 listeMessagesBox.LoadMessages();
+
+                busyIndicator.IsBusy = false;
                 //listeMessagesBox.Messages_GetThreadCalled(th);
             });
         }
@@ -135,6 +139,8 @@ namespace EIP.Views
                 listeMessagesBox.box.AddRange(liste);
                 listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
                 listeMessagesBox.LoadMessages();
+
+                busyIndicator.IsBusy = false;
             });
 
 
@@ -145,6 +151,26 @@ namespace EIP.Views
             {
                 Back.Visibility = System.Windows.Visibility.Visible;
                 listeMessagesBox.Messages_GetThreadCalled(th);
+
+                TextBlock txt = new TextBlock();
+                txt.Text = "Entre ";
+                RecipientsList.Children.Add(txt);
+
+                int compteur = 1;
+
+                foreach (profile user in th.getRecipients())
+                {
+                    HyperlinkButton linkBtn = new HyperlinkButton();
+                    linkBtn.Content = user.name;
+                    linkBtn.NavigateUri = new Uri("/ProfilInfos/" + user.id + "/Account/" + th.accountID, UriKind.Relative);
+                    RecipientsList.Children.Add(linkBtn);
+
+                    TextBlock txt2 = new TextBlock();
+                    txt2.Text = compteur++ < th.getRecipients().Count ? (compteur == th.getRecipients().Count ? " et " : ", ") : ".";
+                    RecipientsList.Children.Add(txt2);
+                }
+
+                busyIndicator.IsBusy = false;
             });
         }
 

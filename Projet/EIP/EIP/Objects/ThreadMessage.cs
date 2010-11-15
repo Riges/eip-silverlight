@@ -23,6 +23,7 @@ namespace EIP.Objects
         // Facebook
         private thread MessageFb { get; set; }
         private profile authorFb { get; set; }
+        private List<profile> recipientsFb { get; set; }
         private List<MessageFacebook> messagesFb { get; set; }
 
         // Twitter
@@ -180,7 +181,7 @@ namespace EIP.Objects
             return 0;
         }
 
-        // Facebook
+        // Facebook, a adapter pour twitter et autres
         public void setMessages(List<MessageFacebook> liste)
         {
             this.messagesFb = liste;
@@ -188,6 +189,14 @@ namespace EIP.Objects
         public List<MessageFacebook> getMessages()
         {
             return this.messagesFb;
+        }
+        public void setRecipients(List<profile> users)
+        {
+            recipientsFb = users;
+        }
+        public List<profile> getRecipients()
+        {
+            return recipientsFb;
         }
     }
 }

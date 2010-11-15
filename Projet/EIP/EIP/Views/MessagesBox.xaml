@@ -4,15 +4,17 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:Controls="clr-namespace:EIP.Views.Controls"
+           xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="Inbox Page" RenderTransformOrigin="0,0">
+    <toolkit:BusyIndicator Name="busyIndicator" BusyContent="Chargement des messages ..." Background="Transparent" >
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -21,11 +23,16 @@
         <!--<TextBlock Name="TitrePage" Style="{StaticResource HeaderTextStyle}"
                            Text="Messagerie" Grid.Row="0" />-->
         <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
-                           Text="Messagerie" Grid.Row="1" />
-        <Button Name="Back" Content="Retour" Grid.Row="2" Visibility="Collapsed" Click="Back_Click" Width="100" HorizontalAlignment="Left" />
+                           Text="Messagerie" Grid.Row="0" />
+            <Button Name="Back" Content="&lt; Retour" Grid.Row="1" Visibility="Collapsed" Click="Back_Click" Width="100" HorizontalAlignment="Left" Margin="0,0,10,10" />
 
+        <toolkit:WrapPanel Orientation="Horizontal" Width="Auto"  Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Name="RecipientsList">
+
+        </toolkit:WrapPanel>
+        
         <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Stretch" Background="{StaticResource BgColor}">
             <Controls:listeMessages x:Name="listeMessagesBox" />
         </ScrollViewer>
-    </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
 </navigation:Page>

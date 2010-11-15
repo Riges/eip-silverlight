@@ -399,7 +399,7 @@ namespace EIP
                         myMessage.message_id = reader.ReadElementContentAsString();
                         reader.ReadToFollowing("author_id");
                         myMessage.author_id = reader.ReadElementContentAsLong();
-                        userIds.Add(myMessage.author_id);
+                        //userIds.Add(myMessage.author_id);
                         reader.ReadToFollowing("body");
                         myMessage.body = reader.ReadElementContentAsString();
                         reader.ReadToFollowing("created_time");
@@ -416,8 +416,11 @@ namespace EIP
                     }
                 } while (!reader.EOF);
                 ((thread)obj).messages.message = liste;
-                /*if (this.GetMessagesCalled != null)
-                    this.GetThreadCalled.Invoke((thread)obj);*/
+
+                foreach (long toto in ((thread)obj).recipients.uid)
+                    if (!userIds.Contains(toto))
+                        userIds.Add(toto);
+                
                 GetAuthors(userIds, obj, new Fql.QueryCallback(GetAuthorThread_Completed));
             }
         }
@@ -482,6 +485,7 @@ namespace EIP
                 }
             ThreadMessage thread = new ThreadMessage((thread)obj, this.account.accountID);
             thread.setMessages(liste);
+            thread.setRecipients(users);
              if (this.GetMessagesCalled != null)
                  this.GetThreadCalled.Invoke(thread);
 

@@ -36,7 +36,7 @@ namespace EIP.Views.Controls
                 HyperlinkButton linkBtn = new HyperlinkButton();
                 linkBtn.Content = "Afficher les " + this.Commentaires.count + " commentaires";
                 linkBtn.Click += new RoutedEventHandler(linkBtn_Click);
-                displayAllComsPanel.Children.Add(linkBtn);
+                displayAllComsPanel.Children.Add(linkBtn;)f
             }
              * */
 
