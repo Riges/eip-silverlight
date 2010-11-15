@@ -111,11 +111,17 @@
   <wsdl:message name="IServiceEIP_UploadPhoto_OutputMessage">
     <wsdl:part name="parameters" element="tns:UploadPhotoResponse" />
   </wsdl:message>
-  <wsdl:message name="IServiceEIP_LoadDirectMessages_InputMessage">
-    <wsdl:part name="parameters" element="tns:LoadDirectMessages" />
+  <wsdl:message name="IServiceEIP_LoadDirectMessagesReceived_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDirectMessagesReceived" />
   </wsdl:message>
-  <wsdl:message name="IServiceEIP_LoadDirectMessages_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LoadDirectMessagesResponse" />
+  <wsdl:message name="IServiceEIP_LoadDirectMessagesReceived_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDirectMessagesReceivedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadDirectMessagesSent_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDirectMessagesSent" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_LoadDirectMessagesSent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDirectMessagesSentResponse" />
   </wsdl:message>
   <wsdl:message name="IServiceEIP_testfb_InputMessage">
     <wsdl:part name="parameters" element="tns:testfb" />
@@ -210,9 +216,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/UploadPhoto" message="tns:IServiceEIP_UploadPhoto_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/UploadPhotoResponse" message="tns:IServiceEIP_UploadPhoto_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="LoadDirectMessages">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessages" message="tns:IServiceEIP_LoadDirectMessages_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesResponse" message="tns:IServiceEIP_LoadDirectMessages_OutputMessage" />
+    <wsdl:operation name="LoadDirectMessagesReceived">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceived" message="tns:IServiceEIP_LoadDirectMessagesReceived_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceivedResponse" message="tns:IServiceEIP_LoadDirectMessagesReceived_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadDirectMessagesSent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesSent" message="tns:IServiceEIP_LoadDirectMessagesSent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesSentResponse" message="tns:IServiceEIP_LoadDirectMessagesSent_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="testfb">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testfb" message="tns:IServiceEIP_testfb_InputMessage" />
@@ -386,8 +396,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="LoadDirectMessages">
-      <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadDirectMessages" style="document" />
+    <wsdl:operation name="LoadDirectMessagesReceived">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceived" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadDirectMessagesSent">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesSent" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

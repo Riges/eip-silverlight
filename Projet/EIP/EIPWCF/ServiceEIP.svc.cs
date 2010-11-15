@@ -80,8 +80,6 @@ namespace EIPWCF
 
         public bool AddAccount(Account newAccount, string token, string pin)
         {
-            /*token = "wc1SUHpMRZdsWnPAdHaVMK2dm29UrhWLJnnDN6G2xU";
-            pin = "2137875";*/
             SetClientInfo();
 
             switch (newAccount.typeAccount)

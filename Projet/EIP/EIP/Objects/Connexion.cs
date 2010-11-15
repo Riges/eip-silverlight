@@ -670,27 +670,30 @@ namespace EIP
 
         static void serviceEIP_AddAccountCompleted(object sender, AddAccountCompletedEventArgs e)
         {
-            if (e.Error == null)
-            {
-                if (e.Result)
+            dispatcher.BeginInvoke(() =>
                 {
-                    GetSession();
-                    Connexion.contentFrame.Navigate(new Uri("/Home?time=00000", UriKind.Relative));
-                }
-                else
-                {
-                    dispatcher.BeginInvoke(() =>
+                    if (e.Error == null)
                     {
-                        MessageBox msg = new MessageBox("Erreur", "Ce compte existe déjà !");
+                        if (e.Result)
+                        {
+                            GetSession();
+                            Connexion.contentFrame.Navigate(new Uri("/Home?time=00000", UriKind.Relative));
+                        }
+                        else
+                        {
+                            dispatcher.BeginInvoke(() =>
+                            {
+                                MessageBox msg = new MessageBox("Erreur", "Ce compte existe déjà !");
+                                msg.Show();
+                            });
+                        }
+                    }
+                    else
+                    {
+                        MessageBox msg = new MessageBox("Erreur", "Erreur lors de l'ajout du compte");
                         msg.Show();
-                    });
-                }
-            }
-            else
-            {
-                MessageBox msg = new MessageBox("Erreur", "Erreur lors de l'ajout du compte");
-                msg.Show();
-            }
+                    }
+                });
 
         }
 
