@@ -51,6 +51,11 @@ namespace EIP
         public static Api facebookAPI { get; set; }
         public static BrowserSession browserSession { get; set; }
         public static Flickr flickr { get; set; }
+        public static string keyFlickr { get; set; }
+        public static string secretFlickr { get; set; }
+
+
+
 
         //api key Facebook
         public static string ApplicationKey = "";// = "e0c1f6b95b88d23bfc9727e0ea90602a";
@@ -94,6 +99,15 @@ namespace EIP
    
         public static void Start()
         {
+
+            #if (DEBUG)
+            keyFlickr = "7121e516217daa3202fbc6f269cc3874";
+            secretFlickr = "4a2d74587af51a4d";
+            #else
+                keyFlickr = "de649ab5a4af089ff78ce07576f0477f";
+                secretFlickr = "3d2ad5bfaf480eae";
+            #endif
+
             //browserSession = new BrowserSession(ApplicationKey);
             //browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
             accounts = new Dictionary<long, AccountLight>();
@@ -165,7 +179,7 @@ namespace EIP
 
             if (frob != string.Empty)
             {
-                flickr = new Flickr("de649ab5a4af089ff78ce07576f0477f", "3d2ad5bfaf480eae");
+                flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr);
                 FlickrGetFrob_Completed(frob);
             }
         }
@@ -358,7 +372,7 @@ namespace EIP
                     break;
                 case Account.TypeAccount.Flickr:
 
-                    Flickr flickr = new Flickr("de649ab5a4af089ff78ce07576f0477f", "3d2ad5bfaf480eae");
+                    Flickr flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr);
 
 
                     string urlAuth = flickr.AuthCalcWebUrl(AuthLevel.Delete);

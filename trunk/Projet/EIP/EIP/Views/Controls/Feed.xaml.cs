@@ -244,11 +244,14 @@ namespace EIP.Views.Controls
                             userSource.NavigateUri = new Uri("/ProfilInfos/" + status.User.Id + "/Account/" + topic.accountID, UriKind.Relative);
                             //imgCpt.Source = new BitmapImage(new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative));
                             imgCpt.UriSource = new Uri("../../Assets/Images/twitter-icon.png", UriKind.Relative);
-                            
-                            TwitterUser userAccount = ((AccountTwitterLight)Connexion.accounts[topic.accountID]).userInfos;
 
-                            imgAccount.UriSource = new Uri(userAccount.ProfileImageUrl, UriKind.Absolute);
-                            userAccountName.Content = userAccount.Name;
+                            ((AccountTwitterLight)Connexion.accounts[topic.accountID]).GetUserInfoCalled += new AccountTwitterLight.OnGetUserInfoCompleted(Feed_GetUserInfoCalled);
+                            TwitterUser userAccount = ((AccountTwitterLight)Connexion.accounts[topic.accountID]).userInfos;
+                            if (userAccount != null)
+                            {
+                                imgAccount.UriSource = new Uri(userAccount.ProfileImageUrl, UriKind.Absolute);
+                                userAccountName.Content = userAccount.Name;
+                            }
                             userAccountName.NavigateUri = new Uri("/ProfilInfos/" + status.User.Id + "/Account/" + topic.accountID, UriKind.Relative);
                             barAccount.Background = App.Current.Resources["BgTW"] as SolidColorBrush;
                             //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
@@ -302,6 +305,15 @@ namespace EIP.Views.Controls
                 }
             }
             
+        }
+
+        void Feed_GetUserInfoCalled(TwitterUser user, long accountID, bool isUserAccount)
+        {
+            if (topic.accountID == accountID && isUserAccount)
+            {
+                imgAccount.UriSource = new Uri(user.ProfileImageUrl, UriKind.Absolute);
+                userAccountName.Content = user.Name;
+            }
         }
 
         private void picUserBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

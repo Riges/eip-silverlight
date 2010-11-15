@@ -29,28 +29,39 @@
 
                     <Controls:UpdateStatus x:Name="updateStatusControl" Grid.Column="1" Margin="25,0,0,0"></Controls:UpdateStatus>
 
-                    <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}" Grid.Column="2" HorizontalAlignment="Right">
+                    <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}" Grid.Column="2" HorizontalAlignment="Right" >
                         <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
 
 
                             <HyperlinkButton x:Name="LinkHome" Style="{StaticResource LinkStyle}" Click="LinkHome_Click" 
                                      NavigateUri="/Home" TargetName="ContentFrame" >
-                            <StackPanel>
-                                <Image Source="Assets/Images/home-icone.png" Width="32"></Image>
-                                <TextBlock Text="Home"></TextBlock>
-                            </StackPanel>
+                                <StackPanel>
+                                    <Image Source="Assets/Images/maison.png" Width="36"></Image>
+                                    <TextBlock Text="Feeds" Margin="0,5,0,0"></TextBlock>
+                                </StackPanel>
 
                         </HyperlinkButton>
 
                             <Rectangle x:Name="DividerHome" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="LinkFriends" Style="{StaticResource LinkStyle}" 
-                                     NavigateUri="/Friends" TargetName="ContentFrame" Content="Amis"/>
+                                     NavigateUri="/Friends" TargetName="ContentFrame">
+                                <StackPanel>
+                                    <Image Source="Assets/Images/user.png" Width="36"></Image>
+                                    <TextBlock Text="Amis" Margin="0,5,0,0"></TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
 
                             <Rectangle x:Name="DividerFriends" Style="{StaticResource DividerStyle}"/>
 
                             <HyperlinkButton x:Name="LinkMessages" Style="{StaticResource LinkStyle}"
-                                     NavigateUri="/Messages" TargetName="ContentFrame" Content="Messages"/>
+                                     NavigateUri="/Messages" TargetName="ContentFrame" >
+                                <StackPanel>
+                                    <Image Source="Assets/Images/msg.png" Width="36"></Image>
+                                    <TextBlock Text="Messages" Margin="0,5,0,0"></TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
+                            
 
                             <Rectangle x:Name="DividerMessages" Style="{StaticResource DividerStyle}"/>
 
@@ -60,7 +71,12 @@
                             <Rectangle x:Name="DividerProfil" Style="{StaticResource DividerStyle}"/>-->
 
                             <HyperlinkButton x:Name="LinkCreateNewAccount" Style="{StaticResource LinkStyle}" Click="LinkCreateNewAccount_Click"
-                                      Content="Ajouter un compte"/>
+                                      >
+                                <StackPanel>
+                                    <Image Source="Assets/Images/ajouter.png" Width="36"></Image>
+                                    <TextBlock Text="Ajouter un compte" Margin="0,5,0,0"></TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
 
                             <Rectangle x:Name="Divider2" Style="{StaticResource DividerStyle}"/>
 
@@ -69,8 +85,12 @@
 
                             <Rectangle x:Name="DividerSeCo" Style="{StaticResource DividerStyle}"/>
 
-                            <HyperlinkButton x:Name="LinkSeDeco" Style="{StaticResource LinkStyle}" Click="LinkSeDeco_Click" 
-                                      Content="Se déconnecter"/>
+                            <HyperlinkButton x:Name="LinkSeDeco" Style="{StaticResource LinkStyle}" Click="LinkSeDeco_Click">
+                                <StackPanel>
+                                    <Image Source="Assets/Images/deconnecter.png" Width="36"></Image>
+                                    <TextBlock Text="Se déconnecter" Margin="0,5,0,0"></TextBlock>
+                                </StackPanel>
+                            </HyperlinkButton>
 
 
 
