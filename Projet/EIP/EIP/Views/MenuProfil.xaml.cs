@@ -19,6 +19,7 @@ namespace EIP.Views
     public partial class MenuProfil : Page
     {
         public long uid { get; set; }
+        public string uidFlickr { get; set; }
         public long accountID { get; set; }
         public Dictionary<String, Profil> profil;
 
@@ -30,25 +31,34 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (this.NavigationContext.QueryString.ContainsKey("uid"))
-                this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
-
             if (this.NavigationContext.QueryString.ContainsKey("accid"))
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
-
-            /*EIP.Views.ProfilPage.Tab tab = EIP.Views.ProfilPage.Tab.Mur;
-            if (this.NavigationContext.QueryString.ContainsKey("tab"))
-                Enum.TryParse<EIP.
-             * Views.ProfilPage.Tab>(this.NavigationContext.QueryString["tab"].ToString(), out tab);
-            */
-
-            if (Connexion.accounts[accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Twitter)
+            if (this.accountID > 0)
             {
-                photosBtn.Visibility = System.Windows.Visibility.Collapsed;
-                videosBtn.Visibility = System.Windows.Visibility.Collapsed;
-            }
+                if (Connexion.accounts[this.accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Flickr)
+                {
+                    if (this.NavigationContext.QueryString.ContainsKey("uid"))
+                        this.uidFlickr = this.NavigationContext.QueryString["uid"];
+                }
+                else
+                {
+                    if (this.NavigationContext.QueryString.ContainsKey("uid"))
+                        this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
+                }
 
-            LoadMenuProfil();
+                if (Connexion.accounts[accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Twitter)
+                {
+                    photosBtn.Visibility = System.Windows.Visibility.Collapsed;
+                    videosBtn.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else if (Connexion.accounts[accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Flickr)
+                {
+                    wallBtn.Visibility = System.Windows.Visibility.Collapsed;
+                    videosBtn.Visibility = System.Windows.Visibility.Collapsed;
+                }
+
+                LoadMenuProfil();
+            }
         }
 
         private void LoadMenuProfil()
@@ -58,20 +68,40 @@ namespace EIP.Views
             {
                 case EIP.ServiceEIP.Account.TypeAccount.Facebook:
                     AccountFacebookLight accFB = (AccountFacebookLight)Connexion.accounts[accountID];
+                    accFB.GetUserInfoCalled -= new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
                     accFB.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
                     accFB.GetUserInfo(uid, AccountFacebookLight.GetUserInfoFrom.Profil);
 
                     break;
                 case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                     AccountTwitterLight accTW = (AccountTwitterLight)Connexion.accounts[accountID];
+                    accTW.GetUserInfoCalled -= new AccountTwitterLight.OnGetUserInfoCompleted(accTW_GetUserInfoCalled);
                     accTW.GetUserInfoCalled += new AccountTwitterLight.OnGetUserInfoCompleted(accTW_GetUserInfoCalled);
                     accTW.GetUserInfo(this.uid);
+                    break;
+                case ServiceEIP.Account.TypeAccount.Flickr:
+                    AccountFlickrLight accFK = (AccountFlickrLight)Connexion.accounts[accountID];
+                    accFK.GetUserInfoCalled -= new AccountFlickrLight.OnGetUserInfoCompleted(accFK_GetUserInfoCalled);
+                    accFK.GetUserInfoCalled += new AccountFlickrLight.OnGetUserInfoCompleted(accFK_GetUserInfoCalled);
+                    accFK.GetUserInfo(this.uidFlickr);
                     break;
                 default:
                     break;
             }
 
 
+        }
+
+        void accFK_GetUserInfoCalled(FlickrNet.Person user)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                if (user != null)
+                {
+                    this.Title = "Profil de " + user.UserName;
+                    photoUser.UriSource = new Uri(user.BuddyIconUrl, UriKind.Absolute);
+                }
+            });
         }
 
         void accTW_GetUserInfoCalled(ServiceEIP.TwitterUser user)
@@ -103,12 +133,12 @@ namespace EIP.Views
 
         private void infosBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/ProfilInfos/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));          
+            this.NavigationService.Navigate(new Uri("/ProfilInfos/" + (this.uid.ToString() != "0" ? this.uid.ToString() : this.uidFlickr) + "/Account/" + this.accountID, UriKind.Relative)); ;
         }
 
         private void photosBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/ProfilPhotos/" + this.uid + "/Account/" + this.accountID, UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("/ProfilPhotos/" + (this.uid.ToString() != "0" ? this.uid.ToString() : this.uidFlickr) + "/Account/" + this.accountID, UriKind.Relative));
         }
 
         private void videosBtn_Click(object sender, RoutedEventArgs e)

@@ -13,7 +13,9 @@ using EIP.ServiceEIP;
 
 namespace EIP
 {
-    //[KnownTypeAttribute(typeof(Account))]
+    [KnownTypeAttribute(typeof(AccountFacebookLight))]
+    [KnownTypeAttribute(typeof(AccountTwitterLight))]
+    [KnownTypeAttribute(typeof(AccountFlickrLight))]
     public class AccountLight
     {
         public Account account { get; set; }

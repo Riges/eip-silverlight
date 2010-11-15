@@ -35,7 +35,7 @@ namespace EIP.Views
                         break;
 
                     case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                    case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                    case EIP.ServiceEIP.Account.TypeAccount.Flickr:
                     default:
                         break;
                 }
@@ -73,7 +73,7 @@ namespace EIP.Views
                     case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                         //((AccountTwitterLight)Connexion.accounts[accountId]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                         break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                    case EIP.ServiceEIP.Account.TypeAccount.Flickr:
                         break;
                 }
             }
@@ -108,7 +108,7 @@ namespace EIP.Views
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 ((AccountTwitterLight)account.Value).LoadDirectMessages();
                                 break;
-                            case EIP.ServiceEIP.Account.TypeAccount.Myspace:
+                            case EIP.ServiceEIP.Account.TypeAccount.Flickr:
                                 break;
                         }
                     }

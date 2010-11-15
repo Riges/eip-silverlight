@@ -127,30 +127,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="testfb">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="testfbResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testfbResult" nillable="true" type="q7:AccountFacebook" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="testT">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="testTResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testTResult" nillable="true" type="q8:AccountTwitter" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetRequestToken">
     <xs:complexType>
       <xs:sequence />
@@ -174,7 +150,7 @@
   <xs:element name="LoadHomeStatusesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadHomeStatusesResult" nillable="true" type="q9:ArrayOfTwitterStatus" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadHomeStatusesResult" nillable="true" type="q7:ArrayOfTwitterStatus" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -190,7 +166,7 @@
   <xs:element name="LoadUserStatusesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadUserStatusesResult" nillable="true" type="q10:ArrayOfTwitterStatus" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadUserStatusesResult" nillable="true" type="q8:ArrayOfTwitterStatus" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -241,7 +217,7 @@
   <xs:element name="GetUserInfosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetUserInfosResult" nillable="true" type="q11:TwitterUser" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetUserInfosResult" nillable="true" type="q9:TwitterUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -256,7 +232,7 @@
   <xs:element name="GetFiendsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetFiendsResult" nillable="true" type="q12:ArrayOfTwitterUser" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="GetFiendsResult" nillable="true" type="q10:ArrayOfTwitterUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -286,7 +262,55 @@
   <xs:element name="LoadDirectMessagesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadDirectMessagesResult" nillable="true" type="q13:ArrayOfTwitterDirectMessage" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" minOccurs="0" name="LoadDirectMessagesResult" nillable="true" type="q11:ArrayOfTwitterDirectMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testfb">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testfbResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testfbResult" nillable="true" type="q12:AccountFacebook" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testT">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testTResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testTResult" nillable="true" type="q13:AccountTwitter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testFl">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testFlResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/EIPLibrary" minOccurs="0" name="testFlResult" nillable="true" type="q14:AccountFlickr" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestAddAccount">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TestAddAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TestAddAccountResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

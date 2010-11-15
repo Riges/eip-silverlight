@@ -20,6 +20,7 @@ using System.Windows.Data;
 using EIP.ServiceEIP;
 using EIP.Objects;
 using EIP.Views.Controls.Feeds;
+using System.Globalization;
 
 
 namespace EIP.Views.Controls
@@ -135,7 +136,10 @@ namespace EIP.Views.Controls
 
                             DateTime dateTime = topic.date;// new DateTime(1970, 1, 1, 0, 0, 0, 0);
                             // dateTime = dateTime.AddSeconds(post.post.created_time);//.AddHours(1);
-                            dateTimeFeed.Text = Utils.Day2Jour(dateTime) + ", à " + dateTime.ToShortTimeString();
+                            dateTimeFeed.Text = Utils.Day2Jour(dateTime.ToUniversalTime()) + ", à " + dateTime.ToUniversalTime().ToShortTimeString();
+
+                            //dateTimeFeed.Text = dateTime.ToString("dddd, dd/mm/yyyy HH:mm", new CultureInfo("fr-FR"));
+        
 
                             if (post.post.attachment.icon != "" && post.post.attachment.icon != null)
                             {
@@ -162,17 +166,17 @@ namespace EIP.Views.Controls
                                     content.Children.Add(statut);
                                     break;
                                 case "80":
-                                    /*LienFeed lienFeed = new LienFeed(post);
-                                    content.Children.Add(lienFeed);
+                                    VideoFeed videoFeed = new VideoFeed(post);
+                                    content.Children.Add(videoFeed);
                                     
-                                    break;*/
+                                    break;
                                 case "237":
                                     LienFeed appliFeed = new LienFeed(post);
                                     content.Children.Add(appliFeed);
                                     break;
                                 case "128":
-                                    VideoFeed videoFeed = new VideoFeed();
-                                    content.Children.Add(videoFeed);
+                                    VideoFeed videoFeedY = new VideoFeed();
+                                    content.Children.Add(videoFeedY);
                                     break;
                                 case "247":
                                     if (post.post.attachment.icon != "")
@@ -259,7 +263,7 @@ namespace EIP.Views.Controls
                             //message.Text = status.Text;
                             
                             //dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(2)) + ", à " + status.CreatedDate.AddHours(2).ToShortTimeString();
-                            dateTimeFeed.Text = Utils.Day2Jour(topic.date) + ", à " + topic.date.ToShortTimeString();
+                            dateTimeFeed.Text = Utils.Day2Jour(topic.date.ToUniversalTime()) + ", à " + topic.date.ToUniversalTime().ToShortTimeString();
 
                             string source = status.Source;
                             if (source != "")
@@ -291,7 +295,7 @@ namespace EIP.Views.Controls
                         //}
 
                         break;
-                    case Account.TypeAccount.Myspace:
+                    case Account.TypeAccount.Flickr:
                         break;
                     default:
                         break;

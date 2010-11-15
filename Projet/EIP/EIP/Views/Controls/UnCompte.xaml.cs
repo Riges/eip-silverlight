@@ -65,13 +65,26 @@ namespace EIP.Views.Controls
                  }
                     imgIcone = "../../Assets/Images/twitter-icon.png";
                     break;
+                case Account.TypeAccount.Flickr:
+                    if (((AccountFlickrLight)oneAccount).userInfos != null)
+                    {
+
+                        if (((AccountFlickrLight)(oneAccount)).userInfos.BuddyIconUrl != null)
+                            imgAcc = ((AccountFlickrLight)(oneAccount)).userInfos.BuddyIconUrl;
+                    }
+                    else
+                    {
+                        ((AccountFlickrLight)oneAccount).GetUserInfoCalled += new AccountFlickrLight.OnGetUserInfoCompleted(UnCompte_GetUserInfoCalled);
+                        ((AccountFlickrLight)oneAccount).GetUserInfo(((AccountFlickr)(oneAccount.account)).userIDstr);
+                    }
+                    imgIcone = "../../Assets/Images/flickr-icon.png";
+                    break;
                 default:
                     break;
 	        }
             LoadAccount(oneAccount, oneAccount.account.typeAccount, oneAccount.account.name, imgIcone, imgAcc, status);
         }
 
-  
 
         private void LoadAccount(AccountLight oneAccount, Account.TypeAccount typeAccount, string userName, string imgIcone, string imgAcc, string status)
         {
@@ -90,10 +103,15 @@ namespace EIP.Views.Controls
 
             accountName.Content = userName;
 
-            accountName.NavigateUri = new Uri("/ProfilInfos/" + oneAccount.account.userID + "/Account/" + oneAccount.account.accountID, UriKind.Relative);
-            
+            if(typeAccount == Account.TypeAccount.Flickr)
+                accountName.NavigateUri = new Uri("/ProfilInfos/" + ((AccountFlickr)oneAccount.account).userIDstr + "/Account/" + oneAccount.account.accountID, UriKind.Relative);
+            else
+                accountName.NavigateUri = new Uri("/ProfilInfos/" + oneAccount.account.userID + "/Account/" + oneAccount.account.accountID, UriKind.Relative);
 
-            imgAccount.Name = "img" + oneAccount.account.userID;
+            if (oneAccount.account.typeAccount == Account.TypeAccount.Flickr)
+                imgAccount.Name = "img" + ((AccountFlickr)oneAccount.account).userIDstr;
+            else
+                imgAccount.Name = "img" + oneAccount.account.userID;
 
             imgDel.Source = new BitmapImage(new Uri("../../Assets/Images/bullet_delete.png", UriKind.Relative));
             imgDel.DataContext = oneAccount.account.accountID;
@@ -131,6 +149,18 @@ namespace EIP.Views.Controls
                     }
                 }
             });
+        }
+
+        void UnCompte_GetUserInfoCalled(FlickrNet.Person user)
+        {
+            this.Dispatcher.BeginInvoke(() =>
+            {
+                if (((AccountFlickr)(this.account.account)).userIDstr == user.UserId)
+                {
+                    if (user.BuddyIconUrl != null && user.BuddyIconUrl != "")
+                        ((Image)LayoutRoot.FindName("img" + user.UserId)).Source = new BitmapImage(new Uri(user.BuddyIconUrl, UriKind.Absolute));
+                }
+           });
         }
 
         private void imgDel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

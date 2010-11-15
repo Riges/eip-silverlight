@@ -53,7 +53,7 @@ namespace EIP.Views
 
                         case Account.TypeAccount.Twitter:
                             break;
-                        case Account.TypeAccount.Myspace:
+                        case Account.TypeAccount.Flickr:
                             break;
                         default:
                             continue;
@@ -87,7 +87,7 @@ namespace EIP.Views
 
                         case Account.TypeAccount.Twitter:
                             break;
-                        case Account.TypeAccount.Myspace:
+                        case Account.TypeAccount.Flickr:
                             break;
                         default:
                             break;
@@ -131,7 +131,7 @@ namespace EIP.Views
 
                     case Account.TypeAccount.Twitter:
                         break;
-                    case Account.TypeAccount.Myspace:
+                    case Account.TypeAccount.Flickr:
                         break;
                     default:
                         break;

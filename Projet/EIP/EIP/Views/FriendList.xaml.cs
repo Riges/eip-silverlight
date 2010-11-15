@@ -15,6 +15,7 @@ using Facebook.Schema;
 using EIP.ServiceEIP;
 using EIP.Views.Controls;
 using System.Windows.Media.Imaging;
+using FlickrNet;
 
 namespace EIP.Views
 {
@@ -55,26 +56,24 @@ namespace EIP.Views
                     switch (account.Value.account.typeAccount)
                     {
                         case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                            ((AccountFacebookLight)account.Value).GetFriendsCalled -= new AccountFacebookLight.OnGetFriendsCompleted(FriendList_GetFriendsCalled);
                             ((AccountFacebookLight)account.Value).GetFriendsCalled += new AccountFacebookLight.OnGetFriendsCompleted(FriendList_GetFriendsCalled);
                             ((AccountFacebookLight)account.Value).LoadFriends();
 
                             break;
                         case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                            List<TwitterUser> friendsTW = ((AccountTwitterLight)account.Value).friends;
-                            foreach (TwitterUser toto in friendsTW)
-                            {
-                                if (friends.Keys.Contains(toto.Name))
-                                {
-                                    if (friends[toto.Name].userTW == null)
-                                        friends[toto.Name].userTW = toto;
-                                }
-                                else
-                                {
-                                    Friend titi = new Friend();
-                                    titi.userTW = toto;
-                                    friends.Add(toto.Name, titi);
-                                }
-                            }
+                            AccountTwitterLight accTW = (AccountTwitterLight)account.Value;
+                            accTW.GetFriendsCalled -= new AccountTwitterLight.OnGetFriendsCompleted(accTW_GetFriendsCalled);
+                            accTW.GetFriendsCalled += new AccountTwitterLight.OnGetFriendsCompleted(accTW_GetFriendsCalled);
+                            accTW.LoadFriends();
+
+                            break;
+                        case Account.TypeAccount.Flickr:
+                            AccountFlickrLight accFK = (AccountFlickrLight)account.Value;
+                            accFK.GetFriendsCalled -= new AccountFlickrLight.OnGetFriendsCompleted(accFK_GetFriendsCalled);
+                            accFK.GetFriendsCalled += new AccountFlickrLight.OnGetFriendsCompleted(accFK_GetFriendsCalled);
+                            accFK.GetFriends();
+
                             break;
                         default:
                             break;
@@ -82,6 +81,34 @@ namespace EIP.Views
             }
             
         }
+
+        void accTW_GetFriendsCalled(List<TwitterUser> friends, long accountID)
+        {
+            foreach (TwitterUser toto in friends)
+            {
+                if (this.friends.Keys.Contains(toto.ScreenName))
+                {
+                    if (this.friends[toto.ScreenName].userTW == null)
+                        this.friends[toto.ScreenName].userTW = toto;
+                }
+                else
+                {
+                    Friend titi = new Friend();
+                    titi.accountID = accountID;
+                    titi.userTW = toto;
+                    this.friends.Add(toto.ScreenName, titi);
+                }
+            }
+
+            this.friends = this.friends.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            Dispatcher.BeginInvoke(() =>
+            {
+                LoadDisplay();
+            });
+        }
+
+        
 
         private void FriendList_GetFriendsCalled(List<user> friendsFB, long accountID)
         {
@@ -103,12 +130,40 @@ namespace EIP.Views
                 }
             }
 
-            friends = friends.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            this.friends = this.friends.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             Dispatcher.BeginInvoke(() =>
                 {
                     LoadDisplay();
                 });
+        }
+
+        void accFK_GetFriendsCalled(FlickrNet.ContactCollection friends, long accountID)
+        {
+            foreach (Contact toto in friends)
+            {
+                string key = toto.UserName; // (toto.proxied_email != null) ? toto.proxied_email : 
+
+                if (this.friends.Keys.Contains(key))
+                {
+                    if (this.friends[key].userFK == null)
+                        this.friends[key].userFK = toto;
+                }
+                else
+                {
+                    Friend titi = new Friend();
+                    titi.accountID = accountID;
+                    titi.userFK = toto;
+                    this.friends.Add(key, titi);
+                }
+            }
+
+            this.friends = this.friends.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            Dispatcher.BeginInvoke(() =>
+            {
+                LoadDisplay();
+            });
         }
 
         private void LoadDisplay()

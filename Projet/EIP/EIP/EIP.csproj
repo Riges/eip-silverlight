@@ -62,6 +62,9 @@
     <Reference Include="Facebook.Silverlight">
       <HintPath>Lib\Facebook.Silverlight.dll</HintPath>
     </Reference>
+    <Reference Include="FlickrNetSilverlight">
+      <HintPath>Lib\FlickrNetSilverlight.dll</HintPath>
+    </Reference>
     <Reference Include="Hammock.Silverlight">
       <HintPath>Lib\Hammock.Silverlight.dll</HintPath>
     </Reference>
@@ -105,6 +108,7 @@
     </Compile>
     <Compile Include="Objects\Account.cs" />
     <Compile Include="Objects\AccountFacebook.cs" />
+    <Compile Include="Objects\AccountFlickr.cs" />
     <Compile Include="Objects\AlbumToImageConverter.cs" />
     <Compile Include="Objects\Connexion.cs" />
     <Compile Include="Objects\AccountTwitter.cs" />
@@ -528,6 +532,9 @@
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountFacebook.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountFlickr.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountTwitter.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -610,6 +617,7 @@
     </None>
     <Resource Include="Assets\Images\home-icone.png" />
     <Resource Include="Assets\Images\users.png" />
+    <Resource Include="Assets\Images\flickr-icon.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">

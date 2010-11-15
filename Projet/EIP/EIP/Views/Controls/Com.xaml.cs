@@ -62,7 +62,7 @@ namespace EIP.Views.Controls
 
             if (com.text != "")
             {
-                foreach (UIElement element in Utils.LoadMessage(com.text, Resources))
+                foreach (UIElement element in Utils.LoadMessage(com.text))
                     content.Children.Add(element);
             }
 

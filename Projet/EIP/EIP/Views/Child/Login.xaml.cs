@@ -89,7 +89,7 @@ namespace EIP.Views.Child
                         mdpBox.Visibility = System.Windows.Visibility.Visible;
                     }
                     break;
-                case Account.TypeAccount.Myspace:
+                case Account.TypeAccount.Flickr:
                     break;
                 default:
                     break;

@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using Facebook.Schema;
+using FlickrNet;
 
 namespace EIP.Objects
 {
@@ -23,25 +24,34 @@ namespace EIP.Objects
         {
             BitmapImage bt = new BitmapImage();
 
-            album album = value as album;
-            if (album.aid != null && album.aid != "")
+
+            if (value.GetType() == typeof(album))
             {
-                foreach (System.Collections.Generic.KeyValuePair<long, AccountLight> account in Connexion.accounts)
+                album album = value as album;
+                if (album.aid != null && album.aid != "")
                 {
-                    if (account.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook)
+                    foreach (System.Collections.Generic.KeyValuePair<long, AccountLight> account in Connexion.accounts)
                     {
-                        AccountFacebookLight accFb = ((AccountFacebookLight)account.Value);
-                        if (accFb.photos.ContainsKey(album.aid))
+                        if (account.Value.account.typeAccount == ServiceEIP.Account.TypeAccount.Facebook)
                         {
-                            if (accFb.photos[album.aid].ContainsKey(album.cover_pid))
+                            AccountFacebookLight accFb = ((AccountFacebookLight)account.Value);
+                            if (accFb.photos.ContainsKey(album.aid))
                             {
-                                bt = new BitmapImage(new Uri(accFb.photos[album.aid][album.cover_pid].src_big, UriKind.Absolute));
+                                if (accFb.photos[album.aid].ContainsKey(album.cover_pid))
+                                {
+                                    bt = new BitmapImage(new Uri(accFb.photos[album.aid][album.cover_pid].src_big, UriKind.Absolute));
+                                }
                             }
                         }
+
                     }
 
                 }
-                
+            }
+            else if (value.GetType() == typeof(Photoset))
+            {
+                Photoset album = value as Photoset;
+                bt = new BitmapImage(new Uri(album.PhotosetSquareThumbnailUrl, UriKind.Absolute));
             }
 
 

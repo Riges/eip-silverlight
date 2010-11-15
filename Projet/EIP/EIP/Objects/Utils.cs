@@ -159,8 +159,9 @@ namespace EIP.Objects
             return mois;
         }
 
-        public static List<UIElement> LoadMessage(string msg, ResourceDictionary Resources)
+        public static List<UIElement> LoadMessage(string msg)
         {
+            ResourceDictionary Resources = App.Current.Resources;
             List<UIElement> list = new List<UIElement>();
             msg = msg.Replace("\n", " ");
             char[] charTab = new char[1];
@@ -176,8 +177,8 @@ namespace EIP.Objects
                         theMot = "http://" + mot;
                     theMot = theMot.Replace(".co..", ".com").Replace(".c..", ".com");
                     HyperlinkButton link = new HyperlinkButton();
-                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
-                    link.Foreground = new SolidColorBrush(Colors.White);
+                    link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
+                    //link.Foreground = new SolidColorBrush(Colors.White);
                     try
                     {
                         link.NavigateUri = new Uri(theMot, UriKind.Absolute);
@@ -193,8 +194,8 @@ namespace EIP.Objects
                 else if (mot.StartsWith("@"))
                 {
                     HyperlinkButton link = new HyperlinkButton();
-                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
-                    link.Foreground = new SolidColorBrush(Colors.White);
+                    link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
+                    //link.Foreground = new SolidColorBrush(Colors.White);
                     if (mot.EndsWith("!"))
                         link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
                     else
@@ -206,8 +207,8 @@ namespace EIP.Objects
                 else if (mot.StartsWith("#"))
                 {
                     HyperlinkButton link = new HyperlinkButton();
-                    link.Style = Resources["HyperlinkButtonStyle"] as Style;
-                    link.Foreground = new SolidColorBrush(Colors.White);
+                    link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
+                    //link.Foreground = new SolidColorBrush(Colors.White);
                     link.NavigateUri = new Uri("http://twitter.com/#search?q=" + mot, UriKind.Absolute);
                     link.Content = mot + " ";
                     link.TargetName = "_blank";

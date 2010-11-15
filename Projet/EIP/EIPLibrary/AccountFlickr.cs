@@ -7,24 +7,18 @@ using System.ServiceModel;
 
 namespace EIPLibrary
 {
-
     [Serializable]
     [DataContract]
     [ServiceContract]
-    public class AccountFacebook : Account
+    public class AccountFlickr : Account
     {
         [DataMember]
-        public bool sessionExpires { get; set; }
+        public string token { get; set; }
 
         [DataMember]
-        public string sessionKey { get; set; }
+        public string userIDstr { get; set; }
 
-        [DataMember]
-        public string sessionSecret { get; set; }
-
-
-
-        public AccountFacebook()
+        public AccountFlickr()
         {
 
         }

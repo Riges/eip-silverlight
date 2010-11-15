@@ -63,18 +63,6 @@
   <wsdl:message name="IServiceEIP_DeleteAccount_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteAccountResponse" />
   </wsdl:message>
-  <wsdl:message name="IServiceEIP_testfb_InputMessage">
-    <wsdl:part name="parameters" element="tns:testfb" />
-  </wsdl:message>
-  <wsdl:message name="IServiceEIP_testfb_OutputMessage">
-    <wsdl:part name="parameters" element="tns:testfbResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServiceEIP_testT_InputMessage">
-    <wsdl:part name="parameters" element="tns:testT" />
-  </wsdl:message>
-  <wsdl:message name="IServiceEIP_testT_OutputMessage">
-    <wsdl:part name="parameters" element="tns:testTResponse" />
-  </wsdl:message>
   <wsdl:message name="IServiceEIP_GetRequestToken_InputMessage">
     <wsdl:part name="parameters" element="tns:GetRequestToken" />
   </wsdl:message>
@@ -129,6 +117,30 @@
   <wsdl:message name="IServiceEIP_LoadDirectMessages_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoadDirectMessagesResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_testfb_InputMessage">
+    <wsdl:part name="parameters" element="tns:testfb" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_testfb_OutputMessage">
+    <wsdl:part name="parameters" element="tns:testfbResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_testT_InputMessage">
+    <wsdl:part name="parameters" element="tns:testT" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_testT_OutputMessage">
+    <wsdl:part name="parameters" element="tns:testTResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_testFl_InputMessage">
+    <wsdl:part name="parameters" element="tns:testFl" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_testFl_OutputMessage">
+    <wsdl:part name="parameters" element="tns:testFlResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_TestAddAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestAddAccount" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_TestAddAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestAddAccountResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServiceEIP">
     <wsdl:operation name="IsUp">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/IsUp" message="tns:IServiceEIP_IsUp_InputMessage" />
@@ -166,14 +178,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/DeleteAccount" message="tns:IServiceEIP_DeleteAccount_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/DeleteAccountResponse" message="tns:IServiceEIP_DeleteAccount_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="testfb">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testfb" message="tns:IServiceEIP_testfb_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testfbResponse" message="tns:IServiceEIP_testfb_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="testT">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testT" message="tns:IServiceEIP_testT_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testTResponse" message="tns:IServiceEIP_testT_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetRequestToken">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetRequestToken" message="tns:IServiceEIP_GetRequestToken_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetRequestTokenResponse" message="tns:IServiceEIP_GetRequestToken_OutputMessage" />
@@ -209,6 +213,22 @@
     <wsdl:operation name="LoadDirectMessages">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessages" message="tns:IServiceEIP_LoadDirectMessages_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesResponse" message="tns:IServiceEIP_LoadDirectMessages_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="testfb">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testfb" message="tns:IServiceEIP_testfb_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testfbResponse" message="tns:IServiceEIP_testfb_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="testT">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testT" message="tns:IServiceEIP_testT_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testTResponse" message="tns:IServiceEIP_testT_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="testFl">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testFl" message="tns:IServiceEIP_testFl_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testFlResponse" message="tns:IServiceEIP_testFl_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestAddAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/TestAddAccount" message="tns:IServiceEIP_TestAddAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/TestAddAccountResponse" message="tns:IServiceEIP_TestAddAccount_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceEIP" type="tns:IServiceEIP">
@@ -294,24 +314,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="testfb">
-      <soap:operation soapAction="http://tempuri.org/IServiceEIP/testfb" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="testT">
-      <soap:operation soapAction="http://tempuri.org/IServiceEIP/testT" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetRequestToken">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetRequestToken" style="document" />
       <wsdl:input>
@@ -386,6 +388,42 @@
     </wsdl:operation>
     <wsdl:operation name="LoadDirectMessages">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/LoadDirectMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testfb">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/testfb" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testT">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/testT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testFl">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/testFl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestAddAccount">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/TestAddAccount" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -19,16 +19,18 @@ namespace EIP.Views.Controls
         private List<user> mutualFriends;
         private long accountID;
         private long uid;
+        private string uidFlickr;
 
         public UserInfos()
         {
             InitializeComponent();
         }
 
-        public UserInfos(long accountID, long uid)
+        public UserInfos(long accountID, long uid, string uidFlickr)
         {
             this.accountID = accountID;
             this.uid = uid;
+            this.uidFlickr = uidFlickr;
 
             InitializeComponent();
 
@@ -44,11 +46,9 @@ namespace EIP.Views.Controls
             {
                 case EIP.ServiceEIP.Account.TypeAccount.Facebook:
                     AccountFacebookLight accFB = (AccountFacebookLight)Connexion.accounts[accountID];
+                    accFB.GetUserInfoCalled -= new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
                     accFB.GetUserInfoCalled += new AccountFacebookLight.OnGetUserInfoCompleted(acc_GetUserInfoCalled);
                     accFB.GetUserInfo(this.uid, AccountFacebookLight.GetUserInfoFrom.Profil);
-
-                    //acc.LoadFriendsOfCalled += new AccountFacebookLight.OnLoadFriendsOfCompleted(acc_LoadFriendsOfCalled);
-                    //acc.LoadFriendsOf(uid);
 
                     accFB.LoadMutualFriendsCalled += new AccountFacebookLight.OnLoadMutualFriendsCompleted(acc_LoadMutualFriendsCalled);
                     accFB.LoadMutualFriends(uid);
@@ -56,15 +56,23 @@ namespace EIP.Views.Controls
                     break;
                 case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                     AccountTwitterLight accTW = (AccountTwitterLight)Connexion.accounts[accountID];
+                    accTW.GetUserInfoCalled -= new AccountTwitterLight.OnGetUserInfoCompleted(accTW_GetUserInfoCalled);
                     accTW.GetUserInfoCalled += new AccountTwitterLight.OnGetUserInfoCompleted(accTW_GetUserInfoCalled);
                     accTW.GetUserInfo(this.uid);
 
-
+                    break;
+                case ServiceEIP.Account.TypeAccount.Flickr:
+                    AccountFlickrLight accFK = (AccountFlickrLight)Connexion.accounts[accountID];
+                    accFK.GetUserInfoCalled -= new AccountFlickrLight.OnGetUserInfoCompleted(accFK_GetUserInfoCalled);
+                    accFK.GetUserInfoCalled += new AccountFlickrLight.OnGetUserInfoCompleted(accFK_GetUserInfoCalled);
+                    accFK.GetUserInfo(this.uidFlickr);
                     break;
                 default:
                     break;
             }
         }
+
+        
 
         void accTW_GetUserInfoCalled(ServiceEIP.TwitterUser user)
         {
@@ -96,8 +104,6 @@ namespace EIP.Views.Controls
                   }
               });
         }
-
-
 
         void acc_GetUserInfoCalled(user monUser)
         {
@@ -275,6 +281,35 @@ namespace EIP.Views.Controls
 
 
                 });
+        }
+
+        void accFK_GetUserInfoCalled(FlickrNet.Person user)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                busyIndicator.IsBusy = false;
+
+                if (user != null)
+                {
+                    pseudoUser.Text = user.UserName;
+                    statusUser.Text = user.RealName;
+
+                    if (user.Location == null || user.Location == "")
+                    {
+                        this.villeActuelleLabel.Visibility = System.Windows.Visibility.Collapsed;
+                        this.villeActuelle.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        this.villeActuelle.Text = user.Location;
+
+                        this.villeActuelleLabel.Visibility = System.Windows.Visibility.Visible;
+                        this.villeActuelle.Visibility = System.Windows.Visibility.Visible;
+                    }
+
+                    LayoutRoot.Visibility = System.Windows.Visibility.Visible;
+                }
+            });
         }
 
         void acc_LoadMutualFriendsCalled(long uid, List<user> friendsFB)

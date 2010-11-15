@@ -10,6 +10,7 @@ namespace EIPLibrary
     //[SerializableAttribute()]
     [KnownType(typeof(AccountFacebook))]
     [KnownType(typeof(AccountTwitter))]
+    [KnownType(typeof(AccountFlickr))]
     [ServiceContract]
     [Serializable]
     [DataContract]
@@ -35,7 +36,7 @@ namespace EIPLibrary
         {
             Facebook,
             Twitter,
-            Myspace
+            Flickr
         }
 
        

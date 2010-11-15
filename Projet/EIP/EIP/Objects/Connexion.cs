@@ -24,6 +24,8 @@ using System.Windows.Navigation;
 using EIP.Views;
 using System.ComponentModel;
 
+using FlickrNet;
+
 //using TweetSharp.Fluent;
 //using TweetSharp.Extensions;
 //using TweetSharp.Model;
@@ -35,6 +37,7 @@ using System.ComponentModel;
 //using TweetSharp;
 using EIP.Views.Child;
 using EIP.Objects;
+using System.Windows.Browser;
 //using TweetSharp.Fluent;
 
 
@@ -46,7 +49,8 @@ namespace EIP
     {
         //Objets Facebook
         public static Api facebookAPI { get; set; }
-        private static BrowserSession browserSession { get; set; }
+        public static BrowserSession browserSession { get; set; }
+        public static Flickr flickr { get; set; }
 
         //api key Facebook
         public static string ApplicationKey = "";// = "e0c1f6b95b88d23bfc9727e0ea90602a";
@@ -130,6 +134,7 @@ namespace EIP
             {
                 ApplicationKey = e.Result;
                 GetSession();
+                GetFrob();
             }
         }
 
@@ -149,7 +154,20 @@ namespace EIP
         public static void StartDisplay()
         {
             Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
-            listeComptes.Reload();
+            listeComptes.Reload();      
+        }
+
+        public static void GetFrob()
+        {
+            string frob = string.Empty;
+            if (HtmlPage.Document.QueryString.ContainsKey("frob"))
+                frob = HtmlPage.Document.QueryString["frob"];
+
+            if (frob != string.Empty)
+            {
+                flickr = new Flickr("de649ab5a4af089ff78ce07576f0477f", "3d2ad5bfaf480eae");
+                FlickrGetFrob_Completed(frob);
+            }
         }
 
         public static void Loading(bool isLoading)
@@ -166,45 +184,6 @@ namespace EIP
 
         }
 
-        /* LoadFromStorage
-        private static void LoadFromStorage()
-        {
-            storageAccounts = new List<AccountLight>();
-            foreach (string key in storage.Keys)
-            {
-                if (key.StartsWith("Account-"))
-                {
-                    storageAccounts.Add((AccountLight)storage[key]);
-                }
-            }
-
-            GetSession();
-
-            if (currentAccount != null)
-            {
-                if (currentAccount.account.userID != 0)
-                {
-                    var theAccountID = from AccountLight account in storageAccounts
-                                       where account.account.userID == currentAccount.account.userID
-                                       select account.account.accountID;
-                    if (theAccountID.Count() > 0)
-                    {
-                        var theAccounts = from AccountLight account in storageAccounts
-                                          where account.account.accountID == theAccountID.First()
-                                          select account;
-
-                        accounts = new Dictionary<long, AccountLight>();
-                        foreach (AccountLight acc in theAccounts)
-                        {
-                            //accounts.Add(acc);
-                        }
-                    }
-                }
-            }
-
-        }
-         * */
-
         private static void GetSession()
         {
             bool showLogin = true;
@@ -218,7 +197,6 @@ namespace EIP
                         showLogin = false;
                         serviceEIP.GetAccountsByGroupIDCompleted += new EventHandler<GetAccountsByGroupIDCompletedEventArgs>(serviceEIP_GetAccountsByGroupIDCompleted);
                         serviceEIP.GetAccountsByGroupIDAsync(Convert.ToInt64(storage["groupID-" + ApplicationKey].ToString()));
-                        
                     }
                 }
             }
@@ -260,35 +238,14 @@ namespace EIP
                 storage["Account-" + ApplicationKey +"-" + acc.Value.account.accountID] = acc.Value.account;
             }
             storage.Save();
-            
-
-            //storage["CurrentAccount"] = currentAccount;
-            //storage["CurrentAccount"] = "Account-" + currentAccount.account.typeAccount.ToString() + "-" + currentAccount.account.userID;
         }
 
-        /*
-        public static void SaveAccount(AccountLight accountToSave)
+        private static void DestroySession()
         {
-            switch (accountToSave.account.typeAccount)
-            {
-                case Account.TypeAccount.Facebook:
-                    storage["Account-" + accountToSave.account.typeAccount.ToString() + "-" + accountToSave.account.userID] = accountToSave;
-                    break;
-                case Account.TypeAccount.Twitter:
-                    storage["Account-" + accountToSave.account.typeAccount.ToString() + "-" + accountToSave.account.userID] = accountToSave;
-                    break;
-                case Account.TypeAccount.Myspace:
-                    break;
-                default:
-                    break;
-            }
-            if (addAccount)
-                serviceEIP.AddAccountAsync(accountToSave.account);
-            else
-                serviceEIP.SaveAccountAsync(accountToSave.account);
-            
+            accounts = null;
+            storage.Remove("groupID-" + ApplicationKey);
+            storage.Save();
         }
-         * */
 
         static void serviceEIP_GetAccountsByGroupIDCompleted(object sender, GetAccountsByGroupIDCompletedEventArgs e)
         {
@@ -314,7 +271,11 @@ namespace EIP
                             //accounts.Add(newAccountTwitter);
                             accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
                             break;
-                        case Account.TypeAccount.Myspace:
+                        case Account.TypeAccount.Flickr:
+                            AccountFlickrLight newAccountFlickr = new AccountFlickrLight();
+                            newAccountFlickr.account = oneAccount;
+                            accounts[newAccountFlickr.account.accountID] = newAccountFlickr;
+                            
                             break;
                         default:
                             break;
@@ -324,28 +285,10 @@ namespace EIP
                 SetSession(groupid);
                 Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
                 listeComptes.Reload();
+
+
                 Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
             }
-        }
-
-
-
-        private static void DestroySession()
-        {
-            //storage["CurrentAccount"] = null;
-            //currentAccounts = null;
-            accounts = null;
-            //storage["groupID"] = "0";
-            storage.Remove("groupID");
-            storage.Save();
-            /*foreach (string key in storage.Keys)
-            {
-                if (key.StartsWith("Account-"))
-                {
-                    storage.Remove(key);
-                }
-                   
-            }*/
         }
 
         public static void Login(Account.TypeAccount type, string pseudo, string password)
@@ -378,19 +321,14 @@ namespace EIP
                     serviceEIP.GetAccountsByTwitterAsync(pseudo, password);
                     
                     break;
-                case Account.TypeAccount.Myspace:
-                    break;
+             
                 default:
                     break;
             }
         }
 
-
-
         public static void AddAccount(Account.TypeAccount type)
         {
-            /*listeComptes = listes;
-            contentFrame = frame;*/
             addAccount = true;
             switch (type)
             {
@@ -414,28 +352,62 @@ namespace EIP
                     break;
                 case Account.TypeAccount.Twitter:
 
-                    /*
-                    var requestToken = FluentTwitter.CreateRequest()
-                       .Configuration.UseTransparentProxy(ProxyUrl)
-                       .Authentication.GetRequestToken()
-                       .CallbackTo(TwitterRequestTokenReceived);
-
-                    //requestToken.BeginRequest();
-                    requestToken.BeginRequest();
-                     * 
-                     */
-
                     serviceEIP.GetRequestTokenCompleted += new EventHandler<GetRequestTokenCompletedEventArgs>(serviceEIP_GetRequestTokenCompleted);
                     serviceEIP.GetRequestTokenAsync();
 
+                    break;
+                case Account.TypeAccount.Flickr:
+
+                    Flickr flickr = new Flickr("de649ab5a4af089ff78ce07576f0477f", "3d2ad5bfaf480eae");
 
 
-                    break;
-                case Account.TypeAccount.Myspace:
-                    break;
+                    string urlAuth = flickr.AuthCalcWebUrl(AuthLevel.Delete);
+
+                    HtmlPage.PopupWindow(new Uri(urlAuth, UriKind.Absolute), "_blank", null);
+
+                    break;     
                 default:
                     break;
             }
+        }
+
+        static void FlickrGetFrob_Completed(string frob)
+        {
+            flickr.AuthGetTokenAsync(frob, new Action<FlickrResult<FlickrNet.Auth>>(AuthGetToken_Completed));
+        }
+
+        static void AuthGetToken_Completed(FlickrResult<FlickrNet.Auth> auth)
+        {
+            flickr.AuthToken = auth.Result.Token;
+
+            AccountFlickrLight newAccount = new AccountFlickrLight();
+
+            Random rand = new Random();
+            if (storage.Contains("groupID-" + ApplicationKey))
+            {
+                newAccount.account.groupID = Convert.ToInt64(storage["groupID-" + ApplicationKey]);
+            }
+            else if (accounts.Count > 0)
+            {
+                newAccount.account.groupID = accounts.First().Value.account.groupID;
+            }
+            else
+            {
+                int number = rand.Next(999999999);
+                newAccount.account.groupID = number;// Convert.ToInt64(token.UserId);// (long)tmp.userID;
+            }
+
+            newAccount.account.typeAccount = Account.TypeAccount.Flickr;
+            newAccount.account.userID = rand.Next(999999999);;
+            newAccount.account.name = auth.Result.User.UserName;
+            newAccount.selected = true;
+            ((AccountFlickr)newAccount.account).token = auth.Result.Token;
+            ((AccountFlickr)newAccount.account).userIDstr = auth.Result.User.UserId;
+
+            SetSession(newAccount.account.groupID);
+
+            serviceEIP.AddAccountCompleted += new EventHandler<AddAccountCompletedEventArgs>(serviceEIP_AddAccountCompleted);
+            serviceEIP.AddAccountAsync(newAccount.account, null, null);
         }
 
         static void serviceEIP_GetRequestTokenCompleted(object sender, GetRequestTokenCompletedEventArgs e)
@@ -573,7 +545,12 @@ namespace EIP
                     if (accounts.Count > 0)
                         newAccount.account.groupID = accounts.First().Value.account.groupID;
                     else
-                        newAccount.account.groupID = (long)users[0].uid;
+                    {
+                        Random rand = new Random();
+                        int number = rand.Next(999999999);
+                        newAccount.account.groupID = number;
+                    }
+                        //newAccount.account.groupID = (long)users[0].uid;
 
                     newAccount.account.typeAccount = Account.TypeAccount.Facebook;
                     newAccount.account.userID = facebookAPI.Session.UserId;
@@ -650,8 +627,7 @@ namespace EIP
                             //accounts.Add(newAccountTwitter);
                             accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
                             break;
-                        case Account.TypeAccount.Myspace:
-                            break;
+                        
                         default:
                             break;
                     }
@@ -685,7 +661,7 @@ namespace EIP
                 if (e.Result)
                 {
                     GetSession();
-                    Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+                    Connexion.contentFrame.Navigate(new Uri("/Home?time=00000", UriKind.Relative));
                 }
                 else
                 {

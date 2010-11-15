@@ -14,22 +14,10 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Facebook" />
       <xs:enumeration value="Twitter" />
-      <xs:enumeration value="Myspace" />
+      <xs:enumeration value="Flickr" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Account.TypeAccount" nillable="true" type="tns:Account.TypeAccount" />
-  <xs:complexType name="AccountFacebook">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Account">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="sessionExpires" type="xs:boolean" />
-          <xs:element minOccurs="0" name="sessionKey" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="sessionSecret" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="AccountFacebook" nillable="true" type="tns:AccountFacebook" />
   <xs:complexType name="AccountTwitter">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Account">
@@ -42,6 +30,29 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="AccountTwitter" nillable="true" type="tns:AccountTwitter" />
+  <xs:complexType name="AccountFlickr">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Account">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userIDstr" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountFlickr" nillable="true" type="tns:AccountFlickr" />
+  <xs:complexType name="AccountFacebook">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Account">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessionExpires" type="xs:boolean" />
+          <xs:element minOccurs="0" name="sessionKey" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="sessionSecret" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountFacebook" nillable="true" type="tns:AccountFacebook" />
   <xs:complexType name="ArrayOfAccount">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Account" nillable="true" type="tns:Account" />

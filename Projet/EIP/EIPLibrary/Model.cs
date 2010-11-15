@@ -39,6 +39,7 @@ namespace EIPLibrary
             cmdText.Append(" SELECT * FROM account a ");
             cmdText.Append(" LEFT JOIN  accountfacebook f ON a.accountid=f.accountid ");
             cmdText.Append(" LEFT JOIN  accounttwitter t ON a.accountid=t.accountid ");
+            cmdText.Append(" LEFT JOIN  accountflickr r ON a.accountid=r.accountid ");
             cmdText.Append(" WHERE a.userid=@USERID");
 
             parms.Add(new NpgsqlParameter("@USERID", userID));
@@ -62,6 +63,7 @@ namespace EIPLibrary
             cmdText.Append(" SELECT * FROM account a ");
             cmdText.Append(" LEFT JOIN  accountfacebook f ON a.accountid=f.accountid ");
             cmdText.Append(" LEFT JOIN  accounttwitter t ON a.accountid=t.accountid ");
+            cmdText.Append(" LEFT JOIN  accountflickr r ON a.accountid=r.accountid ");
             cmdText.Append(" WHERE a.groupid = (SELECT groupid FROM account WHERE userid=@USERID)");
             cmdText.Append(" ORDER BY a.name ");
 
@@ -87,6 +89,7 @@ namespace EIPLibrary
             cmdText.Append(" SELECT * FROM account a ");
             cmdText.Append(" LEFT JOIN  accountfacebook f ON a.accountid=f.accountid ");
             cmdText.Append(" LEFT JOIN  accounttwitter t ON a.accountid=t.accountid ");
+            cmdText.Append(" LEFT JOIN  accountflickr r ON a.accountid=r.accountid ");
             cmdText.Append(" WHERE a.groupid = @GROUPID");
             cmdText.Append(" ORDER BY a.name ");
 
@@ -102,12 +105,24 @@ namespace EIPLibrary
                     listAccount.Add(Populate(dtr));
                 }
             }
+
             return listAccount;
         }
 
 
         public static bool AddAccount(Account newAccount)
         {
+            /*newAccount.groupID = 1520509439;
+            newAccount.name = "Pocketino";
+            newAccount.typeAccount = Account.TypeAccount.Flickr;
+            newAccount.userID = 320810043;
+
+            ((AccountFlickr)newAccount).token = "72157625364494246-b9b9bf3f40834c5c";
+            ((AccountFlickr)newAccount).userIDstr = "50704577@N04";
+            */
+            
+
+
             if (newAccount != null)
             {
                 List<NpgsqlParameter> parms = new List<NpgsqlParameter>();
@@ -173,13 +188,24 @@ namespace EIPLibrary
                             parms.Add(new NpgsqlParameter("@TOKENSECRET", ((AccountTwitter)newAccount).tokenSecret));
                             parms.Add(new NpgsqlParameter("@ACCOUNTID", accountID));
                             break;
-                        case Account.TypeAccount.Myspace:
+                        case Account.TypeAccount.Flickr:
+                            cmdText.Append(" INSERT INTO accountflickr ");
+                            cmdText.Append(" (accountid, tokenflickr, useridstr) ");
+                            cmdText.Append(" VALUES ");
+                            cmdText.Append(" (@ACCOUNTID, @TOKEN, @USERIDSTR) ");
+
+                            parms.Add(new NpgsqlParameter("@TOKEN", ((AccountFlickr)newAccount).token));
+                            parms.Add(new NpgsqlParameter("@USERIDSTR", ((AccountFlickr)newAccount).userIDstr));
+                            parms.Add(new NpgsqlParameter("@ACCOUNTID", accountID));
+
                             break;
                         default:
                             break;
                     }
 
-                    int result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
+                    int result = 0;
+                    if (cmdText.ToString() != "")
+                        result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
 
                     if (result > 0)
                     {
@@ -230,8 +256,17 @@ namespace EIPLibrary
                         parms.Add(new NpgsqlParameter("@TOKENSECRET", ((AccountTwitter)newAccount).tokenSecret));
                         parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
                     break;
-                case Account.TypeAccount.Myspace:
+                case Account.TypeAccount.Flickr:
+                    cmdText.Append(" UPDATE accountflickr SET ");
+                    cmdText.Append(" tokenflickr=@TOKEN, useridstr=@USERIDSTR ");
+                    cmdText.Append(" WHERE accountid=@ACCOUNTID ");
+
+                    parms.Add(new NpgsqlParameter("@TOKEN", ((AccountFlickr)newAccount).token));
+                    parms.Add(new NpgsqlParameter("@USERIDSTR", ((AccountFlickr)newAccount).userIDstr));
+                    parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
                     break;
+              
+              
                 default:
                     break;
 
@@ -251,9 +286,8 @@ namespace EIPLibrary
             StringBuilder cmdText = new StringBuilder();
             cmdText.Append(" DELETE FROM accountfacebook WHERE accountid=@ACCOUNTID;");
             cmdText.Append(" DELETE FROM accounttwitter WHERE accountid=@ACCOUNTID;");
+            cmdText.Append(" DELETE FROM accountflickr WHERE accountid=@ACCOUNTID;");
             cmdText.Append(" DELETE FROM account WHERE accountid=@ACCOUNTID;");
-
-
 
             parms.Add(new NpgsqlParameter("@ACCOUNTID", accountID));
 
@@ -284,7 +318,8 @@ namespace EIPLibrary
                     case Account.TypeAccount.Twitter:
                         account = new AccountTwitter();
                         break;
-                    case Account.TypeAccount.Myspace:
+                    case Account.TypeAccount.Flickr:
+                        account = new AccountFlickr();
                         break;
                     default:
                         break;
@@ -323,8 +358,13 @@ namespace EIPLibrary
                         if (DbUtil.HasFieldNotNull(dtr, "tokensecret"))
                             ((AccountTwitter)account).tokenSecret = dtr["tokensecret"].ToString();
                         break;
-                    case Account.TypeAccount.Myspace:
+                    case Account.TypeAccount.Flickr:
+                        if (DbUtil.HasFieldNotNull(dtr, "tokenflickr"))
+                            ((AccountFlickr)account).token = dtr["tokenflickr"].ToString();
+                        if (DbUtil.HasFieldNotNull(dtr, "useridstr"))
+                            ((AccountFlickr)account).userIDstr = dtr["useridstr"].ToString();
                         break;
+                  
                     default:
                         break;
                 }

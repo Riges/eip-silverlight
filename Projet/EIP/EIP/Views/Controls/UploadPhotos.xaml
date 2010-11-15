@@ -92,12 +92,23 @@
         <TextBlock Grid.Row="3" Grid.Column="1" Text="Lieu" VerticalAlignment="Center"></TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="1" Text="Description" VerticalAlignment="Center"></TextBlock>
 
-        <ComboBox Name="comboAlbums" ItemsSource="{Binding}"  Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="comboAlbums_SelectionChanged" >
+        <ComboBox Name="comboAlbums" Visibility="Collapsed" ItemsSource="{Binding}"  Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="comboAlbums_SelectionChanged" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding Converter={StaticResource AlbumToImageConverter}}" Width="16" Margin="0,0,5,0"></Image>
                         <TextBlock Text="{Binding Path=name}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ComboBox Name="comboPhotosSets" Visibility="Collapsed" ItemsSource="{Binding}"  Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectionChanged="comboAlbums_SelectionChanged" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Converter={StaticResource AlbumToImageConverter}}" Width="16" Margin="0,0,5,0"></Image>
+                        <TextBlock Text="{Binding Path=Title}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Windows.Media.Imaging;
 using Facebook.Schema;
+using FlickrNet;
 
 namespace EIP.Views.Controls
 {
@@ -19,6 +20,7 @@ namespace EIP.Views.Controls
     {
         private long accountID;
         private long uid;
+        private string uidFlickr;
         private string aid;
         private List<UpPhoto> photos;
         
@@ -54,6 +56,26 @@ namespace EIP.Views.Controls
             PhotosControl.DataContext = Images;
         }
 
+        public UploadPhotos(long laccountID, string luserID, string laid, FileInfo[] files)
+        {
+            InitializeComponent();
+
+            this.accountID = laccountID;
+            this.uidFlickr = luserID;
+            this.aid = laid;
+
+            LoadAlbumsFlickr();
+
+            List<UpPhoto> Images = new List<UpPhoto>();
+
+            foreach (var fileInfo in files)
+            {
+                Images.Add(new UpPhoto("", fileInfo));
+            }
+
+            PhotosControl.DataContext = Images;
+        }
+
         private void LoadAlbums()
         {
             ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(UploadPhotos_GetAlbumsCalled); 
@@ -77,29 +99,79 @@ namespace EIP.Views.Controls
                             select a;
                 
                 comboAlbums.SelectedItem = (album)al.First();
-
+                comboAlbums.Visibility = System.Windows.Visibility.Visible;
               
                 // imgAlbum.Source = new BitmapImage(new Uri(accountFB.photos[this.album.aid][this.album.cover_pid].src_big, UriKind.Absolute));
             }
         }
 
+        private void LoadAlbumsFlickr()
+        {
+            ((AccountFlickrLight)Connexion.accounts[this.accountID]).GetAlbumsCalled += new AccountFlickrLight.OnGetAlbumsCompleted(UploadPhotos_GetAlbumsCalled);
+            ((AccountFlickrLight)Connexion.accounts[this.accountID]).GetAlbums(this.uidFlickr);
+        }
+
+        void UploadPhotos_GetAlbumsCalled(FlickrNet.PhotosetCollection albumsResult)
+        {
+            if (albumsResult != null && albumsResult.Count > 0)
+            {
+                List<Photoset> albums = new List<Photoset>();
+
+
+                albums.AddRange(albumsResult);
+                albums.Add(new Photoset() { Title = "Nouvel Album" });
+
+
+                comboPhotosSets.DataContext = albums;
+                var al = from a in albums
+                         where a.PhotosetId == this.aid
+                         select a;
+
+                comboPhotosSets.SelectedItem = (Photoset)al.First();
+                comboPhotosSets.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-
-            album album = comboAlbums.SelectedItem as album;
-            this.photos = PhotosControl.DataContext as List<UpPhoto>;
-
-            if (album.aid == null || album.aid == "")
+            if (this.uid > 0)
             {
-                ((AccountFacebookLight)Connexion.accounts[this.accountID]).CreateAlbumCalled += new AccountFacebookLight.CreateAlbumCompleted(UploadPhotos_CreateAlbumCalled);
-                ((AccountFacebookLight)Connexion.accounts[this.accountID]).CreateAlbum(nameAlbum.Text.Trim(), lieuAlbum.Text.Trim(), descriptionAlbum.Text.Trim());
+                album album = comboAlbums.SelectedItem as album;
+                this.photos = PhotosControl.DataContext as List<UpPhoto>;
+
+                if (album.aid == null || album.aid == "")
+                {
+                    ((AccountFacebookLight)Connexion.accounts[this.accountID]).CreateAlbumCalled += new AccountFacebookLight.CreateAlbumCompleted(UploadPhotos_CreateAlbumCalled);
+                    ((AccountFacebookLight)Connexion.accounts[this.accountID]).CreateAlbum(nameAlbum.Text.Trim(), lieuAlbum.Text.Trim(), descriptionAlbum.Text.Trim());
+                }
+                else
+                {
+                    LetsUploadPhotos(album);
+                }
             }
-            else
+            else if (this.uidFlickr != null && this.uidFlickr != "")
+            {
+                Photoset album = comboPhotosSets.SelectedItem as Photoset;
+                this.photos = PhotosControl.DataContext as List<UpPhoto>;
+
+                if (album.PhotosetId == null || album.PhotosetId == "")
+                {
+                    ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbumCalled += new AccountFlickrLight.CreateAlbumCompleted(UploadPhotos_CreateAlbumCalled);
+                    ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbum(nameAlbum.Text.Trim(), lieuAlbum.Text.Trim(), descriptionAlbum.Text.Trim());
+                }
+                else
+                {
+                    LetsUploadPhotos(album);
+                }
+            }
+        }
+
+        void UploadPhotos_CreateAlbumCalled(Photoset album)
+        {
+            Dispatcher.BeginInvoke(() =>
             {
                 LetsUploadPhotos(album);
-            }
-
-            //this.DialogResult = true;
+            });
         }
 
         void UploadPhotos_CreateAlbumCalled(album album)
@@ -137,8 +209,15 @@ namespace EIP.Views.Controls
             //}
         }
 
-       
+        private void LetsUploadPhotos(Photoset album)
+        {
+            ProgressUploadPhotos progressUploadPhotos = new ProgressUploadPhotos(this.accountID, this.uidFlickr, this.aid, this.photos);
 
+            progressUploadPhotos.Show();
+
+            this.DialogResult = true;
+
+        }
         
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
