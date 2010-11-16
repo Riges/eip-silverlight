@@ -225,6 +225,27 @@ namespace EIP.Objects
 
         }
 
+
+        public static List<WrapPanel> LoadMessageLn(string msg)
+        {
+            ResourceDictionary Resources = App.Current.Resources;
+            List<WrapPanel> list = new List<WrapPanel>();
+
+            char[] charTab = new char[1];
+            charTab[0] = '\n';
+            string[] motsLn = msg.Split(charTab, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string msg2 in motsLn)
+            {
+                WrapPanel wrap = new WrapPanel();
+                foreach (UIElement element in Utils.LoadMessage(msg2))
+                    wrap.Children.Add(element);
+                list.Add(wrap);
+            }
+            
+            return list;
+
+        }
+
         /// <summary>
         /// Put the first letter of the word upper
         /// </summary>

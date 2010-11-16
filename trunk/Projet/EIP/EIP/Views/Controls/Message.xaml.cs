@@ -29,7 +29,7 @@ namespace EIP.Views.Controls
             if (this.DataContext.GetType() == typeof(ThreadMessage))
             {
                 ThreadMessage th = (ThreadMessage)this.DataContext;
-
+                ResourceDictionary Resources = App.Current.Resources;
 
                 thread = th;
                 if (th.getPic() != null) // verif si gif
@@ -53,11 +53,13 @@ namespace EIP.Views.Controls
                     summary.Text = th.getSummary().Replace("\n", " ");
                 else
                     summary.Visibility = System.Windows.Visibility.Collapsed;
-                if (th.getContent() != "")
-                    content.Text = th.getContent();
+                foreach (WrapPanel element in Utils.LoadMessageLn(th.getContent()))
+                    content.Children.Add(element);
                 personText.Text = th.getAuthorThreadName();
                 person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorThreadAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
                 date.Text = th.date.ToString();
+                if (th.unread())
+                    LayoutRoot.Style = Resources["MessageUnreadStyle"] as Style;
             }
             else if(this.DataContext.GetType() == typeof(MessageFacebook)) {
                 MessageFacebook th = (MessageFacebook)this.DataContext;
@@ -67,7 +69,9 @@ namespace EIP.Views.Controls
                     Uri uriImg = new Uri(th.getPic());
                     picUser.Source = new BitmapImage(uriImg);
                 }
-                content.Text = th.getContent();
+                //content.Text = th.getContent();
+                foreach (WrapPanel element in Utils.LoadMessageLn(th.getContent()))
+                    content.Children.Add(element);
                 subject.Visibility = System.Windows.Visibility.Collapsed;
                 summary.Visibility = System.Windows.Visibility.Collapsed;
                 personText.Text = th.getAuthorName();
