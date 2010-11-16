@@ -2,11 +2,11 @@
     <system.serviceModel>
         <bindings>
             <basicHttpBinding>
-                <binding name="BasicHttpBinding_IServiceEIP" maxBufferSize="2147483647"
+                <binding name="BasicHttpBinding_IServiceEIP1" maxBufferSize="2147483647"
                     maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
-                <binding name="BasicHttpBinding_IServiceEIP1" maxBufferSize="2147483647"
+                <binding name="BasicHttpBinding_Service" maxBufferSize="2147483647"
                     maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
@@ -17,8 +17,8 @@
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IServiceEIP1"
                 contract="ServiceEIPprod.IServiceEIP" name="BasicHttpBinding_IServiceEIP1" />
             <endpoint address="http://localhost:6080/ServiceEIP.svc" binding="basicHttpBinding"
-                bindingConfiguration="BasicHttpBinding_IServiceEIP" contract="ServiceEIP.IServiceEIP"
-                name="BasicHttpBinding_IServiceEIP" />
+                bindingConfiguration="BasicHttpBinding_Service" contract="ServiceEIP.IServiceEIP"
+                name="BasicHttpBinding_Service" />
         </client>
     </system.serviceModel>
 </configuration>

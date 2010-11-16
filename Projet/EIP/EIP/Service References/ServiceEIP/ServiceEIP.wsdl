@@ -241,7 +241,7 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/TestAddAccountResponse" message="tns:IServiceEIP_TestAddAccount_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_IServiceEIP" type="tns:IServiceEIP">
+  <wsdl:binding name="BasicHttpBinding_Service" type="tns:IServiceEIP">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="IsUp">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/IsUp" style="document" />
@@ -452,7 +452,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ServiceEIP">
-    <wsdl:port name="BasicHttpBinding_IServiceEIP" binding="tns:BasicHttpBinding_IServiceEIP">
+    <wsdl:port name="BasicHttpBinding_Service" binding="tns:BasicHttpBinding_Service">
       <soap:address location="http://localhost:6080/ServiceEIP.svc" />
     </wsdl:port>
   </wsdl:service>
