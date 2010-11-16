@@ -280,5 +280,19 @@ namespace EIP.Objects
         {
             recipientsFb.Add(unUser);
         }
+
+        public bool unread()
+        {
+            switch (this.typeAccount)
+            {
+                case Account.TypeAccount.Facebook:
+                    return MessageFb.unread;
+                    break;
+
+                case Account.TypeAccount.Twitter:
+                    break;
+            }
+            return false;
+        }
     }
 }
