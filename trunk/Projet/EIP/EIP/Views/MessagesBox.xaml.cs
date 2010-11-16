@@ -45,10 +45,10 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            busyIndicator.IsBusy = true;
 
             if (this.NavigationContext.QueryString.ContainsKey("accountId") && this.NavigationContext.QueryString.ContainsKey("threadId"))
             {
+                busyIndicator.IsBusy = true;
                 if (this.NavigationContext.QueryString.ContainsKey("box"))
                     this.boxActive = this.NavigationContext.QueryString["box"];
 
@@ -98,6 +98,7 @@ namespace EIP.Views
                 {
                     if (account.Value.selected)
                     {
+                        busyIndicator.IsBusy = true;
                         switch (account.Value.account.typeAccount)
                         {
                             case EIP.ServiceEIP.Account.TypeAccount.Facebook:
