@@ -793,6 +793,24 @@ namespace EIP
                 this.busy = false;
         }
 
+        public bool GetNotification()
+        {
+            bool ret = false;
+            if (this.facebookAPI != null)
+            {
+               if (!busy)
+                    //this.facebookAPI.Notification.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
+                   this.facebookAPI.Notifications.GetAsync(new Notifications.GetCallback(GetNotificationCompleted), null);
+            }
+
+            return ret;
+        }
+
+        private void GetNotificationCompleted(notifications data, Object obj, FacebookException ex)
+        {
+           
+        }
+
         /// <summary>
         /// Met à jour l'affichage avec les feeds récupérés
         /// </summary>

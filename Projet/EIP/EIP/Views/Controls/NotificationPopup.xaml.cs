@@ -20,10 +20,17 @@ namespace EIP.Views.Controls
             InitializeComponent();
         }
 
-        public NotificationPopup(string TextForDisplay)
+        public NotificationPopup(string content)
         {
             InitializeComponent();
-            TextToDisplay.Text = TextForDisplay;
+            Content.Text = content;
+        }
+
+        public NotificationPopup(string header, string content)
+        {
+            InitializeComponent();
+            Header.Text = header;
+            Content.Text = content;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
