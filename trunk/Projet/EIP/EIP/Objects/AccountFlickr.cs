@@ -115,7 +115,7 @@ namespace EIP
 
         public void CreateAlbum(string name, string location, string description)
         {
-            this.flickr.PhotosetsCreateAsync(name, description, null, CreateAlbum_Completed);
+            this.flickr.PhotosetsCreateAsync(name, description, "", CreateAlbum_Completed);
         }
 
         private void CreateAlbum_Completed(FlickrResult<Photoset> result)

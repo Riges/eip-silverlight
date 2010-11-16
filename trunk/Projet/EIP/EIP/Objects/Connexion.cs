@@ -99,6 +99,17 @@ namespace EIP
    
         public static void Start()
         {
+            string host = App.Current.Host.Source.Host;
+            if(host.Contains("localhost"))
+            {
+                host += ":6080/ServiceEIP.svc";
+            }
+            else
+                host += "/WCF/ServiceEIP.svc";
+            string urlWCF = "http://" + host;
+            Uri addressWCF = new Uri(urlWCF, UriKind.Absolute);
+
+            serviceEIP = new ServiceEIP.ServiceEIPClient("BasicHttpBinding_Service", addressWCF.AbsoluteUri);
 
             #if (DEBUG)
             keyFlickr = "7121e516217daa3202fbc6f269cc3874";
@@ -111,7 +122,7 @@ namespace EIP
             //browserSession = new BrowserSession(ApplicationKey);
             //browserSession.LoginCompleted += LoginFacebook_LoginCompleted;
             accounts = new Dictionary<long, AccountLight>();
-            serviceEIP = new ServiceEIP.ServiceEIPClient();
+            //serviceEIP = new ServiceEIP.ServiceEIPClient();
             loadingChild = new Loading();
 
             serviceEIP.IsUpCompleted += new EventHandler<IsUpCompletedEventArgs>(serviceEIP_IsUpCompleted);
