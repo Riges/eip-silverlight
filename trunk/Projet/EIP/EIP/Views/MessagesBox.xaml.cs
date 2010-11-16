@@ -128,11 +128,27 @@ namespace EIP.Views
                                 }                                
                                 break;
                             case EIP.ServiceEIP.Account.TypeAccount.Flickr:
+                                Messages_LoadMessagesFlickr();
                                 break;
                         }
                     }
                 }
             }
+        }
+
+        void Messages_LoadMessagesFlickr()
+        {
+            Boolean wait = false;
+            foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+            {
+                if (account.Value.selected && account.Value.account.typeAccount != EIP.ServiceEIP.Account.TypeAccount.Flickr)
+                {
+                    wait = true;
+                    break;
+                }
+            }
+            if (!wait)
+                busyIndicator.IsBusy = false;
         }
 
         void Messages_LoadDirectMessagesCalled(List<ThreadMessage> liste)
@@ -144,6 +160,8 @@ namespace EIP.Views
                 listeMessagesBox.LoadMessages();
 
                 busyIndicator.IsBusy = false;
+                if (listeMessagesBox.box.Count > 0)
+                    MessageDefault.Visibility = System.Windows.Visibility.Collapsed;
                 //listeMessagesBox.Messages_GetThreadCalled(th);
             });
         }
@@ -158,6 +176,8 @@ namespace EIP.Views
                 listeMessagesBox.LoadMessages();
 
                 busyIndicator.IsBusy = false;
+                if (listeMessagesBox.box.Count > 0)
+                    MessageDefault.Visibility = System.Windows.Visibility.Collapsed;
             });
 
 
