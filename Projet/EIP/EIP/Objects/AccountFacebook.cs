@@ -255,6 +255,33 @@ namespace EIP
         public delegate void OnGetThreadCompleted(ThreadMessage th);
         public event OnGetThreadCompleted GetThreadCalled;
 
+        public delegate void OnCountUnreadThreadCompleted(long count);
+        public event OnCountUnreadThreadCompleted CountUnreadThreadCalled;
+
+        public void CountUnreadThreads()
+        {
+            if (this.facebookAPI != null)
+            {
+                this.facebookAPI.Fql.QueryAsync("SELECT thread_id from thread where unread > 0 AND folder_id = 0", CountUnreadThreadCompleted, null);
+            }
+        }
+
+        public void CountUnreadThreadCompleted(String xml, object data, FacebookException ex)
+        {
+            using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(xml)))
+            {
+                long cpt = 0;
+                do
+                {
+                    reader.ReadToFollowing("thread");
+                    cpt++;
+                } while (!reader.EOF);
+                cpt--;
+                if (this.CountUnreadThreadCalled != null)
+                    this.CountUnreadThreadCalled.Invoke(cpt);
+            }
+        }
+
         public void LoadInboxMessages()
         {
 

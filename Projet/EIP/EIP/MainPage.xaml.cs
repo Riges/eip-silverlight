@@ -24,6 +24,7 @@ namespace EIP
     {
 
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
+        private long UnreadMessagesNumber { get; set; }
 
         public MainPage()
         {
@@ -57,6 +58,28 @@ namespace EIP
                 LinkSeConnecter.Visibility = System.Windows.Visibility.Collapsed;
                 DividerSeCo.Visibility = System.Windows.Visibility.Collapsed;
 
+                // load unread messages number
+                UnreadMessagesNumber = 0;
+                foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+                {
+                    if (account.Value.selected)
+                    {
+                        switch (account.Value.account.typeAccount)
+                        {
+                            case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountUnreadThreadCalled -= new AccountFacebookLight.OnCountUnreadThreadCompleted(MainPage_CountUnreadThread);
+                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountUnreadThreadCalled += new AccountFacebookLight.OnCountUnreadThreadCompleted(MainPage_CountUnreadThread);
+                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountUnreadThreads();
+                                break;
+                            case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                                //((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
+                                break;
+                            case EIP.ServiceEIP.Account.TypeAccount.Flickr:
+                                break;
+                        }
+                    }
+                }
+
             }
             else
             {
@@ -79,6 +102,16 @@ namespace EIP
             //LinkSeDeco.Visibility = System.Windows.Visibility.Visible;
 
             LinkHome.NavigateUri = new Uri("/Home?time=" + DateTime.Now.Ticks, UriKind.Relative);
+        }
+
+        void MainPage_CountUnreadThread(long count)
+        {
+            Connexion.dispatcher.BeginInvoke(() =>
+            {
+                UnreadMessagesNumber += count;
+                if (UnreadMessagesNumber > 0)
+                    TxtLinkMessages.Text = "Messages (" + UnreadMessagesNumber.ToString() + ")";
+            });
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -167,6 +200,7 @@ namespace EIP
             Login loginWindow = new Login(false);
             loginWindow.Show();
         }
+
 
 
     }
