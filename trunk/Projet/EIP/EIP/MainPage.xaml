@@ -58,7 +58,7 @@
                                      NavigateUri="/Messages" TargetName="ContentFrame" >
                                 <StackPanel>
                                     <Image Source="Assets/Images/msg.png" Width="36"></Image>
-                                    <TextBlock Text="Messages" Margin="0,5,0,0"></TextBlock>
+                                    <TextBlock Name="TxtLinkMessages" Text="Messages" Margin="0,5,0,0"></TextBlock>
                                 </StackPanel>
                             </HyperlinkButton>
                             
