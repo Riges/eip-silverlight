@@ -13,7 +13,8 @@
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -24,13 +25,15 @@
                            Text="Messagerie" Grid.Row="0" />-->
         <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
                            Text="Messagerie" Grid.Row="0" />
-            <Button Name="Back" Content="&lt; Retour" Grid.Row="1" Visibility="Collapsed" Click="Back_Click" Width="100" HorizontalAlignment="Left" Margin="0,0,10,10" />
+        <TextBlock Name="MessageDefault"
+                        Text="Aucun message." Grid.Row="1" />
+            <Button Name="Back" Content="&lt; Retour" Grid.Row="2" Visibility="Collapsed" Click="Back_Click" Width="100" HorizontalAlignment="Left" Margin="0,0,10,10" />
 
-        <toolkit:WrapPanel Orientation="Horizontal" Width="Auto"  Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Name="RecipientsList">
+        <toolkit:WrapPanel Orientation="Horizontal" Width="Auto"  Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Name="RecipientsList">
 
         </toolkit:WrapPanel>
         
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Stretch" Background="{StaticResource BgColor}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Grid.Row="4" Grid.Column="0"  HorizontalAlignment="Stretch" Background="{StaticResource BgColor}">
             <Controls:listeMessages x:Name="listeMessagesBox" />
         </ScrollViewer>
         </Grid>
