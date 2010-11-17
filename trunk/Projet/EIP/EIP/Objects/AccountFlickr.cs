@@ -232,6 +232,12 @@ namespace EIP
                     if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
                         this.GetFriendsCalled.Invoke(this.friends, this.account.accountID);
                 }
+                else
+                {
+                    if (this.GetFriendsCalled != null)//evite que ca plante si pas dabo
+                        this.GetFriendsCalled.Invoke(new ContactCollection(), this.account.accountID);
+                }
+
         }
 
 

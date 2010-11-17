@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
+using EIP.Objects;
 
 namespace EIP.Views.Controls
 {
@@ -26,13 +27,26 @@ namespace EIP.Views.Controls
         public NotificationPopup(string content)
         {
             InitializeComponent();
-            Content.Text = content;
+
+            List<WrapPanel> panels = Utils.LoadMessageLn(content);
+
+            foreach (WrapPanel wrap in panels)
+            {
+                panelContent.Children.Add(wrap);
+            }
         }
 
         public NotificationPopup(string content, int time)
         {
             InitializeComponent();
-            Content.Text = content;
+
+            List<WrapPanel> panels = Utils.LoadMessageLn(content);
+
+            foreach (WrapPanel wrap in panels)
+            {
+                panelContent.Children.Add(wrap);
+            }
+
             dt.Interval = new TimeSpan(0, 0, 0, time, 000);
             dt.Tick += new EventHandler(dt_Tick);
             dt.Start();
@@ -41,15 +55,32 @@ namespace EIP.Views.Controls
         public NotificationPopup(string header, string content)
         {
             InitializeComponent();
+
             Header.Text = header;
-            Content.Text = content;
+            List<WrapPanel> panels = Utils.LoadMessageLn(content);
+
+            foreach (WrapPanel wrap in panels)
+            {
+                panelContent.Children.Add(wrap);
+            }
         }
 
         public NotificationPopup(string header, string content, int time)
         {
             InitializeComponent();
+
             Header.Text = header;
-            Content.Text = content;
+
+            List<WrapPanel> panels = Utils.LoadMessageLn(content);
+
+            foreach (WrapPanel wrap in panels)
+            {
+                panelContent.Children.Add(wrap);
+            }
+
+            //Content.Text = content;
+
+
             dt.Interval = new TimeSpan(0, 0, 0, time, 000);
             dt.Tick += new EventHandler(dt_Tick);
             dt.Start();

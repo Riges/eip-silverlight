@@ -98,7 +98,7 @@ namespace EIP.Views
             {
                 if (user != null)
                 {
-                    this.Title = "Profil de " + user.UserName;
+                    this.Title = "myNETwork - Profil de " + user.UserName;
                     photoUser.UriSource = new Uri(user.BuddyIconUrl, UriKind.Absolute);
                 }
             });
@@ -110,7 +110,7 @@ namespace EIP.Views
             {
                 if (user != null)
                 {
-                    this.Title = "Profil de " + user.ScreenName;
+                    this.Title = "myNETwork - Profil de " + user.ScreenName;
                     photoUser.UriSource = new Uri(user.ProfileImageUrl, UriKind.Absolute);
                 }
             });
@@ -125,7 +125,7 @@ namespace EIP.Views
             {
                 if (monUser != null)
                 {
-                    this.Title = "Profil de " + monUser.name;
+                    this.Title = "myNETwork - Profil de " + monUser.name;
                     photoUser.UriSource = new Uri(monUser.pic_big, UriKind.Absolute);
                 }
             });

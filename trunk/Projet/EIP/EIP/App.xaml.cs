@@ -28,6 +28,22 @@ namespace EIP
             this.UnhandledException += this.Application_UnhandledException;
 
             InitializeComponent();
+
+            if (App.Current.IsRunningOutOfBrowser)
+            {
+                App.Current.CheckAndDownloadUpdateCompleted +=
+                    new CheckAndDownloadUpdateCompletedEventHandler(CheckAndDownloadUpdateCompleted);
+                App.Current.CheckAndDownloadUpdateAsync();
+            }
+        }
+
+        private void CheckAndDownloadUpdateCompleted(object sender, CheckAndDownloadUpdateCompletedEventArgs e)
+        {
+            if (e.Error == null && e.UpdateAvailable)
+            {
+                MessageBox msgBox = new MessageBox("Mise à jour réussi !", "myNETwork a été mis à jour, veuillez relancer l'application", MessageBoxButton.OK);
+                msgBox.Show();
+            }
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

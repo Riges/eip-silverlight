@@ -56,6 +56,28 @@ namespace EIPLibrary
             return null;
         }
 
+        public static Account GetAccountFlickr(string userID)
+        {
+            List<NpgsqlParameter> parms = new List<NpgsqlParameter>();
+            StringBuilder cmdText = new StringBuilder();
+            cmdText.Append(" SELECT * FROM account a, accountflickr r ");
+            cmdText.Append(" WHERE a.accountid=r.accountid ");
+            cmdText.Append(" AND r.useridstr=@USERID");
+
+            parms.Add(new NpgsqlParameter("@USERID", userID));
+
+            DataTable dt = PgSqlHelper.ExecuteDataTable(CommandType.Text, cmdText.ToString(), parms);
+
+            using (dt)
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    return Populate(dt.Rows[0]);
+                }
+            }
+            return null;
+        }
+
         public static List<Account> GetAccountsByUserID(long userID)
         {
             List<NpgsqlParameter> parms = new List<NpgsqlParameter>();
@@ -229,6 +251,7 @@ namespace EIPLibrary
             cmdText.Append(" accountid=@ACCOUNTID ");
 
             parms.Add(new NpgsqlParameter("@NAME", newAccount.name));
+            parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
 
             int result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
 

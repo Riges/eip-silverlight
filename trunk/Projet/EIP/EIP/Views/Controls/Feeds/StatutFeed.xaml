@@ -15,6 +15,8 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <toolkit:WrapPanel Name="messagePanel" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" ></toolkit:WrapPanel>
+        <!--<toolkit:WrapPanel Name="messagePanel" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" ></toolkit:WrapPanel>-->
+        <StackPanel Name="messagePanel" Grid.Row="0" Grid.Column="0" >
+        </StackPanel>
     </Grid>
 </UserControl>

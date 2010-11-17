@@ -119,7 +119,7 @@ namespace EIP.Views
             {
                 if (user != null)
                 {
-                    this.Title = "Album de " + user.UserName;
+                    this.Title = "myNETwork - Album de " + user.UserName;
                     PseudoUser.Text = user.UserName;
                 }
             });

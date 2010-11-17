@@ -38,6 +38,7 @@ using FlickrNet;
 using EIP.Views.Child;
 using EIP.Objects;
 using System.Windows.Browser;
+using System.Reflection;
 //using TweetSharp.Fluent;
 
 
@@ -129,6 +130,8 @@ namespace EIP
             serviceEIP.GetFBAppKeyCompleted += new EventHandler<GetFBAppKeyCompletedEventArgs>(serviceEIP_GetFBAppKeyCompleted);
             Connexion.serviceEIP.DeleteAccountCompleted += new EventHandler<DeleteAccountCompletedEventArgs>(serviceEIP_DeleteAccountCompleted);
 
+            serviceEIP.GetRequestTokenCompleted += new EventHandler<GetRequestTokenCompletedEventArgs>(serviceEIP_GetRequestTokenCompleted);
+
             perms[0] = Enums.ExtendedPermissions.offline_access;
             perms[1] = Enums.ExtendedPermissions.publish_stream;
             perms[2] = Enums.ExtendedPermissions.photo_upload;
@@ -158,8 +161,8 @@ namespace EIP
             if (e.Error == null)
             {
                 ApplicationKey = e.Result;
-                GetSession();
-                GetFrob();
+
+                GetFrob();              
             }
         }
 
@@ -184,14 +187,41 @@ namespace EIP
 
         public static void GetFrob()
         {
-            string frob = string.Empty;
-            if (HtmlPage.Document.QueryString.ContainsKey("frob"))
-                frob = HtmlPage.Document.QueryString["frob"];
-
-            if (frob != string.Empty)
+            if (App.Current.IsRunningOutOfBrowser)
             {
-                flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr);
-                FlickrGetFrob_Completed(frob);
+                GetSession(0);
+            }
+            else
+            {
+                string frob = string.Empty;
+                if (HtmlPage.Document.QueryString.ContainsKey("frob"))
+                    frob = HtmlPage.Document.QueryString["frob"];
+
+                string oauth_token = string.Empty;
+                if (HtmlPage.Document.QueryString.ContainsKey("oauth_token"))
+                    oauth_token = HtmlPage.Document.QueryString["oauth_token"];
+
+                string oauth_verifier = string.Empty;
+                if (HtmlPage.Document.QueryString.ContainsKey("oauth_verifier"))
+                    oauth_verifier = HtmlPage.Document.QueryString["oauth_verifier"];
+
+                if (frob != string.Empty)
+                {
+                    flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr);
+                    FlickrGetFrob_Completed(frob);
+                }
+                else if (oauth_token != string.Empty && oauth_verifier != string.Empty)
+                {
+                    AccountTwitterLight accountTwitter = new AccountTwitterLight();
+                    ((AccountTwitter)accountTwitter.account).token = oauth_token;
+                    ((AccountTwitter)accountTwitter.account).pin = oauth_verifier;
+
+                    AddTwitterAccount(accountTwitter);
+                }
+                else
+                {
+                    GetSession(0);
+                }
             }
         }
 
@@ -209,13 +239,21 @@ namespace EIP
 
         }
 
-        private static void GetSession()
+        private static void GetSession(long groupID)
         {
             bool showLogin = true;
 
             if (connexionActive)
             {
-                if (storage.Contains("groupID-" + ApplicationKey))
+                
+
+                if (groupID != 0)
+                {
+                    showLogin = false;
+                    serviceEIP.GetAccountsByGroupIDCompleted += new EventHandler<GetAccountsByGroupIDCompletedEventArgs>(serviceEIP_GetAccountsByGroupIDCompleted);
+                    serviceEIP.GetAccountsByGroupIDAsync(groupID);
+                }
+                else if (storage.Contains("groupID-" + ApplicationKey))
                 {
                     if (storage["groupID-" + ApplicationKey] != null && (storage["groupID-" + ApplicationKey].ToString() != "0"))
                     {
@@ -238,7 +276,7 @@ namespace EIP
                     }
                 }
             }
-    
+
             if (showLogin)
             {
                 Login loginWindow = new Login(false);
@@ -276,43 +314,44 @@ namespace EIP
         {
             if (e.Result != null && e.Error == null)
             {
-                long groupid = 0;
-                accounts.Clear();
-                foreach (Account oneAccount in e.Result)
-                {
-                    groupid = oneAccount.groupID;
-                    switch (oneAccount.typeAccount)
-                    {
-                        case Account.TypeAccount.Facebook:
-                            AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
-                            newAccountFacebook.account = oneAccount;
-                            accounts[newAccountFacebook.account.accountID] = newAccountFacebook;
-                            newAccountFacebook.Login();
-                            break;
-                        case Account.TypeAccount.Twitter:
-                            AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
-                            newAccountTwitter.account = oneAccount;
-                            newAccountTwitter.Start();
-                            //accounts.Add(newAccountTwitter);
-                            accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
-                            break;
-                        case Account.TypeAccount.Flickr:
-                            AccountFlickrLight newAccountFlickr = new AccountFlickrLight();
-                            newAccountFlickr.account = oneAccount;
-                            accounts[newAccountFlickr.account.accountID] = newAccountFlickr;
+                LoadAccountsFromDB(e.Result);
+                //long groupid = 0;
+                //accounts.Clear();
+                //foreach (Account oneAccount in e.Result)
+                //{
+                //    groupid = oneAccount.groupID;
+                //    switch (oneAccount.typeAccount)
+                //    {
+                //        case Account.TypeAccount.Facebook:
+                //            AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
+                //            newAccountFacebook.account = oneAccount;
+                //            accounts[newAccountFacebook.account.accountID] = newAccountFacebook;
+                //            newAccountFacebook.Login();
+                //            break;
+                //        case Account.TypeAccount.Twitter:
+                //            AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
+                //            newAccountTwitter.account = oneAccount;
+                //            newAccountTwitter.Start();
+                //            //accounts.Add(newAccountTwitter);
+                //            accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
+                //            break;
+                //        case Account.TypeAccount.Flickr:
+                //            AccountFlickrLight newAccountFlickr = new AccountFlickrLight();
+                //            newAccountFlickr.account = oneAccount;
+                //            accounts[newAccountFlickr.account.accountID] = newAccountFlickr;
                             
-                            break;
-                        default:
-                            break;
+                //            break;
+                //        default:
+                //            break;
 
-                    }
-                }
-                SetSession(groupid);
-                Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
-                listeComptes.Reload();
+                //    }
+                //}
+                //SetSession(groupid);
+                //Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
+                //listeComptes.Reload();
 
 
-                Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+                //Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
             }
         }
 
@@ -341,10 +380,27 @@ namespace EIP
 
                     break;
                 case Account.TypeAccount.Twitter:
-
+                    /*
                     serviceEIP.GetAccountsByTwitterCompleted += new EventHandler<GetAccountsByTwitterCompletedEventArgs>(serviceEIP_GetAccountsByTwitterCompleted);
                     serviceEIP.GetAccountsByTwitterAsync(pseudo, password);
+                    */
+                    string host = App.Current.Host.Source.Host;
+                    string callback = string.Empty;
+                    if (host.Contains("localhost"))
+                        callback = "http://localhost:4164/";
+                    else
+                        callback = "http://mynetwork.selfip.net/";
+
+                    serviceEIP.GetRequestTokenAsync(callback);
                     
+                    break;
+                case Account.TypeAccount.Flickr:
+
+                    Flickr flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr);
+
+                    string urlAuth = flickr.AuthCalcWebUrl(AuthLevel.Delete);
+
+                    HtmlPage.Window.Navigate(new Uri(urlAuth, UriKind.Absolute));
                     break;
              
                 default:
@@ -377,18 +433,23 @@ namespace EIP
                     break;
                 case Account.TypeAccount.Twitter:
 
-                    serviceEIP.GetRequestTokenCompleted += new EventHandler<GetRequestTokenCompletedEventArgs>(serviceEIP_GetRequestTokenCompleted);
-                    serviceEIP.GetRequestTokenAsync();
+                    string host = App.Current.Host.Source.Host;
+                    string callback = string.Empty;
+                    if (host.Contains("localhost"))
+                        callback = "http://localhost:4164/";
+                    else
+                        callback = "http://mynetwork.selfip.net/";
+
+                    serviceEIP.GetRequestTokenAsync(callback);
 
                     break;
                 case Account.TypeAccount.Flickr:
 
-                    Flickr flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr);
-
+                    flickr = new Flickr(Connexion.keyFlickr, Connexion.secretFlickr);
 
                     string urlAuth = flickr.AuthCalcWebUrl(AuthLevel.Delete);
 
-                    HtmlPage.PopupWindow(new Uri(urlAuth, UriKind.Absolute), "_blank", null);
+                    HtmlPage.Window.Navigate(new Uri(urlAuth, UriKind.Absolute));
 
                     break;     
                 default:
@@ -408,7 +469,7 @@ namespace EIP
             AccountFlickrLight newAccount = new AccountFlickrLight();
 
             Random rand = new Random();
-            if (storage.Contains("groupID-" + ApplicationKey))
+            if (storage.Contains("groupID-" + ApplicationKey) && storage["groupID-" + ApplicationKey].ToString() != "0")
             {
                 newAccount.account.groupID = Convert.ToInt64(storage["groupID-" + ApplicationKey]);
             }
@@ -440,11 +501,13 @@ namespace EIP
             if (e.Error == null && e.Result != null)
             {
                 string token = e.Result;
-                Uri uri = new Uri("http://api.twitter.com/oauth/authorize?oauth_token=" + token);
-                AccountTwitterLight accountTwitter = new AccountTwitterLight();
+                Uri uri = new Uri("http://api.twitter.com/oauth/authorize?oauth_token=" + token, UriKind.Absolute);//oauth_callback="+ HttpUtility.UrlEncode("http://localhost:4164/" + "&
+
+                HtmlPage.Window.Navigate(uri);
+                /*AccountTwitterLight accountTwitter = new AccountTwitterLight();
                 ((AccountTwitter)accountTwitter.account).token = token;
                 TwitterPin twitterPin = new TwitterPin(accountTwitter, uri);
-                twitterPin.Show();
+                twitterPin.Show();*/
             }
             else
             {
@@ -526,16 +589,25 @@ namespace EIP
             }
             else
             {
-                Random rand = new Random();
-                int number = rand.Next(999999999);
-                accountTwitter.account.groupID = number;// Convert.ToInt64(token.UserId);// (long)tmp.userID;
+                if (storage.Contains("groupID-" + ApplicationKey))
+                {
+                    if (storage["groupID-" + ApplicationKey] != null && (storage["groupID-" + ApplicationKey].ToString() != "0"))
+                    {
+                        accountTwitter.account.groupID = Convert.ToInt64(storage["groupID-" + ApplicationKey].ToString());
+                    }
+                }
+                else
+                {
+                    Random rand = new Random();
+                    int number = rand.Next(999999999);
+                    accountTwitter.account.groupID = number;// Convert.ToInt64(token.UserId);// (long)tmp.userID;
+                }
             }
             accountTwitter.selected = true;
 
             SetSession(accountTwitter.account.groupID);
             serviceEIP.AddAccountCompleted += new EventHandler<AddAccountCompletedEventArgs>(serviceEIP_AddAccountCompleted);
-            serviceEIP.AddAccountAsync(accountTwitter.account, ((AccountTwitter)accountTwitter.account).token, accountTwitter.pin);
-
+            serviceEIP.AddAccountAsync(accountTwitter.account, ((AccountTwitter)accountTwitter.account).token, ((AccountTwitter)accountTwitter.account).pin);
         }
 
         private static void BrowserSession_LogoutCompleted(object sender, EventArgs e)
@@ -609,7 +681,8 @@ namespace EIP
         static void serviceEIP_GetAccountsByUserIDCompleted(object sender, GetAccountsByUserIDCompletedEventArgs e)
         {
             if (e.Error == null)
-            {LoadAccountsFromDB(e.Result);
+            {
+                LoadAccountsFromDB(e.Result);
 
                 //if (e.Result != null)
                 //{
@@ -631,38 +704,35 @@ namespace EIP
         {
             if (result != null && result.Count > 0)
             {
-                accounts = new Dictionary<long, AccountLight>();
+                long groupid = 0;
+                accounts.Clear();
                 foreach (Account oneAccount in result)
                 {
+                    groupid = oneAccount.groupID;
                     switch (oneAccount.typeAccount)
                     {
                         case Account.TypeAccount.Facebook:
                             AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
                             newAccountFacebook.account = oneAccount;
-                            //accounts.Add(newAccountFacebook);
-
-                            newAccountFacebook.Login();
-
                             accounts[newAccountFacebook.account.accountID] = newAccountFacebook;
+                            newAccountFacebook.Login();
                             break;
                         case Account.TypeAccount.Twitter:
                             AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
                             newAccountTwitter.account = oneAccount;
                             newAccountTwitter.Start();
-                            //accounts.Add(newAccountTwitter);
                             accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
                             break;
-                        
+                        case Account.TypeAccount.Flickr:
+                            AccountFlickrLight newAccountFlickr = new AccountFlickrLight();
+                            newAccountFlickr.account = oneAccount;
+                            accounts[newAccountFlickr.account.accountID] = newAccountFlickr;
+                            break;
                         default:
                             break;
                     }
-                    SetSession(oneAccount.groupID);
                 }
-                
-                //currentAccount.account = e.Result;
-                //LoginToAccount();
-
-                //LoadFromStorage();
+                SetSession(groupid);
                 Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
                 listeComptes.Reload();
                 addAccount = false;
@@ -670,13 +740,55 @@ namespace EIP
                 Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
             }
             else
-            {
-                dispatcher.BeginInvoke(() =>
-                {
-                    MessageBox msg = new MessageBox("Erreur de connexion", "Vous devez ajouter un compte avant de pouvoir vous connecter dessus !");
-                    msg.Show();
-                });
-            }
+                mainBusyIndicator.IsBusy = false;
+            //if (result != null && result.Count > 0)
+            //{
+            //    accounts = new Dictionary<long, AccountLight>();
+            //    foreach (Account oneAccount in result)
+            //    {
+            //        switch (oneAccount.typeAccount)
+            //        {
+            //            case Account.TypeAccount.Facebook:
+            //                AccountFacebookLight newAccountFacebook = new AccountFacebookLight();
+            //                newAccountFacebook.account = oneAccount;
+            //                //accounts.Add(newAccountFacebook);
+
+            //                newAccountFacebook.Login();
+
+            //                accounts[newAccountFacebook.account.accountID] = newAccountFacebook;
+            //                break;
+            //            case Account.TypeAccount.Twitter:
+            //                AccountTwitterLight newAccountTwitter = new AccountTwitterLight();
+            //                newAccountTwitter.account = oneAccount;
+            //                newAccountTwitter.Start();
+            //                //accounts.Add(newAccountTwitter);
+            //                accounts[newAccountTwitter.account.accountID] = newAccountTwitter;
+            //                break;
+                        
+            //            default:
+            //                break;
+            //        }
+            //        SetSession(oneAccount.groupID);
+            //    }
+                
+            //    //currentAccount.account = e.Result;
+            //    //LoginToAccount();
+
+            //    //LoadFromStorage();
+            //    Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
+            //    listeComptes.Reload();
+            //    addAccount = false;
+
+            //    Connexion.contentFrame.Navigate(new Uri("/Home", UriKind.Relative));
+            //}
+            //else
+            //{
+            //    dispatcher.BeginInvoke(() =>
+            //    {
+            //        MessageBox msg = new MessageBox("Erreur de connexion", "Vous devez ajouter un compte avant de pouvoir vous connecter dessus !");
+            //        msg.Show();
+            //    });
+            //}
         }
 
         static void serviceEIP_AddAccountCompleted(object sender, AddAccountCompletedEventArgs e)
@@ -685,9 +797,9 @@ namespace EIP
                 {
                     if (e.Error == null)
                     {
-                        if (e.Result)
+                        if (e.Result > 0)
                         {
-                            GetSession();
+                            GetSession(e.Result);
                             Connexion.contentFrame.Navigate(new Uri("/Home?time=00000", UriKind.Relative));
                         }
                         else
