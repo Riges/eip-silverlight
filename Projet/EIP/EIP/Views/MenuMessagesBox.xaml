@@ -19,7 +19,7 @@
             <ColumnDefinition Width="150"></ColumnDefinition>
 
         </Grid.ColumnDefinitions>
-        <HyperlinkButton NavigateUri="/Messages/inbox" Content="Boîte de réception" Grid.Column="0" Grid.Row="0" />
-        <HyperlinkButton NavigateUri="/Messages/outbox" Content="Boîte d'envoi" Grid.Column="0" Grid.Row="1" />
+        <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" NavigateUri="/Messages/inbox" Content="Boîte de réception" Grid.Column="0" Grid.Row="0" />
+        <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" NavigateUri="/Messages/outbox" Content="Boîte d'envoi" Grid.Column="0" Grid.Row="1" />
     </Grid>
 </navigation:Page>

@@ -51,27 +51,27 @@
         <!--TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="person" Text="Person" /-->
 
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-            <HyperlinkButton Height="Auto" Name="person" FontWeight="Bold">
+            <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="person" FontWeight="Bold">
                 <HyperlinkButton.Content>
                     <TextBlock TextWrapping="Wrap" Name="personText" Text="Title"/>
                 </HyperlinkButton.Content>
             </HyperlinkButton>
-            <TextBlock HorizontalAlignment="Left" Name="date" Text="Date" FontStyle="Italic" FontSize="9" Foreground="#FFCCCCCC" />
+            <TextBlock HorizontalAlignment="Left" Name="date" Text="Date" FontStyle="Italic" FontSize="9" Foreground="#FF666666" />
 
         </StackPanel>
 
         <StackPanel Style="{StaticResource MessageListStyle}" Name="MessageList" Orientation="Vertical" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <HyperlinkButton Height="Auto" Name="subject" FontWeight="Bold">
+            <HyperlinkButton Height="Auto" Name="subject" FontWeight="Bold" Style="{StaticResource HyperlinkButtonFonceStyle}">
                 <HyperlinkButton.Content>
                     <TextBlock TextWrapping="Wrap" Name="subjectText" Text="Title"/>
                 </HyperlinkButton.Content>
             </HyperlinkButton>
         
             <!-- only for FB -->
-            <TextBlock HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" FontStyle="Italic" FontSize="9" Foreground="#FFCCCCCC" />
+            <TextBlock HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" FontStyle="Italic" FontSize="9" Foreground="#FF666666" />
 
             <StackPanel Orientation="Vertical" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" Name="content">
-
+                
             </StackPanel>
         </StackPanel>
     </Grid>

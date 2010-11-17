@@ -195,11 +195,13 @@ namespace EIP.Views
                 RecipientsList.Children.Add(txt);
 
                 int compteur = 1;
+                ResourceDictionary Resources = App.Current.Resources;
 
                 foreach (profile user in th.getRecipients())
                 {
                     HyperlinkButton linkBtn = new HyperlinkButton();
                     linkBtn.Content = user.name;
+                    linkBtn.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
                     linkBtn.NavigateUri = new Uri("/ProfilInfos/" + user.id + "/Account/" + th.accountID, UriKind.Relative);
                     RecipientsList.Children.Add(linkBtn);
 
@@ -211,6 +213,7 @@ namespace EIP.Views
                 HeaderText.Text = th.getSubject();
 
                 busyIndicator.IsBusy = false;
+                MessageDefault.Visibility = System.Windows.Visibility.Collapsed;
             });
         }
 
