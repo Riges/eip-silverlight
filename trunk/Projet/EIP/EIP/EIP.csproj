@@ -630,6 +630,7 @@
     <Resource Include="Assets\Images\maison.png" />
     <Resource Include="Assets\Images\user.png" />
     <Resource Include="Assets\Images\deconnecter.png" />
+    <Resource Include="Assets\Images\top-commentaire.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">
