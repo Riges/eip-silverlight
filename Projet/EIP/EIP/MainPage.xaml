@@ -172,6 +172,7 @@
                         <uriMapper:UriMapping Uri="/" MappedUri="/Views/StreamFeeds.xaml" />
                         <uriMapper:UriMapping Uri="/Home" MappedUri="/Views/StreamFeeds.xaml" />
                         <uriMapper:UriMapping Uri="/Messages/Thread/{accountId}/{threadId}" MappedUri="/Views/MessagesBox.xaml?accountId={accountId}&amp;threadId={threadId}"/>
+                        <uriMapper:UriMapping Uri="/Messages/New" MappedUri="/Views/NewMessageBox.xaml"/>
                         <uriMapper:UriMapping Uri="/Messages/{filter}" MappedUri="/Views/MessagesBox.xaml?box={filter}"/>
                         <uriMapper:UriMapping Uri="/Messages" MappedUri="/Views/MessagesBox.xaml?box=inbox"/>
                         <uriMapper:UriMapping Uri="/WaitLoad" MappedUri="/Views/WaitLoad.xaml" />

@@ -242,6 +242,9 @@
     <Compile Include="Views\Controls\VideoControl.xaml.cs">
       <DependentUpon>VideoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NewMessageBox.xaml.cs">
+      <DependentUpon>NewMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuMessagesBox.xaml.cs">
       <DependentUpon>MenuMessagesBox.xaml</DependentUpon>
     </Compile>
@@ -444,6 +447,10 @@
     <Page Include="Views\Controls\VideoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewMessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MenuMessagesBox.xaml">
       <Generator>MSBuild:Compile</Generator>
