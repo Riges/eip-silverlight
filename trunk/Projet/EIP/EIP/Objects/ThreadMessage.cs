@@ -294,5 +294,15 @@ namespace EIP.Objects
             }
             return false;
         }
+
+        public bool isFacebook()
+        {
+            return (MessageFb != null);
+        }
+
+        public bool isTwitter()
+        {
+            return (MessageTwitter != null);
+        }
     }
 }
