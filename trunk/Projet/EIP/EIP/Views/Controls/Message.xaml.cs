@@ -26,10 +26,10 @@ namespace EIP.Views.Controls
 
         void Message_Loaded(object sender, RoutedEventArgs e)
         {
+            ResourceDictionary Resources = App.Current.Resources;
             if (this.DataContext.GetType() == typeof(ThreadMessage))
             {
                 ThreadMessage th = (ThreadMessage)this.DataContext;
-                ResourceDictionary Resources = App.Current.Resources;
 
                 thread = th;
                 if (th.getPic() != null) // verif si gif
@@ -85,6 +85,8 @@ namespace EIP.Views.Controls
                 personText.Text = th.getAuthorName();
                 person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
                 date.Text = th.getDate().ToString();
+
+                BorderLayoutRoot.Style = Resources["MessageBorderFbStyle"] as Style;
             }
         }
 

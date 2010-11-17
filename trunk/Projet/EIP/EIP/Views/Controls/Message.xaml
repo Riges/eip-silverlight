@@ -7,45 +7,45 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" MinWidth="500">
 
-    <Grid x:Name="LayoutRoot" Style="{StaticResource MessageStyle}">
+    <Border Name="BorderLayoutRoot" Margin="0,0,0,5">
+        <Grid x:Name="LayoutRoot">
 
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="15"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"></ColumnDefinition>
-            <ColumnDefinition Width="120"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="15"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
 
-        </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
 
-        <Border Name="BorderLayoutRoot">
-            <Image Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" VerticalAlignment="Top" >
-            </Image>
-        </Border>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-            <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="person" FontWeight="Bold">
-                <HyperlinkButton.Content>
-                    <TextBlock TextWrapping="Wrap" Name="personText" Text="Title"/>
-                </HyperlinkButton.Content>
-            </HyperlinkButton>
-            <TextBlock HorizontalAlignment="Left" Name="date" Text="Date" FontStyle="Italic" FontSize="9" Foreground="#FF666666" />
+                <Image Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" VerticalAlignment="Top" >
+                </Image>
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="person" FontWeight="Bold">
+                    <HyperlinkButton.Content>
+                        <TextBlock TextWrapping="Wrap" Name="personText" Text="Title"/>
+                    </HyperlinkButton.Content>
+                </HyperlinkButton>
+                <TextBlock HorizontalAlignment="Left" Name="date" Text="Date" Style="{StaticResource MessageSummaryTextStyle}" />
 
-        </StackPanel>
-
-        <StackPanel Style="{StaticResource MessageListStyle}" Name="MessageList" Orientation="Vertical" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <HyperlinkButton Height="Auto" Name="subject" FontWeight="Bold" Style="{StaticResource HyperlinkButtonFonceStyle}">
-                <HyperlinkButton.Content>
-                    <TextBlock TextWrapping="Wrap" Name="subjectText" Text="Title"/>
-                </HyperlinkButton.Content>
-            </HyperlinkButton>
-        
-            <!-- only for FB -->
-            <TextBlock HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" FontStyle="Italic" FontSize="9" Foreground="#FF666666" />
-
-            <StackPanel Orientation="Vertical" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" Name="content">
-                
             </StackPanel>
-        </StackPanel>
-    </Grid>
+
+            <StackPanel Style="{StaticResource MessageListStyle}" Name="MessageList" Orientation="Vertical" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <HyperlinkButton Height="Auto" Name="subject" FontWeight="Bold" Style="{StaticResource HyperlinkButtonFonceStyle}">
+                    <HyperlinkButton.Content>
+                        <TextBlock TextWrapping="Wrap" Name="subjectText" Text="Title"/>
+                    </HyperlinkButton.Content>
+                </HyperlinkButton>
+
+                <!-- only for FB -->
+                <TextBlock HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" Style="{StaticResource MessageSummaryTextStyle}" />
+
+                <StackPanel Orientation="Vertical" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" Name="content">
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>
