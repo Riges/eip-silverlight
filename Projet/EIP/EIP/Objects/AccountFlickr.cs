@@ -79,11 +79,11 @@ namespace EIP
         public void GetAlbums(string uid)
         {
             
-            if (!this.albums.ContainsKey(uid))
-                this.flickr.PhotosetsGetListAsync(uid, GetAlbums_Completed);
-            else
+            if (this.albums.ContainsKey(uid))
                 if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
                     this.GetAlbumsCalled.Invoke(this.albums[uid]);
+
+            this.flickr.PhotosetsGetListAsync(uid, GetAlbums_Completed);
         }
 
         private void GetAlbums_Completed(FlickrResult<PhotosetCollection> result)
@@ -93,11 +93,24 @@ namespace EIP
             if (result.Error == null && albums.Count > 0)
             {
                 string uid = albums[0].OwnerId;
+                if (this.albums.ContainsKey(uid))
+                {
+                    if (this.albums[uid].Count != albums.Count)
+                    {
+                        this.albums[uid] = albums;
 
-                this.albums[uid] = albums;
+                        if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
+                            this.GetAlbumsCalled.Invoke(this.albums[uid]);
+                    }
+                }
+                else
+                {
+                    this.albums[uid] = albums;
 
-                if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
-                    this.GetAlbumsCalled.Invoke(this.albums[uid]);
+                    if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
+                        this.GetAlbumsCalled.Invoke(this.albums[uid]);
+
+                }
             }
             else
             {
@@ -113,9 +126,9 @@ namespace EIP
         public delegate void CreateAlbumCompleted(Photoset album);
         public event CreateAlbumCompleted CreateAlbumCalled;
 
-        public void CreateAlbum(string name, string location, string description)
+        public void CreateAlbum(string name, string description, string photoID)
         {
-            this.flickr.PhotosetsCreateAsync(name, description, "", CreateAlbum_Completed);
+            this.flickr.PhotosetsCreateAsync(name, description, photoID, CreateAlbum_Completed);
         }
 
         private void CreateAlbum_Completed(FlickrResult<Photoset> result)
@@ -146,11 +159,11 @@ namespace EIP
                 if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
                     this.GetPhotosCalled.Invoke(aid, this.photos[aid]);
             }
-            else
-            {
+            //else
+            //{
                
                 this.flickr.PhotosetsGetPhotosAsync(aid, 1, 500, GetPhotos_Completed);
-            }
+            //}
         }
 
         private void GetPhotos_Completed(FlickrResult<PhotosetPhotoCollection> result)
@@ -158,23 +171,34 @@ namespace EIP
             PhotosetPhotoCollection tofs = result.Result;
             if (result.Error == null && tofs.Count > 0)
             {
-                this.photos[tofs.PhotosetId] = tofs;
-                if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
-                    this.GetPhotosCalled.Invoke(tofs.PhotosetId, this.photos[tofs.PhotosetId]);
+                if (this.photos.ContainsKey(tofs.PhotosetId))
+                {
+                    if (tofs.Count != this.photos[tofs.PhotosetId].Count)
+                    {
+                        this.photos[tofs.PhotosetId] = tofs;
+                        if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
+                            this.GetPhotosCalled.Invoke(tofs.PhotosetId, this.photos[tofs.PhotosetId]);
+                    }
+                }
+                else
+                {
+                    this.photos[tofs.PhotosetId] = tofs;
+                    if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
+                        this.GetPhotosCalled.Invoke(tofs.PhotosetId, this.photos[tofs.PhotosetId]);
+                }
             }
             else
             {
                 if (this.GetPhotosCalled != null)//evite que ca plante si pas dabo
                     this.GetPhotosCalled.Invoke(tofs.PhotosetId, new PhotosetPhotoCollection());
             }
-          
         }
 
         /***********************************************/
         /////////////////// Upload Photo ////////////////
         /***********************************************/
 
-        public delegate void UploadPhotoCompleted();
+        public delegate void UploadPhotoCompleted(string photoID);
         public event UploadPhotoCompleted UploadPhotoCalled;
         private string uploadPhotoSetID = string.Empty;
 
@@ -192,7 +216,13 @@ namespace EIP
 
                 if (photoID != null && photoID != "")
                 {
-                    this.flickr.PhotosetsAddPhotoAsync(uploadPhotoSetID, photoID, PhotosetsAddPhoto_Completed);
+                    if (this.uploadPhotoSetID == null || this.uploadPhotoSetID == "")
+                    {
+                        if (this.UploadPhotoCalled != null)//evite que ca plante si pas dabo
+                            this.UploadPhotoCalled.Invoke(photoID);
+                    }
+                    else
+                        this.flickr.PhotosetsAddPhotoAsync(uploadPhotoSetID, photoID, PhotosetsAddPhoto_Completed);
                 }
             }
             //this.uploadPhotoSetID = string.Empty;
@@ -201,7 +231,7 @@ namespace EIP
         private void PhotosetsAddPhoto_Completed(FlickrResult<NoResponse> result)
         {
             if (this.UploadPhotoCalled != null)//evite que ca plante si pas dabo
-                    this.UploadPhotoCalled.Invoke();
+                    this.UploadPhotoCalled.Invoke("");
         }
 
         /***********************************************/

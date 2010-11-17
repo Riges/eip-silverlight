@@ -13,6 +13,7 @@ using System.IO;
 using Facebook.Schema;
 using System.Windows.Media.Imaging;
 using EIP.Objects;
+using FlickrNet;
 
 namespace EIP.Views.Controls
 {
@@ -23,6 +24,7 @@ namespace EIP.Views.Controls
         private string uidFlickr;
         private string aid;
         private List<UpPhoto> photos;
+        Photoset photoset;
 
         int i = 0;
 
@@ -38,7 +40,7 @@ namespace EIP.Views.Controls
             LetsUploadPhotos();
         }
 
-        public ProgressUploadPhotos(long laccountID, string luserID, string laid, List<UpPhoto> lesPhotos)
+        public ProgressUploadPhotos(long laccountID, string luserID, string laid, List<UpPhoto> lesPhotos, Photoset photoset)
         {
             InitializeComponent();
 
@@ -46,6 +48,7 @@ namespace EIP.Views.Controls
             this.uidFlickr = luserID;
             this.aid = laid;
             this.photos = lesPhotos;
+            this.photoset = photoset;
 
             LetsUploadPhotos();
         }
@@ -98,6 +101,8 @@ namespace EIP.Views.Controls
                             sendPhotoText.Text = "Upload de la photo " + ++i + " / " + this.photos.Count;
                             ((AccountFlickrLight)Connexion.accounts[this.accountID]).UploadPhotoCalled += new AccountFlickrLight.UploadPhotoCompleted(ProgressUploadPhotos_UploadPhotoCalled);
                             ((AccountFlickrLight)Connexion.accounts[this.accountID]).UploadPhoto(this.aid, photo.text, str, file.Name);
+
+
                         }
                         str.Close();
                     }
@@ -124,20 +129,40 @@ namespace EIP.Views.Controls
 
         }
 
-        void ProgressUploadPhotos_UploadPhotoCalled()
+        void ProgressUploadPhotos_UploadPhotoCalled(string photoID)
         {
             Dispatcher.BeginInvoke(() =>
             {
                 if (i < this.photos.Count)
                 {
-                    SendPhoto();
+                    if (i==1 && photoID != "")
+                    {
+                        ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbumCalled -= new AccountFlickrLight.CreateAlbumCompleted(ProgressUploadPhotos_CreateAlbumCalled);
+                        ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbumCalled += new AccountFlickrLight.CreateAlbumCompleted(ProgressUploadPhotos_CreateAlbumCalled);
+                        ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbum(photoset.Title, photoset.Description, photoID);
+                    }
+                    else
+                    {
+                        SendPhoto();
+                    }
                 }
                 else
                 {
+                    ((AccountFlickrLight)Connexion.accounts[this.accountID]).GetAlbums(uidFlickr);
                     ((AccountFlickrLight)Connexion.accounts[this.accountID]).GetPhotos(aid);
+                    string uri = "/Album/" + this.aid + "/uid/" + this.uidFlickr + "/Account/" + this.accountID;
                     this.DialogResult = true;
+                    Connexion.navigationService.Navigate(new Uri(uri, UriKind.Relative));
+                     
                 }
             });
+        }
+
+        void ProgressUploadPhotos_CreateAlbumCalled(Photoset album)
+        {
+            this.aid = album.PhotosetId;
+            photoset = album;
+            SendPhoto();
         }
        
 

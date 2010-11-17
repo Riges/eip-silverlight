@@ -134,17 +134,6 @@ namespace EIPLibrary
 
         public static bool AddAccount(Account newAccount)
         {
-            /*newAccount.groupID = 1520509439;
-            newAccount.name = "Pocketino";
-            newAccount.typeAccount = Account.TypeAccount.Flickr;
-            newAccount.userID = 320810043;
-
-            ((AccountFlickr)newAccount).token = "72157625364494246-b9b9bf3f40834c5c";
-            ((AccountFlickr)newAccount).userIDstr = "50704577@N04";
-            */
-            
-
-
             if (newAccount != null)
             {
                 List<NpgsqlParameter> parms = new List<NpgsqlParameter>();
@@ -236,7 +225,6 @@ namespace EIPLibrary
                 }
 
             }
-
             return false;
         }
 
@@ -289,10 +277,8 @@ namespace EIPLibrary
                     parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
                     break;
               
-              
                 default:
                     break;
-
             }
             result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
 
@@ -348,8 +334,6 @@ namespace EIPLibrary
                         break;
                 }
 
-
-
                 if (DbUtil.HasFieldNotNull(dtr, "Type"))
                     account.typeAccount = (Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), dtr["Type"].ToString());
 
@@ -391,13 +375,9 @@ namespace EIPLibrary
                     default:
                         break;
                 }
-
             }
             return account;
         }
-
-
-
 
     }
 }
