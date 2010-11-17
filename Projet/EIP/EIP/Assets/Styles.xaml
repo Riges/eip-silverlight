@@ -367,15 +367,23 @@
         <Setter Property="Margin" Value="0,0,0,20"/>
     </Style>
 
+    <Style x:Key="MessageBorderFbStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource BgFB}"/>
+        <Setter Property="BorderThickness" Value="5,0,0,0"/>
+    </Style>
+
+    <Style x:Key="MessageBorderTwStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource BgTW}"/>
+        <Setter Property="BorderThickness" Value="5,0,0,0"/>
+    </Style>
+
     <Style x:Key="MessageUnreadStyle" TargetType="Grid">
         <Setter Property="Background" Value="#DDDDFF"/>
         <Setter Property="Margin" Value="0,0,0,5"/>
-    </Style>
+    </Style>    
 
     <Style x:Key="MessageStyle" TargetType="Grid">
         <Setter Property="Margin" Value="0,0,0,5"/>
     </Style>
-
-
 
 </ResourceDictionary>

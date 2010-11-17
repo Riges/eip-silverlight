@@ -58,8 +58,16 @@ namespace EIP.Views.Controls
                 personText.Text = th.getAuthorThreadName();
                 person.NavigateUri = new Uri("/ProfilInfos/" + th.getAuthorThreadAccountID() + "/Account/" + th.accountID, UriKind.Relative); // TODO : url profil
                 date.Text = th.date.ToString();
+
+                if (th.isFacebook())
+                    BorderLayoutRoot.Style = Resources["MessageBorderFbStyle"] as Style;
+                else if (th.isTwitter())
+                    BorderLayoutRoot.Style = Resources["MessageBorderTwStyle"] as Style;
+
                 if (th.unread())
+                {
                     LayoutRoot.Style = Resources["MessageUnreadStyle"] as Style;
+                }
             }
             else if(this.DataContext.GetType() == typeof(MessageFacebook)) {
                 MessageFacebook th = (MessageFacebook)this.DataContext;

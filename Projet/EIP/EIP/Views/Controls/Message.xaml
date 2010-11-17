@@ -8,33 +8,6 @@
     d:DesignHeight="300" d:DesignWidth="400" MinWidth="500">
 
     <Grid x:Name="LayoutRoot" Style="{StaticResource MessageStyle}">
-        <!--Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Image Grid.RowSpan="3" Grid.Column="0" Name="picUser" Width="100" Height="100" Stretch="Uniform"  Margin="0,5,0,5" >
-            <Image.Projection>
-                <PlaneProjection  RotationY="-35" CenterOfRotationX="0"  />
-            </Image.Projection>
-        </Image>
-        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Name="subject" Text="Subject" />
-        <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Name="summary" Text="Summary" VerticalAlignment="Top" TextWrapping="Wrap" /-->
-        
-        <!--StackPanel Orientation="Vertical" Name="messagesPanel">
-            
-            
-        </StackPanel-->
 
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="15"></RowDefinition>
@@ -45,11 +18,11 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
 
         </Grid.ColumnDefinitions>
-        
-        <Image Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" VerticalAlignment="Top" >
-        </Image>
-        <!--TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="person" Text="Person" /-->
 
+        <Border Name="BorderLayoutRoot">
+            <Image Grid.Column="0" Name="picUser" Width="50" Height="50" Stretch="Uniform"  Margin="0,5,0,5" VerticalAlignment="Top" >
+            </Image>
+        </Border>
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
             <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="person" FontWeight="Bold">
                 <HyperlinkButton.Content>
@@ -75,5 +48,4 @@
             </StackPanel>
         </StackPanel>
     </Grid>
-    
 </UserControl>
