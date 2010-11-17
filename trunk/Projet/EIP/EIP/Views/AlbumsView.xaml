@@ -9,7 +9,7 @@
            xmlns:Controls="clr-namespace:EIP.Views.Controls"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Margin="10,0,10,0">
+           Margin="10,0,10,0" Drop="Page_Drop">
 
     <navigation:Page.DataContext>
         <vm:InCoverFlowContentControlSampleData />
@@ -45,14 +45,17 @@
     <Grid x:Name="LayoutRoot" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBlock Name="PseudoUser" Grid.Row="0" FontSize="22" FontWeight="Bold" Margin="0,0,0,10" Text=" "></TextBlock>
+        <TextBlock Name="dragText" Grid.Row="1" Text="Pour ajouter des photos, déposez les sur cette page." Visibility="Collapsed"></TextBlock>
+        
+        <TextBlock Grid.Row="2" Name="noAlbums" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,20,0" Visibility="Collapsed" Text="Cet utilisateur ne possède pas de photos ou ne souhaite pas que vous y accédiez."></TextBlock>
 
-        <TextBlock Grid.Row="1" Name="noAlbums" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0,20,0" Visibility="Collapsed" Text="Cet utilisateur ne possède pas de photos ou ne souhaite pas que vous y accédiez."></TextBlock>
-
-        <fl:FlowItemsControl3D Grid.Row="1"  Name="flowControl" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center"  >
+        <fl:FlowItemsControl3D Grid.Row="3"  Name="flowControl" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center"  >
             <!--ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>

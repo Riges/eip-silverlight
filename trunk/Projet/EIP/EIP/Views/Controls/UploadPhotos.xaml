@@ -114,14 +114,14 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <TextBox Name="nameAlbum" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-        
-        <TextBox Name="lieuAlbum" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
-        <TextBox Name="descriptionAlbum" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"></TextBox>
+        <TextBox Name="nameAlbum" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsEnabled="False" TextChanged="nameAlbum_TextChanged"></TextBox>
+
+        <TextBox Name="lieuAlbum" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsEnabled="False"></TextBox>
+        <TextBox Name="descriptionAlbum" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsEnabled="False"></TextBox>
 
         
         
         <Button x:Name="CancelButton" Content="Annuler" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="6" Grid.Column="2" />
-        <Button x:Name="OKButton" Content="Upload" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="6" Grid.Column="2" />
+        <Button x:Name="OKButton" Content="Upload" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="6" Grid.Column="2" IsEnabled="False"/>
     </Grid>
 </controls:ChildWindow>

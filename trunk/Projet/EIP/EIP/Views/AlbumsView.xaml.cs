@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using EIP.ServiceEIP;
 using Facebook.Schema;
 using EIP.Views.Controls;
+using System.IO;
 
 namespace EIP.Views
 {
@@ -46,6 +47,18 @@ namespace EIP.Views
                {
                    if (this.NavigationContext.QueryString.ContainsKey("uid"))
                        this.uid = Convert.ToInt64(this.NavigationContext.QueryString["uid"]);
+               }
+
+               if (this.uid == Connexion.accounts[this.accountID].account.userID ||
+                   (Connexion.accounts[this.accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Flickr && ((AccountFlickr)Connexion.accounts[this.accountID].account).userIDstr == this.uidFlickr))
+               {
+                   dragText.Visibility = System.Windows.Visibility.Visible;
+                   this.AllowDrop = true;
+               }
+               else
+               {
+                   dragText.Visibility = System.Windows.Visibility.Collapsed;
+                   this.AllowDrop = false;
                }
 
                //App.Current.Resources.Add("accountID", this.accountID);
@@ -138,6 +151,13 @@ namespace EIP.Views
                     }
                     else
                     {
+                        if (this.uid == Connexion.accounts[this.accountID].account.userID)
+                        {
+                            noAlbums.Text = "Vous n'avez pas d'albums.";
+                        }
+                        else
+                            noAlbums.Text = "Cet utilisateur ne possède pas de photos ou ne souhaite pas que vous y accédiez.";
+
                         noAlbums.Visibility = System.Windows.Visibility.Visible;                        
                     }
                 });
@@ -154,15 +174,35 @@ namespace EIP.Views
                 }
                 else
                 {
+                    if (Connexion.accounts[this.accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Flickr && ((AccountFlickr)Connexion.accounts[this.accountID].account).userIDstr == this.uidFlickr)
+                    {
+                        noAlbums.Text = "Vous n'avez pas d'albums.";
+                    }
+                    else
+                        noAlbums.Text = "Cet utilisateur ne possède pas de photos ou ne souhaite pas que vous y accédiez.";
                     noAlbums.Visibility = System.Windows.Visibility.Visible;
                 }
             });
         }
 
-        /*protected override void OnNavigatedFrom(NavigationEventArgs e)
+        private void Page_Drop(object sender, DragEventArgs e)
         {
-            Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
-        }*/
+            if (e.Data == null) return;
 
+            var files = e.Data.GetData(DataFormats.FileDrop) as FileInfo[];
+
+            if (files == null) return;
+
+            if (Connexion.accounts[this.accountID].account.typeAccount == Account.TypeAccount.Flickr)
+            {
+                UploadPhotos uploadPhotos = new UploadPhotos(this.accountID, this.uidFlickr, "", files);
+                uploadPhotos.Show();
+            }
+            else
+            {
+                UploadPhotos uploadPhotos = new UploadPhotos(this.accountID, this.uid, "", files);
+                uploadPhotos.Show();
+            }
+        }
     }
 }

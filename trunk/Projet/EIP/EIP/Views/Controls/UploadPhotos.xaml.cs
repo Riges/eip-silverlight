@@ -90,19 +90,29 @@ namespace EIP.Views.Controls
 
 
                 albums.AddRange(albumsResult);
-                albums.Add(new album() { name = "Nouvel Album" });
+                album newAlbum = new album() { name = "Nouvel Album" };
+                albums.Add(newAlbum);
 
 
                 comboAlbums.DataContext = albums;
-                var al = from a in albums
-                            where a.aid == this.aid
-                            select a;
-                
-                comboAlbums.SelectedItem = (album)al.First();
+
+                if (this.aid == "")
+                {
+                    comboAlbums.SelectedItem = newAlbum;
+                }
+                else
+                {
+                    var al = from a in albums
+                             where a.aid == this.aid
+                             select a;
+
+                    comboAlbums.SelectedItem = (album)al.First();
+                }
                 comboAlbums.Visibility = System.Windows.Visibility.Visible;
               
                 // imgAlbum.Source = new BitmapImage(new Uri(accountFB.photos[this.album.aid][this.album.cover_pid].src_big, UriKind.Absolute));
             }
+            EnableUploadBtn();
         }
 
         private void LoadAlbumsFlickr()
@@ -119,17 +129,26 @@ namespace EIP.Views.Controls
 
 
                 albums.AddRange(albumsResult);
-                albums.Add(new Photoset() { Title = "Nouvel Album" });
-
+                Photoset newAlbum = new Photoset() { Title = "Nouvel Album" };
+                albums.Add(newAlbum);
 
                 comboPhotosSets.DataContext = albums;
-                var al = from a in albums
-                         where a.PhotosetId == this.aid
-                         select a;
 
-                comboPhotosSets.SelectedItem = (Photoset)al.First();
+                if (this.aid == "")
+                {
+                    comboAlbums.SelectedItem = newAlbum;
+                }
+                else
+                {
+                    var al = from a in albums
+                             where a.PhotosetId == this.aid
+                             select a;
+
+                    comboPhotosSets.SelectedItem = (Photoset)al.First();
+                }
                 comboPhotosSets.Visibility = System.Windows.Visibility.Visible;
             }
+            EnableUploadBtn();
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
@@ -156,13 +175,16 @@ namespace EIP.Views.Controls
 
                 if (album.PhotosetId == null || album.PhotosetId == "")
                 {
-                    ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbumCalled += new AccountFlickrLight.CreateAlbumCompleted(UploadPhotos_CreateAlbumCalled);
-                    ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbum(nameAlbum.Text.Trim(), lieuAlbum.Text.Trim(), descriptionAlbum.Text.Trim());
+                    album.Title = nameAlbum.Text.Trim();
+                    album.Description = descriptionAlbum.Text.Trim();
+                //    ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbumCalled += new AccountFlickrLight.CreateAlbumCompleted(UploadPhotos_CreateAlbumCalled);
+                //    ((AccountFlickrLight)Connexion.accounts[this.accountID]).CreateAlbum(nameAlbum.Text.Trim(), lieuAlbum.Text.Trim(), descriptionAlbum.Text.Trim());
                 }
-                else
-                {
-                    LetsUploadPhotos(album);
-                }
+                //else
+                //{
+                //    LetsUploadPhotos(album);
+                //}
+                LetsUploadPhotos(album);
             }
         }
 
@@ -184,34 +206,19 @@ namespace EIP.Views.Controls
 
         private void LetsUploadPhotos(album album)
         {
+            this.aid = album.aid;
             ProgressUploadPhotos progressUploadPhotos = new ProgressUploadPhotos(this.accountID, this.uid, this.aid, this.photos);
 
             progressUploadPhotos.Show();
-            
-
 
             this.DialogResult = true;
-
-            //foreach( UpPhoto photo in this.photos)
-            //{
-            //    FileInfo file = photo.img;
-            //    using (System.IO.Stream str = file.OpenRead())
-            //    {
-            //        Byte[] bytes = new Byte[str.Length];
-            //        str.Read(bytes, 0, bytes.Length);
-
-            //        if (GetFileType(file) != Enums.FileType.jp2)
-            //        {
-            //            ((AccountFacebookLight)Connexion.accounts[this.accountID]).UploadPhotoCalled += new AccountFacebookLight.UploadPhotoCompleted(UploadPhotos_UploadPhotoCalled);
-            //            ((AccountFacebookLight)Connexion.accounts[this.accountID]).UploadPhoto(album.aid, photo.text, bytes, GetFileType(file));
-            //        }
-            //    }
-            //}
         }
 
-        private void LetsUploadPhotos(Photoset album)
+        private void LetsUploadPhotos(Photoset photoset)
         {
-            ProgressUploadPhotos progressUploadPhotos = new ProgressUploadPhotos(this.accountID, this.uidFlickr, this.aid, this.photos);
+
+            this.aid = photoset.PhotosetId;
+            ProgressUploadPhotos progressUploadPhotos = new ProgressUploadPhotos(this.accountID, this.uidFlickr, this.aid, this.photos, photoset);
 
             progressUploadPhotos.Show();
 
@@ -227,27 +234,114 @@ namespace EIP.Views.Controls
 
         private void comboAlbums_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            album selectedAlbum = (album)comboAlbums.SelectedItem;
-            if (selectedAlbum != null)
-            {
-                if (selectedAlbum.aid == null || selectedAlbum.aid == "")
+
+            if (comboAlbums.SelectedItem != null && comboAlbums.SelectedItem.GetType() == typeof(album))
                 {
-                    nameAlbum.IsEnabled = true;
-                    lieuAlbum.IsEnabled = true;
-                    descriptionAlbum.IsEnabled = true;
-                    nameAlbum.Text = "";
-                    lieuAlbum.Text = "";
-                    descriptionAlbum.Text = "";
+                    album selectedAlbum = (album)comboAlbums.SelectedItem;
+                    if (selectedAlbum != null)
+                    {
+                        if (selectedAlbum.aid == null || selectedAlbum.aid == "")
+                        {
+                            nameAlbum.IsEnabled = true;
+                            lieuAlbum.IsEnabled = true;
+                            descriptionAlbum.IsEnabled = true;
+                            nameAlbum.Text = "";
+                            lieuAlbum.Text = "";
+                            descriptionAlbum.Text = "";
+                        }
+                        else
+                        {
+                            nameAlbum.Text = selectedAlbum.name;
+                            nameAlbum.IsEnabled = false;
+                            lieuAlbum.IsEnabled = false;
+                            descriptionAlbum.IsEnabled = false;
+                        }
+                    }
                 }
-                else
+                else if (comboPhotosSets.SelectedItem != null && comboPhotosSets.SelectedItem.GetType() == typeof(Photoset))
                 {
-                    nameAlbum.Text = selectedAlbum.name;
-                    nameAlbum.IsEnabled = false;
-                    lieuAlbum.IsEnabled = false;
-                    descriptionAlbum.IsEnabled = false;
+                    Photoset selectedAlbum = (Photoset)comboPhotosSets.SelectedItem;
+                    if (selectedAlbum != null)
+                    {
+                        if (selectedAlbum.PhotosetId == null || selectedAlbum.PhotosetId == "")
+                        {
+                            nameAlbum.IsEnabled = true;
+                            lieuAlbum.IsEnabled = true;
+                            descriptionAlbum.IsEnabled = true;
+                            nameAlbum.Text = "";
+                            lieuAlbum.Text = "";
+                            descriptionAlbum.Text = "";
+                        }
+                        else
+                        {
+                            nameAlbum.Text = selectedAlbum.Title;
+                            descriptionAlbum.Text = selectedAlbum.Description;
+                            nameAlbum.IsEnabled = false;
+                            lieuAlbum.IsEnabled = false;
+                            descriptionAlbum.IsEnabled = false;
+                        }
+                    }
+                }
+
+            
+            EnableUploadBtn();
+        }
+
+        private void nameAlbum_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            EnableUploadBtn();
+        }
+
+        private void EnableUploadBtn()
+        {
+            if (comboAlbums.Visibility == System.Windows.Visibility.Visible)
+            {
+                if (comboAlbums.SelectedItem == null)
+                {
+                    OKButton.IsEnabled = false;
+                }
+                else if (comboAlbums.SelectedItem.GetType() == typeof(album))
+                {
+                    album selectedAlbum = (album)comboAlbums.SelectedItem;
+                    if (selectedAlbum.aid == null || selectedAlbum.aid == "")
+                    {
+                        if (nameAlbum.Text.Trim() != "")
+                            OKButton.IsEnabled = true;
+                        else
+                            OKButton.IsEnabled = false;
+                    }
+                    else
+                    {
+                        OKButton.IsEnabled = true;
+                    }
+                }
+            }
+
+            if (comboPhotosSets.Visibility == System.Windows.Visibility.Visible)
+            {
+                if (comboPhotosSets.SelectedItem == null)
+                {
+                    OKButton.IsEnabled = false;
+                }
+                else if (comboPhotosSets.SelectedItem.GetType() == typeof(Photoset))
+                {
+                    Photoset selectedAlbum = (Photoset)comboPhotosSets.SelectedItem;
+                    if (selectedAlbum.PhotosetId == null || selectedAlbum.PhotosetId == "")
+                    {
+                        if (nameAlbum.Text.Trim() != "")
+                            OKButton.IsEnabled = true;
+                        else
+                            OKButton.IsEnabled = false;
+                    }
+                    else
+                    {
+                        OKButton.IsEnabled = true;
+                    }
                 }
             }
         }
+
+        
     }
 
     public class UpPhoto
