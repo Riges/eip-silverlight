@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         
@@ -26,19 +27,27 @@
 
         </toolkit:WrapPanel>
 
-        <StackPanel Grid.Row="1" Name="displayAllComsPanel" Orientation="Horizontal"  Grid.ColumnSpan="3"></StackPanel>
+        <Image Source="/EIP;component/Assets/Images/top-commentaire.png" Grid.Row="1" Grid.ColumnSpan="3" Name="imgTopComs"></Image>
+        <Border Visibility="Collapsed" Name="borderDisplayAllComsPanel" Grid.Row="2" Grid.ColumnSpan="3" Background="{StaticResource BorderFonce}" BorderThickness="0,1,0,0">
+            <Border Padding="2" Margin="0,0,0,0" Background="{StaticResource BgColorFonce}" BorderThickness="0,0,0,1">
+                <StackPanel Name="displayAllComsPanel" Orientation="Horizontal"  HorizontalAlignment="Stretch" ></StackPanel>
+            </Border>
+        </Border>
 
-        <StackPanel Grid.Row="2" Name="comsPanel" Grid.ColumnSpan="3"  HorizontalAlignment="Stretch"  >
+        <StackPanel Grid.Row="3" Name="comsPanel" Grid.ColumnSpan="3"  HorizontalAlignment="Stretch"  >
             <!--MinWidth="500" MaxWidth="800"-->
 
         </StackPanel>
 
-        <!--<StackPanel Grid.Row="3" Name="addComPanel" Orientation="Horizontal" Margin="0,0,0,10"  >-->
-         <Image Grid.Row="3" Grid.Column="0" Name="imgNewCom" Visibility="Collapsed" Width="40" Height="40" Margin="0,0,10,0"></Image>
-        <TextBox Grid.Row="3" Grid.Column="1" Name="textNewCom" GotFocus="textNewCom_GotFocus" LostFocus="textNewCom_LostFocus" HorizontalAlignment="Stretch" Margin="0,0,10,0"></TextBox>
-        <!--</StackPanel>-->
-        <Button  Grid.Row="3" Grid.Column="2" Content="Commenter" Name="btnNewCom" Visibility="Collapsed"  Click="btnNewCom_Click"></Button>
-       
-
+        <Border Grid.Row="4" Grid.ColumnSpan="3" Background="{StaticResource BorderFonce}" BorderThickness="0,1,0,0">
+            <Border Padding="5,0,5,0" Margin="0,0,0,0" Background="{StaticResource BgColorFonce}" BorderThickness="0,0,0,1">
+                <StackPanel Name="addComPanel" Orientation="Horizontal" Margin="0,0,0,10"  >
+                    <Image Name="imgNewCom" Visibility="Collapsed" Width="40" Height="40" Margin="0,10,5,0"></Image>
+                    <TextBox Width="570" Name="textNewCom" GotFocus="textNewCom_GotFocus" Margin="0,10,5,0" LostFocus="textNewCom_LostFocus" HorizontalAlignment="Stretch"></TextBox>
+        
+                    <Button  Content="Commenter" Name="btnNewCom" Visibility="Collapsed"  Click="btnNewCom_Click" Height="40" Margin="0,10,0,0"></Button>
+                </StackPanel>
+            </Border>
+        </Border>
     </Grid>
 </UserControl>

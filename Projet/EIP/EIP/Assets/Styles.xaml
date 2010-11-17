@@ -17,11 +17,15 @@
     <SolidColorBrush x:Key="LinkColorClairBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="LinkColorFonceBrush" Color="#333"/>
     <SolidColorBrush x:Key="BgColor" Color="#F6F6F6" />
-    <SolidColorBrush x:Key="BgColorFonce" Color="#DFDFDF" /> 
+    <!--<SolidColorBrush x:Key="BgColorFonce" Color="#DFDFDF" /> -->
+    <SolidColorBrush x:Key="BgColorFonce" Color="#DDE8FF" />
+    <SolidColorBrush x:Key="BorderFonce" Color="#C2D1F2" />
     <!--<SolidColorBrush x:Key="BgColor" Color="#FFB5B5B5"/>-->
 
     <SolidColorBrush x:Key="BgFB" Color="#3B5998" />
     <SolidColorBrush x:Key="BgTW" Color="#33CCFF" />
+    <SolidColorBrush x:Key="BorderFB" Color="#1D2E4F" />
+    <SolidColorBrush x:Key="BorderTW" Color="#208DAF" />
 
 
     <!-- LayoutRoot Grid Style -->
@@ -380,7 +384,7 @@
     </Style>
 
     <Style x:Key="MessageUnreadStyle" TargetType="Grid">
-        <Setter Property="Background" Value="#DDDDFF"/>
+        <Setter Property="Background" Value="{StaticResource BgColorFonce}"/>
     </Style>    
 
     <Style x:Key="MessageSummaryTextStyle" TargetType="TextBlock">

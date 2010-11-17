@@ -33,7 +33,7 @@
 
             <!--<toolkit:WrapPanel Name="description" Margin="0,5,0,0" Visibility="Collapsed" Width="Auto"></toolkit:WrapPanel>-->
             <StackPanel Name="description" Margin="0,5,0,0" Visibility="Collapsed" Width="Auto">
-                </StackPanel:WrapPanel>
+                </StackPanel>
 
             <StackPanel Name="properties">
                 

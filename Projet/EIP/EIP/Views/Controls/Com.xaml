@@ -8,9 +8,9 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" >
     <!--Height="Auto" Width="Auto"-->
-
-    <Border Padding="5" Margin="0,0,0,5" Background="{StaticResource BgColorFonce}" BorderThickness="2" BorderBrush="{StaticResource LinkColorFonceBrush}">
-    <Grid x:Name="LayoutRoot"  MouseMove="LayoutRoot_MouseMove" MouseLeave="LayoutRoot_MouseLeave"><!--Background="{StaticResource BgColor}"-->
+<Border Background="{StaticResource BorderFonce}" BorderThickness="0,1,0,0">
+        <Border Padding="5" Margin="0,0,0,0" Background="{StaticResource BgColorFonce}" BorderThickness="0,0,0,1"><!-- BorderBrush="{StaticResource LinkColorFonceBrush}"-->
+        <Grid x:Name="LayoutRoot"  MouseMove="LayoutRoot_MouseMove" MouseLeave="LayoutRoot_MouseLeave"><!--Background="{StaticResource BgColor}"-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -22,7 +22,7 @@
 
         <!--<Image Grid.RowSpan="2" Grid.Column="0" Name="imgUser" Width="40" Height="40" Stretch="Uniform" Margin="0,0,10,10" ></Image>-->
 
-        <Border CornerRadius="0" x:Name="picUserBorder" BorderBrush="Black" BorderThickness="2" Width="40" Height="40" Grid.RowSpan="2" Grid.Column="0" Margin="0,0,10,10" Cursor="Hand" MouseLeftButtonUp="picUserBorder_MouseLeftButtonUp" >
+            <Border CornerRadius="0" x:Name="picUserBorder" Width="40" Height="40" Grid.RowSpan="2" Grid.Column="0" Margin="0,0,10,10" Cursor="Hand" MouseLeftButtonUp="picUserBorder_MouseLeftButtonUp" VerticalAlignment="Top"><!--  BorderBrush="Black" BorderThickness="2"-->
             <Border.Background>
                 <ImageBrush x:Name="backgroundImageBrush" Stretch="UniformToFill">
                     <ImageBrush.ImageSource>
@@ -43,5 +43,6 @@
         </StackPanel>
 
     </Grid>
+        </Border>
     </Border>
 </UserControl>

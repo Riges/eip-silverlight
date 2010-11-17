@@ -63,6 +63,7 @@ namespace EIP.Views.Controls
                 linkBtn.Content = "Afficher les " + this.Commentaires.count + " commentaires";
                 linkBtn.Click += new RoutedEventHandler(linkBtn_Click);
                 displayAllComsPanel.Children.Add(linkBtn);
+                borderDisplayAllComsPanel.Visibility = System.Windows.Visibility.Visible;
             }
 
             imgNewCom.Source = new BitmapImage(new Uri(((AccountFacebookLight)Connexion.accounts[this.accountID]).userInfos.pic_square, UriKind.Absolute));
@@ -103,6 +104,8 @@ namespace EIP.Views.Controls
         {
 
             ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetComs(this.postId);
+
+            borderDisplayAllComsPanel.Visibility = System.Windows.Visibility.Collapsed;
 
         }
 
@@ -173,6 +176,7 @@ namespace EIP.Views.Controls
             btnNewCom.Visibility = System.Windows.Visibility.Visible;
             if(textNewCom.Text == "Rédigez un commentaire...")
                 textNewCom.Text = "";
+            textNewCom.Width = 445;
         }
 
         private void textNewCom_LostFocus(object sender, RoutedEventArgs e)
@@ -182,6 +186,7 @@ namespace EIP.Views.Controls
                 imgNewCom.Visibility = System.Windows.Visibility.Collapsed;
                 btnNewCom.Visibility = System.Windows.Visibility.Collapsed;
                 textNewCom.Text = "Rédigez un commentaire...";
+                textNewCom.Width = 570;
             }
         }
 

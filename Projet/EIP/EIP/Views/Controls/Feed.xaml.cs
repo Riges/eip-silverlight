@@ -124,6 +124,7 @@ namespace EIP.Views.Controls
                             userAccountName.Content = userAccount.name;
                             userAccountName.NavigateUri = new Uri("/ProfilInfos/" + Connexion.accounts[topic.accountID].account.userID + "/Account/" + topic.accountID, UriKind.Relative);
                             barAccount.Background = App.Current.Resources["BgFB"] as SolidColorBrush;
+                            barAccount.BorderBrush = App.Current.Resources["BorderFB"] as SolidColorBrush;
 
                             //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("3B", 16), G = Convert.ToByte("59", 16), B = Convert.ToByte("98", 16) });
                             
@@ -254,6 +255,7 @@ namespace EIP.Views.Controls
                             }
                             userAccountName.NavigateUri = new Uri("/ProfilInfos/" + status.User.Id + "/Account/" + topic.accountID, UriKind.Relative);
                             barAccount.Background = App.Current.Resources["BgTW"] as SolidColorBrush;
+                            barAccount.BorderBrush = App.Current.Resources["BorderTW"] as SolidColorBrush;
                             //borderFeed.Background = new SolidColorBrush(new Color() {A = 255, R = Convert.ToByte("5E", 16), G = Convert.ToByte("C7", 16), B = Convert.ToByte("E5", 16) });
                             
                             
