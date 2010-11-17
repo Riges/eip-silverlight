@@ -10,11 +10,14 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Windows.Threading;
 
 namespace EIP.Views.Controls
 {
     public partial class NotificationPopup : UserControl
     {
+        public DispatcherTimer dt = new DispatcherTimer();
+
         public NotificationPopup()
         {
             InitializeComponent();
@@ -26,6 +29,15 @@ namespace EIP.Views.Controls
             Content.Text = content;
         }
 
+        public NotificationPopup(string content, int time)
+        {
+            InitializeComponent();
+            Content.Text = content;
+            dt.Interval = new TimeSpan(0, 0, 0, time, 000);
+            dt.Tick += new EventHandler(dt_Tick);
+            dt.Start();
+        }
+
         public NotificationPopup(string header, string content)
         {
             InitializeComponent();
@@ -33,9 +45,25 @@ namespace EIP.Views.Controls
             Content.Text = content;
         }
 
+        public NotificationPopup(string header, string content, int time)
+        {
+            InitializeComponent();
+            Header.Text = header;
+            Content.Text = content;
+            dt.Interval = new TimeSpan(0, 0, 0, time, 000);
+            dt.Tick += new EventHandler(dt_Tick);
+            dt.Start();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Remove the control from the layout.
+            DislayOff();
+        }
+
+        void dt_Tick(object sender, EventArgs e)
+        {
+            dt.Stop();
             DislayOff();
         }
 

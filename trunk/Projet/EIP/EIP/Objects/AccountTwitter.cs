@@ -434,7 +434,7 @@ namespace EIP
                         Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                         if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
                             this.LoadHomeStatusesCalled.Invoke();
-                        Utils.NotificationMessage("Message Twitter mis à jours pour " + userInfos.ScreenName);
+                        Utils.NotificationMessage(userInfos.ScreenName, "Message Twitter mis à jours");
                     }
                 }
                 else

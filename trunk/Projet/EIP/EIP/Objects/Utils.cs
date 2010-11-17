@@ -73,44 +73,39 @@ namespace EIP.Objects
             return jour;
         }
 
-        public  static void NotificationMessage(string message)
+        public static void NotificationMessage(string header, string message)
         {
             Connexion.dispatcher.BeginInvoke(() =>
+            {
+                if (App.Current.IsRunningOutOfBrowser)//.InstallState == InstallState.Installed)
                 {
-                    if (App.Current.IsRunningOutOfBrowser)//.InstallState == InstallState.Installed)
-                    {
-                        NotificationWindow notify = new NotificationWindow();
-                        notify.Width = 329;
-                        notify.Height = 74;
+                    NotificationWindow notify = new NotificationWindow();
 
-                        TextBlock tb = new TextBlock();
-                        tb.Text = message;
-                        tb.FontSize = 9;
+                    /*TextBlock tb = new TextBlock();
+                    tb.Text = message;
+                    tb.FontSize = 9;*/
 
-                        notify.Content = tb;
+                    notify.Content = new NotificationPopup(header, message);
 
-                        notify.Show(5000);
-                    }
-                    else
-                    {
-                        // Create a popup. 
-                        Popup p = new Popup();
+                    notify.Show(5000);
+                }
+                else
+                {
+                    // Create a popup. 
+                    Popup p = new Popup();
 
-                        // Set the Child property of Popup to an instance of MyControl. 
-                        p.Child = new NotificationPopup(message);
-
-                        // Set where the popup will show up on the screen. 
-
-                        p.VerticalOffset = App.Current.Host.Content.ActualHeight - 110;
-                        p.HorizontalOffset = App.Current.Host.Content.ActualWidth - 250;
-
-
-
-
-                        // Open the popup. 
-                        p.IsOpen = true;
-                    }
-                });
+                    // Set the Child property of Popup to an instance of MyControl. 
+                    NotificationPopup notifi = new NotificationPopup(header, message, 5);
+                    p.Child = notifi;
+                    notifi.InvokeOnLayoutUpdated(delegate {
+                                                               // Set where the popup will show up on the screen. 
+                                                               p.VerticalOffset = App.Current.Host.Content.ActualHeight - notifi.ActualHeight - 30;
+                                                               p.HorizontalOffset = App.Current.Host.Content.ActualWidth - notifi.ActualWidth;
+                                                           });
+                    // Open the popup. 
+                    p.IsOpen = true;
+                }
+            });
         }
 
         public static string GetMonthFr(int month)
