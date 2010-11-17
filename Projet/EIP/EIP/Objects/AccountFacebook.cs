@@ -734,6 +734,7 @@ namespace EIP
         {
             this.busy = true;
             bool needUpdate = true;
+            bool hasUpdate = false;
            
             if(this.feeds.ContainsKey(filtre.ToString()))
             {
@@ -775,6 +776,8 @@ namespace EIP
                     DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                     dateTime = dateTime.AddSeconds(post.created_time).AddHours(2);
                     this.feeds[post.filter_key].Add(new Topic(dateTime, Account.TypeAccount.Facebook, this.account.accountID, topicFB));
+                    if (!hasUpdate)
+                        hasUpdate = true;
                 }
 
                 if (this.feeds.ContainsKey(filtre.ToString()) && this.feeds[filtre.ToString()].Count > 0 && this.selected)
@@ -782,7 +785,8 @@ namespace EIP
                     Connexion.allTopics[this.account.userID.ToString()] = this.feeds[filtre.ToString()];
                     if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
                         this.LoadFeedsCalled.Invoke();
-                    Utils.NotificationMessage("Message Facebook mis à jours pour " + userInfos.last_name + " " + userInfos.first_name);
+                    if(hasUpdate && this.LoadFeedsCalled != null)
+                        Utils.NotificationMessage(userInfos.last_name + " " + userInfos.first_name, "Message Facebook mis à jours");
                 }
 
                 this.busy = false;
@@ -800,15 +804,21 @@ namespace EIP
             {
                if (!busy)
                     //this.facebookAPI.Notification.GetAsync(this.account.userID, new List<long>(), null, null, 30, filtre, new Stream.GetCallback(GetStreamCompleted), filtre);
-                   this.facebookAPI.Notifications.GetAsync(new Notifications.GetCallback(GetNotificationCompleted), null);
+                   this.facebookAPI.Notifications.GetListAsync(null, false, new Notifications.GetListCallback(GetNotificationCompleted), null);
             }
 
             return ret;
         }
 
-        private void GetNotificationCompleted(notifications data, Object obj, FacebookException ex)
+        private void GetNotificationCompleted(notification_data data, Object obj, FacebookException ex)
         {
-           
+            if (data != null && ex == null)
+            {
+                foreach (notification notificat in data.notifications.notification)
+                {
+                    Utils.NotificationMessage(notificat.title_text, notificat.body_text);
+                }
+            }
         }
 
         /// <summary>

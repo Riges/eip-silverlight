@@ -126,7 +126,7 @@ namespace EIP.Views
                                     waitFB = !((AccountFacebookLight)accountLight.Value).LoadFeeds(this.filterFB, false);
                                 if (waitFB)
                                     wait = waitFB;
-                               
+                                ((AccountFacebookLight)accountLight.Value).GetNotification();
                                 break;
                             case Account.TypeAccount.Twitter:
                                 accountSelected = true;
