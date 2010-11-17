@@ -95,7 +95,7 @@
   <xs:element name="AddAccountResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="AddAccountResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="AddAccountResult" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -129,7 +129,9 @@
   </xs:element>
   <xs:element name="GetRequestToken">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="callback" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetRequestTokenResponse">

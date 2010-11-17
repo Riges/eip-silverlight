@@ -78,38 +78,78 @@ namespace EIPWCF
             return Model.GetAccountsByUserID(identity.Id);
         }
 
-        public bool AddAccount(Account newAccount, string token, string pin)
+        public long AddAccount(Account newAccount, string token, string pin)
         {
             SetClientInfo();
 
             switch (newAccount.typeAccount)
             {
                 case Account.TypeAccount.Facebook:
+                    if (Model.AddAccount(newAccount))
+                        return newAccount.groupID;
                     break;
                 case Account.TypeAccount.Twitter:
                     var accessToken = FluentTwitter.CreateRequest()
-                    .Authentication.GetAccessToken(token, pin);
+                    .Authentication.GetAccessToken(ConfigurationManager.AppSettings["ConsumerKey"], ConfigurationManager.AppSettings["ConsumerSecret"], token, pin);
 
                     TwitterResult result = accessToken.Request();
                     var tokenResult = result.AsToken();
 
-                    if (tokenResult != null)
+                    if (!result.IsTwitterError && tokenResult != null)
                     {
-                        newAccount.groupID = 1520509439;
-                        newAccount.name = tokenResult.ScreenName;
-                        newAccount.userID = Convert.ToInt64(tokenResult.UserId);
-                        newAccount.typeAccount = Account.TypeAccount.Twitter;
-                        ((AccountTwitter)newAccount).token = tokenResult.Token;
-                        ((AccountTwitter)newAccount).tokenSecret = tokenResult.TokenSecret;
+                        Account acc = Model.GetAccount(Convert.ToInt64(tokenResult.UserId));
+
+                        if (acc == null)
+                        {
+                            newAccount.groupID = newAccount.groupID;
+                            newAccount.name = tokenResult.ScreenName;
+                            newAccount.userID = Convert.ToInt64(tokenResult.UserId);
+                            newAccount.typeAccount = Account.TypeAccount.Twitter;
+                            ((AccountTwitter)newAccount).token = tokenResult.Token;
+                            ((AccountTwitter)newAccount).tokenSecret = tokenResult.TokenSecret;
+
+                            if (Model.AddAccount(newAccount))
+                                return newAccount.groupID;
+                        }
+                        else
+                        {
+                            acc.name = tokenResult.ScreenName;
+                            ((AccountTwitter)acc).token = tokenResult.Token;
+                            ((AccountTwitter)acc).tokenSecret = tokenResult.TokenSecret;
+
+                            if (Model.SaveAccount(acc))
+                                return acc.groupID;
+                            else
+                                return -2;
+                        }
                     }
+                    else 
+                        return -1;
                     break;
                case Account.TypeAccount.Flickr:
+                    Account accFK = Model.GetAccountFlickr(((AccountFlickr)newAccount).userIDstr);
+
+                    if (accFK == null)
+                    {
+                        if (Model.AddAccount(newAccount))
+                            return newAccount.groupID;
+                    }
+                    else
+                    {
+                        accFK.name = newAccount.name;
+                        ((AccountFlickr)accFK).token = ((AccountFlickr)newAccount).token;
+
+                        if (Model.SaveAccount(accFK))
+                            return accFK.groupID;
+                        else
+                            return -2;
+                    }
                     break;
                 default:
                     break;
             }
 
-            return Model.AddAccount(newAccount);
+            return 0;
         }
 
         public IEnumerable<TwitterStatus> LoadHomeStatuses(string token, string tokenSecret)
@@ -469,12 +509,12 @@ namespace EIPWCF
         }
 
 
-        public string GetRequestToken()//string consumerKey, string consumerSecret
+        public string GetRequestToken(string callback)//string consumerKey, string consumerSecret
         {
             //SetClientInfo();
 
             var requestToken = FluentTwitter.CreateRequest()
-                .Authentication.GetRequestToken(ConfigurationManager.AppSettings["ConsumerKey"], ConfigurationManager.AppSettings["ConsumerSecret"]);
+                .Authentication.GetRequestToken(ConfigurationManager.AppSettings["ConsumerKey"], ConfigurationManager.AppSettings["ConsumerSecret"], callback);
 
             var response = requestToken.Request();
             var result = response.AsToken();

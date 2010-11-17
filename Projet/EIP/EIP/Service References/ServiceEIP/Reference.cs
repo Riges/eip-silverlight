@@ -1195,7 +1195,7 @@ namespace EIP.ServiceEIP {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/AddAccount", ReplyAction="http://tempuri.org/IServiceEIP/AddAccountResponse")]
         System.IAsyncResult BeginAddAccount(EIP.ServiceEIP.Account newAccount, string token, string pin, System.AsyncCallback callback, object asyncState);
         
-        bool EndAddAccount(System.IAsyncResult result);
+        long EndAddAccount(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/SaveAccount", ReplyAction="http://tempuri.org/IServiceEIP/SaveAccountResponse")]
         System.IAsyncResult BeginSaveAccount(EIP.ServiceEIP.Account accountToSave, System.AsyncCallback callback, object asyncState);
@@ -1208,7 +1208,7 @@ namespace EIP.ServiceEIP {
         long EndDeleteAccount(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetRequestToken", ReplyAction="http://tempuri.org/IServiceEIP/GetRequestTokenResponse")]
-        System.IAsyncResult BeginGetRequestToken(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetRequestToken([System.ServiceModel.MessageParameterAttribute(Name="callback")] string callback1, System.AsyncCallback callback, object asyncState);
         
         string EndGetRequestToken(System.IAsyncResult result);
         
@@ -1407,10 +1407,10 @@ namespace EIP.ServiceEIP {
             this.results = results;
         }
         
-        public bool Result {
+        public long Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((long)(this.results[0]));
             }
         }
     }
@@ -2244,7 +2244,7 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool EIP.ServiceEIP.IServiceEIP.EndAddAccount(System.IAsyncResult result) {
+        long EIP.ServiceEIP.IServiceEIP.EndAddAccount(System.IAsyncResult result) {
             return base.Channel.EndAddAccount(result);
         }
         
@@ -2256,7 +2256,7 @@ namespace EIP.ServiceEIP {
         }
         
         private object[] OnEndAddAccount(System.IAsyncResult result) {
-            bool retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndAddAccount(result);
+            long retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndAddAccount(result);
             return new object[] {
                     retVal};
         }
@@ -2381,8 +2381,8 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetRequestToken(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetRequestToken(callback, asyncState);
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetRequestToken(string callback1, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetRequestToken(callback1, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2391,7 +2391,8 @@ namespace EIP.ServiceEIP {
         }
         
         private System.IAsyncResult OnBeginGetRequestToken(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetRequestToken(callback, asyncState);
+            string callback1 = ((string)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetRequestToken(callback1, callback, asyncState);
         }
         
         private object[] OnEndGetRequestToken(System.IAsyncResult result) {
@@ -2407,11 +2408,11 @@ namespace EIP.ServiceEIP {
             }
         }
         
-        public void GetRequestTokenAsync() {
-            this.GetRequestTokenAsync(null);
+        public void GetRequestTokenAsync(string callback1) {
+            this.GetRequestTokenAsync(callback1, null);
         }
         
-        public void GetRequestTokenAsync(object userState) {
+        public void GetRequestTokenAsync(string callback1, object userState) {
             if ((this.onBeginGetRequestTokenDelegate == null)) {
                 this.onBeginGetRequestTokenDelegate = new BeginOperationDelegate(this.OnBeginGetRequestToken);
             }
@@ -2421,7 +2422,8 @@ namespace EIP.ServiceEIP {
             if ((this.onGetRequestTokenCompletedDelegate == null)) {
                 this.onGetRequestTokenCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetRequestTokenCompleted);
             }
-            base.InvokeAsync(this.onBeginGetRequestTokenDelegate, null, this.onEndGetRequestTokenDelegate, this.onGetRequestTokenCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetRequestTokenDelegate, new object[] {
+                        callback1}, this.onEndGetRequestTokenDelegate, this.onGetRequestTokenCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3208,9 +3210,9 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public bool EndAddAccount(System.IAsyncResult result) {
+            public long EndAddAccount(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("AddAccount", _args, result)));
+                long _result = ((long)(base.EndInvoke("AddAccount", _args, result)));
                 return _result;
             }
             
@@ -3240,8 +3242,9 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetRequestToken(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginGetRequestToken(string callback1, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = callback1;
                 System.IAsyncResult _result = base.BeginInvoke("GetRequestToken", _args, callback, asyncState);
                 return _result;
             }

@@ -41,7 +41,7 @@ namespace EIPWCF
         List<Account> GetAccountsByTwitter(string pseudo, string password);
 
         [OperationContract]
-        bool AddAccount(Account newAccount, string token, string pin);
+        long AddAccount(Account newAccount, string token, string pin);
 
         [OperationContract]
         bool SaveAccount(Account accountToSave);
@@ -55,7 +55,7 @@ namespace EIPWCF
 
 
         [OperationContract]
-        string GetRequestToken();
+        string GetRequestToken(string callback);
 
         [OperationContract]
         IEnumerable<TwitterStatus> LoadHomeStatuses(string token, string tokenSecret);

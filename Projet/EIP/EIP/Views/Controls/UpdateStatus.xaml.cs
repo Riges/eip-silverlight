@@ -47,7 +47,7 @@ namespace EIP.Views.Controls
                         NetworkStackPanel.Children.Clear();
                         foreach (KeyValuePair<long, AccountLight> oneAccount in Connexion.accounts)
                         {
-                            if (oneAccount.Value.selected)
+                            if (oneAccount.Value.selected && oneAccount.Value.account.typeAccount != Account.TypeAccount.Flickr)
                             {
                                 StackPanel panel = new StackPanel();
                                 panel.Orientation = Orientation.Horizontal;

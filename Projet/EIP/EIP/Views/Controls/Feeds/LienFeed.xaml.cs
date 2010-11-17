@@ -84,8 +84,8 @@ namespace EIP.Views.Controls.Feeds
 
             if (topic.post.attachment.description != "" && topic.post.attachment.description != null)
             {
-                foreach (UIElement element in Utils.LoadMessage(topic.post.attachment.description))
-                    description.Children.Add(element);
+                foreach (WrapPanel wrap in Utils.LoadMessageLn(topic.post.attachment.description))
+                    description.Children.Add(wrap);
                 description.Visibility = System.Windows.Visibility.Visible;
                 
             }

@@ -30,8 +30,10 @@
             <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Name="titre" TargetName="_blank" Margin="0,2,0,0"></HyperlinkButton>
             
             <TextBlock Name="caption" Visibility="Collapsed" TextWrapping="Wrap" ></TextBlock>
-            
-            <toolkit:WrapPanel Name="description" Margin="0,5,0,0" Visibility="Collapsed" Width="Auto"></toolkit:WrapPanel>
+
+            <!--<toolkit:WrapPanel Name="description" Margin="0,5,0,0" Visibility="Collapsed" Width="Auto"></toolkit:WrapPanel>-->
+            <StackPanel Name="description" Margin="0,5,0,0" Visibility="Collapsed" Width="Auto">
+                </StackPanel:WrapPanel>
 
             <StackPanel Name="properties">
                 

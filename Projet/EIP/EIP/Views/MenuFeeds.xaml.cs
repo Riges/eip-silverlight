@@ -40,7 +40,7 @@ namespace EIP.Views
             menufiltre.Items.Clear();
             foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
-                if (account.Value.selected)
+                if (account.Value.selected && account.Value.account.typeAccount != Account.TypeAccount.Flickr)
                 {
                     //AccordionItem item = new AccordionItem();
                     TreeViewItem item = new TreeViewItem();

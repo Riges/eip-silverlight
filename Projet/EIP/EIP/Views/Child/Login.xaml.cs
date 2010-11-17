@@ -80,14 +80,15 @@ namespace EIP.Views.Child
                     mdpBox.Visibility = System.Windows.Visibility.Collapsed;
                     break;
                 case Account.TypeAccount.Twitter:
-
+                    /*
                     if (!this.addAccount)
                     {
                         pseudoText.Visibility = System.Windows.Visibility.Visible;
                         pseudoBox.Visibility = System.Windows.Visibility.Visible;
                         mdpText.Visibility = System.Windows.Visibility.Visible;
                         mdpBox.Visibility = System.Windows.Visibility.Visible;
-                    }
+                    }*/
+
                     break;
                 case Account.TypeAccount.Flickr:
                     break;

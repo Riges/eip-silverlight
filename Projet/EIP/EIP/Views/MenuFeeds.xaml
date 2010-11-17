@@ -6,8 +6,8 @@
                  xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
-           d:DesignWidth="640" d:DesignHeight="480" MinHeight="300"
-           Title="myNETwork" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+           d:DesignWidth="640" d:DesignHeight="480" MinHeight="300" Title="myNETwork - Fil d'actualités"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}" >
         <!--<StackPanel Orientation="Vertical" Name="LayoutPanel" ScrollViewer.HorizontalScrollBarVisibmility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <Button Content="Actualités"></Button>

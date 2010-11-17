@@ -32,12 +32,13 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-           
+            Connexion.listeComptes.ListeCompteMode = ListeComptes.ListeCptMode.Normal;
+
             busyIndicator.BusyContent = "Chargement des amis en cours...";
             busyIndicator.IsBusy = true;
             busyIndicator.DisplayAfter = new TimeSpan(200);
 
-            this.Title = "Amis";
+            this.Title = "myNETwork - Amis";
             this.friends = new Dictionary<String, Friend>();
             LoadList();
 
@@ -168,7 +169,13 @@ namespace EIP.Views
 
         private void LoadDisplay()
         {
-            nbAmis.Text = "Vous avez " + friends.Count + " Amis";
+            if (friends.Count == 1)
+                nbAmis.Text = "Vous avez un seul ami, il est temps de se sociabiliser !";
+            else if (friends.Count > 0)
+                nbAmis.Text = "Vous avez " + friends.Count + " Amis";
+            else
+                nbAmis.Text = "Vous n'avez pas d'amis. Poor little thing...";
+
             flowControl.DataContext = friends.Values;
             
             //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;

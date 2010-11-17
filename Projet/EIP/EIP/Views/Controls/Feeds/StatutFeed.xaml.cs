@@ -28,6 +28,14 @@ namespace EIP.Views.Controls.Feeds
 
         private void LoadMessage(string msg)
         {
+            foreach (WrapPanel wrap in Utils.LoadMessageLn(msg))
+            {
+                messagePanel.Children.Add(wrap);
+            }
+        }
+
+        private void LoadMessageold(string msg)
+        {
             msg = msg.Replace("\n", " ");
             char[] charTab = new char[1];
             charTab[0] = ' ';

@@ -8,7 +8,7 @@
            mc:Ignorable="d"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
-           Title="Inbox Page" RenderTransformOrigin="0,0">
+           Title="myNETwork - Messages privés" RenderTransformOrigin="0,0">
     <toolkit:BusyIndicator Name="busyIndicator" BusyContent="Chargement des messages ..." Background="Transparent" >
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>

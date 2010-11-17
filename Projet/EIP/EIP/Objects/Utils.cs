@@ -158,62 +158,72 @@ namespace EIP.Objects
         {
             ResourceDictionary Resources = App.Current.Resources;
             List<UIElement> list = new List<UIElement>();
-            msg = msg.Replace("\n", " ");
-            char[] charTab = new char[1];
-            charTab[0] = ' ';
-            string[] mots = msg.Split(charTab, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (string mot in mots)
+            if (msg == "")
             {
-                if (mot.StartsWith("http://") || mot.StartsWith("https://") || mot.StartsWith("www."))
-                {
-                    string theMot = mot;
-                    if (mot.StartsWith("www."))
-                        theMot = "http://" + mot;
-                    theMot = theMot.Replace(".co..", ".com").Replace(".c..", ".com");
-                    HyperlinkButton link = new HyperlinkButton();
-                    link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
-                    //link.Foreground = new SolidColorBrush(Colors.White);
-                    try
-                    {
-                        link.NavigateUri = new Uri(theMot, UriKind.Absolute);
-                    }
-                    catch(Exception ex)
-                    {
+                TextBlock txtBlock = new TextBlock();
+                txtBlock.Text = " ";
+                list.Add(txtBlock);
+            }
+            else
+            {
+                msg = msg.Replace("\n", " ");
+                char[] charTab = new char[1];
+                charTab[0] = ' ';
+                string[] mots = msg.Split(charTab, StringSplitOptions.RemoveEmptyEntries);
 
-                    }               
-                    link.Content = theMot + " ";
-                    link.TargetName = "_blank";
-                    list.Add(link);
-                }
-                else if (mot.StartsWith("@"))
+                foreach (string mot in mots)
                 {
-                    HyperlinkButton link = new HyperlinkButton();
-                    link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
-                    //link.Foreground = new SolidColorBrush(Colors.White);
-                    if (mot.EndsWith("!"))
-                        link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
+                    if (mot.StartsWith("http://") || mot.StartsWith("https://") || mot.StartsWith("www."))
+                    {
+                        string theMot = mot;
+                        if (mot.StartsWith("www."))
+                            theMot = "http://" + mot;
+                        theMot = theMot.Replace(".co..", ".com").Replace(".c..", ".com");
+                        HyperlinkButton link = new HyperlinkButton();
+                        link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
+                        //link.Foreground = new SolidColorBrush(Colors.White);
+                        try
+                        {
+                            link.NavigateUri = new Uri(theMot, UriKind.Absolute);
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                        link.Content = theMot + " ";
+                        link.TargetName = "_blank";
+                        list.Add(link);
+                    }
+                    else if (mot.StartsWith("@"))
+                    {
+                        HyperlinkButton link = new HyperlinkButton();
+                        link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
+                        //link.Foreground = new SolidColorBrush(Colors.White);
+                        if (mot.EndsWith("!"))
+                            link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
+                        else
+                            link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1), UriKind.Absolute);
+                        link.Content = mot + " ";
+                        link.TargetName = "_blank";
+                        list.Add(link);
+                    }
+                    else if (mot.StartsWith("#"))
+                    {
+                        HyperlinkButton link = new HyperlinkButton();
+                        link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
+                        //link.Foreground = new SolidColorBrush(Colors.White);
+                        link.NavigateUri = new Uri("http://twitter.com/#search?q=" + mot, UriKind.Absolute);
+                        link.Content = mot + " ";
+                        link.TargetName = "_blank";
+                        list.Add(link);
+                    }
                     else
-                        link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1), UriKind.Absolute);
-                    link.Content = mot + " ";
-                    link.TargetName = "_blank";
-                    list.Add(link);
-                }
-                else if (mot.StartsWith("#"))
-                {
-                    HyperlinkButton link = new HyperlinkButton();
-                    link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
-                    //link.Foreground = new SolidColorBrush(Colors.White);
-                    link.NavigateUri = new Uri("http://twitter.com/#search?q=" + mot, UriKind.Absolute);
-                    link.Content = mot + " ";
-                    link.TargetName = "_blank";
-                    list.Add(link);
-                }
-                else
-                {
-                    TextBlock txtBlock = new TextBlock();
-                    txtBlock.Text = mot + " ";
-                    list.Add(txtBlock);
+                    {
+                        TextBlock txtBlock = new TextBlock();
+                        txtBlock.Text = mot + " ";
+                        list.Add(txtBlock);
+                    }
                 }
             }
             return list;
@@ -228,7 +238,7 @@ namespace EIP.Objects
 
             char[] charTab = new char[1];
             charTab[0] = '\n';
-            string[] motsLn = msg.Split(charTab, StringSplitOptions.RemoveEmptyEntries);
+            string[] motsLn = msg.Split(charTab, StringSplitOptions.None);
             foreach (string msg2 in motsLn)
             {
                 WrapPanel wrap = new WrapPanel();

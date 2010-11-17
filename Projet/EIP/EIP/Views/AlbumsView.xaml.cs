@@ -108,7 +108,7 @@ namespace EIP.Views
                 {
                     if (monUser != null)
                     {
-                        this.Title = "Albums photo de " + monUser.name;
+                        this.Title = "myNETwork - Albums photo de " + monUser.name;
                         PseudoUser.Text = monUser.name;
                     }
                 });
@@ -120,7 +120,7 @@ namespace EIP.Views
             {
                 if (user != null)
                 {
-                    this.Title = "Albums photo de " + user.UserName;
+                    this.Title = "myNETwork - Albums photo de " + user.UserName;
                     PseudoUser.Text = user.UserName;
                 }
             });
