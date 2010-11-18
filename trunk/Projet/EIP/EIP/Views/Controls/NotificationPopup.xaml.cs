@@ -50,6 +50,7 @@ namespace EIP.Views.Controls
             dt.Interval = new TimeSpan(0, 0, 0, time, 000);
             dt.Tick += new EventHandler(dt_Tick);
             dt.Start();
+            
         }
 
         public NotificationPopup(string header, string content)
@@ -65,9 +66,51 @@ namespace EIP.Views.Controls
             }
         }
 
-        public NotificationPopup(string header, string content, int time)
+        public NotificationPopup(AccountLight account, string header, string content, int time)
         {
             InitializeComponent();
+
+
+            if (account != null)
+            {
+                switch (account.account.typeAccount)
+                {
+                    case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                        AccountFacebookLight accFB = (AccountFacebookLight)account;
+
+                        imgAccount.UriSource = new Uri(accFB.userInfos.pic_square, UriKind.Absolute);
+                        userAccountName.Content = accFB.userInfos.name;
+                        userAccountName.NavigateUri = new Uri("/ProfilInfos/" + accFB.account.userID + "/Account/" + accFB.account.accountID, UriKind.Relative);
+                        barAccount.Background = App.Current.Resources["BgFB"] as SolidColorBrush;
+                        barAccount.BorderBrush = App.Current.Resources["BorderFB"] as SolidColorBrush;
+                        borderImgAccount.BorderBrush = App.Current.Resources["BorderFB"] as SolidColorBrush;
+                        borderNotif.BorderBrush = App.Current.Resources["BorderFB"] as SolidColorBrush;
+
+                        break;
+                    case EIP.ServiceEIP.Account.TypeAccount.Twitter:
+                        AccountTwitterLight accTW = (AccountTwitterLight)account;
+                        
+                        if (accTW.userInfos != null)
+                        {
+                            imgAccount.UriSource = new Uri(accTW.userInfos.ProfileImageUrl, UriKind.Absolute);
+                            userAccountName.Content = accTW.userInfos.Name;
+                        }
+                        userAccountName.NavigateUri = new Uri("/ProfilInfos/" + accTW.userInfos.Id + "/Account/" + accTW.account.accountID, UriKind.Relative);
+                        barAccount.Background = App.Current.Resources["BgTW"] as SolidColorBrush;
+                        barAccount.BorderBrush = App.Current.Resources["BorderTW"] as SolidColorBrush;
+                        borderImgAccount.BorderBrush = App.Current.Resources["BorderTW"] as SolidColorBrush;
+                        borderNotif.BorderBrush = App.Current.Resources["BorderTW"] as SolidColorBrush;
+
+
+                        break;
+                    case EIP.ServiceEIP.Account.TypeAccount.Flickr:
+                        break;
+                    default:
+
+                        break;
+                }
+            }
+
 
             Header.Text = header;
 
@@ -101,6 +144,16 @@ namespace EIP.Views.Controls
         private void DislayOff()
         {
             this.Visibility = Visibility.Collapsed;
+        }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            dt.Stop();
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            dt.Start();
         }
     }
 }

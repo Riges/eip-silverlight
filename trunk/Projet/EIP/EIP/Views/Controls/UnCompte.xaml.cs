@@ -98,7 +98,7 @@ namespace EIP.Views.Controls
             string key = acc.groupID + "-" + acc.userID + "-selected";
 
             box.CommandParameter = oneAccount;
-            if (oneAccount.selected || Convert.ToBoolean(Connexion.GetStorageValue(key)))
+            if (oneAccount.selected || Convert.ToBoolean(Connexion.GetStorageValue(key)) || !Connexion.storage.Contains(key))
                 box.IsChecked = true;
 
             accountName.Content = userName;
