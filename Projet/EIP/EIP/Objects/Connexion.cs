@@ -857,8 +857,15 @@ namespace EIP
 
         private static void DeleteAccount(long accountID)
         {
+            string host = App.Current.Host.Source.Host;
+            if (host.Contains("localhost"))
+                navigationService.Navigate(new Uri("http://locahost:4164", UriKind.Absolute));
+            else
+                navigationService.Navigate(new Uri("http://mynetwork.selfip.net", UriKind.Absolute));
+            /*
             accounts.Remove(accountID);
             listeComptes.Reload();
+            */
         }
 
 
