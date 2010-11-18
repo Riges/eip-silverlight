@@ -64,7 +64,7 @@ namespace EIP.Views
                     panelHeader.Orientation = Orientation.Horizontal;
 
                     TextBlock textHeader = new TextBlock();
-                    textHeader.Text = account.Value.account.name + " - Filtres";
+                    textHeader.Text = account.Value.account.name;// +" - Filtres";
                     textHeader.Margin = new Thickness(5, 0, 0, 0);
 
                     panelHeader.Children.Add(img);

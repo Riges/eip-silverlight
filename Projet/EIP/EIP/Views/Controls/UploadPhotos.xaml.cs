@@ -109,8 +109,18 @@ namespace EIP.Views.Controls
                     comboAlbums.SelectedItem = (album)al.First();
                 }
                 comboAlbums.Visibility = System.Windows.Visibility.Visible;
-              
+
                 // imgAlbum.Source = new BitmapImage(new Uri(accountFB.photos[this.album.aid][this.album.cover_pid].src_big, UriKind.Absolute));
+            }
+            else
+            {
+                List<album> albums = new List<album>();
+
+                album newAlbum = new album() { name = "Nouvel Album" };
+                albums.Add(newAlbum);
+
+                comboAlbums.DataContext = albums;
+                comboAlbums.Visibility = System.Windows.Visibility.Visible;
             }
             EnableUploadBtn();
         }
@@ -147,6 +157,18 @@ namespace EIP.Views.Controls
                     comboPhotosSets.SelectedItem = (Photoset)al.First();
                 }
                 comboPhotosSets.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                List<Photoset> albums = new List<Photoset>();
+
+                Photoset newAlbum = new Photoset() { Title = "Nouvel Album" };
+                albums.Add(newAlbum);
+
+                comboPhotosSets.DataContext = albums;
+
+                comboPhotosSets.Visibility = System.Windows.Visibility.Visible;
+
             }
             EnableUploadBtn();
         }

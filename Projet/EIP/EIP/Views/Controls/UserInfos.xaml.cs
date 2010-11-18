@@ -338,24 +338,24 @@ namespace EIP.Views.Controls
         {
             Dispatcher.BeginInvoke(() =>
                 {
-                    if (users != null)
+                    if (users != null && users.Count > 0)
                     {
-                        if (users.Count > 0)
+                        if (Connexion.accounts[accountID].account.userID == this.uid)
+                            amisCommun.Text = users.Count + " ami" + (users.Count > 1 ? "s" : "");
+                        else
+                            amisCommun.Text = users.Count + " ami" + (users.Count > 1 ? "s" : "") + " en commun";
+                        List<Friend> friends = new List<Friend>();
+                        foreach (user friend in users)
                         {
-                            if (Connexion.accounts[accountID].account.userID == this.uid)
-                                amisCommun.Text = users.Count + " ami" + (users.Count>1?"s":"");
-                            else
-                                amisCommun.Text = users.Count + " ami" + (users.Count>1?"s":"")+" en commun";
-                            List<Friend> friends = new List<Friend>();
-                            foreach (user friend in users)
-                            {
-                                friends.Add(new Friend() { accountID = this.accountID, userFB = friend });
-                            }
-
-                            flowControl.DataContext = friends;
-                            return;
+                            friends.Add(new Friend() { accountID = this.accountID, userFB = friend });
                         }
+
+                        flowControl.DataContext = friends;
+                        return;
                     }
+                    else
+                        flowControl.Visibility = System.Windows.Visibility.Collapsed;
+                    
 
 
                     amisCommun.Text = "Pas d'amis en commun";

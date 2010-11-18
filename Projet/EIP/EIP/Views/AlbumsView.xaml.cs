@@ -38,6 +38,9 @@ namespace EIP.Views
                 this.accountID = Convert.ToInt64(this.NavigationContext.QueryString["accid"]);
            if (this.accountID > 0)
            {
+               busyIndicator.BusyContent = "Chargement des albums...";
+               busyIndicator.IsBusy = true;
+
                if (Connexion.accounts[this.accountID].account.typeAccount == ServiceEIP.Account.TypeAccount.Flickr)
                {
                    if (this.NavigationContext.QueryString.ContainsKey("uid"))
@@ -144,6 +147,8 @@ namespace EIP.Views
         {
             Connexion.dispatcher.BeginInvoke(() =>
                 {
+                    busyIndicator.IsBusy = false;
+
                     if (albums.Count > 0)
                     {
                         noAlbums.Visibility = System.Windows.Visibility.Collapsed;
@@ -167,6 +172,8 @@ namespace EIP.Views
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
+                busyIndicator.IsBusy = false;
+
                 if (albums.Count > 0)
                 {
                     noAlbums.Visibility = System.Windows.Visibility.Collapsed;

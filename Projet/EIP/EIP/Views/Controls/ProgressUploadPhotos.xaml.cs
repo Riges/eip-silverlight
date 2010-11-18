@@ -122,8 +122,11 @@ namespace EIP.Views.Controls
                 }
                 else
                 {
+                    ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetAlbums(uid);
                     ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetPhotos(aid);
+                    string uri = "/Album/" + this.aid + "/uid/" + this.uidFlickr + "/Account/" + this.accountID;
                     this.DialogResult = true;
+                    Connexion.navigationService.Navigate(new Uri(uri, UriKind.Relative));
                 }
             });
 

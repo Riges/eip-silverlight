@@ -241,6 +241,7 @@ namespace EIP.Views.Controls
                     }
 
                 }
+                ClosePopup();
             });
         }
 
