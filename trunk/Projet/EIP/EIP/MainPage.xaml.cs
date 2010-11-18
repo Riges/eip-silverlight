@@ -201,6 +201,12 @@ namespace EIP
             loginWindow.Show();
         }
 
+        private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Connexion.SilverClick();
+        }
+
+    
 
 
     }
