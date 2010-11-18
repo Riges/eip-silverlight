@@ -10,7 +10,7 @@
     xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
              
     mc:Ignorable="d" 
-    d:DesignHeight="400" d:DesignWidth="1300" Background="{StaticResource BgColor}" >
+    d:DesignHeight="400" d:DesignWidth="1300" Background="{StaticResource BgColor}" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
 
     <toolkit:BusyIndicator Name="mainBusyIndicator" BusyContent="Chargement de l'application myNETwork en cours...">
         <Grid x:Name="LayoutRoot" Background="{StaticResource BgColor}">

@@ -95,11 +95,15 @@ namespace EIP
         public static DispatcherTimer dt = new DispatcherTimer();
 
         public static Enums.ExtendedPermissions[] perms = new Enums.ExtendedPermissions[8];
-       
+
+        public delegate void OnClick();
+        public static event OnClick OnClickCalled;
+
         /////////
    
         public static void Start()
         {
+           
             string host = App.Current.Host.Source.Host;
             if(host.Contains("localhost"))
             {
@@ -156,6 +160,13 @@ namespace EIP
             
         }
 
+        public static void SilverClick()
+        {
+            if (OnClickCalled != null)
+                OnClickCalled.Invoke();
+        }
+
+     
         static void serviceEIP_GetFBAppKeyCompleted(object sender, GetFBAppKeyCompletedEventArgs e)
         {
             if (e.Error == null)

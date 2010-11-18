@@ -31,8 +31,14 @@ namespace EIP.Views.Controls
         public UpdateStatus()
         {
             InitializeComponent();
+
+           Connexion.OnClickCalled += new Connexion.OnClick(Connexion_OnClickCalled);
+
             LayoutRoot.Children.Add(p);
+
         }
+
+
         
         private void LoadAccountButtons()
         {
@@ -342,7 +348,7 @@ namespace EIP.Views.Controls
 
         private void borderPopup_LostFocus(object sender, RoutedEventArgs e)
         {
-            ClosePopup();
+            //ClosePopup();
         }
 
         private void borderPopup_MouseEnter(object sender, MouseEventArgs e)
@@ -352,7 +358,7 @@ namespace EIP.Views.Controls
 
         private void borderPopup_MouseLeave(object sender, MouseEventArgs e)
         {
-            ClosePopup();
+            //ClosePopup();
         }
 
         private void OpenPopup()
@@ -438,6 +444,26 @@ namespace EIP.Views.Controls
             if (statutBox.Text.Trim() == "")
             {
                 statutBox.Text = "Exprime toi !";
+            }
+        }
+
+        private bool mouseHover = false;
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            mouseHover = true;
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            mouseHover = false;
+        }
+
+        void Connexion_OnClickCalled()
+        {
+            if (!mouseHover)
+            {
+                ClosePopup();
             }
         }
 

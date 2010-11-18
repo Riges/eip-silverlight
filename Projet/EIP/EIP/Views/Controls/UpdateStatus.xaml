@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Height="50" Width="400" LostFocus="UserControl_LostFocus">
+    d:DesignHeight="300" d:DesignWidth="400" Height="50" Width="400" LostFocus="UserControl_LostFocus" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource NavigationBackgroundColorBrush}" >
        
