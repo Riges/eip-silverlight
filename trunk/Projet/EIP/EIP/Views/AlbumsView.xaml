@@ -7,6 +7,7 @@
            xmlns:fl="clr-namespace:SStuff.FlowControls;assembly=SStuff.FlowControls"
            xmlns:vm="clr-namespace:EIP.Showroom.ViewModels"
            xmlns:Controls="clr-namespace:EIP.Views.Controls"
+           xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Margin="10,0,10,0" Drop="Page_Drop">
@@ -14,35 +15,9 @@
     <navigation:Page.DataContext>
         <vm:InCoverFlowContentControlSampleData />
     </navigation:Page.DataContext>
-    <navigation:Page.Resources>
-        <!--<Style TargetType="fl:FlowItem3D" x:Key="empty3D">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="fl:FlowItem3D">
-                        <ContentPresenter />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-        <!--<DataTemplate x:Key="itemTemplate" >
-
-           <fl:InFlowContentControl   Width="250" Height="250" Content="{Binding}" Heading="{Binding}" Cursor="Hand">
-                <fl:InFlowContentControl.HeadingTemplate>
-                    <DataTemplate>
-                        <Controls:HeaderLinkAlbum x:Name="headerLink"  VerticalAlignment="Top" Tag="{Binding MyAccountID}" ></Controls:HeaderLinkAlbum>
-                    </DataTemplate>
-                </fl:InFlowContentControl.HeadingTemplate>
-                    <fl:InFlowContentControl.ContentTemplate>
-                    <DataTemplate>               
-                        <Controls:AlbumControl x:Name="albumItem"  VerticalAlignment="Top"></Controls:AlbumControl>
-                    </DataTemplate>
-                </fl:InFlowContentControl.ContentTemplate>
-            </fl:InFlowContentControl>
-
-        </DataTemplate>-->
-    </navigation:Page.Resources>
-
-    <Grid x:Name="LayoutRoot" >
+    
+    <toolkit:BusyIndicator Name="busyIndicator">
+        <Grid x:Name="LayoutRoot" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -71,4 +46,5 @@
 
 
     </Grid>
+    </toolkit:BusyIndicator>
 </navigation:Page>

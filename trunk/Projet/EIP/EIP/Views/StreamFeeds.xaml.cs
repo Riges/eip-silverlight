@@ -65,7 +65,7 @@ namespace EIP.Views
                 this.filterFB = this.NavigationContext.QueryString["filter"];
 
 
-            Connexion.allTopics = new Dictionary<string, List<Topic>>();
+            //Connexion.allTopics = new Dictionary<string, List<Topic>>();
             
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
@@ -91,7 +91,7 @@ namespace EIP.Views
                 }*/
                 Connexion.dt.Stop();
                 Connexion.dt = new DispatcherTimer();
-                Connexion.dt.Interval = new TimeSpan(0, 0, 0, 30, 000);
+                Connexion.dt.Interval = new TimeSpan(0, 0, 1, 00, 000);
                 Connexion.dt.Tick += new EventHandler(dt_Tick);
                 Connexion.dt.Start();
             }

@@ -1145,11 +1145,11 @@ namespace EIP
         /// <param name="uid">user id</param>
         public void GetAlbums(long uid)
         {
-            if(!this.albums.ContainsKey(uid))
-                this.facebookAPI.Photos.GetAlbumsAsync(uid, new Photos.GetAlbumsCallback(GetAlbums_Completed), uid);
-            else
+            if(this.albums.ContainsKey(uid))
                 if (this.GetAlbumsCalled != null)//evite que ca plante si pas dabo
                     this.GetAlbumsCalled.Invoke(this.albums[(long)uid]);
+
+            this.facebookAPI.Photos.GetAlbumsAsync(uid, new Photos.GetAlbumsCallback(GetAlbums_Completed), uid);
         }
 
         private void GetAlbums_Completed(IList<album> albums, object uid, FacebookException ex)
