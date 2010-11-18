@@ -98,6 +98,22 @@ namespace EIP.Views.Controls
                           this.villeActuelle.Visibility = System.Windows.Visibility.Visible;
                       }
 
+                      //Follower + Following + Followed
+                      this.Follower.Text = user.FollowersCount.ToString();
+
+                      this.FollowerLabel.Visibility = System.Windows.Visibility.Visible;
+                      this.Follower.Visibility = System.Windows.Visibility.Visible;
+
+                      this.Following.Text = user.FriendsCount.ToString();
+
+                      this.FollowingLabel.Visibility = System.Windows.Visibility.Visible;
+                      this.Following.Visibility = System.Windows.Visibility.Visible;
+
+                      if (user.IsFollowing.Value)
+                          this.FollowedLabel.Visibility = System.Windows.Visibility.Visible;
+                      else
+                          this.FollowedLabel.Visibility = System.Windows.Visibility.Collapsed;
+                    
                       //user.Status
 
                       LayoutRoot.Visibility = System.Windows.Visibility.Visible;

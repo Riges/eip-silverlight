@@ -49,8 +49,6 @@ namespace EIP
         public Dictionary<long, Dictionary<long, VideoLight>> videos { get; set; }
         //public Dictionary<long, string> thumbVideos { get; set; }
 
-      
-
         public enum MsgFolder
         {
             Inbox = 0,
@@ -812,13 +810,22 @@ namespace EIP
 
         private void GetNotificationCompleted(notification_data data, Object obj, FacebookException ex)
         {
+            List<long> notifiRead = new List<long>();
             if (data != null && ex == null)
             {
                 foreach (notification notificat in data.notifications.notification)
                 {
                     Utils.NotificationMessage(notificat.title_text, notificat.body_text);
+                    
+                    notifiRead.Add(notificat.notification_id);
                 }
+                this.facebookAPI.Notifications.MarkReadAsync(notifiRead, new Notifications.MarkReadCallback(GetNotificationMarkReadCompleted), null);
             }
+        }
+
+        private void GetNotificationMarkReadCompleted(bool ret, Object obj, FacebookException ex)
+        {
+
         }
 
         /// <summary>

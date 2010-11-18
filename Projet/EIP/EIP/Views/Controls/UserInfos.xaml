@@ -25,9 +25,11 @@
             <RowDefinition Height="Auto"></RowDefinition> <!--11-->
             <RowDefinition Height="Auto"></RowDefinition> <!--12-->
             <RowDefinition Height="Auto"></RowDefinition> <!--13-->
-            <RowDefinition Height="*"></RowDefinition> <!--14-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--14-->
             <RowDefinition Height="Auto"></RowDefinition> <!--15-->
-            <RowDefinition Height="Auto"></RowDefinition> <!--16-->
+            <RowDefinition Height="*"></RowDefinition> <!--16-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--17-->
+            <RowDefinition Height="Auto"></RowDefinition> <!--18-->
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -67,21 +69,28 @@
         <TextBlock Grid.Column="1" Grid.Row="8" Name="religionLabel" Visibility="Collapsed">Religion</TextBlock>
         <TextBlock Grid.Column="2" Grid.Row="8" Name="religion" Margin="0,0,0,10" Visibility="Collapsed"></TextBlock>
 
-        <Line Grid.ColumnSpan="3" Grid.Row="9" Stroke="Gray" StrokeThickness="2" HorizontalAlignment="Stretch" X1="0" X2="2000" Margin="0,0,0,10" ></Line>
-
-        <TextBlock Grid.Column="0" Grid.Row="10" Name="bioLabel" Visibility="Collapsed">Biographie</TextBlock>
-        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Grid.Row="10" Name="bio" Margin="0,0,0,10" Visibility="Collapsed"></TextBlock>
-
-        <TextBlock Grid.Column="0" Grid.Row="11" Name="quoteLabel" Visibility="Collapsed">Citations favorites</TextBlock>
-        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Grid.Row="11" Name="quote" Margin="0,0,0,10" Visibility="Collapsed"></TextBlock>
-
-
-        <Rectangle  Grid.Column="0"  Grid.ColumnSpan="3" Grid.Row="12" Fill="Gray" Stretch="Fill" Height="0" Visibility="Collapsed"></Rectangle>
+        <TextBlock Grid.Column="0" Grid.Row="9" Name="FollowedLabel" Visibility="Collapsed">Followed</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="9" Name="FollowerLabel" Visibility="Collapsed">Nombre de Followers</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="9" Name="Follower" Margin="0,0,0,10" Visibility="Collapsed"></TextBlock>
         
-        <TextBlock Grid.Column="0" Grid.Row="13" FontWeight="Bold" FontSize="14" Name="amisCommun"></TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="13" Width="150" HorizontalAlignment="Right" Text="Chercher un ami..." Name="searchFriend" TextChanged="searchFriend_TextChanged" GotFocus="searchFriend_GotFocus" LostFocus="searchFriend_LostFocus"></TextBox>
+        <TextBlock Grid.Column="1" Grid.Row="10" Name="FollowingLabel" Visibility="Collapsed">Nombre de Following</TextBlock>
+        <TextBlock Grid.Column="2" Grid.Row="10" Name="Following" Margin="0,0,0,10" Visibility="Collapsed"></TextBlock>
+
+        <Line Grid.ColumnSpan="3" Grid.Row="11" Stroke="Gray" StrokeThickness="2" HorizontalAlignment="Stretch" X1="0" X2="2000" Margin="0,0,0,10" ></Line>
+
+        <TextBlock Grid.Column="0" Grid.Row="12" Name="bioLabel" Visibility="Collapsed">Biographie</TextBlock>
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Grid.Row="12" Name="bio" Margin="0,0,0,10" Visibility="Collapsed"></TextBlock>
+
+        <TextBlock Grid.Column="0" Grid.Row="13" Name="quoteLabel" Visibility="Collapsed">Citations favorites</TextBlock>
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Grid.Row="13" Name="quote" Margin="0,0,0,10" Visibility="Collapsed"></TextBlock>
+
+
+        <Rectangle  Grid.Column="0"  Grid.ColumnSpan="3" Grid.Row="14" Fill="Gray" Stretch="Fill" Height="0" Visibility="Collapsed"></Rectangle>
         
-        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="14" Grid.ColumnSpan="3" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <TextBlock Grid.Column="0" Grid.Row="15" FontWeight="Bold" FontSize="14" Name="amisCommun"></TextBlock>
+        <TextBox Grid.Column="2" Grid.Row="15" Width="150" HorizontalAlignment="Right" Text="Chercher un ami..." Name="searchFriend" TextChanged="searchFriend_TextChanged" GotFocus="searchFriend_GotFocus" LostFocus="searchFriend_LostFocus"></TextBox>
+        
+        <fl:FlowItemsControl3D Name="flowControl"  Grid.Row="16" Grid.ColumnSpan="3" ItemsSource="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Center">
             <!-- ItemTemplate="{StaticResource itemTemplate}" ItemContainerStyle="{StaticResource empty3D}"-->
             <fl:FlowItemsControl3D.ItemTemplate>
                 <DataTemplate>
@@ -90,8 +99,7 @@
             </fl:FlowItemsControl3D.ItemTemplate>
         </fl:FlowItemsControl3D>
 
-
-    </Grid>
+        </Grid>
 
     </toolkit:BusyIndicator>
 
