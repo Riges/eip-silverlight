@@ -631,6 +631,8 @@
     <Resource Include="Assets\Images\user.png" />
     <Resource Include="Assets\Images\deconnecter.png" />
     <Resource Include="Assets\Images\top-commentaire.png" />
+    <Resource Include="Assets\Images\croix-grise.png" />
+    <Resource Include="Assets\Images\croix-rouge.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\ServiceEIP\ServiceEIP.wsdl" />
     <None Include="Service References\ServiceEIP\ServiceEIP.xsd">
@@ -642,9 +644,6 @@
     <None Include="Service References\ServiceEIP\ServiceEIP2.xsd">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\ajax-loader.gif" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
