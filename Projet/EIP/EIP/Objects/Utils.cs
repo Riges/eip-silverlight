@@ -75,6 +75,11 @@ namespace EIP.Objects
 
         public static void NotificationMessage(string header, string message)
         {
+            NotificationMessage(null, header, message);
+        }
+
+        public static void NotificationMessage(AccountLight account, string header, string message)
+        {
             Connexion.dispatcher.BeginInvoke(() =>
             {
                 if (App.Current.IsRunningOutOfBrowser)//.InstallState == InstallState.Installed)
@@ -95,7 +100,7 @@ namespace EIP.Objects
                     Popup p = new Popup();
 
                     // Set the Child property of Popup to an instance of MyControl. 
-                    NotificationPopup notifi = new NotificationPopup(header, message, 5);
+                    NotificationPopup notifi = new NotificationPopup(account, header, message, 5);
                     p.Child = notifi;
                     notifi.InvokeOnLayoutUpdated(delegate {
                                                                // Set where the popup will show up on the screen. 

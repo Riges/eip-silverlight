@@ -55,6 +55,7 @@ namespace EIP.Views.Controls
 
             HyperlinkButton userName = new HyperlinkButton();
             userName.Style = App.Current.Resources["HyperlinkButtonFonceStyle"] as Style;
+            userName.FontWeight = FontWeights.Bold;
             userName.Content = profile.name;
             userName.Margin = new Thickness(0, 0, 5, 0);
             userName.NavigateUri = new Uri("/ProfilInfos/" + unProfile.id + "/Account/" + this.accountID, UriKind.Relative);

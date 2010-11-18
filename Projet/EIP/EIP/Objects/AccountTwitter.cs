@@ -434,7 +434,8 @@ namespace EIP
                         Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                         if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
                             this.LoadHomeStatusesCalled.Invoke();
-                        Utils.NotificationMessage(userInfos.ScreenName, "Message Twitter mis à jours");
+
+                        Utils.NotificationMessage(this, "Vous avez de nouveaux tweet !", "");
                     }
                 }
                 else
@@ -442,6 +443,8 @@ namespace EIP
                     Connexion.allTopics[this.account.userID.ToString()] = this.homeStatuses;
                     if (this.LoadHomeStatusesCalled != null)//evite que ca plante si pas dabo
                         this.LoadHomeStatusesCalled.Invoke();
+
+                    Utils.NotificationMessage(this, "Vous avez de nouveaux tweet !", "");
                 }
                 return true;
             }

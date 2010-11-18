@@ -784,7 +784,7 @@ namespace EIP
                     if (this.LoadFeedsCalled != null)//evite que ca plante si pas dabo
                         this.LoadFeedsCalled.Invoke();
                     if(hasUpdate && this.LoadFeedsCalled != null)
-                        Utils.NotificationMessage(userInfos.name, "Message Facebook mis à jour");
+                        Utils.NotificationMessage(this, "Message Facebook mis à jour", "");
                 }
 
                 this.busy = false;
