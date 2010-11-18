@@ -4,9 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
-    
-    <StackPanel>
+    d:DesignHeight="300" d:DesignWidth="400" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
+
+    <StackPanel Background="{StaticResource BgColor}" >
         <Grid x:Name="LayoutRoot" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -29,7 +29,7 @@
 
             <HyperlinkButton Name="accountName" FontSize="12" Style="{StaticResource HyperlinkButtonFonceStyle}" FontWeight="Bold" Grid.Row="0" Grid.Column="3" Margin="5,0,0,0" VerticalAlignment="Center"></HyperlinkButton>
 
-            <Image Name="imgDel" Grid.Row="0" Grid.Column="4" Width="20" Visibility="Collapsed" MouseLeftButtonUp="imgDel_MouseLeftButtonUp" MouseLeave="img_MouseLeave" MouseMove="img_MouseMove" VerticalAlignment="Center"></Image>
+            <Image Name="imgDel" Grid.Row="0" Grid.Column="4" Width="16" Visibility="Collapsed" MouseLeftButtonUp="imgDel_MouseLeftButtonUp" MouseLeave="img_MouseLeave" MouseMove="img_MouseMove" VerticalAlignment="Center"></Image>
 
         </Grid>
         <TextBlock Name="accountStatus" FontStyle="Italic" Foreground="{StaticResource LinkColorFonceBrush}">

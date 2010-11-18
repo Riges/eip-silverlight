@@ -113,7 +113,7 @@ namespace EIP.Views.Controls
             else
                 imgAccount.Name = "img" + oneAccount.account.userID;
 
-            imgDel.Source = new BitmapImage(new Uri("../../Assets/Images/bullet_delete.png", UriKind.Relative));
+            imgDel.Source = new BitmapImage(new Uri("../../Assets/Images/croix-rouge.png", UriKind.Relative));
             imgDel.DataContext = oneAccount.account.accountID;
             imgDel.Name = "imgDel" + oneAccount.account.accountID;
 
@@ -244,6 +244,16 @@ namespace EIP.Views.Controls
                 else
                     Connexion.contentFrame.Navigate(source);
             }
+        }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            imgDel.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            imgDel.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }
