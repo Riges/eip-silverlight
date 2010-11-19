@@ -13,6 +13,7 @@ using Facebook.Schema;
 using System.IO;
 using System.Windows.Controls.Primitives;
 using EIP.Views.Controls;
+using System.Text.RegularExpressions;
 
 namespace EIP.Objects
 {
@@ -176,6 +177,7 @@ namespace EIP.Objects
                 char[] charTab = new char[1];
                 charTab[0] = ' ';
                 string[] mots = msg.Split(charTab, StringSplitOptions.RemoveEmptyEntries);
+                string tmpWord;
 
                 foreach (string mot in mots)
                 {
@@ -205,10 +207,13 @@ namespace EIP.Objects
                         HyperlinkButton link = new HyperlinkButton();
                         link.Style = Resources["HyperlinkButtonFonceStyle"] as Style;
                         //link.Foreground = new SolidColorBrush(Colors.White);
-                        if (mot.EndsWith("!"))
+                        /*if (mot.EndsWith("!"))
                             link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1, mot.Length - 2), UriKind.Absolute);
-                        else
-                            link.NavigateUri = new Uri("http://twitter.com/" + mot.Substring(1), UriKind.Absolute);
+                        else*/
+                        // tmpWord = Regex.Replace(mot.Substring(1), @"/([^.a-z0-9]+)/i", "");
+                        tmpWord = Regex.Replace(mot.Substring(1), @"\W", "");
+                        link.NavigateUri = new Uri("http://twitter.com/" + tmpWord, UriKind.Absolute);
+                        
                         link.Content = mot + " ";
                         link.TargetName = "_blank";
                         list.Add(link);
