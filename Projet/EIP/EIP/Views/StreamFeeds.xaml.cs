@@ -65,7 +65,7 @@ namespace EIP.Views
                 this.filterFB = this.NavigationContext.QueryString["filter"];
 
 
-            //Connexion.allTopics = new Dictionary<string, List<Topic>>();
+            Connexion.allTopics = new Dictionary<string, List<Topic>>();
             
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
