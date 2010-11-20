@@ -92,7 +92,15 @@ namespace EIP
                     }
 
                     Connexion.serviceEIP.LogErrorCompleted += new EventHandler<ServiceEIP.LogErrorCompletedEventArgs>(serviceEIP_LogErrorCompleted);
-                    Connexion.serviceEIP.LogErrorAsync(groupID, e.ExceptionObject.StackTrace, e.ExceptionObject.Message);
+                    try
+                    {
+                        //System.Windows.Browser.HtmlPage.Window.Alert(e.ExceptionObject.StackTrace);
+                        Connexion.serviceEIP.LogErrorAsync(groupID, e.ExceptionObject.StackTrace.Replace('"', '\'').Replace("\r\n", @"\n"), e.ExceptionObject.Message);
+                    }
+                    catch (Exception)
+                    {
+                        System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"LogErrorAsync, Erreur\");");
+                    }
                 }
 
                 System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight 4 Application, Erreur : " + errorMsg + "\");");
@@ -104,6 +112,7 @@ namespace EIP
 
         void serviceEIP_LogErrorCompleted(object sender, ServiceEIP.LogErrorCompletedEventArgs e)
         {
+            
             if (e.Error != null )
             {
                 string errorMsg = e.Error.Message + e.Error.StackTrace;

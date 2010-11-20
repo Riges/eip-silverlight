@@ -332,7 +332,7 @@ namespace EIP
                 this.userStatuses[(int)e.UserState] = new List<Topic>();
                 foreach (ServiceEIP.TwitterStatus status in e.Result)
                 {
-                    this.userStatuses[(int)e.UserState].Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
+                    this.userStatuses[(int)e.UserState].Add(new Topic(status.CreatedDate.ToUniversalTime(), Account.TypeAccount.Twitter, this.account.accountID, status));
                 }
 
                 if (this.LoadUserStatusesCalled != null)
