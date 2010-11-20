@@ -18,17 +18,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Account.TypeAccount" nillable="true" type="tns:Account.TypeAccount" />
-  <xs:complexType name="AccountFlickr">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Account">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="userIDstr" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="AccountFlickr" nillable="true" type="tns:AccountFlickr" />
   <xs:complexType name="AccountTwitter">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Account">
@@ -41,6 +30,17 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="AccountTwitter" nillable="true" type="tns:AccountTwitter" />
+  <xs:complexType name="AccountFlickr">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Account">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userIDstr" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AccountFlickr" nillable="true" type="tns:AccountFlickr" />
   <xs:complexType name="AccountFacebook">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Account">

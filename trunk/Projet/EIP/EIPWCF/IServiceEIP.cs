@@ -98,6 +98,9 @@ namespace EIPWCF
         [OperationContract]
         bool TestAddAccount();
 
+        [OperationContract]
+        bool LogError(long groupID, string stackTrace, string message);
+
         /*[OperationContract]
         string AuthorizeDesktop(string consumerKey, string consumerSecret);
         */

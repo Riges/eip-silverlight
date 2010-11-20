@@ -379,5 +379,32 @@ namespace EIPLibrary
             return account;
         }
 
+
+
+        public static bool InsertError(long groupID, string stackTrace, string message)
+        {
+            List<NpgsqlParameter> parmsInsert = new List<NpgsqlParameter>();
+            StringBuilder cmdTextInsert = new StringBuilder();
+            cmdTextInsert.Append(" INSERT INTO errors ");
+            cmdTextInsert.Append(" (message, stacktrace, dateerreur, groupid) ");
+            cmdTextInsert.Append(" VALUES ");
+            cmdTextInsert.Append(" (@MESSAGE, @STACKTRACE, @DATERREUR, @GROUPID) ");
+
+            //  parmsInsert.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
+            parmsInsert.Add(new NpgsqlParameter("@MESSAGE", message));
+            parmsInsert.Add(new NpgsqlParameter("@STACKTRACE", stackTrace));
+            parmsInsert.Add(new NpgsqlParameter("@DATERREUR", DateTime.Now));
+            parmsInsert.Add(new NpgsqlParameter("@GROUPID", groupID));
+
+            int result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdTextInsert.ToString(), parmsInsert);
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

@@ -268,7 +268,7 @@ namespace EIP.Views.Controls
                             //message.Text = status.Text;
                             
                             //dateTimeFeed.Text = Day2Jour(status.CreatedDate.AddHours(2)) + ", à " + status.CreatedDate.AddHours(2).ToShortTimeString();
-                            dateTimeFeed.Text = Utils.Day2Jour(topic.date.ToUniversalTime()) + ", à " + topic.date.ToUniversalTime().ToShortTimeString();
+                            dateTimeFeed.Text = Utils.Day2Jour(topic.date.AddHours(1)) + ", à " + topic.date.AddHours(1).ToShortTimeString();
 
                             string source = status.Source;
                             if (source != "")

@@ -147,6 +147,12 @@
   <wsdl:message name="IServiceEIP_TestAddAccount_OutputMessage">
     <wsdl:part name="parameters" element="tns:TestAddAccountResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_LogError_InputMessage">
+    <wsdl:part name="parameters" element="tns:LogError" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_LogError_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogErrorResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServiceEIP">
     <wsdl:operation name="IsUp">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/IsUp" message="tns:IServiceEIP_IsUp_InputMessage" />
@@ -239,6 +245,10 @@
     <wsdl:operation name="TestAddAccount">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/TestAddAccount" message="tns:IServiceEIP_TestAddAccount_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/TestAddAccountResponse" message="tns:IServiceEIP_TestAddAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LogError">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LogError" message="tns:IServiceEIP_LogError_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LogErrorResponse" message="tns:IServiceEIP_LogError_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_Service" type="tns:IServiceEIP">
@@ -443,6 +453,15 @@
     </wsdl:operation>
     <wsdl:operation name="TestAddAccount">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/TestAddAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogError">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/LogError" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

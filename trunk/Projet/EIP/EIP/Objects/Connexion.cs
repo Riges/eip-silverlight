@@ -693,7 +693,10 @@ namespace EIP
         {
             if (e.Error == null)
             {
-                LoadAccountsFromDB(e.Result);
+                dispatcher.BeginInvoke(() =>
+                    {
+                        LoadAccountsFromDB(e.Result);
+                    });
 
                 //if (e.Result != null)
                 //{

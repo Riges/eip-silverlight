@@ -533,27 +533,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
-    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.Account.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountFacebook.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountFlickr.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountTwitter.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterDirectMessage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterStatus.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterUser.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\ServiceEIPprod\EIP.ServiceEIPprod.Account.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -584,6 +563,27 @@
     </None>
     <None Include="Service References\ServiceEIPprod\TweetSharp.Twitter.Model.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.Account.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountFacebook.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountFlickr.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountTwitter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterDirectMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.TwitterUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceEIP\ServiceEIP.disco" />
     <None Include="Service References\ServiceEIP\configuration91.svcinfo" />
