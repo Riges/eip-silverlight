@@ -72,24 +72,50 @@ namespace EIP
                 // For production applications this error handling should be replaced with something that will 
                 // report the error to the website and stop the application.
                 e.Handled = true;
-                Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
+                Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(sender, e); });
             }
         }
-        private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
+        private void ReportErrorToDOM(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             try
             {
                 string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
                 errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
 
-                System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight 2 Application " + errorMsg + "\");");
+
+                if (Connexion.serviceEIP != null)
+                {
+                    long groupID = 0;
+                    if (Connexion.accounts.Count > 0)
+                    {
+                        groupID = Connexion.accounts.First().Value.account.groupID;
+                    }
+
+                    Connexion.serviceEIP.LogErrorCompleted += new EventHandler<ServiceEIP.LogErrorCompletedEventArgs>(serviceEIP_LogErrorCompleted);
+                    Connexion.serviceEIP.LogErrorAsync(groupID, e.ExceptionObject.StackTrace, e.ExceptionObject.Message);
+                }
+
+                System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight 4 Application, Erreur : " + errorMsg + "\");");
             }
             catch (Exception)
             {
             }
         }
 
+        void serviceEIP_LogErrorCompleted(object sender, ServiceEIP.LogErrorCompletedEventArgs e)
+        {
+            if (e.Error != null )
+            {
+                string errorMsg = e.Error.Message + e.Error.StackTrace;
+                 errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
 
+                System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"LogErrorCompleted, Erreur : "+ errorMsg + "\");");
+            }
+           if (!e.Result)
+           {
+               System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"LogErrorCompleted, Erreur : retour false\");");
+           }
+        }
 
         
     }

@@ -530,6 +530,11 @@ namespace EIPWCF
             return null;
         }
 
+        public bool LogError(long groupID, string stackTrace, string message)
+        {
+            return Model.InsertError(groupID, stackTrace, message);
+        }
+
         
     }
 

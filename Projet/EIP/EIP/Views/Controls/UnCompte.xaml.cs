@@ -209,17 +209,17 @@ namespace EIP.Views.Controls
         void img_MouseLeave(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.Arrow;
-            string obj = "imgDel" + (long)((StackPanel)sender).DataContext;
-            Image imgDel = (Image)FindName(obj);
-            imgDel.Visibility = System.Windows.Visibility.Collapsed;
+        //    string obj = "imgDel" + (long)((StackPanel)sender).DataContext;
+        //    Image imgDel = (Image)FindName(obj);
+        //    imgDel.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         void img_MouseMove(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.Hand;
-            string obj = "imgDel" + (long)((StackPanel)sender).DataContext;
-            Image imgDel = (Image)FindName(obj);
-            imgDel.Visibility = System.Windows.Visibility.Visible;
+            //string obj = "imgDel" + (long)((StackPanel)sender).DataContext;
+            //Image imgDel = (Image)FindName(obj);
+            //imgDel.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void ReloadPage()

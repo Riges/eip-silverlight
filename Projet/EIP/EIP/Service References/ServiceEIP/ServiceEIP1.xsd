@@ -331,4 +331,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="LogError">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="groupID" type="xs:long" />
+        <xs:element minOccurs="0" name="stackTrace" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogErrorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LogErrorResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
