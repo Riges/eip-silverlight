@@ -175,6 +175,7 @@ namespace EIP.Views.Controls
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            OKButton.IsEnabled = false;
             if (this.uid > 0)
             {
                 album album = comboAlbums.SelectedItem as album;

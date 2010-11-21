@@ -36,8 +36,10 @@ namespace EIP.Views
 
         public StreamFeeds()
         {
+
             InitializeComponent();
             App.Current.Host.Content.Resized += new EventHandler(Content_Resized);
+         
 
             //scroolView.ScrollToVerticalOffset(scroolView.VerticalOffset + 25);
         }
@@ -47,12 +49,17 @@ namespace EIP.Views
             FeedsControl.MaxHeight = App.Current.Host.Content.ActualHeight - 140;
         }
 
-        // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            LoadFeedsPage();
+        }
+
+        private void LoadFeedsPage()
         {
             Connexion.Loading(false);
             busyIndicator.IsBusy = true;
-            Connexion.navigationContext = NavigationContext;
+            if(Connexion.navigationContext == null)
+                Connexion.navigationContext = NavigationContext;
             //Connexion.GetFrob();
 
 
@@ -65,30 +72,12 @@ namespace EIP.Views
                 this.filterFB = this.NavigationContext.QueryString["filter"];
 
 
-            Connexion.allTopics = new Dictionary<string, List<Topic>>();
-            
+            //Connexion.allTopics = new Dictionary<string, List<Topic>>();
+
             if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
-               // ImgLoad.Visibility = System.Windows.Visibility.Visible;
                 dt_Tick(true, null);
-                /*
-                foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
-                {
-                    if (accountLight.Value.selected)
-                        switch (accountLight.Value.account.typeAccount)
-                        {
-                            case Account.TypeAccount.Facebook:
-                                dt_Tick(null, null);
-                                break;
-                            case Account.TypeAccount.Twitter:
-                                dt_Tick(null, null);
-                                break;
-                            case Account.TypeAccount.Flickr:
-                                break;
-                            default:
-                                break;
-                        }
-                }*/
+
                 Connexion.dt.Stop();
                 Connexion.dt = new DispatcherTimer();
                 Connexion.dt.Interval = new TimeSpan(0, 0, 1, 00, 000);
@@ -98,7 +87,6 @@ namespace EIP.Views
             else
             {
                 busyIndicator.IsBusy = false;
-                //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
 
@@ -111,7 +99,8 @@ namespace EIP.Views
 
                 foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
                 {
-                    if(accountLight.Value.selected)
+                    if (accountLight.Value.selected)
+                    {
                         switch (accountLight.Value.account.typeAccount)
                         {
                             case Account.TypeAccount.Facebook:
@@ -146,6 +135,11 @@ namespace EIP.Views
                             default:
                                 break;
                         }
+                    }
+                    else
+                    {
+                        Connexion.allTopics.Remove(accountLight.Value.account.userID.ToString());
+                    }
                 }
 
                 if (!accountSelected)

@@ -185,7 +185,7 @@ namespace EIP.Views.Controls
                                         imgVia.Source = new BitmapImage(new Uri("http://localhost:4164/GifHandler.ashx?link=" + post.post.attachment.icon, UriKind.Absolute));
                                         imgVia.Visibility = System.Windows.Visibility.Visible;
                                     }
-                                    PhotosFeed photosFeed = new PhotosFeed(post);
+                                    PhotosFeed photosFeed = new PhotosFeed(post, topic.accountID);
                                     content.Children.Add(photosFeed);
                                     //this.Height = 220;
                                     break;

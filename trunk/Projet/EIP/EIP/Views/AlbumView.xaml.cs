@@ -35,6 +35,8 @@ namespace EIP.Views
         // Executes when the user navigates to this page.
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            albumName.Text = " ";
+
             if (this.NavigationContext.QueryString.ContainsKey("aid"))
                 this.aid = this.NavigationContext.QueryString["aid"];
 
@@ -138,13 +140,15 @@ namespace EIP.Views
                         flowControl.DataContext = photos.Values;
 
 
-
-                        List<album> albums = ((AccountFacebookLight)Connexion.accounts[this.accountID]).albums[this.uid];
-                        var al = from a in albums
-                                 where a.aid == this.aid
-                                 select a;
-
-                        albumName.Text = al.First().name;
+                        if (((AccountFacebookLight)Connexion.accounts[this.accountID]).albums.ContainsKey(this.uid))
+                        {
+                            List<album> albums = ((AccountFacebookLight)Connexion.accounts[this.accountID]).albums[this.uid];
+                            DisplayAlbumName(albums);
+                        }
+                        else
+                        {
+                            ((AccountFacebookLight)Connexion.accounts[this.accountID]).GetAlbumsCalled += new AccountFacebookLight.OnGetAlbumsCompleted(AlbumView_GetAlbumsCalled);
+                        }
                     }
                     else
                     {
@@ -154,6 +158,24 @@ namespace EIP.Views
 
             //photo tof = new photo();
            
+        }
+
+        void AlbumView_GetAlbumsCalled(List<album> albums)
+        {
+
+            DisplayAlbumName(albums);
+        }
+
+        private void DisplayAlbumName(List<album> albums)
+        {
+            if (albums.Count > 0)
+            {
+                var al = from a in albums
+                         where a.aid == this.aid
+                         select a;
+
+                albumName.Text = al.First().name;
+            }
         }
 
         void accFK_GetPhotosCalled(string aid, FlickrNet.PhotosetPhotoCollection photos)

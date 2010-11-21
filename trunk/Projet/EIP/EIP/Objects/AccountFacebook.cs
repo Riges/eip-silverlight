@@ -1245,7 +1245,7 @@ namespace EIP
         {
             if (ex == null && photos.Count > 0)
             {
-                if (this.photos[aid.ToString()].Count != photos.Count)
+                if (!this.photos.ContainsKey(aid.ToString()) || this.photos[aid.ToString()].Count != photos.Count)
                 {
                     this.photos[aid.ToString()] = new Dictionary<string, photo>();
                     foreach (photo tof in photos)
