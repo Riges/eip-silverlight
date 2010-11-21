@@ -53,6 +53,25 @@ namespace EIP.Objects
                 Photoset album = value as Photoset;
                 bt = new BitmapImage(new Uri(album.PhotosetSquareThumbnailUrl, UriKind.Absolute));
             }
+            else if (value.GetType() == typeof(string))
+            {
+                string image = value as string;
+                switch (image)
+                {
+                    case "Facebook":
+                        return "../../Assets/Images/facebook-icon.png";
+                        break;
+                    case "Twitter":
+                        return "../../Assets/Images/twitter-icon.png";
+                        break;
+                    case "Flickr":
+                        return "../../Assets/Images/flickr-icon.png";
+                        break;
+                    default:
+                        break;
+                }
+                
+            }
 
 
             return bt;

@@ -17,7 +17,9 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Name="img1Border" BorderThickness="5" BorderBrush="white"  VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Visibility="Collapsed"><!--Padding="5,5,5,5"-->
-            <Image Name="img1" Stretch="None"></Image>
+            <HyperlinkButton Name="img1Link">
+                <Image Name="img1" Stretch="None"></Image>
+            </HyperlinkButton>
         </Border>
         <Border Name="img2Border" BorderThickness="5" BorderBrush="white"  VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Visibility="Collapsed">
             <Image Name="img2" Stretch="None"></Image>

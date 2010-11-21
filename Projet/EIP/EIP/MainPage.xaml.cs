@@ -17,6 +17,7 @@ using Facebook.Session;
 using System.IO.IsolatedStorage;
 using EIP.ServiceEIP;
 using EIP.Views.Child;
+using System.Windows.Browser;
 
 namespace EIP
 {
@@ -173,7 +174,8 @@ namespace EIP
         {
             Connexion.Deconnexion();
             liste.Reload();
-            ContentFrame.Navigate(new Uri("/Deconnexion", UriKind.Relative));
+            HtmlPage.Window.Navigate(new Uri("http://"+App.Current.Host.Source.Host + (App.Current.Host.Source.Port != 80?":"+App.Current.Host.Source.Port:null), UriKind.Absolute));
+            //ContentFrame.Navigate(new Uri("/Deconnexion", UriKind.Relative));
 
             /*LinkSeConnecter.Visibility = System.Windows.Visibility.Visible;
             DividerSeCo.Visibility = System.Windows.Visibility.Visible;*/

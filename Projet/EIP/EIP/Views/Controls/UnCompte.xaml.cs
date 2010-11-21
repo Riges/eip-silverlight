@@ -225,6 +225,7 @@ namespace EIP.Views.Controls
         private void ReloadPage()
         {
             string sourceStr = Application.Current.Host.NavigationState;
+
             if (!sourceStr.StartsWith("/WaitLoad"))
             {
                 string query = "?time=" + DateTime.Now.Ticks;

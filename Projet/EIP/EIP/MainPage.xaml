@@ -161,8 +161,8 @@
             </StackPanel>
 
             <!--<StackPanel my:DockPanel.Dock="Top" HorizontalAlignment="Stretch">-->
-                
-                <navigation:Frame x:Name="ContentFrame" my:DockPanel.Dock="Top" Style="{StaticResource ContentFrameStyle}" Template="{StaticResource TransitioningFrame}" 
+
+                <navigation:Frame  x:Name="ContentFrame" my:DockPanel.Dock="Top" Style="{StaticResource ContentFrameStyle}" Template="{StaticResource TransitioningFrame}" 
                                   Source="/WaitLoad" Navigated="ContentFrame_Navigated" NavigationFailed="ContentFrame_NavigationFailed" Margin="0,15,0,0"><!--Source="/Home"-->
                     <navigation:Frame.UriMapper>
                         <uriMapper:UriMapper>

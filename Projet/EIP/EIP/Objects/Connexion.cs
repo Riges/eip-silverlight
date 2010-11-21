@@ -366,7 +366,7 @@ namespace EIP
             }
         }
 
-        public static void Login(Account.TypeAccount type, string pseudo, string password)
+        public static void Login(Account.TypeAccount type)
         {
             addAccount = false;
             switch (type)
@@ -382,10 +382,22 @@ namespace EIP
                     }
                     else
                     {
+                        //browserSession = new BrowserSession(ApplicationKey, perms);
+                        //facebookAPI = new Api(browserSession);
+                        //facebookAPI.Users.GetLoggedInUserAsync(browserSession_GetLoggedInUser, null);
+
                         //browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
+                        //facebookAPI = null;
                         //browserSession.Logout();
 
-                        BrowserSession_LogoutCompleted(null, null);
+                        browserSession = new BrowserSession(ApplicationKey, perms);
+                        browserSession.LoginCompleted -= browserSession_LoginCompletedTest;
+                        browserSession.LoginCompleted += browserSession_LoginCompletedTest;
+                        browserSession.Login();
+
+
+
+                        //BrowserSession_LogoutCompleted(null, null);
                     }
                    
 
@@ -419,6 +431,48 @@ namespace EIP
             }
         }
 
+        static void browserSession_LoginCompletedTest(object sender, AsyncCompletedEventArgs e)
+        {
+            if (facebookAPI == null)
+            {
+                facebookAPI = new Api(browserSession);
+                facebookAPI.Users.GetInfoAsync(facebookAPI.Session.UserId, GetInfoLoggedIn, null);
+            }
+            
+        }
+
+        static void GetInfoLoggedIn(IList<user> users, object obj, FacebookException ex)
+        {
+            if(ex == null && users.Count > 0)
+            {
+                dispatcher.BeginInvoke(() =>
+                    {
+                        user toto = users.First();
+                        MessageBox msg = new MessageBox("Connexion....", "Vous allez vous connecter à l'aide votre compte facebook : " + toto.name + ".\nCliquez sur annuler pour vous connecter grâce à un autre compte facebook.", MessageBoxButton.OKCancel);
+                        msg.Closed += new EventHandler(msg_Closed);
+                        msg.Show();
+
+                    });
+            }
+        }
+
+        static void msg_Closed(object sender, EventArgs e)
+        {
+            if (((MessageBox)sender).DialogResult == false)
+            {
+                browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
+                facebookAPI = null;
+                browserSession.Logout();
+            }
+            else
+            {
+                facebookAPI = null;
+                NewAccountFacebook_LoginCompleted(null, null);
+            }
+        }
+
+
+
         public static void AddAccount(Account.TypeAccount type)
         {
             addAccount = true;
@@ -434,11 +488,12 @@ namespace EIP
                     }
                     else
                     {
-                        /*
+                        browserSession = new BrowserSession(ApplicationKey, perms);
+                        facebookAPI = new Api(browserSession);
                         browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
+                        facebookAPI = null;
                         browserSession.Logout();
-                        */
-                        BrowserSession_LogoutCompleted(null, null);
+                        //BrowserSession_LogoutCompleted(null, null);
                     }
 
                     break;

@@ -53,7 +53,7 @@ namespace EIP.Views.Child
 
             if (!this.addAccount)
             {
-                Connexion.Login((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedValue.ToString(), true), pseudoBox.Text.Trim(), mdpBox.Password.Trim());
+                Connexion.Login((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedValue.ToString(), true));
             }
             else
             {
@@ -69,34 +69,23 @@ namespace EIP.Views.Child
             this.DialogResult = false;
         }
 
-        private void DropDownTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch ((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedItem.ToString(),true) )
-            {
-                case Account.TypeAccount.Facebook:
-                    pseudoText.Visibility = System.Windows.Visibility.Collapsed;
-                    pseudoBox.Visibility = System.Windows.Visibility.Collapsed;
-                    mdpText.Visibility = System.Windows.Visibility.Collapsed;
-                    mdpBox.Visibility = System.Windows.Visibility.Collapsed;
-                    break;
-                case Account.TypeAccount.Twitter:
-                    /*
-                    if (!this.addAccount)
-                    {
-                        pseudoText.Visibility = System.Windows.Visibility.Visible;
-                        pseudoBox.Visibility = System.Windows.Visibility.Visible;
-                        mdpText.Visibility = System.Windows.Visibility.Visible;
-                        mdpBox.Visibility = System.Windows.Visibility.Visible;
-                    }*/
+        //private void DropDownTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    switch ((Account.TypeAccount)Enum.Parse(typeof(Account.TypeAccount), DropDownTypes.SelectedItem.ToString(),true) )
+        //    {
+        //        case Account.TypeAccount.Facebook:
+        //            break;
+        //        case Account.TypeAccount.Twitter:
+                 
 
-                    break;
-                case Account.TypeAccount.Flickr:
-                    break;
-                default:
-                    break;
-            }
+        //            break;
+        //        case Account.TypeAccount.Flickr:
+        //            break;
+        //        default:
+        //            break;
+        //    }
 
-        }
+        //}
 
         private void linkAddAccount_Click(object sender, RoutedEventArgs e)
         {
