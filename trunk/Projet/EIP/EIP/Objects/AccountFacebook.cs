@@ -280,6 +280,16 @@ namespace EIP
             }
         }
 
+        public void LoadInboxMessages(DateTime start, DateTime end)
+        {
+
+            //this.facebookAPI.Message.GetThreadsInFolderAsynch(0, (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(LoadMessagesCompleted), null);1289959645
+
+            //this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0 AND updated_time <= 1289959645 AND updated_time >= 1289959644", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);// LIMIT 0, 2
+            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0 AND updated_time >= " + Utils.GetEpochTime(start).ToString() + " AND updated_time <= " + Utils.GetEpochTime(end).ToString() + "", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);// LIMIT 0, 2
+
+        }
+
         public void LoadInboxMessages()
         {
 
@@ -288,6 +298,15 @@ namespace EIP
             this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=0", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);// LIMIT 0, 2
 
         }
+
+        public void LoadOutboxMessages(DateTime start, DateTime end)
+        {
+            //this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(GetThreadsFQL_Completed), null);
+
+            this.facebookAPI.Fql.QueryAsync<message_getThreadsInFolder_response>("SELECT thread_id,folder_id,subject,recipients,updated_time,parent_message_id,parent_thread_id,message_count,snippet,snippet_author,object_id,unread,viewer_id from thread where folder_id=1 AND updated_time >= '" + Utils.GetEpochTime(start).ToString() + "' AND updated_time <= '" + Utils.GetEpochTime(end).ToString() + "'", new Fql.QueryCallback<message_getThreadsInFolder_response>(GetThreadsFQL_Completed), null);
+
+        }
+
         public void LoadOutboxMessages()
         {
             //this.facebookAPI.Message.GetThreadsInFolderAsynch(Int32.Parse(EIP.AccountFacebookLight.MsgFolder.Outbox.ToString()), (int)this.account.userID, 42, 0, new Message.GetThreadsInFolderCallback(GetThreadsFQL_Completed), null);

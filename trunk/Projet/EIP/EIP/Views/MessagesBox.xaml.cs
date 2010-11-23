@@ -18,8 +18,10 @@ namespace EIP.Views
     public partial class MessagesBox : Page
     {
         //public Dictionary<String, Friend> friends;
-        
+
         public String boxActive;
+        public String ongletActive;
+        private String ongletDefault = "lastWeek";
 
         public MessagesBox()
         {
@@ -94,6 +96,68 @@ namespace EIP.Views
                         break;
                 }
 
+                if (this.NavigationContext.QueryString.ContainsKey("onglet"))
+                    this.ongletActive = this.NavigationContext.QueryString["onglet"];
+                else
+                    this.ongletActive = ongletDefault;
+                
+                DateTime start, end;
+                ResourceDictionary Resources = App.Current.Resources;
+                switch (this.ongletActive)
+                {
+                    case "yesterday": 
+                        start = DateTime.Today.AddDays(-1);
+                        end = DateTime.Today;
+                        yesterday.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+
+                    case "week":
+                        start = DateTime.Today.AddDays(-7);
+                        end = DateTime.Today;
+                        week.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+
+                    case "lastWeek":
+                        start = DateTime.Today.AddDays(-14);
+                        end = DateTime.Today.AddDays(-7);
+                        lastWeek.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+
+                    case "month":
+                        start = DateTime.Today.AddMonths(-1);
+                        end = DateTime.Today;
+                        month.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+
+                    case "lastMonth":
+                        start = DateTime.Today.AddMonths(-2);
+                        end = DateTime.Today.AddMonths(-1);
+                        lastMonth.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+
+                    case "year":
+                        start = DateTime.Today.AddYears(-1);
+                        end = DateTime.Today;
+                        year.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+
+                    case "plus":
+                        start = DateTime.Today.AddYears(-10);
+                        end = DateTime.Today.AddYears(-1);
+                        plus.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+
+                    default:
+                    case "today":
+                        start = DateTime.Today;
+                        end = DateTime.Today.AddDays(1);
+                        today.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
+                        break;
+                }
+
+                foreach (HyperlinkButton link in OngletsNavigation.Children)
+                    link.NavigateUri = new Uri("/Messages/" + this.boxActive + "/" + link.Name, UriKind.Relative);
+
                 foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
                 {
                     if (account.Value.selected)
@@ -107,11 +171,10 @@ namespace EIP.Views
                                 switch (this.boxActive)
                                 {
                                     case "outbox":
-                                        ((AccountFacebookLight)account.Value).LoadOutboxMessages();
+                                        ((AccountFacebookLight)account.Value).LoadOutboxMessages(start, end);
                                         break;
                                     case "inbox":
-                                        ((AccountFacebookLight)account.Value).LoadInboxMessages();
-                                        //this.box = ((AccountFacebookLight)account.Value).inbox;
+                                        ((AccountFacebookLight)account.Value).LoadInboxMessages(start, end);
                                         break;
                                 }
                                 break;
