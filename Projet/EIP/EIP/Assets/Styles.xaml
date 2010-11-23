@@ -366,6 +366,11 @@
     <Style x:Key="HyperlinkButtonFonceStyle" TargetType="HyperlinkButton">
         <Setter Property="Foreground" Value="{StaticResource LinkColorFonceBrush}"/>
     </Style>
+    
+    <Style x:Key="HyperlinkButtonActiveStyle" TargetType="HyperlinkButton">
+        <Setter Property="Foreground" Value="{StaticResource LinkColorFonceBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
 
     <Style x:Key="MessageListStyle" TargetType="StackPanel">
         <Setter Property="Margin" Value="0,0,0,20"/>

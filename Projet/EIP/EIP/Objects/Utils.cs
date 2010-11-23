@@ -74,6 +74,16 @@ namespace EIP.Objects
             return jour;
         }
 
+        public static long GetEpochTime(DateTime dtCurTime)
+        {
+            DateTime dtEpochStartTime = Convert.ToDateTime("1/1/1970 8:00:00 AM");
+            TimeSpan ts = dtCurTime.Subtract(dtEpochStartTime);
+
+            long epochtime;
+            epochtime = ((((((ts.Days * 24) + ts.Hours) * 60) + ts.Minutes) * 60) + ts.Seconds);
+            return epochtime;
+        } 
+
         public static void NotificationMessage(string header, string message)
         {
             NotificationMessage(null, header, message);
