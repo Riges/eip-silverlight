@@ -488,11 +488,17 @@ namespace EIP
                     }
                     else
                     {
-                        browserSession = new BrowserSession(ApplicationKey, perms);
+                        /*browserSession = new BrowserSession(ApplicationKey, perms);
                         facebookAPI = new Api(browserSession);
                         browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
                         facebookAPI = null;
-                        browserSession.Logout();
+                        browserSession.Logout();*/
+
+                        browserSession = new BrowserSession(ApplicationKey, perms);
+                        browserSession.LoginCompleted -= browserSession_LoginCompletedTest;
+                        browserSession.LoginCompleted += browserSession_LoginCompletedTest;
+                        browserSession.Login();
+
                         //BrowserSession_LogoutCompleted(null, null);
                     }
 
