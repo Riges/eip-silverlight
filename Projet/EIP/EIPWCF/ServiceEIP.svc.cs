@@ -206,7 +206,7 @@ namespace EIPWCF
             return null;
         }
 
-        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret)
+        /*public IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret)
         {
             SetClientInfo();
             var query = FluentTwitter.CreateRequest()
@@ -218,6 +218,28 @@ namespace EIPWCF
             {
                 var dms = response.AsDirectMessages();
                 //dms.ElementAt(0).
+                return dms;
+            }
+
+            return null;
+        }*/
+
+        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret, long start, long end)
+        {
+            SetClientInfo();
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .DirectMessages().Received();
+
+            if (start > 0)
+                query = query.Before(start);
+            if (end > 0)
+                query = query.Since(end); 
+
+            var response = query.Request();
+            if (!response.IsTwitterError)
+            {
+                var dms = response.AsDirectMessages();
                 return dms;
             }
 

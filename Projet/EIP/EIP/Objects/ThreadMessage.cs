@@ -304,5 +304,10 @@ namespace EIP.Objects
         {
             return (MessageTwitter != null);
         }
+
+        public TwitterDirectMessage getDm()
+        {
+            return this.MessageTwitter;
+        }
     }
 }

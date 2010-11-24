@@ -206,7 +206,6 @@ namespace EIP.Views
                         switch (account.Value.account.typeAccount)
                         {
                             case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountThreadCalled -= new AccountFacebookLight.OnCountThreadCompleted(Messages_LoadMessagesFb);
                                 ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountThreadCalled += new AccountFacebookLight.OnCountThreadCompleted(Messages_LoadMessagesFb);
                                 
                                 switch (this.boxActive)
@@ -228,7 +227,7 @@ namespace EIP.Views
                                         ((AccountTwitterLight)account.Value).LoadDirectMessagesSent();
                                         break;
                                     case "inbox":
-                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesReceived();
+                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesReceived(start, end);
                                         break;
                                 }                                
                                 break;
@@ -246,9 +245,10 @@ namespace EIP.Views
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
+                accountFb.CountThreadCalled -= new AccountFacebookLight.OnCountThreadCompleted(Messages_LoadMessagesFb);
                 nbThreads.Add(accountFb.account.accountID, count);
                 if (count > 0)
-                {
+                {                                
                     accountFb.GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
                     accountFb.GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
                     switch (this.boxActive)
