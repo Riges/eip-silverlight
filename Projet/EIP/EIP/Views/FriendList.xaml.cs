@@ -26,7 +26,7 @@ namespace EIP.Views
         public FriendList()
         {
             InitializeComponent();
-           
+
         }
 
         // Executes when the user navigates to this page.
@@ -43,8 +43,10 @@ namespace EIP.Views
             LoadList();
 
             //LoadDisplay();
+            
            
         }
+
 
         /// <summary>
         /// methode qui merge les listes de friends
@@ -113,6 +115,8 @@ namespace EIP.Views
 
         private void FriendList_GetFriendsCalled(List<user> friendsFB, long accountID)
         {
+            //((AccountFacebookLight)Connexion.accounts[accountID]).GetFriendsCalled -= FriendList_GetFriendsCalled;
+
             foreach (user toto in friendsFB)
             {
                 string key = toto.name; // (toto.proxied_email != null) ? toto.proxied_email : 
