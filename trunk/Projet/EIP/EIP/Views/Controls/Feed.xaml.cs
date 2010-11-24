@@ -21,6 +21,7 @@ using EIP.ServiceEIP;
 using EIP.Objects;
 using EIP.Views.Controls.Feeds;
 using System.Globalization;
+using System.Windows.Browser;
 
 
 namespace EIP.Views.Controls
@@ -263,7 +264,7 @@ namespace EIP.Views.Controls
                             //<!--#5ec7e5--> 
 
                             //LoadMessage(status.Text);
-                            StatutFeed statut = new StatutFeed(status.Text);
+                            StatutFeed statut = new StatutFeed(HttpUtility.HtmlDecode(status.Text));
                             content.Children.Add(statut);
                             //message.Text = status.Text;
                             
