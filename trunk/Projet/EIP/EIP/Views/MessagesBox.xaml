@@ -27,13 +27,13 @@
             <TextBlock Name="HeaderText" Style="{StaticResource HeaderTextStyle}"
                                Text="Messagerie" Grid.Row="0" />
             <TextBlock Name="MessageDefault"
-                            Text="Aucun message." Grid.Row="1" />
+                            Text="Aucun message." Grid.Row="4" />
                 <Button Name="Back" Content="&lt; Retour" Grid.Row="2" Visibility="Collapsed" Click="Back_Click" Width="100" HorizontalAlignment="Left" Margin="0,0,10,10" />
 
             <toolkit:WrapPanel Orientation="Horizontal" Width="Auto"  Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Name="RecipientsList">
 
             </toolkit:WrapPanel>
-            <toolkit:WrapPanel Orientation="Horizontal" Width="Auto" Grid.Column="0" Grid.Row="4" Name="OngletsNavigation">
+            <toolkit:WrapPanel Orientation="Horizontal" Width="Auto" Grid.Column="0" Grid.Row="1" Name="OngletsNavigation">
                 <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="today">
                     <HyperlinkButton.Content>
                         <TextBlock Name="todayText" Text="Aujourd'hui"/>

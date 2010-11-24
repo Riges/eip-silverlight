@@ -22,10 +22,13 @@ namespace EIP.Views
         public String boxActive;
         public String ongletActive;
         private String ongletDefault = "today";
+        private DateTime start, end;
+        private Dictionary<long, long> nbThreads;
 
         public MessagesBox()
         {
             InitializeComponent();
+            nbThreads = new Dictionary<long, long>();
             
             /*foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
@@ -85,6 +88,7 @@ namespace EIP.Views
             {
                 this.boxActive = this.NavigationContext.QueryString["box"];
                 listeMessagesBox.box.Clear();
+                nbThreads.Clear();
 
                 switch (this.boxActive)
                 {
@@ -101,7 +105,6 @@ namespace EIP.Views
                 else
                     this.ongletActive = ongletDefault;
                 
-                DateTime start, end;
                 ResourceDictionary Resources = App.Current.Resources;
                 double offset = 0;
                 switch (this.ongletActive)
@@ -194,7 +197,7 @@ namespace EIP.Views
 
                 foreach (HyperlinkButton link in OngletsNavigation.Children)
                     link.NavigateUri = new Uri("/Messages/" + this.boxActive + "/" + link.Name, UriKind.Relative);
-
+                
                 foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
                 {
                     if (account.Value.selected)
@@ -203,18 +206,19 @@ namespace EIP.Views
                         switch (account.Value.account.typeAccount)
                         {
                             case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
-                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountThreadCalled -= new AccountFacebookLight.OnCountThreadCompleted(Messages_LoadMessagesFb);
+                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountThreadCalled += new AccountFacebookLight.OnCountThreadCompleted(Messages_LoadMessagesFb);
+                                
                                 switch (this.boxActive)
                                 {
                                     case "outbox":
-                                        ((AccountFacebookLight)account.Value).LoadOutboxMessages(start, end);
+                                        ((AccountFacebookLight)account.Value).CountOutboxMessages(start, end);
                                         break;
                                     case "inbox":
-                                        ((AccountFacebookLight)account.Value).LoadInboxMessages(start, end);
+                                        ((AccountFacebookLight)account.Value).CountInboxMessages(start, end);
                                         break;
-                                }
-                                break;
+                                }                                
+                            break;
                             case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
@@ -235,6 +239,44 @@ namespace EIP.Views
                     }
                 }
             }
+        }
+
+
+        void Messages_LoadMessagesFb(long count, AccountFacebookLight accountFb)
+        {
+            Connexion.dispatcher.BeginInvoke(() =>
+            {
+                nbThreads.Add(accountFb.account.accountID, count);
+                if (count > 0)
+                {
+                    accountFb.GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                    accountFb.GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                    switch (this.boxActive)
+                    {
+                        case "outbox":
+                            accountFb.LoadOutboxMessages(start, end);
+                            break;
+                        case "inbox":
+                            accountFb.LoadInboxMessages(start, end);
+                            break;
+                    }
+
+                }
+                else
+                {
+                    Boolean wait = false;
+                    foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
+                    {
+                        if (account.Value.selected && account.Value.account.typeAccount != EIP.ServiceEIP.Account.TypeAccount.Flickr && !nbThreads.ContainsKey(account.Value.account.accountID))
+                        {
+                            wait = true;
+                            break;
+                        }
+                    }
+                    if (!wait)
+                        busyIndicator.IsBusy = false;
+                }
+            });
         }
 
         void Messages_LoadMessagesFlickr()
