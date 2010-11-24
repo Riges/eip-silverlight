@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
 using EIP.Objects;
+using System.Windows.Browser;
 
 namespace EIP.Views.Controls
 {
@@ -83,7 +84,7 @@ namespace EIP.Views.Controls
                   if (user != null)
                   {
                       pseudoUser.Text = user.ScreenName;
-                      statusUser.Text = user.Status.Text;
+                      statusUser.Text = HttpUtility.HtmlDecode(user.Status.Text);
 
                       if (user.Location == null || user.Location == "")
                       {
