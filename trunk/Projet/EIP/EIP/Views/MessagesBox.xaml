@@ -59,19 +59,9 @@
                         <TextBlock Name="monthText" Text="Ce mois-ci"/>
                     </HyperlinkButton.Content>
                 </HyperlinkButton>
-                <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="lastMonth">
-                    <HyperlinkButton.Content>
-                        <TextBlock Name="lastMonthText" Text="Le mois dernier"/>
-                    </HyperlinkButton.Content>
-                </HyperlinkButton>
                 <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="year">
                     <HyperlinkButton.Content>
                         <TextBlock Name="yearText" Text="Cette année"/>
-                    </HyperlinkButton.Content>
-                </HyperlinkButton>
-                <HyperlinkButton Style="{StaticResource HyperlinkButtonFonceStyle}" Height="Auto" Name="plus">
-                    <HyperlinkButton.Content>
-                        <TextBlock Name="plusText" Text="+"/>
                     </HyperlinkButton.Content>
                 </HyperlinkButton>
             </toolkit:WrapPanel>
