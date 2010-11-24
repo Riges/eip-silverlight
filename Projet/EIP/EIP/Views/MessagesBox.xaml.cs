@@ -21,7 +21,7 @@ namespace EIP.Views
 
         public String boxActive;
         public String ongletActive;
-        private String ongletDefault = "lastWeek";
+        private String ongletDefault = "today";
 
         public MessagesBox()
         {
@@ -103,6 +103,7 @@ namespace EIP.Views
                 
                 DateTime start, end;
                 ResourceDictionary Resources = App.Current.Resources;
+                double offset = 0;
                 switch (this.ongletActive)
                 {
                     case "yesterday": 
@@ -112,39 +113,75 @@ namespace EIP.Views
                         break;
 
                     case "week":
-                        start = DateTime.Today.AddDays(-7);
-                        end = DateTime.Today;
+                        switch (DateTime.Today.DayOfWeek)
+                        {
+                            case DayOfWeek.Monday:
+                                offset = 0;
+                                break;
+                            case DayOfWeek.Tuesday:
+                                offset = -1;
+                                break;
+                            case DayOfWeek.Wednesday:
+                                offset = -2;
+                                break;
+                            case DayOfWeek.Thursday:
+                                offset = -3;
+                                break;
+                            case DayOfWeek.Friday:
+                                offset = -4;
+                                break;
+                            case DayOfWeek.Saturday:
+                                offset = -5;
+                                break;
+                            case DayOfWeek.Sunday:
+                                offset = -6;
+                                break;
+                        }
+                        start = DateTime.Today.AddDays(offset);
+                        end = DateTime.Today.AddDays(1);
                         week.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
                         break;
 
-                    case "lastWeek":
-                        start = DateTime.Today.AddDays(-14);
-                        end = DateTime.Today.AddDays(-7);
+                    case "lastWeek": 
+                        switch (DateTime.Today.DayOfWeek)
+                        {
+                            case DayOfWeek.Monday:
+                                offset = 0;
+                                break;
+                            case DayOfWeek.Tuesday:
+                                offset = -1;
+                                break;
+                            case DayOfWeek.Wednesday:
+                                offset = -2;
+                                break;
+                            case DayOfWeek.Thursday:
+                                offset = -3;
+                                break;
+                            case DayOfWeek.Friday:
+                                offset = -4;
+                                break;
+                            case DayOfWeek.Saturday:
+                                offset = -5;
+                                break;
+                            case DayOfWeek.Sunday:
+                                offset = -6;
+                                break;
+                        }
+                        start = DateTime.Today.AddDays(-7 + offset);
+                        end = DateTime.Today.AddDays(offset);
                         lastWeek.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
                         break;
 
                     case "month":
-                        start = DateTime.Today.AddMonths(-1);
-                        end = DateTime.Today;
+                        start = DateTime.Today.AddDays(-DateTime.Today.Day + 1);
+                        end = DateTime.Today.AddDays(1);
                         month.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
                         break;
 
-                    case "lastMonth":
-                        start = DateTime.Today.AddMonths(-2);
-                        end = DateTime.Today.AddMonths(-1);
-                        lastMonth.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
-                        break;
-
                     case "year":
-                        start = DateTime.Today.AddYears(-1);
-                        end = DateTime.Today;
+                        start = DateTime.Today.AddDays(-DateTime.Today.Day + 1).AddMonths(-DateTime.Today.Month + 1);
+                        end = DateTime.Today.AddDays(1);
                         year.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
-                        break;
-
-                    case "plus":
-                        start = DateTime.Today.AddYears(-10);
-                        end = DateTime.Today.AddYears(-1);
-                        plus.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
                         break;
 
                     default:
