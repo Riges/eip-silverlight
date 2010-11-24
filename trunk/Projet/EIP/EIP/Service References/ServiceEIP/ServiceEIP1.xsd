@@ -258,6 +258,8 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="tokenSecret" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="start" type="xs:long" />
+        <xs:element minOccurs="0" name="end" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

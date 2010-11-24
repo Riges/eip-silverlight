@@ -19,8 +19,8 @@ namespace EIP.ServiceEIP {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Account", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountTwitter))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountFlickr))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountFacebook))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(EIP.ServiceEIP.AccountFlickr))]
     public partial class Account : object, System.ComponentModel.INotifyPropertyChanged {
         
         private long accountIDField;
@@ -175,42 +175,6 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AccountFlickr", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
-    public partial class AccountFlickr : EIP.ServiceEIP.Account {
-        
-        private string tokenField;
-        
-        private string userIDstrField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string token {
-            get {
-                return this.tokenField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.tokenField, value) != true)) {
-                    this.tokenField = value;
-                    this.RaisePropertyChanged("token");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string userIDstr {
-            get {
-                return this.userIDstrField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.userIDstrField, value) != true)) {
-                    this.userIDstrField = value;
-                    this.RaisePropertyChanged("userIDstr");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AccountFacebook", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
     public partial class AccountFacebook : EIP.ServiceEIP.Account {
         
@@ -255,6 +219,42 @@ namespace EIP.ServiceEIP {
                 if ((object.ReferenceEquals(this.sessionSecretField, value) != true)) {
                     this.sessionSecretField = value;
                     this.RaisePropertyChanged("sessionSecret");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AccountFlickr", Namespace="http://schemas.datacontract.org/2004/07/EIPLibrary")]
+    public partial class AccountFlickr : EIP.ServiceEIP.Account {
+        
+        private string tokenField;
+        
+        private string userIDstrField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string token {
+            get {
+                return this.tokenField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.tokenField, value) != true)) {
+                    this.tokenField = value;
+                    this.RaisePropertyChanged("token");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string userIDstr {
+            get {
+                return this.userIDstrField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.userIDstrField, value) != true)) {
+                    this.userIDstrField = value;
+                    this.RaisePropertyChanged("userIDstr");
                 }
             }
         }
@@ -1248,7 +1248,7 @@ namespace EIP.ServiceEIP {
         string EndUploadPhoto(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceived", ReplyAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceivedResponse")]
-        System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, long start, long end, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessagesReceived(System.IAsyncResult result);
         
@@ -2809,8 +2809,8 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesReceived(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginLoadDirectMessagesReceived(token, tokenSecret, callback, asyncState);
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesReceived(string token, string tokenSecret, long start, long end, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLoadDirectMessagesReceived(token, tokenSecret, start, end, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2821,7 +2821,9 @@ namespace EIP.ServiceEIP {
         private System.IAsyncResult OnBeginLoadDirectMessagesReceived(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string token = ((string)(inValues[0]));
             string tokenSecret = ((string)(inValues[1]));
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesReceived(token, tokenSecret, callback, asyncState);
+            long start = ((long)(inValues[2]));
+            long end = ((long)(inValues[3]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesReceived(token, tokenSecret, start, end, callback, asyncState);
         }
         
         private object[] OnEndLoadDirectMessagesReceived(System.IAsyncResult result) {
@@ -2837,11 +2839,11 @@ namespace EIP.ServiceEIP {
             }
         }
         
-        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret) {
-            this.LoadDirectMessagesReceivedAsync(token, tokenSecret, null);
+        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, long start, long end) {
+            this.LoadDirectMessagesReceivedAsync(token, tokenSecret, start, end, null);
         }
         
-        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, object userState) {
+        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, long start, long end, object userState) {
             if ((this.onBeginLoadDirectMessagesReceivedDelegate == null)) {
                 this.onBeginLoadDirectMessagesReceivedDelegate = new BeginOperationDelegate(this.OnBeginLoadDirectMessagesReceived);
             }
@@ -2853,7 +2855,9 @@ namespace EIP.ServiceEIP {
             }
             base.InvokeAsync(this.onBeginLoadDirectMessagesReceivedDelegate, new object[] {
                         token,
-                        tokenSecret}, this.onEndLoadDirectMessagesReceivedDelegate, this.onLoadDirectMessagesReceivedCompletedDelegate, userState);
+                        tokenSecret,
+                        start,
+                        end}, this.onEndLoadDirectMessagesReceivedDelegate, this.onLoadDirectMessagesReceivedCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3442,10 +3446,12 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, long start, long end, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
                 _args[0] = token;
                 _args[1] = tokenSecret;
+                _args[2] = start;
+                _args[3] = end;
                 System.IAsyncResult _result = base.BeginInvoke("LoadDirectMessagesReceived", _args, callback, asyncState);
                 return _result;
             }
