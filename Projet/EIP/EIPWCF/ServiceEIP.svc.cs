@@ -557,6 +557,28 @@ namespace EIPWCF
             return Model.InsertError(groupID, stackTrace, message);
         }
 
+        public XmlReader GetRSS(string Url)
+        {
+            Uri uri = new System.Uri(Url);
+            WebClient rssClient = new WebClient();
+
+            Stream stream = rssClient.OpenRead(uri);
+
+            XmlReader rssReader = XmlReader.Create(stream);
+            //SyndicationFeed feed = SyndicationFeed.Load(rssReader);
+            //SyndicationItem item = feed.Items.First();
+            //List<Article> articles;
+
+            //articles = (from article in feed.Items
+            //            select new Article
+            //            {
+            //                Titre = article.Title.Text,
+            //                Lien = article.Links.First().Uri.ToString()
+            //            }).ToList();
+
+            return rssReader;
+        }
+
         
     }
 

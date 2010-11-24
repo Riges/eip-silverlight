@@ -8,6 +8,7 @@ using System.Text;
 using EIPLibrary;
 using TweetSharp.Twitter.Model;
 using System.IO;
+using System.Xml;
 //using Dimebrain.TweetSharp.Model;
 //using Dimebrain.TweetSharp.Fluent;
 
@@ -103,6 +104,9 @@ namespace EIPWCF
 
         [OperationContract]
         bool LogError(long groupID, string stackTrace, string message);
+
+        [OperationContract]
+        XmlReader GetRSS(string Url);
 
         /*[OperationContract]
         string AuthorizeDesktop(string consumerKey, string consumerSecret);
