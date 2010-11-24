@@ -249,12 +249,14 @@ namespace EIP
         public delegate void OnGetMessagesCompleted(List<ThreadMessage> liste);
         public event OnGetMessagesCompleted GetMessagesCalled;
 
-
         public delegate void OnGetThreadCompleted(ThreadMessage th);
         public event OnGetThreadCompleted GetThreadCalled;
 
         public delegate void OnCountUnreadThreadCompleted(long count);
         public event OnCountUnreadThreadCompleted CountUnreadThreadCalled;
+
+        public delegate void OnCountThreadCompleted(long count, AccountFacebookLight account);
+        public event OnCountThreadCompleted CountThreadCalled;
 
         public void CountUnreadThreads()
         {
@@ -277,6 +279,36 @@ namespace EIP
                 cpt--;
                 if (this.CountUnreadThreadCalled != null)
                     this.CountUnreadThreadCalled.Invoke(cpt);
+            }
+        }
+
+        public void CountInboxMessages(DateTime start, DateTime end)
+        {
+
+            this.facebookAPI.Fql.QueryAsync("SELECT thread_id from thread where folder_id=0 AND updated_time >= " + Utils.GetEpochTime(start).ToString() + " AND updated_time <= " + Utils.GetEpochTime(end).ToString() + "", CountThreadCompleted, null);// LIMIT 0, 2
+
+        }
+
+        public void CountOutboxMessages(DateTime start, DateTime end)
+        {
+
+            this.facebookAPI.Fql.QueryAsync("SELECT thread_id from thread where folder_id=1 AND updated_time >= " + Utils.GetEpochTime(start).ToString() + " AND updated_time <= " + Utils.GetEpochTime(end).ToString() + "", CountThreadCompleted, null);// LIMIT 0, 2
+
+        }
+
+        public void CountThreadCompleted(String xml, object data, FacebookException ex)
+        {
+            using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(xml)))
+            {
+                long cpt = 0;
+                do
+                {
+                    reader.ReadToFollowing("thread");
+                    cpt++;
+                } while (!reader.EOF);
+                cpt--;
+                if (this.CountThreadCalled != null)
+                    this.CountThreadCalled.Invoke(cpt, this);
             }
         }
 
