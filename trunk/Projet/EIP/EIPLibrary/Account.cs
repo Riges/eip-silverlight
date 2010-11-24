@@ -36,7 +36,8 @@ namespace EIPLibrary
         {
             Facebook,
             Twitter,
-            Flickr
+            Flickr,
+            RSS
         }
 
        

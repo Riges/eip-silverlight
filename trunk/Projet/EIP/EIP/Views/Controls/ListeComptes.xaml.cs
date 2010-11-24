@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Browser;
 using System.Windows.Navigation;
 using System.Windows.Data;
+using EIP.Views.Child;
 
 
 namespace EIP.Views.Controls
@@ -208,6 +209,12 @@ namespace EIP.Views.Controls
                         LayoutPanel.Children.Clear();
                     });
             }
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Login loginBox = new Login(true);
+            loginBox.Show();
         }
         /*
         void ListeComptes_GetFirstUserInfoCalled(Facebook.Schema.user monUser)

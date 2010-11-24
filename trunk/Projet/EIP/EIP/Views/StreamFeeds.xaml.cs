@@ -22,6 +22,9 @@ using System.Windows.Threading;
 using EIP.ServiceEIP;
 using EIP.Objects;
 using EIP.Views.Controls;
+using System.IO;
+using System.Xml;
+using System.ServiceModel.Syndication;
 //using EIP.ServiceEIP;
 
 namespace EIP.Views
@@ -188,10 +191,42 @@ namespace EIP.Views
              
         }
 
+
+       
+
+        
+
     }
 
 
-
+    public class Article
+	   {
+	       private string _titre;
+	       private string _lien;
+	       private string _contenu;
+	 
+	       public string Contenu
+	       {
+	           get { return _contenu; }
+	           set { _contenu = value; }
+	       }
+	 
+	       public Article()
+	       {
+	       }
+	 
+	       public string Lien
+	       {
+	           get { return _lien; }
+	           set { _lien = value; }
+	       }
+	 
+	       public string Titre
+	       {
+	           get { return _titre; }
+	           set { _titre = value; }
+	       }
+	   }
     
 
 
