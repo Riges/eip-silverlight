@@ -84,10 +84,10 @@ namespace EIPWCF
         IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret);*/
 
         [OperationContract]
-        IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret, long start, long end);
+        IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret, long userId, long start, long end);
 
         [OperationContract]
-        IEnumerable<TwitterDirectMessage> LoadDirectMessagesSent(string token, string tokenSecret);
+        IEnumerable<TwitterDirectMessage> LoadDirectMessagesSent(string token, string tokenSecret, long userId, long start, long end);
 
 
         [OperationContract]

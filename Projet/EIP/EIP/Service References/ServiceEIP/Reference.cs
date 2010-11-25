@@ -119,6 +119,9 @@ namespace EIP.ServiceEIP {
             
             [System.Runtime.Serialization.EnumMemberAttribute()]
             Flickr = 2,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            RSS = 3,
         }
     }
     
@@ -1248,12 +1251,12 @@ namespace EIP.ServiceEIP {
         string EndUploadPhoto(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceived", ReplyAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesReceivedResponse")]
-        System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, long start, long end, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, long userId, long start, long end, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessagesReceived(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/LoadDirectMessagesSent", ReplyAction="http://tempuri.org/IServiceEIP/LoadDirectMessagesSentResponse")]
-        System.IAsyncResult BeginLoadDirectMessagesSent(string token, string tokenSecret, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginLoadDirectMessagesSent(string token, string tokenSecret, long userId, long start, long end, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<EIP.ServiceEIP.TwitterDirectMessage> EndLoadDirectMessagesSent(System.IAsyncResult result);
         
@@ -1281,6 +1284,11 @@ namespace EIP.ServiceEIP {
         System.IAsyncResult BeginLogError(long groupID, string stackTrace, string message, System.AsyncCallback callback, object asyncState);
         
         bool EndLogError(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IServiceEIP/GetRSS", ReplyAction="http://tempuri.org/IServiceEIP/GetRSSResponse")]
+        System.IAsyncResult BeginGetRSS(string Url, System.AsyncCallback callback, object asyncState);
+        
+        System.Xml.XmlReader EndGetRSS(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1745,6 +1753,25 @@ namespace EIP.ServiceEIP {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetRSSCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetRSSCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Xml.XmlReader Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Xml.XmlReader)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ServiceEIPClient : System.ServiceModel.ClientBase<EIP.ServiceEIP.IServiceEIP>, EIP.ServiceEIP.IServiceEIP {
         
         private BeginOperationDelegate onBeginIsUpDelegate;
@@ -1891,6 +1918,12 @@ namespace EIP.ServiceEIP {
         
         private System.Threading.SendOrPostCallback onLogErrorCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGetRSSDelegate;
+        
+        private EndOperationDelegate onEndGetRSSDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetRSSCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -1991,6 +2024,8 @@ namespace EIP.ServiceEIP {
         public event System.EventHandler<TestAddAccountCompletedEventArgs> TestAddAccountCompleted;
         
         public event System.EventHandler<LogErrorCompletedEventArgs> LogErrorCompleted;
+        
+        public event System.EventHandler<GetRSSCompletedEventArgs> GetRSSCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -2809,8 +2844,8 @@ namespace EIP.ServiceEIP {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesReceived(string token, string tokenSecret, long start, long end, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginLoadDirectMessagesReceived(token, tokenSecret, start, end, callback, asyncState);
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesReceived(string token, string tokenSecret, long userId, long start, long end, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLoadDirectMessagesReceived(token, tokenSecret, userId, start, end, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2821,9 +2856,10 @@ namespace EIP.ServiceEIP {
         private System.IAsyncResult OnBeginLoadDirectMessagesReceived(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string token = ((string)(inValues[0]));
             string tokenSecret = ((string)(inValues[1]));
-            long start = ((long)(inValues[2]));
-            long end = ((long)(inValues[3]));
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesReceived(token, tokenSecret, start, end, callback, asyncState);
+            long userId = ((long)(inValues[2]));
+            long start = ((long)(inValues[3]));
+            long end = ((long)(inValues[4]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesReceived(token, tokenSecret, userId, start, end, callback, asyncState);
         }
         
         private object[] OnEndLoadDirectMessagesReceived(System.IAsyncResult result) {
@@ -2839,11 +2875,11 @@ namespace EIP.ServiceEIP {
             }
         }
         
-        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, long start, long end) {
-            this.LoadDirectMessagesReceivedAsync(token, tokenSecret, start, end, null);
+        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, long userId, long start, long end) {
+            this.LoadDirectMessagesReceivedAsync(token, tokenSecret, userId, start, end, null);
         }
         
-        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, long start, long end, object userState) {
+        public void LoadDirectMessagesReceivedAsync(string token, string tokenSecret, long userId, long start, long end, object userState) {
             if ((this.onBeginLoadDirectMessagesReceivedDelegate == null)) {
                 this.onBeginLoadDirectMessagesReceivedDelegate = new BeginOperationDelegate(this.OnBeginLoadDirectMessagesReceived);
             }
@@ -2856,13 +2892,14 @@ namespace EIP.ServiceEIP {
             base.InvokeAsync(this.onBeginLoadDirectMessagesReceivedDelegate, new object[] {
                         token,
                         tokenSecret,
+                        userId,
                         start,
                         end}, this.onEndLoadDirectMessagesReceivedDelegate, this.onLoadDirectMessagesReceivedCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesSent(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginLoadDirectMessagesSent(token, tokenSecret, callback, asyncState);
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginLoadDirectMessagesSent(string token, string tokenSecret, long userId, long start, long end, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginLoadDirectMessagesSent(token, tokenSecret, userId, start, end, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2873,7 +2910,10 @@ namespace EIP.ServiceEIP {
         private System.IAsyncResult OnBeginLoadDirectMessagesSent(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string token = ((string)(inValues[0]));
             string tokenSecret = ((string)(inValues[1]));
-            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesSent(token, tokenSecret, callback, asyncState);
+            long userId = ((long)(inValues[2]));
+            long start = ((long)(inValues[3]));
+            long end = ((long)(inValues[4]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginLoadDirectMessagesSent(token, tokenSecret, userId, start, end, callback, asyncState);
         }
         
         private object[] OnEndLoadDirectMessagesSent(System.IAsyncResult result) {
@@ -2889,11 +2929,11 @@ namespace EIP.ServiceEIP {
             }
         }
         
-        public void LoadDirectMessagesSentAsync(string token, string tokenSecret) {
-            this.LoadDirectMessagesSentAsync(token, tokenSecret, null);
+        public void LoadDirectMessagesSentAsync(string token, string tokenSecret, long userId, long start, long end) {
+            this.LoadDirectMessagesSentAsync(token, tokenSecret, userId, start, end, null);
         }
         
-        public void LoadDirectMessagesSentAsync(string token, string tokenSecret, object userState) {
+        public void LoadDirectMessagesSentAsync(string token, string tokenSecret, long userId, long start, long end, object userState) {
             if ((this.onBeginLoadDirectMessagesSentDelegate == null)) {
                 this.onBeginLoadDirectMessagesSentDelegate = new BeginOperationDelegate(this.OnBeginLoadDirectMessagesSent);
             }
@@ -2905,7 +2945,10 @@ namespace EIP.ServiceEIP {
             }
             base.InvokeAsync(this.onBeginLoadDirectMessagesSentDelegate, new object[] {
                         token,
-                        tokenSecret}, this.onEndLoadDirectMessagesSentDelegate, this.onLoadDirectMessagesSentCompletedDelegate, userState);
+                        tokenSecret,
+                        userId,
+                        start,
+                        end}, this.onEndLoadDirectMessagesSentDelegate, this.onLoadDirectMessagesSentCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3132,6 +3175,52 @@ namespace EIP.ServiceEIP {
                         groupID,
                         stackTrace,
                         message}, this.onEndLogErrorDelegate, this.onLogErrorCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult EIP.ServiceEIP.IServiceEIP.BeginGetRSS(string Url, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetRSS(Url, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Xml.XmlReader EIP.ServiceEIP.IServiceEIP.EndGetRSS(System.IAsyncResult result) {
+            return base.Channel.EndGetRSS(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetRSS(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string Url = ((string)(inValues[0]));
+            return ((EIP.ServiceEIP.IServiceEIP)(this)).BeginGetRSS(Url, callback, asyncState);
+        }
+        
+        private object[] OnEndGetRSS(System.IAsyncResult result) {
+            System.Xml.XmlReader retVal = ((EIP.ServiceEIP.IServiceEIP)(this)).EndGetRSS(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetRSSCompleted(object state) {
+            if ((this.GetRSSCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetRSSCompleted(this, new GetRSSCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetRSSAsync(string Url) {
+            this.GetRSSAsync(Url, null);
+        }
+        
+        public void GetRSSAsync(string Url, object userState) {
+            if ((this.onBeginGetRSSDelegate == null)) {
+                this.onBeginGetRSSDelegate = new BeginOperationDelegate(this.OnBeginGetRSS);
+            }
+            if ((this.onEndGetRSSDelegate == null)) {
+                this.onEndGetRSSDelegate = new EndOperationDelegate(this.OnEndGetRSS);
+            }
+            if ((this.onGetRSSCompletedDelegate == null)) {
+                this.onGetRSSCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetRSSCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetRSSDelegate, new object[] {
+                        Url}, this.onEndGetRSSDelegate, this.onGetRSSCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -3446,12 +3535,13 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, long start, long end, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[4];
+            public System.IAsyncResult BeginLoadDirectMessagesReceived(string token, string tokenSecret, long userId, long start, long end, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
                 _args[0] = token;
                 _args[1] = tokenSecret;
-                _args[2] = start;
-                _args[3] = end;
+                _args[2] = userId;
+                _args[3] = start;
+                _args[4] = end;
                 System.IAsyncResult _result = base.BeginInvoke("LoadDirectMessagesReceived", _args, callback, asyncState);
                 return _result;
             }
@@ -3462,10 +3552,13 @@ namespace EIP.ServiceEIP {
                 return _result;
             }
             
-            public System.IAsyncResult BeginLoadDirectMessagesSent(string token, string tokenSecret, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginLoadDirectMessagesSent(string token, string tokenSecret, long userId, long start, long end, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
                 _args[0] = token;
                 _args[1] = tokenSecret;
+                _args[2] = userId;
+                _args[3] = start;
+                _args[4] = end;
                 System.IAsyncResult _result = base.BeginInvoke("LoadDirectMessagesSent", _args, callback, asyncState);
                 return _result;
             }
@@ -3536,6 +3629,19 @@ namespace EIP.ServiceEIP {
             public bool EndLogError(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("LogError", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetRSS(string Url, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = Url;
+                System.IAsyncResult _result = base.BeginInvoke("GetRSS", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Xml.XmlReader EndGetRSS(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Xml.XmlReader _result = ((System.Xml.XmlReader)(base.EndInvoke("GetRSS", _args, result)));
                 return _result;
             }
         }

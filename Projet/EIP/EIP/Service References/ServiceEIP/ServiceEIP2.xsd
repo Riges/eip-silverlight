@@ -15,6 +15,7 @@
       <xs:enumeration value="Facebook" />
       <xs:enumeration value="Twitter" />
       <xs:enumeration value="Flickr" />
+      <xs:enumeration value="RSS" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="Account.TypeAccount" nillable="true" type="tns:Account.TypeAccount" />

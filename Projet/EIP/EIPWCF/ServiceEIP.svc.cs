@@ -188,12 +188,17 @@ namespace EIPWCF
             return null;
         }
 
-        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesSent(string token, string tokenSecret)
+        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesSent(string token, string tokenSecret, long userId, long start, long end)
         {
             SetClientInfo();
             var query = FluentTwitter.CreateRequest()
                    .AuthenticateWith(token, tokenSecret)
                    .DirectMessages().Sent();
+
+            if (start > 0)
+                query = query.Before(start);
+            if (end > 0)
+                query = query.Since(end); 
 
             var response = query.Request();
             if (!response.IsTwitterError)
@@ -224,7 +229,7 @@ namespace EIPWCF
             return null;
         }*/
 
-        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret, long start, long end)
+        public IEnumerable<TwitterDirectMessage> LoadDirectMessagesReceived(string token, string tokenSecret, long userId, long start, long end)
         {
             SetClientInfo();
             var query = FluentTwitter.CreateRequest()

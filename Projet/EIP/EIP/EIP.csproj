@@ -534,6 +534,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\DataSources\System.Xml.XmlReader.datasource" />
     <None Include="Service References\ServiceEIPprod\EIP.ServiceEIPprod.Account.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -597,6 +598,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ServiceEIP\ServiceEIP31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceEIP\ServiceEIP4.xsd">
       <SubType>Designer</SubType>
     </None>
     <Resource Include="Assets\Images\twitter-icon.png" />

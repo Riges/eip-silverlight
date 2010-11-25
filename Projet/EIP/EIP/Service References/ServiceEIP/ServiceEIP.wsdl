@@ -7,6 +7,7 @@
       <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EIPLibrary" />
       <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" />
       <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/TweetSharp.Model" />
+      <xsd:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Xml" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IServiceEIP_IsUp_InputMessage">
@@ -153,6 +154,12 @@
   <wsdl:message name="IServiceEIP_LogError_OutputMessage">
     <wsdl:part name="parameters" element="tns:LogErrorResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetRSS_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRSS" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetRSS_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRSSResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServiceEIP">
     <wsdl:operation name="IsUp">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/IsUp" message="tns:IServiceEIP_IsUp_InputMessage" />
@@ -249,6 +256,10 @@
     <wsdl:operation name="LogError">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/LogError" message="tns:IServiceEIP_LogError_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/LogErrorResponse" message="tns:IServiceEIP_LogError_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRSS">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetRSS" message="tns:IServiceEIP_GetRSS_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetRSSResponse" message="tns:IServiceEIP_GetRSS_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_Service" type="tns:IServiceEIP">
@@ -462,6 +473,15 @@
     </wsdl:operation>
     <wsdl:operation name="LogError">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/LogError" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRSS">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetRSS" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

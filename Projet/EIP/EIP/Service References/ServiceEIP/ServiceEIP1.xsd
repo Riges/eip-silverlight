@@ -2,6 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/EIPLibrary" />
   <xs:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/TweetSharp.Twitter.Model" />
+  <xs:import schemaLocation="http://localhost:6080/ServiceEIP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Xml" />
   <xs:element name="IsUp">
     <xs:complexType>
       <xs:sequence />
@@ -258,6 +259,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="tokenSecret" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userId" type="xs:long" />
         <xs:element minOccurs="0" name="start" type="xs:long" />
         <xs:element minOccurs="0" name="end" type="xs:long" />
       </xs:sequence>
@@ -275,6 +277,9 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="tokenSecret" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userId" type="xs:long" />
+        <xs:element minOccurs="0" name="start" type="xs:long" />
+        <xs:element minOccurs="0" name="end" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -346,6 +351,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="LogErrorResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRSS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRSSResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/System.Xml" minOccurs="0" name="GetRSSResult" nillable="true" type="q16:XmlReader" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
