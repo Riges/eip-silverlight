@@ -223,7 +223,7 @@ namespace EIP.Views
                                 switch (this.boxActive)
                                 {
                                     case "outbox":
-                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesSent();
+                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesSent(start, end);
                                         break;
                                     case "inbox":
                                         ((AccountTwitterLight)account.Value).LoadDirectMessagesReceived(start, end);

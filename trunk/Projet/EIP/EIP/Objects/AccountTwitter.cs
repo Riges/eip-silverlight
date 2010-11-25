@@ -33,6 +33,7 @@ namespace EIP
         public List<TwitterUser> profiles { get; set; }
         public List<ThreadMessage> messagesReceived { get; set; }
         public List<ThreadMessage> messagesSent { get; set; }
+        public Int32 messagesWait { get; set; }
 
         private DateTime messageReceivedStart, messageReceivedEnd, messageSentStart, messageSentEnd;
 
@@ -197,6 +198,11 @@ namespace EIP
             LoadDirectMessagesReceived(start, end, false);
         }
 
+        public void LoadDirectMessagesSent(DateTime start, DateTime end)
+        {
+            LoadDirectMessagesSent(start, end, false);
+        }
+
         // stop sert a savoir si on peut faire des nouvelles requetes ou pas !
         public void LoadDirectMessagesReceived(DateTime start, DateTime end, Boolean stop)
         {
@@ -207,13 +213,13 @@ namespace EIP
                 // regarde dans la liste 
                 // si on a ce qu'il faut, on renvoie les bon messages
                 // sinon : 
-                    // si dernier dans le champ ou date supérieure, requete de 20 inf
-                    // si premier dans le champ ou inférieur, requete de 20 sup
+                // si dernier dans le champ ou date supérieure, requete de 20 inf
+                // si premier dans le champ ou inférieur, requete de 20 sup
                 ThreadMessage prems = this.messagesReceived.ElementAt(0);
                 ThreadMessage last = this.messagesReceived.ElementAt(this.messagesReceived.Count - 1);
 
                 // A t on ce qu'il faut ?
-                if (prems.date.CompareTo(start) < 0 && prems.date.CompareTo(end) > 0)
+                if (prems.date.CompareTo(start) >= 0 && last.date.CompareTo(end) <= 0)
                 {
                     List<ThreadMessage> returnList = new List<ThreadMessage>();
                     foreach (ThreadMessage message in this.messagesReceived)
@@ -224,15 +230,18 @@ namespace EIP
                     if (this.LoadDirectMessagesCalled != null)
                         this.LoadDirectMessagesCalled.Invoke(returnList);
                 }
-                else if (!stop){
+                else if (!stop)
+                {
                     // Sans doute besoin de nouvelles requetes !!!
                     if (
-                            (prems.date.CompareTo(start) >= 0 && prems.date.CompareTo(end) <= 0) 
-                        ||  (prems.date.CompareTo(end) > 0)
+                            (prems.date.CompareTo(start) <= 0 && prems.date.CompareTo(end) >= 0)
+                        || (prems.date.CompareTo(end) > 0)
                     )
                     {
                         // prems dans le champ ou date inférieure
-                        Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, 0, prems.getDm().Id);
+                        // Y passe jamais la je sais pas pk, cette partie est elle vraiment utile ? le test suivant suffit peut etre !!!
+                        Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, 0, prems.getDm().Id + 1);
+                        messagesWait += 1;
                     }
 
                     if (
@@ -241,31 +250,104 @@ namespace EIP
                     )
                     {
                         // last dans le champ ou date supérieure
-                        Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, last.getDm().Id, 0);
+                        Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, last.getDm().Id - 1, 0);
+                        messagesWait += 1;
                     }
+                }
+                else if ( messagesWait == 0) {
+                    if (this.LoadDirectMessagesCalled != null)
+                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>());
                 }
             }
             else
+            {
                 // requete 20 premiers
                 Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, 0, 0);
-
+                messagesWait += 1;
+            }
         }
 
-        public void LoadDirectMessagesReceived()
+        /*public void LoadDirectMessagesReceived()
         {
 
             Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, 0 ,0);
 
-        }
-        public void LoadDirectMessagesSent()
+        }*/
+        /*public void LoadDirectMessagesSent()
         {
             Connexion.serviceEIP.LoadDirectMessagesSentAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID);
+        }*/
+
+        // stop sert a savoir si on peut faire des nouvelles requetes ou pas !
+        public void LoadDirectMessagesSent(DateTime start, DateTime end, Boolean stop)
+        {
+            messageSentStart = start;
+            messageSentEnd = end;
+            if (this.messagesSent.Count > 0)
+            {
+                // regarde dans la liste 
+                // si on a ce qu'il faut, on renvoie les bon messages
+                // sinon : 
+                // si dernier dans le champ ou date supérieure, requete de 20 inf
+                // si premier dans le champ ou inférieur, requete de 20 sup
+                ThreadMessage prems = this.messagesSent.ElementAt(0);
+                ThreadMessage last = this.messagesSent.ElementAt(this.messagesSent.Count - 1);
+
+                // A t on ce qu'il faut ?
+                if (prems.date.CompareTo(start) >= 0 && last.date.CompareTo(end) <= 0)
+                {
+                    List<ThreadMessage> returnList = new List<ThreadMessage>();
+                    foreach (ThreadMessage message in this.messagesSent)
+                    {
+                        if (message.date.CompareTo(start) >= 0 && message.date.CompareTo(end) <= 0)
+                            returnList.Add(message);
+                    }
+                    if (this.LoadDirectMessagesCalled != null)
+                        this.LoadDirectMessagesCalled.Invoke(returnList);
+                }
+                else if (!stop)
+                {
+                    // Sans doute besoin de nouvelles requetes !!!
+                    if (
+                            (prems.date.CompareTo(start) <= 0 && prems.date.CompareTo(end) >= 0)
+                        || (prems.date.CompareTo(end) > 0)
+                    )
+                    {
+                        // prems dans le champ ou date inférieure
+                        // Y passe jamais la je sais pas pk, cette partie est elle vraiment utile ? le test suivant suffit peut etre !!!
+                        Connexion.serviceEIP.LoadDirectMessagesSentAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, 0, prems.getDm().Id + 1);
+                        messagesWait += 1;
+                    }
+
+                    if (
+                            (last.date.CompareTo(start) >= 0 && last.date.CompareTo(end) <= 0)
+                        || (last.date.CompareTo(start) < 0)
+                    )
+                    {
+                        // last dans le champ ou date supérieure
+                        Connexion.serviceEIP.LoadDirectMessagesSentAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, last.getDm().Id - 1, 0);
+                        messagesWait += 1;
+                    }
+                }
+                else if (messagesWait == 0)
+                {
+                    if (this.LoadDirectMessagesCalled != null)
+                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>());
+                }
+            }
+            else
+            {
+                // requete 20 premiers
+                Connexion.serviceEIP.LoadDirectMessagesSentAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, 0, 0);
+                messagesWait += 1;
+            }
         }
 
         void serviceEIP_LoadDirectMessagesReceivedCompleted(object sender, LoadDirectMessagesReceivedCompletedEventArgs e)
         {
-            if (Convert.ToInt64(e.UserState) == this.account.userID)
-            {
+           /* if (Convert.ToInt64(e.UserState) == this.account.userID)
+            {*/
+                messagesWait -= 1;
                 List<ServiceEIP.TwitterDirectMessage> dms = e.Result;
                 List<ThreadMessage> directMessages = new List<ThreadMessage>();
 
@@ -295,7 +377,7 @@ namespace EIP
                             this.LoadDirectMessagesCalled.Invoke(directMessages);*/
                     }
                 }
-            }
+            //}
         }
 
         /*void serviceEIP_LoadDirectMessagesReceivedCompleted(object sender, LoadDirectMessagesReceivedCompletedEventArgs e)
@@ -323,6 +405,43 @@ namespace EIP
 
         void serviceEIP_LoadDirectMessagesSentCompleted(object sender, LoadDirectMessagesSentCompletedEventArgs e)
         {
+            /* if (Convert.ToInt64(e.UserState) == this.account.userID)
+             {*/
+            messagesWait -= 1;
+            List<ServiceEIP.TwitterDirectMessage> dms = e.Result;
+            List<ThreadMessage> directMessages = new List<ThreadMessage>();
+
+
+            if ((this.account.typeAccount == Account.TypeAccount.Twitter) && (e.Error == null))
+            {
+
+                if (dms == null || dms.Count == 0)
+                {
+                    LoadDirectMessagesSent(messageSentStart, messageSentEnd, true);
+                }
+                else
+                {
+                    foreach (ServiceEIP.TwitterDirectMessage dm in dms)
+                    {
+                        ThreadMessage directMessage = new ThreadMessage(dm, this.account.accountID);
+                        directMessages.Add(directMessage);
+                        //homeStatuses.Add(new Topic(status.CreatedDate.AddHours(2), Account.TypeAccount.Twitter, this.account.accountID, status));
+                    }
+                    this.messagesSent.AddRange(directMessages);
+                    this.messagesSent.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); }); // on sait jms
+
+                    // on retourne vers la première méthode pour vérifier !!!
+                    LoadDirectMessagesSent(messageSentStart, messageSentEnd);
+
+                    /*if (this.LoadDirectMessagesCalled != null)
+                        this.LoadDirectMessagesCalled.Invoke(directMessages);*/
+                }
+            }
+            //}
+        }
+
+        /*void serviceEIP_LoadDirectMessagesSentCompleted(object sender, LoadDirectMessagesSentCompletedEventArgs e)
+        {
             if (Convert.ToInt64(e.UserState) == this.account.userID)
             {
                 List<ServiceEIP.TwitterDirectMessage> dms = e.Result;
@@ -342,7 +461,7 @@ namespace EIP
                         this.LoadDirectMessagesCalled.Invoke(directMessages);
                 }
             }
-        }
+        }*/
         
 
 
