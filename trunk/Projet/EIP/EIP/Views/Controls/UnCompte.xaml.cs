@@ -13,6 +13,7 @@ using Facebook.Schema;
 using EIP.ServiceEIP;
 using System.Windows.Media.Imaging;
 using EIP.Views.Controls;
+using System.Windows.Browser;
 
 namespace EIP.Views.Controls
 {
@@ -53,8 +54,8 @@ namespace EIP.Views.Controls
                  {
                      if (((AccountTwitterLight)oneAccount).userInfos.Status != null && ((AccountTwitterLight)oneAccount).userInfos.Status.Text != null && ((AccountTwitterLight)oneAccount).userInfos.Status.Text != "")
                      {
-                         status = ((AccountTwitterLight)oneAccount).userInfos.Status.Text;
-                         // status = HttpUtility.HtmlDecode(((AccountTwitterLight)oneAccount).userInfos.Status.Text);
+                         // status = ((AccountTwitterLight)oneAccount).userInfos.Status.Text;
+                         status = HttpUtility.HtmlDecode(((AccountTwitterLight)oneAccount).userInfos.Status.Text);
                      }
                      if (((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl != null && ((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl != "")
                          imgAcc = ((AccountTwitterLight)(oneAccount)).userInfos.ProfileImageUrl;
