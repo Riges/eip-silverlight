@@ -36,6 +36,11 @@ namespace EIP.Views.Controls
            
         }
 
+        private void FAQ_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void contact_Click(object sender, RoutedEventArgs e)
         {
 

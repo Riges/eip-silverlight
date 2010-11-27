@@ -18,7 +18,7 @@
             <TextBlock Text="-" Margin="5,0,5,0"></TextBlock>
             <HyperlinkButton Content="Télécharger l'application" Name="installApp" Click="installApp_Click"></HyperlinkButton>
             <TextBlock Text="-" Margin="5,0,5,0" Name="installAppTiret"></TextBlock>
-            <HyperlinkButton Content="FAQ"></HyperlinkButton>
+            <HyperlinkButton Content="FAQ" Name="FAQ" NavigateUri="http://mynetwork.selfip.net/site/?page_id=108" TargetName="_blank"></HyperlinkButton>
         </StackPanel>
        
 
