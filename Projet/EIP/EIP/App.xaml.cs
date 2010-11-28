@@ -37,7 +37,7 @@ namespace EIP
             }
         }
 
-        private void CheckAndDownloadUpdateCompleted(object sender, CheckAndDownloadUpdateCompletedEventArgs e)
+        private new void CheckAndDownloadUpdateCompleted(object sender, CheckAndDownloadUpdateCompletedEventArgs e)
         {
             if (e.Error == null && e.UpdateAvailable)
             {

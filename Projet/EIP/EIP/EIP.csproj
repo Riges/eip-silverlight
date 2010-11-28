@@ -102,6 +102,7 @@
     <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -110,6 +111,7 @@
     <Compile Include="Objects\Account.cs" />
     <Compile Include="Objects\AccountFacebook.cs" />
     <Compile Include="Objects\AccountFlickr.cs" />
+    <Compile Include="Objects\AccountRSS.cs" />
     <Compile Include="Objects\AlbumToImageConverter.cs" />
     <Compile Include="Objects\Connexion.cs" />
     <Compile Include="Objects\AccountTwitter.cs" />
@@ -573,6 +575,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountFlickr.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountRSS.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceEIP\EIP.ServiceEIP.AccountTwitter.datasource">

@@ -60,15 +60,12 @@ namespace EIP.Objects
                 {
                     case "Facebook":
                         return "../../Assets/Images/facebook-icon.png";
-                        break;
                     case "Twitter":
                         return "../../Assets/Images/twitter-icon.png";
-                        break;
                     case "Flickr":
                         return "../../Assets/Images/flickr-icon.png";
-                        break;
                     default:
-                        break;
+                        return "";
                 }
                 
             }

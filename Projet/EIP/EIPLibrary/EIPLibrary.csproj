@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="AccountFacebook.cs" />
+    <Compile Include="AccountRSS.cs" />
     <Compile Include="AccountTwitter.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="AccountFlickr.cs" />

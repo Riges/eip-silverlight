@@ -92,7 +92,7 @@ namespace EIP.Views.Controls
 
                            
 
-                            BitmapImage btImgFB = null;
+                            //BitmapImage btImgFB = null;
 
                             if (post.userSource.pic_square != null) // verif si gif
                             {
@@ -229,7 +229,7 @@ namespace EIP.Views.Controls
                         }
                         break;
                     case Account.TypeAccount.Twitter:
-                        BitmapImage btImg = null;
+                        //BitmapImage btImg = null;
                         //if (this.DataContext.GetType() == typeof(TwitterStatus))
                         //{
                         if (topic.t_post != null)

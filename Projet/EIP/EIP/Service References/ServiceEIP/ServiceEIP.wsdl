@@ -40,12 +40,6 @@
   <wsdl:message name="IServiceEIP_GetAccountsByGroupID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAccountsByGroupIDResponse" />
   </wsdl:message>
-  <wsdl:message name="IServiceEIP_GetAccountsByTwitter_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAccountsByTwitter" />
-  </wsdl:message>
-  <wsdl:message name="IServiceEIP_GetAccountsByTwitter_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAccountsByTwitterResponse" />
-  </wsdl:message>
   <wsdl:message name="IServiceEIP_AddAccount_InputMessage">
     <wsdl:part name="parameters" element="tns:AddAccount" />
   </wsdl:message>
@@ -142,6 +136,12 @@
   <wsdl:message name="IServiceEIP_testFl_OutputMessage">
     <wsdl:part name="parameters" element="tns:testFlResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_testR_InputMessage">
+    <wsdl:part name="parameters" element="tns:testR" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_testR_OutputMessage">
+    <wsdl:part name="parameters" element="tns:testRResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_TestAddAccount_InputMessage">
     <wsdl:part name="parameters" element="tns:TestAddAccount" />
   </wsdl:message>
@@ -180,10 +180,6 @@
     <wsdl:operation name="GetAccountsByGroupID">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByGroupID" message="tns:IServiceEIP_GetAccountsByGroupID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByGroupIDResponse" message="tns:IServiceEIP_GetAccountsByGroupID_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetAccountsByTwitter">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByTwitter" message="tns:IServiceEIP_GetAccountsByTwitter_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetAccountsByTwitterResponse" message="tns:IServiceEIP_GetAccountsByTwitter_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddAccount">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/AddAccount" message="tns:IServiceEIP_AddAccount_InputMessage" />
@@ -249,6 +245,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testFl" message="tns:IServiceEIP_testFl_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testFlResponse" message="tns:IServiceEIP_testFl_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="testR">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/testR" message="tns:IServiceEIP_testR_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/testRResponse" message="tns:IServiceEIP_testR_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="TestAddAccount">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/TestAddAccount" message="tns:IServiceEIP_TestAddAccount_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/TestAddAccountResponse" message="tns:IServiceEIP_TestAddAccount_OutputMessage" />
@@ -302,15 +302,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetAccountsByGroupID">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetAccountsByGroupID" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAccountsByTwitter">
-      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetAccountsByTwitter" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -455,6 +446,15 @@
     </wsdl:operation>
     <wsdl:operation name="testFl">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/testFl" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="testR">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/testR" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

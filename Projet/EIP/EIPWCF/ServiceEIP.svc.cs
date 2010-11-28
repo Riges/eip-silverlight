@@ -63,20 +63,20 @@ namespace EIPWCF
             return Model.GetAccountsByGroupID(groupID);
         }
 
-        public List<Account> GetAccountsByTwitter(string pseudo, string password)
-        {
-            SetClientInfo();
-            var query = FluentTwitter.CreateRequest()
-                 .AuthenticateAs(pseudo, password)
-                 .Account()
-                 .VerifyCredentials()
-                 .AsXml();
+        //public List<Account> GetAccountsByTwitter(string pseudo, string password)
+        //{
+        //    SetClientInfo();
+        //    var query = FluentTwitter.CreateRequest()
+        //         .AuthenticateAs(pseudo, password)
+        //         .Account()
+        //         .VerifyCredentials()
+        //         .AsXml();
 
-            var response = query.Request();
-            var identity = response.AsUser();
+        //    var response = query.Request();
+        //    var identity = response.AsUser();
 
-            return Model.GetAccountsByUserID(identity.Id);
-        }
+        //    return Model.GetAccountsByUserID(identity.Id);
+        //}
 
         public long AddAccount(Account newAccount, string token, string pin)
         {
@@ -517,6 +517,11 @@ namespace EIPWCF
         public AccountFlickr testFl()
         {
             return new AccountFlickr() { typeAccount = Account.TypeAccount.Flickr };
+        }
+
+        public AccountRSS testR()
+        {
+            return new AccountRSS() { };
         }
 
         public bool TestAddAccount()

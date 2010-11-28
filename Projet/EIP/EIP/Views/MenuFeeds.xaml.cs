@@ -26,7 +26,7 @@ namespace EIP.Views
     public partial class LeftMenu : Page
     {
         //private Api facebookAPI;
-        private IList<stream_filter> filters;
+        //private IList<stream_filter> filters;
         private IsolatedStorageSettings storage = IsolatedStorageSettings.ApplicationSettings;
 
         public LeftMenu()
