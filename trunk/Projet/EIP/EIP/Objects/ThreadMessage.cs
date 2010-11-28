@@ -99,11 +99,9 @@ namespace EIP.Objects
             {
                 case Account.TypeAccount.Facebook:
                     return this.MessageFb.snippet_author;
-                    break;
 
                 case Account.TypeAccount.Twitter:
                     return this.MessageTwitter.Sender.Id == Connexion.accounts[this.accountID].account.userID ? this.MessageTwitter.Recipient.Id : this.MessageTwitter.Sender.Id;
-                    break;
             }
             return 0;
         }
@@ -149,7 +147,6 @@ namespace EIP.Objects
 
                 case Account.TypeAccount.Twitter:
                     return this.MessageTwitter.Sender.Id == Connexion.accounts[this.accountID].account.userID ? this.MessageTwitter.Recipient.ProfileImageUrl : this.MessageTwitter.Sender.ProfileImageUrl;
-                    break;
             }
             return null;
         }
@@ -160,7 +157,6 @@ namespace EIP.Objects
             {
                 case Account.TypeAccount.Facebook:
                     return true;
-                    break;
             }
             return false;
         }
@@ -172,7 +168,6 @@ namespace EIP.Objects
             {
                 case Account.TypeAccount.Facebook:
                     return this.MessageFb;
-                    break;
             }
             return null;
         }
@@ -183,7 +178,6 @@ namespace EIP.Objects
             {
                 case Account.TypeAccount.Facebook:
                     return this.MessageFb.thread_id;
-                    break;
             }
             return 0;
         }
@@ -222,11 +216,9 @@ namespace EIP.Objects
                     }
                     else
                         return getAuthorAccountID();
-                    break;
 
                 case Account.TypeAccount.Twitter:
                     return getAuthorAccountID();
-                    break;
             }
             return 0;
         }
@@ -248,11 +240,9 @@ namespace EIP.Objects
                     }
                     else
                         return getPic();
-                    break;
 
                 case Account.TypeAccount.Twitter:
                     return getPic();
-                    break;
             }
             return null;
         }
@@ -267,11 +257,9 @@ namespace EIP.Objects
                         return this.getRecipients().ElementAt(0).name;
                     else
                         return getAuthorName();
-                    break;
 
                 case Account.TypeAccount.Twitter:
                     return getAuthorName();
-                    break;
             }
             return null;
         }
@@ -287,7 +275,6 @@ namespace EIP.Objects
             {
                 case Account.TypeAccount.Facebook:
                     return MessageFb.unread;
-                    break;
 
                 case Account.TypeAccount.Twitter:
                     break;

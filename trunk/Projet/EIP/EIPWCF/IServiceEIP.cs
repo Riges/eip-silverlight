@@ -38,8 +38,8 @@ namespace EIPWCF
         [OperationContract]
         List<Account> GetAccountsByGroupID(long groupID);
 
-        [OperationContract]
-        List<Account> GetAccountsByTwitter(string pseudo, string password);
+        //[OperationContract]
+        //List<Account> GetAccountsByTwitter(string pseudo, string password);
 
         [OperationContract]
         long AddAccount(Account newAccount, string token, string pin);
@@ -98,6 +98,9 @@ namespace EIPWCF
 
         [OperationContract]
         AccountFlickr testFl();
+
+        [OperationContract]
+        AccountRSS testR();
 
         [OperationContract]
         bool TestAddAccount();

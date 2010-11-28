@@ -398,8 +398,8 @@ namespace EIP
             using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(usersXml)))
             {
                 do {
-                    try
-                    {
+                    //try
+                    //{
                         profile myUser = new profile();
 
                         reader.ReadToFollowing("id");
@@ -414,11 +414,11 @@ namespace EIP
                         myUser.type = reader.ReadElementContentAsString();
 
                         users.Add(myUser);
-                    }
-                    catch (Exception e)
-                    {
-                        break;
-                    }
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    break;
+                    //}
                 } while (!reader.EOF);
 
             }
@@ -472,8 +472,8 @@ namespace EIP
             {
                 do
                 {
-                    try
-                    {
+                    //try
+                    //{
                         message myMessage = new message();
 
                         reader.ReadToFollowing("message_id");
@@ -490,11 +490,11 @@ namespace EIP
 
 
                         liste.Add(myMessage);
-                    }
-                    catch (Exception e)
-                    {
-                        break;
-                    }
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    break;
+                    //}
                 } while (!reader.EOF);
                 ((thread)obj).messages.message = liste;
 
@@ -517,8 +517,8 @@ namespace EIP
             {
                 do
                 {
-                    try
-                    {
+                    //try
+                    //{
                         profile myUser = new profile();
 
                         reader.ReadToFollowing("id");
@@ -533,11 +533,11 @@ namespace EIP
                         myUser.type = reader.ReadElementContentAsString();
 
                         users.Add(myUser);
-                    }
-                    catch (Exception e)
-                    {
-                        break;
-                    }
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    break;
+                    //}
                 } while (!reader.EOF);
 
             }
@@ -1533,8 +1533,8 @@ namespace EIP
             {
                 do
                 {
-                    try
-                    {
+                    //try
+                    //{
                         VideoLight vid = new VideoLight();
                         
                         reader.ReadToFollowing("vid");
@@ -1566,11 +1566,11 @@ namespace EIP
                         
 
                         vids.Add(vid);
-                    }
-                    catch (Exception e)
-                    {
-                        break;
-                    }
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    break;
+                    //}
                 } while (!reader.EOF);
             }
 

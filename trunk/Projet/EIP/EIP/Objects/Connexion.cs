@@ -151,7 +151,8 @@ namespace EIP
             }
             catch (Exception ex)
             {
-
+                throw new Exception(ex.Message, ex);
+                
             }
 
             //SetTwitterClientInfo();
@@ -745,10 +746,10 @@ namespace EIP
             }
         }
 
-        static void serviceEIP_GetAccountsByTwitterCompleted(object sender, GetAccountsByTwitterCompletedEventArgs e)
-        {
-            LoadAccountsFromDB(e.Result);
-        }
+        //static void serviceEIP_GetAccountsByTwitterCompleted(object sender, GetAccountsByTwitterCompletedEventArgs e)
+        //{
+        //    LoadAccountsFromDB(e.Result);
+        //}
 
         static void serviceEIP_GetAccountsByUserIDCompleted(object sender, GetAccountsByUserIDCompletedEventArgs e)
         {
