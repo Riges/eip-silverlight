@@ -11,6 +11,7 @@ namespace EIPLibrary
     [KnownType(typeof(AccountFacebook))]
     [KnownType(typeof(AccountTwitter))]
     [KnownType(typeof(AccountFlickr))]
+    [KnownType(typeof(AccountRSS))]
     [ServiceContract]
     [Serializable]
     [DataContract]
