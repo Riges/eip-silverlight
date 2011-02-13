@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using EIP.Objects;
 using Facebook.Schema;
+using EIP.ServiceEIP;
 
 namespace EIP.Views
 {
@@ -20,6 +21,8 @@ namespace EIP.Views
         //public Dictionary<String, Friend> friends;
         
         public String boxActive;
+        protected List<TwitterUser> followers = new List<TwitterUser>();
+        private long waitFollowers;
 
         public NewMessageBox()
         {
@@ -46,113 +49,22 @@ namespace EIP.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             busyIndicator.IsBusy = true;
-            /*if (this.NavigationContext.QueryString.ContainsKey("accountId") && this.NavigationContext.QueryString.ContainsKey("threadId"))
-            {
-                busyIndicator.IsBusy = true;
-                if (this.NavigationContext.QueryString.ContainsKey("box"))
-                    this.boxActive = this.NavigationContext.QueryString["box"];
 
-                long accountId = Convert.ToInt64(this.NavigationContext.QueryString["accountId"]);
-                switch (Connexion.accounts[accountId].account.typeAccount)
-                {
-                    case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        //((AccountFacebookLight)Connexion.accounts[accountId]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
-                        ((AccountFacebookLight)Connexion.accounts[accountId]).GetThreadCalled += new AccountFacebookLight.OnGetThreadCompleted(Messages_GetThreadCalled);
-                        ((AccountFacebookLight)Connexion.accounts[accountId]).LoadThread(Convert.ToInt64(this.NavigationContext.QueryString["threadId"]));
-                        /*switch (this.boxActive)
-                      {
-                          case "outbox":
-                              HeaderText.Text = "Boîte d'envoi";
-                              ((AccountFacebookLight)account.Value).LoadOutboxMessages();
-                              break;
-                          case "inbox":
-                              HeaderText.Text = "Boîte de réception";
-                              ((AccountFacebookLight)account.Value).LoadInboxMessages();
-                              //this.box = ((AccountFacebookLight)account.Value).inbox;
-                              break;
-                      }
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                        //((AccountTwitterLight)Connexion.accounts[accountId]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-                        break;
-                    case EIP.ServiceEIP.Account.TypeAccount.Flickr:
-                        break;
-                }
-            }
-            else if (this.NavigationContext.QueryString.ContainsKey("box"))
-            {
-                this.boxActive = this.NavigationContext.QueryString["box"];
-                listeMessagesBox.box.Clear();
-
-                switch (this.boxActive)
-                {
-                    case "outbox":
-                        HeaderText.Text = "Boîte d'envoi";
-                        break;
-                    case "inbox":
-                        HeaderText.Text = "Boîte de réception";
-                        break;
-                }
-
-                foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
-                {
-                    if (account.Value.selected)
-                    {
-                        busyIndicator.IsBusy = true;
-                        switch (account.Value.account.typeAccount)
-                        {
-                            case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
-                                ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
-                                switch (this.boxActive)
-                                {
-                                    case "outbox":
-                                        ((AccountFacebookLight)account.Value).LoadOutboxMessages();
-                                        break;
-                                    case "inbox":
-                                        ((AccountFacebookLight)account.Value).LoadInboxMessages();
-                                        //this.box = ((AccountFacebookLight)account.Value).inbox;
-                                        break;
-                                }
-                                break;
-                            case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                                ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-                                ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-                                switch (this.boxActive)
-                                {
-                                    case "outbox":
-                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesSent();
-                                        break;
-                                    case "inbox":
-                                        ((AccountTwitterLight)account.Value).LoadDirectMessagesReceived();
-                                        break;
-                                }                                
-                                break;
-                            case EIP.ServiceEIP.Account.TypeAccount.Flickr:
-                                Messages_LoadMessagesFlickr();
-                                break;
-                        }
-                    }
-                }
-            }*/
             long compteurTwitter = 0;
+            waitFollowers = 0; 
+            cbFollowers.ItemsSource = null;
+                
             foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
                 switch (account.Value.account.typeAccount)
                 {
                     case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                        /*((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-                        ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-                        switch (this.boxActive)
-                        {
-                            case "outbox":
-                                ((AccountTwitterLight)account.Value).LoadDirectMessagesSent();
-                                break;
-                            case "inbox":
-                                ((AccountTwitterLight)account.Value).LoadDirectMessagesReceived();
-                                break;
-                        }*/
-                        compteurTwitter++;
+                        if (account.Value.selected) {
+                            compteurTwitter++;
+                            waitFollowers++;
+                            ((AccountTwitterLight)account.Value).LoadFollowers();
+                            ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).GetFollowersCalled += new AccountTwitterLight.OnGetFollowersCompleted(Messages_GetFollowersCalled);
+                        }
                         break;
                     case EIP.ServiceEIP.Account.TypeAccount.Facebook:
                     case EIP.ServiceEIP.Account.TypeAccount.Flickr:
@@ -163,11 +75,46 @@ namespace EIP.Views
                 {
                     // Affichage message d'erreur et cachage formulaire
                     MessageDefault.Visibility = System.Windows.Visibility.Visible;
-                    //cachage formulaire TODO
+                    tbMessage.Visibility = System.Windows.Visibility.Collapsed;
+                    cbFollowers.Visibility = System.Windows.Visibility.Collapsed;
                     busyIndicator.IsBusy = false;
+                }
+                else
+                {
+                    MessageDefault.Visibility = System.Windows.Visibility.Collapsed;
+                    //busyIndicator.IsBusy = false;
                 }
 
             }
+        }
+
+        // l'idéal est de la mettre dans le fichier ou est definie twitterUser mais introuvable, ou est elle ??????
+        private class TwitterUserComparer : IEqualityComparer<TwitterUser>
+        {
+            public bool Equals(TwitterUser s1, TwitterUser s2) { return s1.ScreenName == s2.ScreenName; }
+            public int GetHashCode(TwitterUser s) { return 0; }
+        }
+
+        private void Messages_GetFollowersCalled(List<TwitterUser> followers, long accountID)
+        {
+            Connexion.dispatcher.BeginInvoke(() =>
+            {
+                ((AccountTwitterLight)Connexion.accounts[accountID]).GetFollowersCalled -= new AccountTwitterLight.OnGetFollowersCompleted(Messages_GetFollowersCalled);
+                this.followers.AddRange(followers);
+                
+                if (--waitFollowers == 0)
+                {
+                    // deboullonage
+                    List<TwitterUser> tmp = new List<TwitterUser>();
+                    foreach (TwitterUser t in this.followers)
+                        if (!tmp.Contains(t, new TwitterUserComparer()))
+                            tmp.Add(t);
+                    this.followers = tmp;
+                    this.followers.Sort(delegate(TwitterUser t1, TwitterUser t2) { return t1.ScreenName.CompareTo(t2.ScreenName); });
+                    cbFollowers.ItemsSource = this.followers;
+                    busyIndicator.IsBusy = false;
+                }
+            });
         }
 
         

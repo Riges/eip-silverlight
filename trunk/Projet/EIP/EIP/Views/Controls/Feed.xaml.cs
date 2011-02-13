@@ -77,7 +77,7 @@ namespace EIP.Views.Controls
 
         void Feed_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Connexion.accounts.Count > 0)
+            if (Connexion.accounts != null && Connexion.accounts.Count > 0)
             {
                 this.topic = (Topic)this.DataContext;
 
