@@ -13,8 +13,10 @@
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -26,10 +28,12 @@
         <TextBlock Visibility="Collapsed" Name="MessageDefault"
                         Text="Vous devez sélectionner au moins un compte Twitter pour envoyer un message." Grid.Row="1" />
             
-        
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Stretch" Background="{StaticResource BgColor}">
+            <ComboBox Width="350" Grid.Row="2" Name="cbFollowers" Margin="20" DisplayMemberPath="ScreenName" />
+
+            <TextBox Grid.Row="3" Width="350" Height="100" Name="tbMessage" />
+            <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5" BorderThickness="0" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Stretch" Background="{StaticResource BgColor}">
             <Controls:listeMessages x:Name="listeMessagesBox" />
-        </ScrollViewer>
+        </ScrollViewer>-->
         </Grid>
     </toolkit:BusyIndicator>
 </navigation:Page>

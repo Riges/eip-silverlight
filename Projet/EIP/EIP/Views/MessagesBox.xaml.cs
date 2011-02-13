@@ -218,7 +218,6 @@ namespace EIP.Views
                                 }                                
                             break;
                             case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                                ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 switch (this.boxActive)
                                 {
@@ -293,10 +292,12 @@ namespace EIP.Views
                 busyIndicator.IsBusy = false;
         }
 
-        void Messages_LoadDirectMessagesCalled(List<ThreadMessage> liste)
+        void Messages_LoadDirectMessagesCalled(List<ThreadMessage> liste, long accountID)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
+                ((AccountTwitterLight)Connexion.accounts[accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
+                                
                 listeMessagesBox.box.AddRange(liste);
                 listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
                 listeMessagesBox.LoadMessages();

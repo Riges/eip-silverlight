@@ -100,6 +100,12 @@
   <wsdl:message name="IServiceEIP_GetFiends_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFiendsResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetFollowers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFollowers" />
+  </wsdl:message>
+  <wsdl:message name="IServiceEIP_GetFollowers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFollowersResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceEIP_UploadPhoto_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadPhoto" />
   </wsdl:message>
@@ -220,6 +226,10 @@
     <wsdl:operation name="GetFiends">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetFiends" message="tns:IServiceEIP_GetFiends_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetFiendsResponse" message="tns:IServiceEIP_GetFiends_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFollowers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/GetFollowers" message="tns:IServiceEIP_GetFollowers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceEIP/GetFollowersResponse" message="tns:IServiceEIP_GetFollowers_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UploadPhoto">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceEIP/UploadPhoto" message="tns:IServiceEIP_UploadPhoto_InputMessage" />
@@ -392,6 +402,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetFiends">
       <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetFiends" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFollowers">
+      <soap:operation soapAction="http://tempuri.org/IServiceEIP/GetFollowers" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

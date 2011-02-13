@@ -78,6 +78,9 @@ namespace EIPWCF
         List<TwitterUser> GetFiends(string token, string tokenSecret);
 
         [OperationContract]
+        List<TwitterUser> GetFollowers(string token, string tokenSecret);
+
+        [OperationContract]
         string UploadPhoto(string name, byte[] img);
 
         /*[OperationContract]

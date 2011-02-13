@@ -470,6 +470,27 @@ namespace EIPWCF
             return allFriends;
         }
 
+        public List<TwitterUser> GetFollowers(string token, string tokenSecret)
+        {
+            List<TwitterUser> allFollowers = new List<TwitterUser>();
+
+            SetClientInfo();
+
+            var query = FluentTwitter.CreateRequest()
+                   .AuthenticateWith(token, tokenSecret)
+                   .Users().GetFollowers();
+
+            var response = query.Request();
+
+            if (!response.IsTwitterError)
+            {
+                var users = response.AsUsers();
+                allFollowers.AddRange(users);
+            }
+
+            return allFollowers;
+        }
+
 
         public string UploadPhoto(string name, byte[] img)
         {

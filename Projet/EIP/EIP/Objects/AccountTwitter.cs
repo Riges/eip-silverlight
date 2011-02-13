@@ -29,7 +29,7 @@ namespace EIP
 
         public List<TwitterFilter> filters { get; set; }
         public List<TwitterUser> friends { get; set; }
-        //public List<TwitterUser> followers { get; set; }
+        public List<TwitterUser> followers { get; set; }
         public List<TwitterUser> profiles { get; set; }
         public List<ThreadMessage> messagesReceived { get; set; }
         public List<ThreadMessage> messagesSent { get; set; }
@@ -56,6 +56,7 @@ namespace EIP
             this.homeStatuses = new List<Topic>();
             this.userStatuses = new Dictionary<int, List<Topic>>();
             this.friends = new List<TwitterUser>();
+            this.followers = new List<TwitterUser>();
             this.profiles = new List<TwitterUser>();
             this.messagesReceived = new List<ThreadMessage>();
             this.messagesSent = new List<ThreadMessage>();
@@ -78,6 +79,7 @@ namespace EIP
             Connexion.serviceEIP.GetUserInfosCompleted += new EventHandler<GetUserInfosCompletedEventArgs>(serviceEIP_GetUserInfosCompleted);
 
             Connexion.serviceEIP.GetFiendsCompleted += new EventHandler<GetFiendsCompletedEventArgs>(serviceEIP_GetFiendsCompleted);
+            Connexion.serviceEIP.GetFollowersCompleted += new EventHandler<GetFollowersCompletedEventArgs>(serviceEIP_GetFollowersCompleted);
 
             Connexion.serviceEIP.SendTwitPicCompleted += new EventHandler<SendTwitPicCompletedEventArgs>(serviceEIP_SendTwitPicCompleted);
         }
@@ -189,8 +191,8 @@ namespace EIP
           //********************************\\
          //*Methodes de récupération d'infos*\\
         //************************************\\
-
-        public delegate void OnLoadDirectMessagesCompleted(List<ThreadMessage> liste);
+        #region direct messages
+        public delegate void OnLoadDirectMessagesCompleted(List<ThreadMessage> liste, long accountID);
         public event OnLoadDirectMessagesCompleted LoadDirectMessagesCalled;
 
         public void LoadDirectMessagesReceived(DateTime start, DateTime end)
@@ -228,7 +230,7 @@ namespace EIP
                             returnList.Add(message);
                     }
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(returnList);
+                        this.LoadDirectMessagesCalled.Invoke(returnList, this.account.accountID);
                 }
                 else if (!stop)
                 {
@@ -256,7 +258,7 @@ namespace EIP
                 }
                 else if ( messagesWait == 0) {
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>());
+                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>(), this.account.accountID);
                 }
             }
             else
@@ -303,7 +305,7 @@ namespace EIP
                             returnList.Add(message);
                     }
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(returnList);
+                        this.LoadDirectMessagesCalled.Invoke(returnList, this.account.accountID);
                 }
                 else if (!stop)
                 {
@@ -332,7 +334,7 @@ namespace EIP
                 else if (messagesWait == 0)
                 {
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>());
+                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>(), this.account.accountID);
                 }
             }
             else
@@ -462,9 +464,11 @@ namespace EIP
                 }
             }
         }*/
-        
 
 
+        #endregion
+
+        #region status
         public delegate void OnLoadHomeStatusesCompleted();
         public event OnLoadHomeStatusesCompleted LoadHomeStatusesCalled;
 
@@ -541,8 +545,9 @@ namespace EIP
                     this.LoadUserStatusesCalled.Invoke((int)e.UserState);
             }
         }
+        #endregion
 
-       
+
         /// <summary>
         /// methode pour charger les amis (gens que l'on suit)
         /// </summary>
@@ -598,15 +603,18 @@ namespace EIP
         /// <summary>
         /// methode pour charger les followers (gens qui nous suivent)
         /// </summary>
+        /// 
+        public delegate void OnGetFollowersCompleted(List<TwitterUser> followers, long accountID);
+        public event OnGetFollowersCompleted GetFollowersCalled;
         public void LoadFollowers()
         {
-            /*
-            var homeTimeline = FluentTwitter.CreateRequest()
-               .Configuration.UseTransparentProxy(Connexion.ProxyUrl)
-               .AuthenticateWith(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret)
-               .Users().GetFollowers()
-               .CallbackTo(FollowersReceived);
-             * */
+            if (this.followers == null || this.followers.Count == 0)
+                Connexion.serviceEIP.GetFollowersAsync(((AccountTwitter)this.account).token, ((AccountTwitter)this.account).tokenSecret, this.account.userID);
+            else
+            {
+                if (this.GetFollowersCalled != null)//evite que ca plante si pas dabo
+                    this.GetFollowersCalled.Invoke(this.followers, this.account.accountID);
+            }
         }
 
         /// <summary>
@@ -614,17 +622,26 @@ namespace EIP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="result"></param>
-       
-        /*
-        private void FollowersReceived(object sender, TwitterResult result)
+
+
+        private void serviceEIP_GetFollowersCompleted(object sender, GetFollowersCompletedEventArgs e)
         {
-            if (!result.IsTwitterError)
+            if (Convert.ToInt64(e.UserState) == this.account.userID)
             {
-                var followersTmp = result.AsUsers();
-                this.followers = followersTmp as List<TwitterUser>;
+                if (e.Error == null)
+                {
+                    if (e.Result != null)
+                        if (e.Result.Count > 0)
+                        {
+                            this.followers = e.Result;
+
+                            if (this.GetFollowersCalled != null)//evite que ca plante si pas dabo
+                                this.GetFollowersCalled.Invoke(this.followers, this.account.accountID);
+                        }
+                }
             }
         }
-        */
+        
         /*
         private void StatusSended(object sender, TwitterResult result)
         {
