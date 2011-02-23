@@ -39,6 +39,7 @@ using EIP.Views.Child;
 using EIP.Objects;
 using System.Windows.Browser;
 using System.Reflection;
+using Facebook;
 //using TweetSharp.Fluent;
 
 
@@ -480,6 +481,28 @@ namespace EIP
             switch (type)
             {
                 case Account.TypeAccount.Facebook:
+
+                    /**************** NEW FB ***********/
+
+                    var oauth = new FacebookOAuthClient
+                    {
+                        ClientId = "131664040210585",
+                        RedirectUri = new Uri(slfbloginUrl)
+                    };
+
+                    var paramatersLogin = new Dictionary<string, object>
+                                {
+                                    { "display", "popup" },
+                                    { "response_type", "code" },  // make it code and not access token for security reasons.
+                                    { "scope", requestedFbPermissions }
+                                };
+                    var paramatersLogout = new Dictionary<string, object>();
+                                
+
+                    var loginUrl = oauth.GetLoginUrl(paramatersLogin);
+                    var logoutUrl = oauth.GetLogoutUrl(paramatersLogout);
+
+
                     if (facebookAPI != null)
                     {
                         browserSession = (BrowserSession)facebookAPI.Session;
@@ -489,18 +512,10 @@ namespace EIP
                     }
                     else
                     {
-                        /*browserSession = new BrowserSession(ApplicationKey, perms);
-                        facebookAPI = new Api(browserSession);
-                        browserSession.LogoutCompleted += BrowserSession_LogoutCompleted;
-                        facebookAPI = null;
-                        browserSession.Logout();*/
-
                         browserSession = new BrowserSession(ApplicationKey, perms);
                         browserSession.LoginCompleted -= browserSession_LoginCompletedTest;
                         browserSession.LoginCompleted += browserSession_LoginCompletedTest;
                         browserSession.Login();
-
-                        //BrowserSession_LogoutCompleted(null, null);
                     }
 
                     break;
@@ -963,6 +978,25 @@ namespace EIP
                 return null;
             }
         }
+
+
+
+        /****************** NEW FB ********************/
+
+        private static string slfbloginUrl = @"http://localhost:4164/loginFB.aspx";
+
+        private static string requestedFbPermissions = "user_about_me";
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
