@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>libs\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -60,6 +63,7 @@
     <Content Include="fblogin.js" />
     <Content Include="images\animated_favicon1.gif" />
     <Content Include="images\favicon.ico" />
+    <Content Include="LoginFB.aspx" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -75,6 +79,13 @@
   <ItemGroup>
     <Compile Include="GifHandler.ashx.cs">
       <DependentUpon>GifHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginFB.aspx.cs">
+      <DependentUpon>LoginFB.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginFB.aspx.designer.cs">
+      <DependentUpon>LoginFB.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TweetSharpProxyModule.cs" />

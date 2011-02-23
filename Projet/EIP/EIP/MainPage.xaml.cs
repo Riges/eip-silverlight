@@ -31,6 +31,9 @@ namespace EIP
         {
             InitializeComponent();
 
+            HtmlPage.RegisterScriptableObject("slObject", this);
+            
+
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
             Connexion.listeComptes = liste;
             Connexion.contentFrame = ContentFrame;
@@ -39,6 +42,22 @@ namespace EIP
             Connexion.mainBusyIndicator = mainBusyIndicator;
             Connexion.StartDisplay();
             LoadInterface();
+        }
+
+        [ScriptableMember]
+        public void LoginComplete(string accesstoken, string errorDescription)
+        {
+            /*
+            if (string.IsNullOrEmpty(errorDescription) && !string.IsNullOrEmpty(accesstoken))
+            {
+                // we have access token.
+                fb = new FacebookClient(accesstoken);
+                loginSucceeded();
+            }
+            else
+            {
+                HtmlPage.Window.Alert(errorDescription);
+            }*/
         }
 
         private void LoadInterface()

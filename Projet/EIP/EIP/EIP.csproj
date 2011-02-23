@@ -59,6 +59,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook">
+      <HintPath>Lib\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook.Silverlight">
       <HintPath>Lib\Facebook.Silverlight.dll</HintPath>
     </Reference>
@@ -69,7 +72,8 @@
       <HintPath>Lib\Hammock.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight">
+    <Reference Include="Newtonsoft.Json.Silverlight, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\Newtonsoft.Json.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="SStuff.FlowControls">
@@ -108,16 +112,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Objects\Account.cs" />
-    <Compile Include="Objects\AccountFacebook.cs" />
-    <Compile Include="Objects\AccountFlickr.cs" />
-    <Compile Include="Objects\AccountRSS.cs" />
+    <Compile Include="Objects\Accounts\Account.cs" />
+    <Compile Include="Objects\Accounts\AccountFacebook.cs" />
+    <Compile Include="Objects\Accounts\AccountFlickr.cs" />
+    <Compile Include="Objects\Accounts\AccountRSS.cs" />
     <Compile Include="Objects\AlbumToImageConverter.cs" />
     <Compile Include="Objects\Connexion.cs" />
-    <Compile Include="Objects\AccountTwitter.cs" />
+    <Compile Include="Objects\Accounts\AccountTwitter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Objects\ConnexionFB.cs" />
     <Compile Include="Objects\CustomNotification.cs" />
     <Compile Include="Objects\FileInfoToBitmapImage.cs" />
     <Compile Include="Objects\Friend.cs" />
@@ -126,6 +131,7 @@
     <Compile Include="Objects\Profil.cs" />
     <Compile Include="Objects\Topic.cs" />
     <Compile Include="Objects\TopicFB.cs" />
+    <Compile Include="Objects\UserFB.cs" />
     <Compile Include="Objects\Utils.cs" />
     <Compile Include="Objects\VideoLight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" %>
+﻿:<%@ Page Language="C#" AutoEventWireup="true" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
@@ -65,6 +65,36 @@
             throw new Error(errMsg);
         }
     </script>
+    <script type="text/javascript">
+        var slPluginId = '_sl_facebookapp';
+
+        function getSlPlugin() {
+            if (typeof (window.slPlugin) == "undefined" || window.slPlugin == null) {
+                window.slPlugin = document.getElementById(slPluginId);
+            }
+            return window.slPlugin.Content.slObject;
+        }
+        window.loginDialog = null;
+        function fbLogin(uri)
+        {
+            window.loginDialog = window.open(uri, "loginDialog", "height=320,width=480,location=no,menubar=no,toolbar=no");
+        }
+        window.LoginComplete = function (accessToken, errorDescription)
+        {
+            if (window.loginDialog != null) {
+                window.loginDialog.close();
+            }
+            getSlPlugin().LoginComplete(accessToken, errorDescription);
+        }
+
+        window.logoutDialog = null;
+        window.fblogout = function ()
+        {
+            window.logoutDialog = window.open(uri, "loginDialog", "height=320,width=480,location=no,menubar=no,toolbar=no");
+        }
+
+    </script>
+
 </head>
 <body>
     <form id="form1" runat="server" style="height:100%">
