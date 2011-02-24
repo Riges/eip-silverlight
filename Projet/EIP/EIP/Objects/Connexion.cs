@@ -500,9 +500,11 @@ namespace EIP
                                 
 
                     var loginUrl = oauth.GetLoginUrl(paramatersLogin);
-                    var logoutUrl = oauth.GetLogoutUrl(paramatersLogout);
+                    //var logoutUrl = oauth.GetLogoutUrl(paramatersLogout);
 
+                    HtmlPage.Window.Eval(string.Format("fbLogin('{0}')", loginUrl));
 
+                    /*
                     if (facebookAPI != null)
                     {
                         browserSession = (BrowserSession)facebookAPI.Session;
@@ -516,7 +518,7 @@ namespace EIP
                         browserSession.LoginCompleted -= browserSession_LoginCompletedTest;
                         browserSession.LoginCompleted += browserSession_LoginCompletedTest;
                         browserSession.Login();
-                    }
+                    }*/
 
                     break;
                 case Account.TypeAccount.Twitter:
@@ -983,15 +985,116 @@ namespace EIP
 
         /****************** NEW FB ********************/
 
-        private static string slfbloginUrl = @"http://localhost:4164/loginFB.aspx";
+        private static FacebookClient fb;
+
+        private static string slfbloginUrl = @"http://localhost:4164/LoginFB.aspx";
 
         private static string requestedFbPermissions = "user_about_me";
 
 
+        public static void LoginFB_Completed(string accesstoken, string errorDescription)
+        {
+            if (string.IsNullOrEmpty(errorDescription) && !string.IsNullOrEmpty(accesstoken))
+            {
+                fb = new FacebookClient(accesstoken);
+
+                fb.GetAsync("me", (val) =>
+                {
+                    if (val.Error == null)
+                    {
+                        var result = (JsonObject)val.Result;
+
+                        UserFB userMe = new UserFB();
+                        userMe.PopulateFB(result);
+
+                        AddFBAccount(userMe);
+                    }
+                    else
+                    {
+                        // TODO: Need to let the user know there was an error
+                        //failedLogin();
+                    }
+                });
+            }
+            else
+            {
+                HtmlPage.Window.Alert(errorDescription);
+            }
+        }
+
+        private static void AddFBAccount(UserFB userMe)
+        {
+            AccountFacebookLight newAccount = new AccountFacebookLight();
+            if (accounts.Count > 0)
+                newAccount.account.groupID = accounts.First().Value.account.groupID;
+            else
+            {
+                Random rand = new Random();
+                int number = rand.Next(999999999);
+                newAccount.account.groupID = number;
+            }
+
+            newAccount.account.typeAccount = Account.TypeAccount.Facebook;
+            newAccount.account.userID = Convert.ToInt64(userMe.userID);
+            newAccount.account.name = userMe.name;
+            newAccount.selected = true;
+
+            
+
+            ((AccountFacebook)newAccount.account).sessionExpires = false;
+            ((AccountFacebook)newAccount.account).sessionKey = fb.AccessToken.Split('|')[1];
+            ((AccountFacebook)newAccount.account).sessionSecret = fb.AccessToken.Split('|')[2];
+            ((AccountFacebook)newAccount.account).accessToken = fb.AccessToken;
+
+            SetSession(newAccount.account.groupID);
+
+            serviceEIP.AddAccountCompleted += new EventHandler<AddAccountCompletedEventArgs>(serviceEIP_AddAccountCompleted);
+            serviceEIP.AddAccountAsync(newAccount.account, null, null);
+        }
+
+        /*
+        private static void GetUserFacebook_Completed(IList<user> users, object o, FacebookException ex)
+        {
+
+            if (users != null && users.Count > 0)
+            {
+                if (addAccount)
+                {
+                    AccountFacebookLight newAccount = new AccountFacebookLight();
+                    if (accounts.Count > 0)
+                        newAccount.account.groupID = accounts.First().Value.account.groupID;
+                    else
+                    {
+                        Random rand = new Random();
+                        int number = rand.Next(999999999);
+                        newAccount.account.groupID = number;
+                    }
+                    //newAccount.account.groupID = (long)users[0].uid;
+
+                    newAccount.account.typeAccount = Account.TypeAccount.Facebook;
+                    newAccount.account.userID = facebookAPI.Session.UserId;
+                    newAccount.account.name = users[0].name;
+                    newAccount.selected = true;
+                    ((AccountFacebook)newAccount.account).sessionExpires = facebookAPI.Session.SessionExpires;
+                    ((AccountFacebook)newAccount.account).sessionKey = facebookAPI.Session.SessionKey;
+                    ((AccountFacebook)newAccount.account).sessionSecret = facebookAPI.Session.SessionSecret;
+
+                    SetSession(newAccount.account.groupID);
+
+                    serviceEIP.AddAccountCompleted += new EventHandler<AddAccountCompletedEventArgs>(serviceEIP_AddAccountCompleted);
+                    serviceEIP.AddAccountAsync(newAccount.account, null, null);
 
 
 
-
+                }
+                else
+                {
+                    serviceEIP.GetAccountsByUserIDCompleted += new EventHandler<GetAccountsByUserIDCompletedEventArgs>(serviceEIP_GetAccountsByUserIDCompleted);
+                    serviceEIP.GetAccountsByUserIDAsync((long)users[0].uid);
+                }
+            }
+        }
+        */
 
 
 

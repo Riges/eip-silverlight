@@ -47,6 +47,7 @@ namespace EIP
         [ScriptableMember]
         public void LoginComplete(string accesstoken, string errorDescription)
         {
+            Connexion.LoginFB_Completed(accesstoken, errorDescription);
             /*
             if (string.IsNullOrEmpty(errorDescription) && !string.IsNullOrEmpty(accesstoken))
             {

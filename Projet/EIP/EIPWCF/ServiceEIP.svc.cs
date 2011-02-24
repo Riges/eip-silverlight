@@ -117,7 +117,7 @@ namespace EIPWCF
                             ((AccountTwitter)acc).token = tokenResult.Token;
                             ((AccountTwitter)acc).tokenSecret = tokenResult.TokenSecret;
 
-                            if (Model.SaveAccount(acc))
+                            if (Model.SaveAccount(acc, false))
                                 return acc.groupID;
                             else
                                 return -2;
@@ -139,7 +139,7 @@ namespace EIPWCF
                         accFK.name = newAccount.name;
                         ((AccountFlickr)accFK).token = ((AccountFlickr)newAccount).token;
 
-                        if (Model.SaveAccount(accFK))
+                        if (Model.SaveAccount(accFK, false))
                             return accFK.groupID;
                         else
                             return -2;
@@ -516,7 +516,7 @@ namespace EIPWCF
 
         public bool SaveAccount(Account accountToSave)
         {
-            return Model.SaveAccount(accountToSave);
+            return Model.SaveAccount(accountToSave, false);
         }
 
         public long DeleteAccount(long accountID)
