@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Facebook.Schema;
 using EIP.ServiceEIP;
+using System.ComponentModel;
 //using TweetSharp.Model;
 
 namespace EIP.Objects
@@ -63,12 +64,6 @@ namespace EIP.Objects
             this.t_post = aT_post;
         }
 
-
-            
-           
-         
-               
-
-
+       
     }
 }

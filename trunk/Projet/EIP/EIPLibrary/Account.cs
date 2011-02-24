@@ -32,6 +32,13 @@ namespace EIPLibrary
         [DataMember]
         public string name { get; set; }
 
+        [DataMember]
+        public DateTime added { get; set; }
+
+        [DataMember]
+        public DateTime lastConnexion { get; set; }
+        
+
 
         public enum TypeAccount
         {

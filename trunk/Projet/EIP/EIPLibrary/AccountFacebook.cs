@@ -22,6 +22,9 @@ namespace EIPLibrary
         [DataMember]
         public string sessionSecret { get; set; }
 
+        [DataMember]
+        public string accessToken { get; set; }
+
 
 
         public AccountFacebook()

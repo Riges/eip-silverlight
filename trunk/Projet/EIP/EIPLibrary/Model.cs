@@ -98,7 +98,9 @@ namespace EIPLibrary
             {
                 foreach (DataRow dtr in dt.Rows)
                 {
-                    listAccount.Add(Populate(dtr));
+                    Account acc = Populate(dtr);
+                    listAccount.Add(acc);
+                    SaveAccount(acc, true);
                 }
             }
             return listAccount;
@@ -124,7 +126,9 @@ namespace EIPLibrary
             {
                 foreach (DataRow dtr in dt.Rows)
                 {
-                    listAccount.Add(Populate(dtr));
+                    Account acc = Populate(dtr);
+                    listAccount.Add(acc);
+                    SaveAccount(acc, true);
                 }
             }
 
@@ -158,15 +162,17 @@ namespace EIPLibrary
                 List<NpgsqlParameter> parmsInsert = new List<NpgsqlParameter>();
                 StringBuilder cmdTextInsert = new StringBuilder();
                 cmdTextInsert.Append(" INSERT INTO account ");
-                cmdTextInsert.Append(" (userid, name, type, groupid) ");
+                cmdTextInsert.Append(" (userid, name, type, groupid, added, lastconnexion) ");
                 cmdTextInsert.Append(" VALUES ");
-                cmdTextInsert.Append(" (@USERID, @NAME, @TYPE, @GROUPID) ");
+                cmdTextInsert.Append(" (@USERID, @NAME, @TYPE, @GROUPID, @ADDED, @LASTCONNEXION) ");
 
                 parmsInsert.Add(new NpgsqlParameter("@USERID", newAccount.userID));
                 //  parmsInsert.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
                 parmsInsert.Add(new NpgsqlParameter("@NAME", newAccount.name));
                 parmsInsert.Add(new NpgsqlParameter("@TYPE", newAccount.typeAccount.ToString()));
                 parmsInsert.Add(new NpgsqlParameter("@GROUPID", newAccount.groupID));
+                parmsInsert.Add(new NpgsqlParameter("@ADDED", DateTime.Now));
+                parmsInsert.Add(new NpgsqlParameter("@LASTCONNEXION", DateTime.Now));
 
                 int accountID = PgSqlHelper.ExecuteScalar(CommandType.Text, cmdTextInsert.ToString(), parmsInsert, "account_accountid_seq");
 
@@ -179,13 +185,14 @@ namespace EIPLibrary
                     {
                         case Account.TypeAccount.Facebook:
                             cmdText.Append(" INSERT INTO accountfacebook ");
-                            cmdText.Append(" (sessionkey, sessionsecret, sessionexpires, accountid) ");
+                            cmdText.Append(" (sessionkey, sessionsecret, sessionexpires, accesstoken, accountid) ");
                             cmdText.Append(" VALUES ");
-                            cmdText.Append(" (@SESSIONKEY, @SESSIONSECRET, @SESSIONEXPIRES, @ACCOUNTID) ");
+                            cmdText.Append(" (@SESSIONKEY, @SESSIONSECRET, @SESSIONEXPIRES, @ACCESSTOKEN, @ACCOUNTID) ");
 
                             parms.Add(new NpgsqlParameter("@SESSIONKEY", ((AccountFacebook)newAccount).sessionKey));
                             parms.Add(new NpgsqlParameter("@SESSIONSECRET", ((AccountFacebook)newAccount).sessionSecret));
                             parms.Add(new NpgsqlParameter("@SESSIONEXPIRES", ((AccountFacebook)newAccount).sessionExpires));
+                            parms.Add(new NpgsqlParameter("@ACCESSTOKEN", ((AccountFacebook)newAccount).accessToken));
 
                             parms.Add(new NpgsqlParameter("@ACCOUNTID", accountID));
                             break;
@@ -228,60 +235,62 @@ namespace EIPLibrary
             return false;
         }
 
-        public static bool SaveAccount(Account newAccount)
+        public static bool SaveAccount(Account newAccount, bool justConnexion)
         {
 
             List<NpgsqlParameter> parms = new List<NpgsqlParameter>();
             StringBuilder cmdText = new StringBuilder();
             cmdText.Append(" UPDATE account SET ");
-            cmdText.Append(" name=@NAME ");
+            cmdText.Append(" name=@NAME, lastconnexion=@LASTCONNEXION");
             cmdText.Append(" WHERE ");
             cmdText.Append(" accountid=@ACCOUNTID ");
 
             parms.Add(new NpgsqlParameter("@NAME", newAccount.name));
             parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
+            parms.Add(new NpgsqlParameter("@LASTCONNEXION", DateTime.Now));
 
             int result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
 
-            
-            parms = new List<NpgsqlParameter>();
-            cmdText = new StringBuilder();
-            switch (newAccount.typeAccount)
+            if (!justConnexion)
             {
-                case Account.TypeAccount.Facebook:
-                    cmdText.Append(" UPDATE accountfacebook SET ");
-                    cmdText.Append(" sessionkey=@SESSIONKEY, sessionsecret=@SESSIONSECRET, sessionexpires=@SESSIONEXPIRES ");
-                    cmdText.Append(" WHERE accountid=@ACCOUNTID ");
+                parms = new List<NpgsqlParameter>();
+                cmdText = new StringBuilder();
+                switch (newAccount.typeAccount)
+                {
+                    case Account.TypeAccount.Facebook:
+                        cmdText.Append(" UPDATE accountfacebook SET ");
+                        cmdText.Append(" sessionkey=@SESSIONKEY, sessionsecret=@SESSIONSECRET, sessionexpires=@SESSIONEXPIRES ");
+                        cmdText.Append(" WHERE accountid=@ACCOUNTID ");
 
-                    parms.Add(new NpgsqlParameter("@SESSIONKEY", ((AccountFacebook)newAccount).sessionKey));
-                    parms.Add(new NpgsqlParameter("@SESSIONSECRET", ((AccountFacebook)newAccount).sessionSecret));
-                    parms.Add(new NpgsqlParameter("@SESSIONEXPIRES", ((AccountFacebook)newAccount).sessionExpires));
-                    parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
-                    break;
-                case Account.TypeAccount.Twitter:
-                    cmdText.Append(" UPDATE accounttwitter SET ");
-                    cmdText.Append(" token=@TOKEN, tokensecret=@TOKENSECRET ");
+                        parms.Add(new NpgsqlParameter("@SESSIONKEY", ((AccountFacebook)newAccount).sessionKey));
+                        parms.Add(new NpgsqlParameter("@SESSIONSECRET", ((AccountFacebook)newAccount).sessionSecret));
+                        parms.Add(new NpgsqlParameter("@SESSIONEXPIRES", ((AccountFacebook)newAccount).sessionExpires));
+                        parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
+                        break;
+                    case Account.TypeAccount.Twitter:
+                        cmdText.Append(" UPDATE accounttwitter SET ");
+                        cmdText.Append(" token=@TOKEN, tokensecret=@TOKENSECRET ");
                         cmdText.Append(" WHERE accountid=@ACCOUNTID ");
 
                         parms.Add(new NpgsqlParameter("@TOKEN", ((AccountTwitter)newAccount).token));
                         parms.Add(new NpgsqlParameter("@TOKENSECRET", ((AccountTwitter)newAccount).tokenSecret));
                         parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
-                    break;
-                case Account.TypeAccount.Flickr:
-                    cmdText.Append(" UPDATE accountflickr SET ");
-                    cmdText.Append(" tokenflickr=@TOKEN, useridstr=@USERIDSTR ");
-                    cmdText.Append(" WHERE accountid=@ACCOUNTID ");
+                        break;
+                    case Account.TypeAccount.Flickr:
+                        cmdText.Append(" UPDATE accountflickr SET ");
+                        cmdText.Append(" tokenflickr=@TOKEN, useridstr=@USERIDSTR ");
+                        cmdText.Append(" WHERE accountid=@ACCOUNTID ");
 
-                    parms.Add(new NpgsqlParameter("@TOKEN", ((AccountFlickr)newAccount).token));
-                    parms.Add(new NpgsqlParameter("@USERIDSTR", ((AccountFlickr)newAccount).userIDstr));
-                    parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
-                    break;
-              
-                default:
-                    break;
+                        parms.Add(new NpgsqlParameter("@TOKEN", ((AccountFlickr)newAccount).token));
+                        parms.Add(new NpgsqlParameter("@USERIDSTR", ((AccountFlickr)newAccount).userIDstr));
+                        parms.Add(new NpgsqlParameter("@ACCOUNTID", newAccount.accountID));
+                        break;
+
+                    default:
+                        break;
+                }
+                result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
             }
-            result = PgSqlHelper.ExecuteNonQuery(CommandType.Text, cmdText.ToString(), parms);
-
             if (result > 0)
             {
                 return true;
@@ -349,6 +358,12 @@ namespace EIPLibrary
                 if (DbUtil.HasFieldNotNull(dtr, "userid"))
                     account.userID = Convert.ToInt64(dtr["userid"]);
 
+                if (DbUtil.HasFieldNotNull(dtr, "added"))
+                    account.added = Convert.ToDateTime(dtr["added"].ToString());
+
+                if (DbUtil.HasFieldNotNull(dtr, "lastconnexion"))
+                    account.lastConnexion = Convert.ToDateTime(dtr["lastconnexion"].ToString());
+
                 switch (account.typeAccount)
                 {
                     case Account.TypeAccount.Facebook:
@@ -358,6 +373,8 @@ namespace EIPLibrary
                             ((AccountFacebook)account).sessionKey = dtr["sessionkey"].ToString();
                         if (DbUtil.HasFieldNotNull(dtr, "sessionsecret"))
                             ((AccountFacebook)account).sessionSecret = dtr["sessionsecret"].ToString();
+                        if (DbUtil.HasFieldNotNull(dtr, "accesstoken"))
+                            ((AccountFacebook)account).accessToken = dtr["accesstoken"].ToString();
                         break;
                     case Account.TypeAccount.Twitter:
                         if (DbUtil.HasFieldNotNull(dtr, "token"))

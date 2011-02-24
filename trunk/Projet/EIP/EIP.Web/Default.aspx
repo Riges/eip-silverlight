@@ -88,9 +88,9 @@
         }
 
         window.logoutDialog = null;
-        window.fblogout = function ()
+        function fblogout(uri)
         {
-            window.logoutDialog = window.open(uri, "loginDialog", "height=320,width=480,location=no,menubar=no,toolbar=no");
+            window.logoutDialog = window.open(uri, "logoutDialog", "height=320,width=480,location=no,menubar=no,toolbar=no");
         }
 
     </script>

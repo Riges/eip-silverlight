@@ -25,26 +25,51 @@ using EIP.Views.Controls;
 using System.IO;
 using System.Xml;
 using System.ServiceModel.Syndication;
+using System.ComponentModel;
 //using EIP.ServiceEIP;
 
 namespace EIP.Views
 {
     public partial class StreamFeeds : Page
+
     {
-        private List<Topic> topics = new List<Topic>();
+        private ObservableCollection<Topic> topics = new ObservableCollection<Topic>();
         private string filterFB = string.Empty;
-       
+        bool isDead = false;       
 
         //public Dictionary<string, List<Topic>> allTopics = new Dictionary<string, List<Topic>>();
 
         public StreamFeeds()
         {
+            this.Unloaded += new RoutedEventHandler(StreamFeeds_Unloaded);
 
             InitializeComponent();
+
+            App.Current.Host.Content.Resized -= new EventHandler(Content_Resized);
             App.Current.Host.Content.Resized += new EventHandler(Content_Resized);
          
 
             //scroolView.ScrollToVerticalOffset(scroolView.VerticalOffset + 25);
+        }
+
+        void StreamFeeds_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= new RoutedEventHandler(StreamFeeds_Unloaded);
+
+            foreach (KeyValuePair<long, AccountLight> accountLight in Connexion.accounts)
+            {
+                switch (accountLight.Value.account.typeAccount)
+                {
+                    case Account.TypeAccount.Facebook:
+                        ((AccountFacebookLight)accountLight.Value).LoadFeedsCalled -= new AccountFacebookLight.OnLoadFeedsCompleted(StreamFeeds_LoadFeedsCalled);
+                        break;
+                    case Account.TypeAccount.Twitter:
+                        ((AccountTwitterLight)accountLight.Value).LoadHomeStatusesCalled -= new AccountTwitterLight.OnLoadHomeStatusesCompleted(StreamFeeds_LoadHomeStatusesCalled);
+                        break;
+                }
+              
+            }
+            isDead = true;
         }
 
         void Content_Resized(object sender, EventArgs e)
@@ -108,6 +133,7 @@ namespace EIP.Views
                         {
                             case Account.TypeAccount.Facebook:
                                 accountSelected = true;
+                                ((AccountFacebookLight)accountLight.Value).LoadFeedsCalled -= new AccountFacebookLight.OnLoadFeedsCompleted(StreamFeeds_LoadFeedsCalled);
                                 ((AccountFacebookLight)accountLight.Value).LoadFeedsCalled += new AccountFacebookLight.OnLoadFeedsCompleted(StreamFeeds_LoadFeedsCalled);
 
                                 bool waitFB = false;
@@ -170,27 +196,53 @@ namespace EIP.Views
             LoadContext();
         }
 
+        public static readonly DependencyProperty CustomerListProperty = DependencyProperty.Register("topics", typeof(ObservableCollection<Topic>), typeof(StreamFeeds), new PropertyMetadata(new ObservableCollection<Topic>()));
+
+
         public void LoadContext()
         {
-            
             Dispatcher.BeginInvoke(() =>
                 {
-                    topics = new List<Topic>();
-                    topics.Capacity = topics.Capacity + Connexion.allTopics.Count;
-                    foreach (KeyValuePair<string, List<Topic>> item in Connexion.allTopics)
+                    if (!isDead)
                     {
-                        topics.AddRange(item.Value);
-                    }
+                        
+                        topics = new ObservableCollection<Topic>();
+                        //topics..Capacity = topics.Capacity + Connexion.allTopics.Count;
+                        foreach (KeyValuePair<string, List<Topic>> item in Connexion.allTopics)
+                        {
+                            //topics.AddRange(item.Value);
+                            foreach (Topic topic in item.Value)
+                            {
+                                topics.Add(topic);
+                            }
 
-                    topics.Sort(delegate(Topic t1, Topic t2) { return t2.date.CompareTo(t1.date); });
-                    FeedsControl.DataContext = topics;
-                    busyIndicator.IsBusy = false;
-                    //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
-                    FeedsControl.Visibility = System.Windows.Visibility.Visible;
-                });
-             
+                        }
+
+                        //topics.Sort(delegate(Topic t1, Topic t2) { return t2.date.CompareTo(t1.date); });
+
+                        //if (FeedsControl.DataContext == null)
+                            FeedsControl.DataContext = topics;
+                       //else
+                            //SetValue(CustomerListProperty, topics);
+                            //OnPropertyChanged("topics");
+
+
+                        busyIndicator.IsBusy = false;
+                        //ImgLoad.Visibility = System.Windows.Visibility.Collapsed;
+                        FeedsControl.Visibility = System.Windows.Visibility.Visible;
+                    }
+                }); 
         }
 
+        /*
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        } */
 
        
 
