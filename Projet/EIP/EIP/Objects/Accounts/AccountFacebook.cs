@@ -106,10 +106,16 @@ namespace EIP
             Connexion.dispatcher.BeginInvoke(() =>
                 {
                     
-                    browserSession.LoggedIn(((AccountFacebook)this.account).sessionKey,
+                    /*browserSession.LoggedIn(((AccountFacebook)this.account).sessionKey,
                                                                 ((AccountFacebook)this.account).sessionSecret,
                                                                 Convert.ToInt32(((AccountFacebook)this.account).sessionExpires),
                                                                 this.account.userID);
+                    */
+                    
+                   
+
+                    browserSession.LoggedIn(((AccountFacebook)this.account).accessToken, this.account.userID);
+
                     /*NotificationWindow notify = new NotificationWindow();
                     notify.Height = 75; notify.Width = 200;
                     TextBlock note = new TextBlock();
