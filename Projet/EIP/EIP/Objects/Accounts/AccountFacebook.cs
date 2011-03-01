@@ -111,11 +111,10 @@ namespace EIP
                                                                 Convert.ToInt32(((AccountFacebook)this.account).sessionExpires),
                                                                 this.account.userID);
                     */
-                    
-                   
 
+                    browserSession.UseGraphAuth = true;
                     browserSession.LoggedIn(((AccountFacebook)this.account).accessToken, this.account.userID);
-
+                    
                     /*NotificationWindow notify = new NotificationWindow();
                     notify.Height = 75; notify.Width = 200;
                     TextBlock note = new TextBlock();
