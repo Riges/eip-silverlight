@@ -19,32 +19,39 @@ namespace EIP.Views
     {
         //public Dictionary<String, Friend> friends;
 
+        #region Properties
+        /// <summary>
+        /// Box active : inbox, outbox
+        /// </summary>
         public String boxActive;
+
+        /// <summary>
+        /// Onglet actif (pagination)
+        /// </summary>
         public String ongletActive;
+
+        /// <summary>
+        /// Onglet de pagination par defaut
+        /// </summary>
         private String ongletDefault = "today";
+
+        /// <summary>
+        /// Date debut et fin pour pagination
+        /// </summary>
         private DateTime start, end;
+
+        /// <summary>
+        /// Compte les threads par compte
+        /// key : accountID
+        /// value : nombre de messages
+        /// </summary>
         private Dictionary<long, long> nbThreads;
+        #endregion
 
         public MessagesBox()
         {
             InitializeComponent();
             nbThreads = new Dictionary<long, long>();
-            
-            /*foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
-            {
-                switch (account.Value.account.typeAccount)
-                {
-                    case EIP.ServiceEIP.Account.TypeAccount.Facebook:
-                        inbox = ((AccountFacebookLight)account.Value).inbox;
-                        outbox = ((AccountFacebookLight)account.Value).outbox;
-                        break;
-
-                    case EIP.ServiceEIP.Account.TypeAccount.Twitter:
-                    case EIP.ServiceEIP.Account.TypeAccount.Flickr:
-                    default:
-                        break;
-                }
-            }*/
         }
 
         // Executes when the user navigates to this page.
@@ -52,6 +59,7 @@ namespace EIP.Views
         {
             if (this.NavigationContext.QueryString.ContainsKey("accountId") && this.NavigationContext.QueryString.ContainsKey("threadId"))
             {
+                #region detail d'un message
                 busyIndicator.IsBusy = true;
                 if (this.NavigationContext.QueryString.ContainsKey("box"))
                     this.boxActive = this.NavigationContext.QueryString["box"];
@@ -82,15 +90,19 @@ namespace EIP.Views
                     case EIP.ServiceEIP.Account.TypeAccount.Flickr:
                         break;
                 }
+                #endregion
             }
             else if (this.NavigationContext.QueryString.ContainsKey("box"))
             {
+                #region liste de messages
+
                 this.boxActive = this.NavigationContext.QueryString["box"];
                 listeMessagesBox.box.Clear();
                 nbThreads.Clear();
 
                 switch (this.boxActive)
                 {
+                    // TODO : définir des constantes, c'est laid
                     case "outbox":
                         HeaderText.Text = "Boîte d'envoi";
                         break;
@@ -99,6 +111,8 @@ namespace EIP.Views
                         break;
                 }
 
+                #region pagination (onglet actif) et definition de start et end
+                
                 if (this.NavigationContext.QueryString.ContainsKey("onglet"))
                     this.ongletActive = this.NavigationContext.QueryString["onglet"];
                 else
@@ -108,6 +122,7 @@ namespace EIP.Views
                 double offset = 0;
                 switch (this.ongletActive)
                 {
+                    // TODO : faire des constantes, c'est laid
                     case "yesterday": 
                         start = DateTime.Today.AddDays(-1);
                         end = DateTime.Today;
@@ -193,10 +208,14 @@ namespace EIP.Views
                         today.Style = Resources["HyperlinkButtonActiveStyle"] as Style;
                         break;
                 }
+                #endregion
 
+                // MAJ des links des onglets pagination
                 foreach (HyperlinkButton link in OngletsNavigation.Children)
                     link.NavigateUri = new Uri("/Messages/" + this.boxActive + "/" + link.Name, UriKind.Relative);
-                
+
+                #region recupération des messages
+
                 foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
                 {
                     if (account.Value.selected)
@@ -205,10 +224,11 @@ namespace EIP.Views
                         switch (account.Value.account.typeAccount)
                         {
                             case EIP.ServiceEIP.Account.TypeAccount.Facebook:
+                                // On compte les messages pour ne récupérer que si besoin
                                 ((AccountFacebookLight)Connexion.accounts[account.Value.account.accountID]).CountThreadCalled += new AccountFacebookLight.OnCountThreadCompleted(Messages_LoadMessagesFb);
-                                
                                 switch (this.boxActive)
                                 {
+                                    // TODO : constantes
                                     case "outbox":
                                         ((AccountFacebookLight)account.Value).CountOutboxMessages(start, end);
                                         break;
@@ -217,10 +237,12 @@ namespace EIP.Views
                                         break;
                                 }                                
                             break;
+
                             case EIP.ServiceEIP.Account.TypeAccount.Twitter:
                                 ((AccountTwitterLight)Connexion.accounts[account.Value.account.accountID]).LoadDirectMessagesCalled += new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
                                 switch (this.boxActive)
                                 {
+                                    // TODO : constantes
                                     case "outbox":
                                         ((AccountTwitterLight)account.Value).LoadDirectMessagesSent(start, end);
                                         break;
@@ -229,16 +251,25 @@ namespace EIP.Views
                                         break;
                                 }                                
                                 break;
+
                             case EIP.ServiceEIP.Account.TypeAccount.Flickr:
                                 Messages_LoadMessagesFlickr();
                                 break;
                         }
                     }
+                    #endregion
                 }
+                #endregion
             }
         }
 
+        #region methodes de chargement de la liste des messages
 
+        /// <summary>
+        /// Chargement des messages FB
+        /// </summary>
+        /// <param name="count">Nombre de messages</param>
+        /// <param name="accountFb">Objet AccountFacebookLight</param>
         void Messages_LoadMessagesFb(long count, AccountFacebookLight accountFb)
         {
             Connexion.dispatcher.BeginInvoke(() =>
@@ -246,11 +277,14 @@ namespace EIP.Views
                 accountFb.CountThreadCalled -= new AccountFacebookLight.OnCountThreadCompleted(Messages_LoadMessagesFb);
                 nbThreads.Add(accountFb.account.accountID, count);
                 if (count > 0)
-                {                                
-                    accountFb.GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                {                            
+                    // il y a des messages alors on les charge
+                    //accountFb.GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
                     accountFb.GetMessagesCalled += new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                    
                     switch (this.boxActive)
                     {
+                        // TODO : constantes
                         case "outbox":
                             accountFb.LoadOutboxMessages(start, end);
                             break;
@@ -262,10 +296,16 @@ namespace EIP.Views
                 }
                 else
                 {
+                    // attend-on les autres appels des autres comptes ?
+                    // Oui si un des comptes actifs (autre que flickr) n'a pas d'entrée dans nbThreads
                     Boolean wait = false;
                     foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
                     {
-                        if (account.Value.selected && account.Value.account.typeAccount != EIP.ServiceEIP.Account.TypeAccount.Flickr && !nbThreads.ContainsKey(account.Value.account.accountID))
+                        if (
+                                account.Value.selected 
+                            &&  account.Value.account.typeAccount != EIP.ServiceEIP.Account.TypeAccount.Flickr 
+                            &&  !nbThreads.ContainsKey(account.Value.account.accountID)
+                            )
                         {
                             wait = true;
                             break;
@@ -277,8 +317,12 @@ namespace EIP.Views
             });
         }
 
+        /// <summary>
+        /// Chargement des messages Flickr
+        /// </summary>
         void Messages_LoadMessagesFlickr()
         {
+            // on se contente de s'assurer du wait
             Boolean wait = false;
             foreach (KeyValuePair<long, AccountLight> account in Connexion.accounts)
             {
@@ -292,39 +336,52 @@ namespace EIP.Views
                 busyIndicator.IsBusy = false;
         }
 
-        void Messages_LoadDirectMessagesCalled(List<ThreadMessage> liste, long accountID)
+        /// <summary>
+        /// Callback chargement messages twitter
+        /// </summary>
+        /// <param name="liste">liste des messages</param>
+        /// <param name="accountID">numero de compte</param>
+        void Messages_LoadDirectMessagesCalled(List<ThreadMessage> liste, AccountTwitterLight accountTw)
         {
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                ((AccountTwitterLight)Connexion.accounts[accountID]).LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
-                                
-                listeMessagesBox.box.AddRange(liste);
-                listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
-                listeMessagesBox.LoadMessages();
-
-                busyIndicator.IsBusy = false;
-                if (listeMessagesBox.box.Count > 0)
-                    MessageDefault.Visibility = System.Windows.Visibility.Collapsed;
-                //listeMessagesBox.Messages_GetThreadCalled(th);
+                accountTw.LoadDirectMessagesCalled -= new AccountTwitterLight.OnLoadDirectMessagesCompleted(Messages_LoadDirectMessagesCalled);
+                Messages_LoadListeMessages(liste);
             });
         }
 
-        void Messages_GetMessagesCalled(List<ThreadMessage> liste)
+        /// <summary>
+        /// Callback chargement messages facebook
+        /// </summary>
+        /// <param name="liste">liste des messages</param>
+        void Messages_GetMessagesCalled(List<ThreadMessage> liste, AccountFacebookLight accountFb)
         {
-            //this.box = liste;
             Connexion.dispatcher.BeginInvoke(() =>
             {
-                listeMessagesBox.box.AddRange(liste);
-                listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
-                listeMessagesBox.LoadMessages();
-
-                busyIndicator.IsBusy = false;
-                if (listeMessagesBox.box.Count > 0)
-                    MessageDefault.Visibility = System.Windows.Visibility.Collapsed;
+                accountFb.GetMessagesCalled -= new AccountFacebookLight.OnGetMessagesCompleted(Messages_GetMessagesCalled);
+                Messages_LoadListeMessages(liste);                
             });
-
-
         }
+
+        /// <summary>
+        /// Charge la liste de messages dans le usercontrol
+        /// </summary>
+        /// <param name="liste"></param>
+        void Messages_LoadListeMessages(List<ThreadMessage> liste)
+        {
+            listeMessagesBox.box.AddRange(liste);
+            listeMessagesBox.box.Sort(delegate(ThreadMessage t1, ThreadMessage t2) { return t2.date.CompareTo(t1.date); });
+            listeMessagesBox.LoadMessages();
+
+            busyIndicator.IsBusy = false;
+            if (listeMessagesBox.box.Count > 0)
+                MessageDefault.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        #endregion
+
+        #region methodes pour la partie detail
+        
         void Messages_GetThreadCalled(ThreadMessage th)
         {
             Connexion.dispatcher.BeginInvoke(() =>
@@ -365,6 +422,7 @@ namespace EIP.Views
                 Connexion.navigationService.GoBack();
         }
 
-        
+        #endregion
+
     }
 }

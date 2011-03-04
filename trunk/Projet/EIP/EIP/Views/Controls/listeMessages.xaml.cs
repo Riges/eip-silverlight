@@ -16,7 +16,13 @@ namespace EIP.Views.Controls
 {
     public partial class listeMessages : UserControl
     {
+        #region Properties
+        /// <summary>
+        /// Contains all threads
+        /// </summary>
         public List<ThreadMessage> box { get; set; }
+        #endregion
+
         public long accountID { get; set; }
 
         public listeMessages()

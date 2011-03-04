@@ -254,7 +254,7 @@ namespace EIP
         ////////// Messages \\\\\\\\\\\
         #region Messages
 
-        public delegate void OnGetMessagesCompleted(List<ThreadMessage> liste);
+        public delegate void OnGetMessagesCompleted(List<ThreadMessage> liste, AccountFacebookLight account);
         public event OnGetMessagesCompleted GetMessagesCalled;
 
         public delegate void OnGetThreadCompleted(ThreadMessage th);
@@ -406,11 +406,13 @@ namespace EIP
             using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(usersXml)))
             {
                 do {
-                    //try
-                    //{
+                    /*try
+                    {*/
                         profile myUser = new profile();
 
-                        reader.ReadToFollowing("id");
+                        // POur éviter l'exception
+                        if (!reader.ReadToFollowing("id"))
+                            break;
                         myUser.id = reader.ReadElementContentAsLong();
                         reader.ReadToFollowing("name");
                         myUser.name = reader.ReadElementContentAsString();
@@ -422,11 +424,11 @@ namespace EIP
                         myUser.type = reader.ReadElementContentAsString();
 
                         users.Add(myUser);
-                    //}
-                    //catch (Exception e)
-                    //{
-                    //    break;
-                    //}
+                    /*}
+                    catch (Exception e)
+                    {
+                        break;
+                    }*/
                 } while (!reader.EOF);
 
             }
@@ -455,7 +457,7 @@ namespace EIP
                     }
                 }
             if(this.GetMessagesCalled != null)
-                this.GetMessagesCalled.Invoke(liste2);
+                this.GetMessagesCalled.Invoke(liste2, this);
         }
 
         public void LoadThread(long thId)
