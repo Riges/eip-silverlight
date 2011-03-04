@@ -192,7 +192,7 @@ namespace EIP
          //*Methodes de récupération d'infos*\\
         //************************************\\
         #region direct messages
-        public delegate void OnLoadDirectMessagesCompleted(List<ThreadMessage> liste, long accountID);
+        public delegate void OnLoadDirectMessagesCompleted(List<ThreadMessage> liste, AccountTwitterLight accountTw);
         public event OnLoadDirectMessagesCompleted LoadDirectMessagesCalled;
 
         public void LoadDirectMessagesReceived(DateTime start, DateTime end)
@@ -208,13 +208,22 @@ namespace EIP
         // stop sert a savoir si on peut faire des nouvelles requetes ou pas !
         public void LoadDirectMessagesReceived(DateTime start, DateTime end, Boolean stop)
         {
+            // PSEUDO CODE
+            // on requete 20 messages
+            // on regarde si premier message et dernier messages sont dans le champ
+            // on requete si necessaire pour compléter la liste (si on veut les messages de l'année, il faudra pl requetes !)
+            // (-detailler l'algo me souvient plus-)
+            // a un moment on aura un resultat nul (plus de messages a recup !) ou les dates depasseront le champ d'action (end - start)
+            // alors on pourra generer la liste a renvoyer
+            // TODO : optimiser un peu et corriger des bugs dans l'algo
+
             messageReceivedStart = start;
             messageReceivedEnd = end;
             if (this.messagesReceived.Count > 0)
             {
                 // regarde dans la liste 
                 // si on a ce qu'il faut, on renvoie les bon messages
-                // sinon : 
+                // sinon : (champ = partie entre start et end)
                 // si dernier dans le champ ou date supérieure, requete de 20 inf
                 // si premier dans le champ ou inférieur, requete de 20 sup
                 ThreadMessage prems = this.messagesReceived.ElementAt(0);
@@ -223,14 +232,16 @@ namespace EIP
                 // A t on ce qu'il faut ?
                 if (prems.date.CompareTo(start) >= 0 && last.date.CompareTo(end) <= 0)
                 {
+                    // prems et last sont dans le champ
                     List<ThreadMessage> returnList = new List<ThreadMessage>();
                     foreach (ThreadMessage message in this.messagesReceived)
                     {
+                        // si message entre start et end on l'ajoute a la liste
                         if (message.date.CompareTo(start) >= 0 && message.date.CompareTo(end) <= 0)
                             returnList.Add(message);
                     }
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(returnList, this.account.accountID);
+                        this.LoadDirectMessagesCalled.Invoke(returnList, this);
                 }
                 else if (!stop)
                 {
@@ -241,7 +252,7 @@ namespace EIP
                     )
                     {
                         // prems dans le champ ou date inférieure
-                        // Y passe jamais la je sais pas pk, cette partie est elle vraiment utile ? le test suivant suffit peut etre !!!
+
                         Connexion.serviceEIP.LoadDirectMessagesReceivedAsync(((AccountTwitter)account).token, ((AccountTwitter)account).tokenSecret, this.account.userID, 0, prems.getDm().Id + 1);
                         messagesWait += 1;
                     }
@@ -258,7 +269,7 @@ namespace EIP
                 }
                 else if ( messagesWait == 0) {
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>(), this.account.accountID);
+                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>(), this);
                 }
             }
             else
@@ -305,7 +316,7 @@ namespace EIP
                             returnList.Add(message);
                     }
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(returnList, this.account.accountID);
+                        this.LoadDirectMessagesCalled.Invoke(returnList, this);
                 }
                 else if (!stop)
                 {
@@ -334,7 +345,7 @@ namespace EIP
                 else if (messagesWait == 0)
                 {
                     if (this.LoadDirectMessagesCalled != null)
-                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>(), this.account.accountID);
+                        this.LoadDirectMessagesCalled.Invoke(new List<ThreadMessage>(), this);
                 }
             }
             else
