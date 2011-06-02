@@ -880,7 +880,7 @@ namespace EIP
                     
                     notifiRead.Add(notificat.notification_id);
                 }
-                this.facebookAPI.Notifications.MarkReadAsync(notifiRead, new Notifications.MarkReadCallback(GetNotificationMarkReadCompleted), null);
+                //this.facebookAPI.Notifications.MarkReadAsync(notifiRead, new Notifications.MarkReadCallback(GetNotificationMarkReadCompleted), null);
             }
         }
 
